@@ -1,0 +1,234 @@
+import React, {useMemo, useState} from 'react';
+import {
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import questData from '../data/quests.json';
+
+type Quest = {
+  id: number;
+  name: string;
+  quest_giver: string;
+  location: string;
+  objectives: string[];
+  rewards: {item_id: string; name: string; quantity: number}[];
+  prerequisites: string[];
+  unlock_requirement: string | null;
+  tree_position: string;
+};
+
+const GIVER_COLORS: Record<string, string> = {
+  Shani: '#66BB6A',
+  Celeste: '#AB47BC',
+  Lance: '#42A5F5',
+  Apollo: '#FF7043',
+  TianWen: '#FDD835',
+};
+
+const quests: Quest[] = (questData as any).quests || [];
+
+const QuestListScreen = ({navigation}: any) => {
+  const insets = useSafeAreaInsets();
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
+  const giverFilter = useMemo(() => {
+    const givers = [...new Set(quests.map(q => q.quest_giver))];
+    return ['All', ...givers];
+  }, []);
+
+  const [activeGiver, setActiveGiver] = useState('All');
+
+  const filtered = useMemo(
+    () =>
+      activeGiver === 'All'
+        ? quests
+        : quests.filter(q => q.quest_giver === activeGiver),
+    [activeGiver],
+  );
+
+  const renderQuest = ({item}: {item: Quest}) => {
+    const giverColor = GIVER_COLORS[item.quest_giver] || colors.orange;
+    const isExpanded = expandedId === item.id;
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => setExpandedId(isExpanded ? null : item.id)}>
+        <View style={styles.questCard}>
+          {/* Header Row */}
+          <View style={styles.questHeader}>
+            <View style={[styles.giverDot, {backgroundColor: giverColor}]} />
+            <View style={styles.questHeaderInfo}>
+              <Text style={styles.questName}>{item.name}</Text>
+              <Text style={[styles.questGiver, {color: giverColor}]}>
+                {item.quest_giver} · {item.location}
+              </Text>
+            </View>
+            <Icon
+              name={isExpanded ? 'chevron-up' : 'chevron-down'}
+              size={20}
+              color={colors.textMuted}
+            />
+          </View>
+
+          {/* Prerequisites */}
+          {item.prerequisites.length > 0 && (
+            <View style={styles.prereqRow}>
+              <Icon name="lock-outline" size={12} color={colors.textMuted} />
+              <Text style={styles.prereqText}>
+                Requires: {item.prerequisites.join(', ')}
+              </Text>
+            </View>
+          )}
+
+          {/* Expanded Content */}
+          {isExpanded && (
+            <View style={styles.expandedContent}>
+              {/* Objectives */}
+              <Text style={styles.sectionLabel}>OBJECTIVES</Text>
+              {item.objectives.map((obj, idx) => (
+                <View key={idx} style={styles.objectiveRow}>
+                  <View style={styles.bulletDot} />
+                  <Text style={styles.objectiveText}>{obj}</Text>
+                </View>
+              ))}
+
+              {/* Rewards */}
+              {item.rewards.length > 0 && (
+                <>
+                  <Text style={[styles.sectionLabel, {marginTop: spacing.md}]}>
+                    REWARDS
+                  </Text>
+                  {item.rewards.map((reward, idx) => (
+                    <View key={idx} style={styles.rewardRow}>
+                      <Icon name="gift" size={14} color={colors.orange} />
+                      <Text style={styles.rewardText}>
+                        {reward.name} x{reward.quantity}
+                      </Text>
+                    </View>
+                  ))}
+                </>
+              )}
+
+              {/* Unlock Requirement */}
+              {item.unlock_requirement && (
+                <View style={styles.unlockRow}>
+                  <Icon name="map-marker-check" size={14} color={colors.yellow} />
+                  <Text style={styles.unlockText}>{item.unlock_requirement}</Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View style={[styles.container, {paddingTop: insets.top}]}>
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
+        </TouchableOpacity>
+        <View>
+          <Text style={styles.headerTitle}>QUESTS</Text>
+          <Text style={styles.headerSubtitle}>{quests.length} quests available</Text>
+        </View>
+      </View>
+
+      {/* Giver Filter */}
+      <FlatList
+        horizontal
+        data={giverFilter}
+        renderItem={({item: giver}) => {
+          const isActive = activeGiver === giver;
+          const gColor = GIVER_COLORS[giver] || colors.orange;
+          return (
+            <TouchableOpacity
+              style={[
+                styles.filterChip,
+                isActive && {backgroundColor: gColor + '20', borderColor: gColor},
+              ]}
+              onPress={() => setActiveGiver(giver)}>
+              <Text
+                style={[styles.filterText, isActive && {color: gColor}]}>
+                {giver}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={item => item}
+        contentContainerStyle={styles.filterRow}
+        showsHorizontalScrollIndicator={false}
+      />
+
+      <FlatList
+        data={filtered}
+        renderItem={renderQuest}
+        keyExtractor={item => String(item.id)}
+        contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: colors.bg},
+  header: {
+    flexDirection: 'row', alignItems: 'center',
+    paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.sm,
+    gap: spacing.md,
+  },
+  backBtn: {
+    width: 36, height: 36, borderRadius: 18,
+    backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center',
+  },
+  headerTitle: {fontSize: fonts.sizes.xl, fontWeight: '900', color: colors.textPrimary, letterSpacing: 2},
+  headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
+  filterRow: {paddingHorizontal: spacing.lg, paddingBottom: spacing.sm, gap: spacing.xs},
+  filterChip: {
+    paddingHorizontal: spacing.sm, paddingVertical: 6,
+    borderRadius: borderRadius.md, borderWidth: 1,
+    borderColor: 'transparent', backgroundColor: colors.bgCard,
+  },
+  filterText: {fontSize: 11, fontWeight: '700', color: colors.textMuted},
+  list: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.sm},
+  questCard: {
+    backgroundColor: colors.bgCard, borderRadius: borderRadius.lg,
+    borderWidth: 1, borderColor: colors.border, padding: spacing.md,
+  },
+  questHeader: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm},
+  giverDot: {width: 8, height: 8, borderRadius: 4},
+  questHeaderInfo: {flex: 1},
+  questName: {fontSize: fonts.sizes.md, fontWeight: '700', color: colors.textPrimary},
+  questGiver: {fontSize: 11, fontWeight: '600', marginTop: 1},
+  prereqRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+    marginTop: spacing.xs, paddingLeft: 20,
+  },
+  prereqText: {fontSize: 10, color: colors.textMuted, fontStyle: 'italic'},
+  expandedContent: {marginTop: spacing.md, paddingTop: spacing.md, borderTopWidth: 1, borderTopColor: colors.border},
+  sectionLabel: {fontSize: 10, fontWeight: '700', color: colors.textMuted, letterSpacing: 1, marginBottom: spacing.xs},
+  objectiveRow: {flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, marginBottom: 4},
+  bulletDot: {width: 5, height: 5, borderRadius: 3, backgroundColor: colors.orange, marginTop: 5},
+  objectiveText: {fontSize: fonts.sizes.sm, color: colors.textSecondary, flex: 1, lineHeight: 20},
+  rewardRow: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: 4},
+  rewardText: {fontSize: fonts.sizes.sm, color: colors.textPrimary, fontWeight: '600'},
+  unlockRow: {
+    flexDirection: 'row', alignItems: 'center', gap: spacing.sm,
+    marginTop: spacing.md, paddingTop: spacing.sm, borderTopWidth: 1, borderTopColor: colors.border,
+  },
+  unlockText: {fontSize: 11, color: colors.yellow, fontWeight: '600'},
+});
+
+export default QuestListScreen;

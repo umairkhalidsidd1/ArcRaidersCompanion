@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Dam Battlegrounds",
+    "description": "A massive hydroelectric dam overrun by ARC forces. Dense combat zones around the spillways and generator rooms.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Medium"
+  },
+  {
+    "id": "buried-city",
+    "name": "Buried City",
+    "description": "The ruins of a once-thriving metropolis, now half-buried beneath sand and rubble. Rich in loot but dangerous.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Hard"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "The Spaceport",
+    "description": "An abandoned launch facility with hangars, control towers, and scattered ARC tech. Wide open sightlines.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Easy"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Blue Gate",
+    "description": "A fortified checkpoint between regions. Tight corridors and verticality make for intense firefights.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Medium"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "A mountainous region with alpine forests and hidden bunkers. High-value resources scattered across the peaks.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Hard"
+  }
+]
