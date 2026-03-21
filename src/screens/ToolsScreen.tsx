@@ -65,27 +65,6 @@ const ToolsScreen = ({ navigation }: any) => {
           </Card>
         </TouchableOpacity>
 
-        {/* Marketplace */}
-        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Marketplace')}>
-          <Card style={styles.toolCard}>
-            <View style={styles.toolRow}>
-              <View style={[styles.toolIconWrap, { backgroundColor: colors.red + '18' }]}>
-                <Icon name="storefront-outline" size={26} color={colors.red} />
-              </View>
-              <View style={styles.toolInfo}>
-                <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>MARKETPLACE</Text>
-                  <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
-                  </View>
-                </View>
-                <Text style={styles.toolDesc}>Trade items with other raiders</Text>
-              </View>
-              <Icon name="chevron-right" size={20} color={colors.textMuted} />
-            </View>
-          </Card>
-        </TouchableOpacity>
-
         {/* Traders */}
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('TraderList')}>
           <Card style={styles.toolCard}>
@@ -176,6 +155,90 @@ const ToolsScreen = ({ navigation }: any) => {
               <View style={styles.toolInfo}>
                 <Text style={styles.toolName}>SKILL TREE BUILDER</Text>
                 <Text style={styles.toolDesc}>Interactive Rive animation</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Expedition Tracker */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Expedition')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FF572218' }]}>
+                <Icon name="rocket-launch-outline" size={26} color="#FF5722" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>EXPEDITIONS</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>6-STAGE PRESTIGE TRACKER</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Trials */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Trials')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#E91E6318' }]}>
+                <Icon name="trophy-outline" size={26} color="#E91E63" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>TRIALS</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>WEEKLY CHALLENGES · RANK POINTS</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Guides */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Guides')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#4CAF5018' }]}>
+                <Icon name="book-open-variant" size={26} color="#4CAF50" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>GUIDES</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>GENERAL & QUEST WALKTHROUGHS</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Materials */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Materials')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FFC10718' }]}>
+                <Icon name="cube-outline" size={26} color="#FFC107" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>MATERIALS</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>WORKBENCH & EXPEDITION ITEMS</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>

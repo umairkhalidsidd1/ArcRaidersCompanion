@@ -16,12 +16,16 @@ import ToolsScreen from '../screens/ToolsScreen';
 import TraderListScreen from '../screens/TraderListScreen';
 import TraderDetailScreen from '../screens/TraderDetailScreen';
 import BlueprintTrackerScreen from '../screens/BlueprintTrackerScreen';
-import MarketplaceScreen from '../screens/MarketplaceScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import QuestListScreen from '../screens/QuestListScreen';
 import ArcListScreen from '../screens/ArcListScreen';
 import EventTimerScreen from '../screens/EventTimerScreen';
 import SkillTreeScreen from '../screens/SkillTreeScreen';
+import ArcDetailScreen from '../screens/ArcDetailScreen';
+import ExpeditionScreen from '../screens/ExpeditionScreen';
+import TrialsScreen from '../screens/TrialsScreen';
+import GuidesScreen from '../screens/GuidesScreen';
+import GuideDetailScreen from '../screens/GuideDetailScreen';
+import MaterialsScreen from '../screens/MaterialsScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
@@ -30,7 +34,6 @@ const MapsStack = createNativeStackNavigator();
 const CatalogStack = createNativeStackNavigator();
 const SubmitStack = createNativeStackNavigator();
 const ToolsStack = createNativeStackNavigator();
-const ProfileStack = createNativeStackNavigator();
 
 function MapsStackScreen() {
   return (
@@ -64,20 +67,17 @@ function ToolsStackScreen() {
       <ToolsStack.Screen name="TraderList" component={TraderListScreen} />
       <ToolsStack.Screen name="TraderDetail" component={TraderDetailScreen} />
       <ToolsStack.Screen name="BlueprintTracker" component={BlueprintTrackerScreen} />
-      <ToolsStack.Screen name="Marketplace" component={MarketplaceScreen} />
       <ToolsStack.Screen name="QuestList" component={QuestListScreen} />
       <ToolsStack.Screen name="ArcList" component={ArcListScreen} />
       <ToolsStack.Screen name="EventTimers" component={EventTimerScreen} />
       <ToolsStack.Screen name="SkillTree" component={SkillTreeScreen} />
+      <ToolsStack.Screen name="ArcDetail" component={ArcDetailScreen} />
+      <ToolsStack.Screen name="Expedition" component={ExpeditionScreen} />
+      <ToolsStack.Screen name="Trials" component={TrialsScreen} />
+      <ToolsStack.Screen name="Guides" component={GuidesScreen} />
+      <ToolsStack.Screen name="GuideDetail" component={GuideDetailScreen} />
+      <ToolsStack.Screen name="Materials" component={MaterialsScreen} />
     </ToolsStack.Navigator>
-  );
-}
-
-function ProfileStackScreen() {
-  return (
-    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
-      <ProfileStack.Screen name="ProfileMain" component={ProfileScreen} />
-    </ProfileStack.Navigator>
   );
 }
 
@@ -86,7 +86,6 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
   Catalog: { active: 'package-variant-closed', inactive: 'package-variant' },
   Submit: { active: 'plus-circle', inactive: 'plus-circle-outline' },
   Tools: { active: 'wrench', inactive: 'wrench-outline' },
-  Profile: { active: 'account-circle', inactive: 'account-circle-outline' },
 };
 
 /* ── Tab Navigator (with bottom bar) ── */
@@ -111,7 +110,6 @@ function TabNavigator() {
       <Tab.Screen name="Catalog" component={CatalogStackScreen} />
       <Tab.Screen name="Submit" component={SubmitStackScreen} />
       <Tab.Screen name="Tools" component={ToolsStackScreen} />
-      <Tab.Screen name="Profile" component={ProfileStackScreen} />
     </Tab.Navigator>
   );
 }

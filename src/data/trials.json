@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Weapon Master",
+    "description": "Get 50 kills with any weapon",
+    "image": "https://cdn.metaforge.app/arc-raiders/icons/rattler-i.webp",
+    "reward": "250 Rank XP",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/trials",
+    "category": "Combat"
+  },
+  {
+    "id": 2,
+    "name": "Survivor",
+    "description": "Extract from 5 expeditions without dying",
+    "image": "https://cdn.metaforge.app/arc-raiders/icons/combat-mk-1.webp",
+    "reward": "500 Rank XP",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/trials",
+    "category": "Survival"
+  },
+  {
+    "id": 3,
+    "name": "Loot Runner",
+    "description": "Collect 100 items in a single expedition",
+    "image": "https://cdn.metaforge.app/arc-raiders/icons/looting-mk-1.webp",
+    "reward": "150 Rank XP",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/trials",
+    "category": "Looting"
+  },
+  {
+    "id": 4,
+    "name": "ARC Destroyer",
+    "description": "Destroy 20 ARC units in Topside",
+    "image": "https://cdn.metaforge.app/arc-raiders/icons/hullcracker.webp",
+    "reward": "300 Rank XP",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/trials",
+    "category": "Combat"
+  },
+  {
+    "id": 5,
+    "name": "Stealth Operative",
+    "description": "Complete 3 expeditions without alerting any ARC",
+    "image": "https://cdn.metaforge.app/arc-raiders/icons/hairpin-i.webp",
+    "reward": "400 Rank XP",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/trials",
+    "category": "Stealth"
+  },
+  {
+    "id": 6,
+    "name": "Blueprint Hunter",
+    "description": "Find 10 blueprints in Topside",
+    "image": "https://cdn.metaforge.app/arc-raiders/icons/anvil.webp",
+    "reward": "350 Rank XP",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/trials",
+    "category": "Looting"
+  }
+]

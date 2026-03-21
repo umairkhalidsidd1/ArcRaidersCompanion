@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "title": "Beginner's Guide to Arc Raiders",
+    "type": "general",
+    "author": "Community",
+    "xpReward": 100,
+    "thumbnail": "https://cdn.metaforge.app/arc-raiders/icons/free-loadout-augment.webp",
+    "locked": false,
+    "steps": [
+      {"title": "Understanding the Basics", "content": "Arc Raiders is a PvPvE extraction shooter. Your goal is to land in Topside, loot valuable resources, and extract before the ARC or other Raiders take you out."},
+      {"title": "Choose Your Loadout", "content": "Start with the Free Loadout Augment and a basic weapon. As you progress, craft better gear at workbenches."},
+      {"title": "Learn the Maps", "content": "Study the map layouts, extraction points, and high-loot areas. Knowledge of the terrain is your best weapon."}
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Weapon Crafting Guide",
+    "type": "general",
+    "author": "Community",
+    "xpReward": 150,
+    "thumbnail": "https://cdn.metaforge.app/arc-raiders/icons/anvil-i.webp",
+    "locked": false,
+    "steps": [
+      {"title": "Gathering Materials", "content": "Collect Metal Parts, Plastic Parts, Chemicals, and other basic materials from loot areas during expeditions."},
+      {"title": "Workbench Tiers", "content": "Different weapons require different workbench tiers. Higher tier weapons need Gunsmith II or III."},
+      {"title": "Blueprint System", "content": "You need blueprints to craft most advanced weapons. Find them in Topside or complete specific quests."}
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Dam Battleground Quest Line",
+    "type": "quest",
+    "author": "Community",
+    "xpReward": 250,
+    "thumbnail": "https://cdn.metaforge.app/arc-raiders/icons/combat-mk-1.webp",
+    "locked": false,
+    "steps": [
+      {"title": "Reach the Dam", "content": "Navigate through the Dam Battleground map to find the quest objective marker."},
+      {"title": "Activate the Terminal", "content": "Interact with the terminal near the main dam structure to begin the event."},
+      {"title": "Defend the Position", "content": "Hold your position against waves of ARC enemies while the data downloads."}
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Advanced ARC Combat Tactics",
+    "type": "general",
+    "author": "Community",
+    "xpReward": 200,
+    "thumbnail": "https://cdn.metaforge.app/arc-raiders/icons/hullcracker.webp",
+    "locked": true,
+    "steps": [
+      {"title": "Know Your Enemy", "content": "Each ARC type has unique weaknesses. Learn which weapons work best against each one."},
+      {"title": "Use the Environment", "content": "ARCs can be stunned, trapped, and even turned against each other using environmental hazards."}
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Spaceport Navigation",
+    "type": "quest",
+    "author": "Community",
+    "xpReward": 300,
+    "thumbnail": "https://cdn.metaforge.app/arc-raiders/icons/tactical-mk-1.webp",
+    "locked": true,
+    "steps": [
+      {"title": "Enter the Spaceport", "content": "Access the Spaceport through the main gate or the underground tunnels."},
+      {"title": "Find the Control Room", "content": "Navigate through the corridors to locate the central control room."}
+    ]
+  }
+]

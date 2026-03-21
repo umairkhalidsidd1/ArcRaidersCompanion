@@ -1,0 +1,89 @@
+{
+  "description": "Expeditions are an optional prestige/soft-wipe system. Available at Level 20, players reset progress in exchange for permanent rewards. The project has 6 stages of increasing difficulty.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Foundation",
+      "description": "Gather basic construction materials to begin building the caravan.",
+      "objectives": [
+        {"item": "Metal Parts", "quantity": 150},
+        {"item": "Chemicals", "quantity": 100},
+        {"item": "ARC Alloy", "quantity": 80},
+        {"item": "Steel Spring", "quantity": 15}
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Core Systems",
+      "description": "Install the electrical and mechanical core systems for the caravan.",
+      "objectives": [
+        {"item": "Durable Cloth", "quantity": 30},
+        {"item": "Wires", "quantity": 25},
+        {"item": "Electrical Components", "quantity": 20},
+        {"item": "Industrial Charger", "quantity": 3}
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "Framework",
+      "description": "Assemble the structural framework and specialized components.",
+      "objectives": [
+        {"item": "Coffee Pot", "quantity": 1},
+        {"item": "Battery", "quantity": 25},
+        {"item": "Firefly Burner", "quantity": 5},
+        {"item": "Exodus Module", "quantity": 1}
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Outfitting",
+      "description": "Equip the caravan with advanced tech and rare ARC components.",
+      "objectives": [
+        {"item": "Broken Guidance System", "quantity": 1},
+        {"item": "Advanced Electrical Components", "quantity": 10},
+        {"item": "Snow Globe", "quantity": 3},
+        {"item": "Bombardier Cell", "quantity": 2}
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Load Stage",
+      "description": "Fill the caravan with supplies categorized by coin value.",
+      "objectives": [
+        {"item": "Materials (by coin value)", "quantity": 300000},
+        {"item": "Combat Items (by coin value)", "quantity": 200000},
+        {"item": "Survival Items (by coin value)", "quantity": 100000},
+        {"item": "Provisions (by coin value)", "quantity": 150000}
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Departure",
+      "description": "Register your Raider during the departure window. All remaining stash items contribute to your Expedition value.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {"name": "Bonus Skill Points", "description": "Up to 5 bonus skill points (1 per million coin value)", "icon": "star"},
+      {"name": "+12 Stash Spaces", "description": "Additional stash storage for your next Raider", "icon": "archive"},
+      {"name": "Patchwork Raider Outfit", "description": "Exclusive evolved cosmetic", "icon": "tshirt-crew"},
+      {"name": "Scrappy Cosmetic", "description": "Unique headgear (e.g. Scrappy Janitor Cap)", "icon": "hat-fedora"},
+      {"name": "Expedition Indicator", "description": "Badge showing your expedition count", "icon": "medal"}
+    ],
+    "temporary": [
+      {"name": "Repair Value Boost", "description": "+60-70% repair value (stacks x3)", "icon": "tools"},
+      {"name": "XP Boost", "description": "+5-10% XP gain (stacks x3)", "icon": "trending-up"},
+      {"name": "Scrappy Materials", "description": "+6% materials from Scrappy (stacks x3)", "icon": "recycle"}
+    ]
+  },
+  "keeps": ["Unlocked Maps", "Cosmetics", "Raider Decks", "Raider Tokens", "Cred", "Codex Entries", "Workshop Stations", "Trials", "Active Leaderboards", "Personal Event Progress", "Bonus Skill Points (from prior)"],
+  "loses": ["Blueprints", "Inventory & Stash", "Player Level", "Coins", "Workshop Upgrades", "Quest Progression", "Skill Points (initial)"]
+}
