@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -24,16 +24,28 @@ type Trial = {
   category: string;
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Combat: '#F44336',
-  Survival: '#66BB6A',
-  Looting: '#FF9800',
-  Stealth: '#AB47BC',
+const getResetTime = () => {
+  const now = new Date();
+  const nextTuesday = new Date(now);
+  nextTuesday.setDate(now.getDate() + ((2 - now.getDay() + 7) % 7 || 7));
+  nextTuesday.setHours(17, 0, 0, 0);
+  if (nextTuesday <= now) nextTuesday.setDate(nextTuesday.getDate() + 7);
+  const diff = nextTuesday.getTime() - now.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  return `${days}d ${hours}h ${mins}m`;
 };
 
 const TrialsScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const trials = rawTrials as Trial[];
+  const [resetTime, setResetTime] = useState(getResetTime());
+
+  useEffect(() => {
+    const interval = setInterval(() => setResetTime(getResetTime()), 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const openMetaforge = (url: string) => {
     Linking.openURL(url).catch(() => {});
@@ -43,60 +55,52 @@ const TrialsScreen = ({navigation}: any) => {
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
+      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <View>
-          <Text style={styles.headerTitle}>TRIALS</Text>
-          <Text style={styles.headerSubtitle}>
-            Complete challenges for bonus rank points
-          </Text>
+        <View style={styles.headerLeft}>
+          <View style={styles.headerIconWrap}>
+            <Icon name="shield-check-outline" size={18} color={colors.cyan} />
+          </View>
+          <Text style={styles.headerTitle}>Trials</Text>
         </View>
+        <Text style={styles.resetTimer}>Resets in: {resetTime}</Text>
       </View>
 
-      {/* Reset Banner */}
-      <View style={styles.resetBanner}>
-        <Icon name="clock-outline" size={14} color={colors.orange} />
-        <Text style={styles.resetText}>Weekly reset · Check back for new challenges</Text>
-      </View>
+      <Text style={styles.subtitle}>
+        Complete challenges to earn bonus rank points.
+      </Text>
 
       <FlatList
         data={trials}
-        renderItem={({item}) => {
-          const catColor = CATEGORY_COLORS[item.category] || colors.orange;
-          return (
-            <TouchableOpacity
-              style={styles.trialCard}
-              onPress={() => openMetaforge(item.metaforgeUrl)}
-              activeOpacity={0.7}>
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.trialCard}
+            onPress={() => openMetaforge(item.metaforgeUrl)}
+            activeOpacity={0.7}>
+            <View style={styles.imageWrap}>
               <Image
                 source={{uri: item.image}}
                 style={styles.trialImage}
-                resizeMode="contain"
+                resizeMode="cover"
               />
-              <View style={styles.trialInfo}>
-                <View style={styles.trialTopRow}>
-                  <Text style={styles.trialName}>{item.name}</Text>
-                  <View style={[styles.catBadge, {backgroundColor: catColor + '20'}]}>
-                    <Text style={[styles.catText, {color: catColor}]}>
-                      {item.category.toUpperCase()}
-                    </Text>
-                  </View>
-                </View>
-                <Text style={styles.trialDesc}>{item.description}</Text>
-                <View style={styles.trialFooter}>
-                  <Icon name="star" size={12} color={colors.yellow} />
-                  <Text style={styles.rewardText}>{item.reward}</Text>
-                  <View style={styles.viewGuide}>
-                    <Text style={styles.viewGuideText}>VIEW GUIDE</Text>
-                    <Icon name="arrow-right" size={12} color={colors.orange} />
-                  </View>
-                </View>
+            </View>
+            <View style={styles.trialInfo}>
+              <Text style={styles.trialName}>{item.name}</Text>
+              <View style={styles.mapRow}>
+                <Icon name="map-marker-outline" size={13} color={colors.textSecondary} />
+                <Text style={styles.mapText}>
+                  {item.category === 'Combat' ? 'All Maps' : 'Available on all maps'}
+                </Text>
               </View>
-            </TouchableOpacity>
-          );
-        }}
+              <TouchableOpacity
+                style={styles.viewGuideBtn}
+                onPress={() => openMetaforge(item.metaforgeUrl)}>
+                <Text style={styles.viewGuideText}>VIEW GUIDE</Text>
+                <Icon name="open-in-new" size={12} color={colors.cyan} />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        )}
         keyExtractor={item => String(item.id)}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
@@ -110,87 +114,89 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
-    paddingBottom: spacing.md,
-    gap: spacing.md,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.sm,
   },
-  backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.bgCard,
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  headerIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
     fontSize: fonts.sizes.xl,
-    fontWeight: '900',
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
   },
-  headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
-  resetBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: borderRadius.md,
-    backgroundColor: colors.orange + '10',
-    borderWidth: 1,
-    borderColor: colors.orange + '20',
+  resetTimer: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '600',
+    color: colors.textSecondary,
   },
-  resetText: {fontSize: 11, fontWeight: '600', color: colors.orange},
-  list: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.md},
+  subtitle: {
+    fontSize: fonts.sizes.sm,
+    color: colors.textSecondary,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
+  },
+  list: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.lg},
   trialCard: {
-    flexDirection: 'row',
     backgroundColor: colors.bgCard,
     borderRadius: borderRadius.lg,
     borderWidth: 1,
     borderColor: colors.border,
-    padding: spacing.md,
-    gap: spacing.md,
+    overflow: 'hidden',
   },
-  trialImage: {width: 48, height: 48, borderRadius: borderRadius.md},
-  trialInfo: {flex: 1},
-  trialTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 4,
+  imageWrap: {
+    width: '100%',
+    height: 160,
+    backgroundColor: colors.bgElevated,
+    overflow: 'hidden',
+    borderTopLeftRadius: borderRadius.lg,
+    borderTopRightRadius: borderRadius.lg,
+  },
+  trialImage: {
+    width: '100%',
+    height: '100%',
+  },
+  trialInfo: {
+    padding: spacing.lg,
   },
   trialName: {
-    fontSize: fonts.sizes.md,
+    fontSize: fonts.sizes.lg,
     fontWeight: '700',
     color: colors.textPrimary,
-    flex: 1,
+    marginBottom: spacing.xs,
   },
-  catBadge: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-    marginLeft: spacing.sm,
-  },
-  catText: {fontSize: 8, fontWeight: '800', letterSpacing: 1},
-  trialDesc: {fontSize: 12, color: colors.textSecondary, marginBottom: spacing.sm},
-  trialFooter: {
+  mapRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
+    marginBottom: spacing.md,
   },
-  rewardText: {fontSize: 11, fontWeight: '700', color: colors.yellow, flex: 1},
-  viewGuide: {
+  mapText: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textSecondary,
+  },
+  viewGuideBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 2,
+    alignSelf: 'flex-end',
+    gap: 4,
   },
   viewGuideText: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.orange,
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.cyan,
     letterSpacing: 1,
   },
 });

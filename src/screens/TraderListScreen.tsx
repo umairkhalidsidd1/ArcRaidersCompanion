@@ -69,8 +69,11 @@ const TraderListScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
+        <View style={styles.headerIconWrap}>
+          <Icon name="account-group" size={18} color={colors.cyan} />
+        </View>
         <View>
-          <Text style={styles.headerTitle}>TRADERS</Text>
+          <Text style={styles.headerTitle}>Traders</Text>
           <Text style={styles.headerSubtitle}>
             {traders.length} traders · {totalItems} items
           </Text>
@@ -139,11 +142,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  headerIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   headerTitle: {
     fontSize: fonts.sizes.xl,
-    fontWeight: '900',
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
   },
   headerSubtitle: {
     fontSize: fonts.sizes.xs,
@@ -171,7 +181,7 @@ const styles = StyleSheet.create({
   traderInfo: {flex: 1},
   traderName: {
     fontSize: fonts.sizes.lg,
-    fontWeight: '800',
+    fontWeight: '700',
     color: colors.textPrimary,
   },
   traderTitle: {

@@ -98,11 +98,14 @@ const TraderDetailScreen = ({route, navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
+        <View style={styles.headerIconWrap}>
+          <Icon name="store" size={18} color={colors.cyan} />
+        </View>
         <View style={[styles.avatar, {backgroundColor: meta.color + '20', borderColor: meta.color}]}>
           <Icon name={meta.icon} size={22} color={meta.color} />
         </View>
         <View>
-          <Text style={styles.headerTitle}>{traderName.toUpperCase()}</Text>
+          <Text style={styles.headerTitle}>{traderName}</Text>
           <Text style={[styles.headerSubtitle, {color: meta.color}]}>{meta.title}</Text>
         </View>
       </View>
@@ -139,13 +142,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgCard,
     alignItems: 'center', justifyContent: 'center',
   },
+  headerIconWrap: {
+    width: 32, height: 32, borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center', justifyContent: 'center',
+  },
   avatar: {
     width: 40, height: 40, borderRadius: 20,
     borderWidth: 2, alignItems: 'center', justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: fonts.sizes.lg, fontWeight: '900',
-    color: colors.textPrimary, letterSpacing: 2,
+    fontSize: fonts.sizes.lg, fontWeight: '700',
+    color: colors.textPrimary,
   },
   headerSubtitle: {fontSize: fonts.sizes.xs, fontWeight: '700', marginTop: 1},
   countRow: {
@@ -175,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.sizes.sm, fontWeight: '700', color: colors.textPrimary,
   },
   itemType: {fontSize: 10, color: colors.textMuted, fontWeight: '600', marginTop: 1},
-  itemRarity: {fontSize: 10, fontWeight: '800', letterSpacing: 1, marginTop: 2},
+  itemRarity: {fontSize: 10, fontWeight: '700', marginTop: 2},
   priceWrap: {
     flexDirection: 'row', alignItems: 'center', gap: 2,
   },

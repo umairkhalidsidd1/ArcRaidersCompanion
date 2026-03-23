@@ -1,6 +1,5 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {
-  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -40,42 +39,27 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.headerLabel}>GUIDE</Text>
+        <Text style={styles.headerLabel}>Guide</Text>
       </View>
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
 
-        {/* Title */}
-        <View style={styles.titleSection}>
-          <Image
-            source={{uri: guide.thumbnail}}
-            style={styles.thumb}
-            resizeMode="contain"
-          />
-          <View style={{flex: 1}}>
-            <Text style={styles.title}>{guide.title}</Text>
-            <View style={styles.metaRow}>
-              <Text style={styles.author}>By {guide.author}</Text>
-              <View style={styles.xpBadge}>
-                <Icon name="star" size={10} color={colors.yellow} />
-                <Text style={styles.xpText}>{guide.xpReward} XP</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        {/* Title + Author */}
+        <Text style={styles.title}>{guide.title}</Text>
+        <Text style={styles.author}>by {guide.author}</Text>
 
         {/* Steps */}
         {guide.steps.map((step, idx) => (
           <View key={idx} style={styles.stepCard}>
-            <View style={styles.stepNum}>
-              <Text style={styles.stepNumText}>{idx + 1}</Text>
-            </View>
-            <View style={styles.stepContent}>
+            <View style={styles.stepHeader}>
+              <View style={styles.stepNum}>
+                <Text style={styles.stepNumText}>{idx + 1}</Text>
+              </View>
               <Text style={styles.stepTitle}>{step.title}</Text>
-              <Text style={styles.stepBody}>{step.content}</Text>
             </View>
+            <Text style={styles.stepBody}>{step.content}</Text>
           </View>
         ))}
       </ScrollView>
@@ -90,6 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
+    gap: spacing.md,
   },
   backBtn: {
     width: 36,
@@ -98,73 +83,64 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgCard,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: spacing.md,
   },
   headerLabel: {
     fontSize: fonts.sizes.md,
     fontWeight: '700',
-    color: colors.orange,
-    letterSpacing: 2,
+    color: colors.cyan,
+    letterSpacing: 1,
   },
   scrollContent: {paddingHorizontal: spacing.lg, paddingBottom: 100},
-  titleSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    marginBottom: spacing.xl,
-    marginTop: spacing.md,
-  },
-  thumb: {width: 48, height: 48, borderRadius: borderRadius.md},
   title: {
     fontSize: fonts.sizes.xl,
     fontWeight: '800',
     color: colors.textPrimary,
+    marginTop: spacing.md,
     marginBottom: 4,
   },
-  metaRow: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm},
-  author: {fontSize: 11, color: colors.textMuted, fontWeight: '600'},
-  xpBadge: {
+  author: {
+    fontSize: 12,
+    color: colors.textMuted,
+    marginBottom: spacing.xl,
+  },
+  stepCard: {
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  stepHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 2,
-    backgroundColor: colors.yellow + '15',
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-    borderRadius: borderRadius.sm,
-  },
-  xpText: {fontSize: 9, fontWeight: '800', color: colors.yellow},
-
-  // Steps
-  stepCard: {
-    flexDirection: 'row',
     gap: spacing.md,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.sm,
   },
   stepNum: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.orange,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: colors.cyan,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 2,
   },
   stepNumText: {
     fontSize: 12,
     fontWeight: '800',
-    color: colors.textInverse,
+    color: '#000',
   },
-  stepContent: {flex: 1},
   stepTitle: {
     fontSize: fonts.sizes.md,
     fontWeight: '700',
     color: colors.textPrimary,
-    marginBottom: 4,
+    flex: 1,
   },
   stepBody: {
     fontSize: fonts.sizes.sm,
     color: colors.textSecondary,
     lineHeight: 22,
+    paddingLeft: 26 + spacing.md,
   },
 });
 

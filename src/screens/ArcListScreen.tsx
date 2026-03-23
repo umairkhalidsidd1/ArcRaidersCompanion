@@ -36,14 +36,12 @@ const ArcListScreen = ({navigation}: any) => {
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
+      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <View>
-          <Text style={styles.headerTitle}>ARC ENCYCLOPEDIA</Text>
-          <Text style={styles.headerSubtitle}>{arcs.length} units classified</Text>
+        <View style={styles.headerIconWrap}>
+          <Icon name="lightning-bolt" size={18} color={colors.cyan} />
         </View>
+        <Text style={styles.headerTitle}>Enemies</Text>
       </View>
 
       <FlatList
@@ -54,7 +52,7 @@ const ArcListScreen = ({navigation}: any) => {
           <TouchableOpacity
             style={styles.arcCard}
             activeOpacity={0.7}
-            onPress={() => navigation.navigate('ArcDetail', {arcId: item.id})}>
+            onPress={() => navigation.navigate('ArcDetail', {arcId: item.id, arc: item})}>
             <View style={styles.iconWrap}>
               {item.icon ? (
                 <Image
@@ -66,8 +64,8 @@ const ArcListScreen = ({navigation}: any) => {
                 <Icon name="robot" size={32} color={colors.textMuted} />
               )}
             </View>
-            <Text style={styles.arcName} numberOfLines={2}>
-              {item.name}
+            <Text style={styles.arcName} numberOfLines={1}>
+              {item.name.toUpperCase()}
             </Text>
           </TouchableOpacity>
         )}
@@ -85,25 +83,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.xl,
     paddingBottom: spacing.lg,
-    gap: spacing.md,
+    gap: spacing.sm,
   },
-  backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.bgCard,
+  headerIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
     fontSize: fonts.sizes.xl,
-    fontWeight: '900',
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
   },
-  headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
   list: {paddingHorizontal: PADDING, paddingBottom: 100},
   row: {gap: CARD_GAP, marginBottom: CARD_GAP},
   arcCard: {
@@ -112,28 +108,27 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.lg,
     borderWidth: 1,
     borderColor: colors.border,
-    padding: spacing.sm,
+    paddingVertical: spacing.lg,
     alignItems: 'center',
   },
   iconWrap: {
-    width: CARD_W - spacing.sm * 2,
-    height: CARD_W - spacing.sm * 2,
-    borderRadius: borderRadius.md,
-    backgroundColor: colors.bgElevated,
+    width: CARD_W * 0.55,
+    height: CARD_W * 0.55,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: spacing.xs,
+    marginBottom: spacing.sm,
   },
   arcIcon: {
-    width: '70%',
-    height: '70%',
+    width: '100%',
+    height: '100%',
+    tintColor: '#FFFFFF',
   },
   arcName: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
     color: colors.textPrimary,
     textAlign: 'center',
-    lineHeight: 14,
+    letterSpacing: 1,
   },
 });
 

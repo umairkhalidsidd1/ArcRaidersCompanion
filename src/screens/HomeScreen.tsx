@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Dimensions,
+  FlatList,
+  ImageBackground,
+  Linking,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -8,31 +12,135 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Card from '../components/Card';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
-import { getFoundCount } from '../utils/storage';
-import items from '../data/items.json';
+import { getMapImage } from '../data/mapImages';
+import maps from '../data/maps.json';
+import events from '../data/events.json';
 
-const QUICK_ACTIONS = [
-  { key: 'maps', icon: 'map-legend', label: 'Explore Maps', color: colors.cyan, screen: 'MapList' },
-  { key: 'items', icon: 'package-variant-closed', label: 'Item Database', color: colors.orange, screen: 'ItemList' },
-  { key: 'tools', icon: 'wrench-outline', label: 'Tools', color: colors.green, screen: 'ToolsMain' },
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const MAP_CARD_WIDTH = SCREEN_WIDTH - spacing.lg * 2 - 40;
+
+const RAIDER_TOOLS = [
+  {
+    key: 'skilltree',
+    icon: 'file-tree-outline',
+    color: colors.cyan,
+    title: 'Skill Tree',
+    desc: 'Plan your character build and progression.',
+    screen: 'SkillTree',
+  },
+  {
+    key: 'weapons',
+    icon: 'shield-sword',
+    color: colors.cyan,
+    title: 'Weapons',
+    desc: 'Detailed weapon stat analysis.',
+    screen: 'Weapons',
+  },
+  {
+    key: 'blueprints',
+    icon: 'floor-plan',
+    color: colors.cyan,
+    title: 'Blueprints Checklist',
+    desc: 'Track your blueprint collection progress.',
+    screen: 'BlueprintTracker',
+  },
+  {
+    key: 'tierlist',
+    icon: 'trophy-outline',
+    color: colors.cyan,
+    title: 'Tier List',
+    desc: 'Weapon and item tier rankings.',
+    screen: 'TierList',
+  },
+  {
+    key: 'traders',
+    icon: 'store',
+    color: colors.cyan,
+    title: 'Traders',
+    desc: 'Browse trader inventories and prices.',
+    screen: 'TraderList',
+  },
+  {
+    key: 'quests',
+    icon: 'clipboard-list-outline',
+    color: colors.cyan,
+    title: 'Quests',
+    desc: 'Track your quest progress and chains.',
+    screen: 'QuestList',
+  },
+  {
+    key: 'questtree',
+    icon: 'sitemap-outline',
+    color: colors.cyan,
+    title: 'Quest Tree',
+    desc: 'View quest prerequisites and branching paths.',
+    screen: 'QuestTree',
+  },
+  {
+    key: 'expedition',
+    icon: 'compass-outline',
+    color: colors.cyan,
+    title: 'Expeditions',
+    desc: 'Plan and track your expeditions.',
+    screen: 'Expedition',
+  },
+  {
+    key: 'eventtimers',
+    icon: 'timer-sand',
+    color: colors.cyan,
+    title: 'Event Timers',
+    desc: 'Live countdowns for in-game events.',
+    screen: 'EventTimers',
+  },
+  {
+    key: 'cosmetics',
+    icon: 'tshirt-crew-outline',
+    color: colors.cyan,
+    title: 'Cosmetics',
+    desc: 'Browse available cosmetic items.',
+    screen: 'Cosmetics',
+  },
+  {
+    key: 'collectibles',
+    icon: 'star-circle-outline',
+    color: colors.cyan,
+    title: 'Collectibles',
+    desc: 'Track collectible items and locations.',
+    screen: 'CollectibleTracker',
+  },
+  {
+    key: 'submit',
+    icon: 'send-outline',
+    color: colors.cyan,
+    title: 'Submit Info',
+    desc: 'Contribute data to the community.',
+    screen: 'Submit',
+  },
+  {
+    key: 'support',
+    icon: 'chat-outline',
+    color: colors.cyan,
+    title: 'Support',
+    desc: 'Join our community Discord for help.',
+    url: 'https://discord.gg/arcraiders',
+  },
 ];
 
 const HomeScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
-  const [foundCount, setFoundCount] = useState(0);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getFoundCount().then(setFoundCount);
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  const totalItems = items.length;
-  const progress = totalItems > 0 ? foundCount / totalItems : 0;
+  const getNextEvent = (mapId: string) => {
+    const mapEvents = (events as any[]).filter(
+      (e: any) => e.mapId === mapId || !e.mapId,
+    );
+    if (mapEvents.length > 0) {
+      return mapEvents[0];
+    }
+    return null;
+  };
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -40,94 +148,90 @@ const HomeScreen = ({ navigation }: any) => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
-        {/* Hero */}
-        <View style={styles.hero}>
-          <View style={styles.heroAccent} />
-          <Text style={styles.heroTitle}>ARC RAIDERS</Text>
-          <Text style={styles.heroSubtitle}>COMPANION</Text>
-          <Text style={styles.heroTagline}>
-            Your field guide to surviving the ARC invasion
-          </Text>
+
+        {/* Maps Header */}
+        <View style={styles.sectionHeader}>
+          <View style={styles.sectionTitleRow}>
+            <View style={styles.sectionIconWrap}>
+              <Icon name="shield-check" size={18} color={colors.cyan} />
+            </View>
+            <Text style={styles.sectionTitle}>Maps</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('MapList')}>
+            <Text style={styles.seeAllText}>See All Events</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Quick Actions */}
-        <Text style={styles.sectionTitle}>QUICK ACCESS</Text>
-        <View style={styles.actionsGrid}>
-          {QUICK_ACTIONS.map(action => (
+        {/* Map Carousel */}
+        <FlatList
+          horizontal
+          data={maps}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.mapCarousel}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => {
+            const mapImage = getMapImage(item.id);
+            const nextEvent = getNextEvent(item.id);
+            return (
+              <TouchableOpacity
+                activeOpacity={0.9}
+                style={styles.mapCardWrap}
+                onPress={() => navigation.navigate('MapDetail', { mapId: item.id })}>
+                <ImageBackground
+                  source={mapImage}
+                  style={styles.mapCard}
+                  imageStyle={styles.mapCardImage}
+                  resizeMode="cover">
+                  <LinearGradient
+                    colors={['transparent', 'rgba(10, 14, 23, 0.7)', 'rgba(10, 14, 23, 0.95)']}
+                    style={StyleSheet.absoluteFillObject}
+                  />
+                  <View style={styles.mapCardContent}>
+                    {nextEvent && (
+                      <View style={styles.eventBadge}>
+                        <Icon name="clock-outline" size={12} color={colors.textPrimary} />
+                        <Text style={styles.eventBadgeText}>
+                          NEXT: {nextEvent.name || 'Event'}
+                        </Text>
+                      </View>
+                    )}
+                    <View style={{ flex: 1 }} />
+                    <Text style={styles.mapCardName}>{item.name}</Text>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
+            );
+          }}
+        />
+
+        {/* Raider Tools */}
+        <View style={styles.toolsSectionHeader}>
+          <Text style={styles.toolsSectionTitle}>RAIDER TOOLS</Text>
+        </View>
+
+        <View style={styles.toolsList}>
+          {RAIDER_TOOLS.map(tool => (
             <TouchableOpacity
-              key={action.key}
+              key={tool.key}
               activeOpacity={0.7}
+              style={styles.toolCard}
               onPress={() => {
-                if (action.screen === 'MapList') {
-                  navigation.navigate('Maps');
-                } else if (action.screen === 'ItemList') {
-                  navigation.navigate('Items');
-                } else {
-                  navigation.navigate('Tools');
+                if (tool.url) {
+                  Linking.openURL(tool.url).catch(() => {});
+                } else if (tool.screen) {
+                  navigation.navigate(tool.screen);
                 }
               }}>
-              <Card style={styles.actionCard}>
-                <View
-                  style={[
-                    styles.actionIconWrap,
-                    { backgroundColor: action.color + '20' },
-                  ]}>
-                  <Icon name={action.icon} size={28} color={action.color} />
-                </View>
-                <Text style={styles.actionLabel}>{action.label}</Text>
-                <Icon
-                  name="chevron-right"
-                  size={16}
-                  color={colors.textMuted}
-                  style={styles.actionChevron}
-                />
-              </Card>
+              <View style={styles.toolIconWrap}>
+                <Icon name={tool.icon} size={24} color={tool.color} />
+              </View>
+              <View style={styles.toolInfo}>
+                <Text style={styles.toolTitle}>{tool.title}</Text>
+                <Text style={styles.toolDesc}>{tool.desc}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </TouchableOpacity>
           ))}
-        </View>
-
-        {/* Progress */}
-        <Text style={styles.sectionTitle}>YOUR PROGRESS</Text>
-        <Card style={styles.progressCard}>
-          <View style={styles.progressHeader}>
-            <Icon name="trophy-outline" size={22} color={colors.yellow} />
-            <Text style={styles.progressTitle}>Items Found</Text>
-            <Text style={styles.progressCount}>
-              {foundCount}
-              <Text style={styles.progressTotal}> / {totalItems}</Text>
-            </Text>
-          </View>
-          <View style={styles.progressBarBg}>
-            <View
-              style={[
-                styles.progressBarFill,
-                { width: `${Math.min(progress * 100, 100)}%` },
-              ]}
-            />
-          </View>
-          <Text style={styles.progressPercent}>
-            {Math.round(progress * 100)}% Complete
-          </Text>
-        </Card>
-
-        {/* Stats */}
-        <Text style={styles.sectionTitle}>FIELD INTEL</Text>
-        <View style={styles.statsRow}>
-          <Card style={styles.statCard}>
-            <Icon name="map-marker-multiple" size={24} color={colors.cyan} />
-            <Text style={styles.statValue}>5</Text>
-            <Text style={styles.statLabel}>Maps</Text>
-          </Card>
-          <Card style={styles.statCard}>
-            <Icon name="package-variant-closed" size={24} color={colors.orange} />
-            <Text style={styles.statValue}>{totalItems}</Text>
-            <Text style={styles.statLabel}>Items</Text>
-          </Card>
-          <Card style={styles.statCard}>
-            <Icon name="map-marker" size={24} color={colors.green} />
-            <Text style={styles.statValue}>56</Text>
-            <Text style={styles.statLabel}>Markers</Text>
-          </Card>
         </View>
       </ScrollView>
     </View>
@@ -143,149 +247,131 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
 
-  // Hero
-  hero: {
-    paddingHorizontal: spacing.xl,
-    paddingTop: spacing.xxl,
-    paddingBottom: spacing.xl,
-    position: 'relative',
-    overflow: 'hidden',
+  // Section Header
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.md,
   },
-  heroAccent: {
-    position: 'absolute',
-    top: -60,
-    right: -40,
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: colors.orange,
-    opacity: 0.06,
+  sectionTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
   },
-  heroTitle: {
-    fontSize: fonts.sizes.hero,
-    fontWeight: '900',
-    color: colors.orange,
-    letterSpacing: 4,
+  sectionIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  heroSubtitle: {
+  sectionTitle: {
     fontSize: fonts.sizes.xl,
-    fontWeight: '300',
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 8,
-    marginTop: -4,
   },
-  heroTagline: {
+  seeAllText: {
     fontSize: fonts.sizes.sm,
     color: colors.textSecondary,
-    marginTop: spacing.md,
-    letterSpacing: 1,
+    fontWeight: '500',
   },
 
-  // Section
-  sectionTitle: {
+  // Map Carousel
+  mapCarousel: {
+    paddingHorizontal: spacing.lg,
+    gap: spacing.md,
+  },
+  mapCardWrap: {
+    width: MAP_CARD_WIDTH,
+    height: 200,
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  mapCard: {
+    flex: 1,
+  },
+  mapCardImage: {
+    borderRadius: borderRadius.lg,
+  },
+  mapCardContent: {
+    flex: 1,
+    padding: spacing.lg,
+  },
+  eventBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: borderRadius.sm,
+  },
+  eventBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    letterSpacing: 0.5,
+  },
+  mapCardName: {
+    fontSize: fonts.sizes.lg,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    letterSpacing: 0.5,
+  },
+
+  // Raider Tools
+  toolsSectionHeader: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xxl,
+    paddingBottom: spacing.md,
+  },
+  toolsSectionTitle: {
     fontSize: fonts.sizes.xs,
     fontWeight: '700',
     color: colors.textMuted,
     letterSpacing: 3,
-    paddingHorizontal: spacing.xl,
-    marginTop: spacing.xl,
-    marginBottom: spacing.md,
   },
-
-  // Quick Actions
-  actionsGrid: {
+  toolsList: {
     paddingHorizontal: spacing.lg,
     gap: spacing.sm,
   },
-  actionCard: {
+  toolCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: spacing.md,
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.lg,
+    gap: spacing.lg,
   },
-  actionIconWrap: {
-    width: 48,
-    height: 48,
+  toolIconWrap: {
+    width: 44,
+    height: 44,
     borderRadius: borderRadius.md,
+    backgroundColor: 'rgba(0, 229, 255, 0.08)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: spacing.lg,
   },
-  actionLabel: {
+  toolInfo: {
     flex: 1,
-    fontSize: fonts.sizes.lg,
-    fontWeight: '600',
-    color: colors.textPrimary,
   },
-  actionChevron: {
-    marginLeft: spacing.sm,
-  },
-
-  // Progress
-  progressCard: {
-    marginHorizontal: spacing.lg,
-  },
-  progressHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  progressTitle: {
-    flex: 1,
+  toolTitle: {
     fontSize: fonts.sizes.md,
-    fontWeight: '600',
-    color: colors.textPrimary,
-  },
-  progressCount: {
-    fontSize: fonts.sizes.lg,
     fontWeight: '700',
-    color: colors.yellow,
-  },
-  progressTotal: {
-    fontSize: fonts.sizes.sm,
-    fontWeight: '400',
-    color: colors.textMuted,
-  },
-  progressBarBg: {
-    height: 6,
-    backgroundColor: colors.bgElevated,
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-    backgroundColor: colors.yellow,
-    borderRadius: 3,
-  },
-  progressPercent: {
-    fontSize: fonts.sizes.xs,
-    color: colors.textMuted,
-    marginTop: spacing.xs,
-    textAlign: 'right',
-  },
-
-  // Stats
-  statsRow: {
-    flexDirection: 'row',
-    paddingHorizontal: spacing.lg,
-    gap: spacing.sm,
-  },
-  statCard: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: spacing.lg,
-    gap: spacing.xs,
-  },
-  statValue: {
-    fontSize: fonts.sizes.xxl,
-    fontWeight: '800',
     color: colors.textPrimary,
+    marginBottom: 2,
   },
-  statLabel: {
+  toolDesc: {
     fontSize: fonts.sizes.xs,
-    color: colors.textMuted,
-    fontWeight: '600',
-    letterSpacing: 1,
+    color: colors.textSecondary,
   },
 });
 

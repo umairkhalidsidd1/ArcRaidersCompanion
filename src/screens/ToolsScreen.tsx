@@ -12,9 +12,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
 import { colors, fonts, spacing, borderRadius } from '../theme/theme';
 
-// Placeholder avatar colors
-const AVATAR_COLORS = ['#FF6B2C', '#00E5FF', '#A855F7', '#00FF88', '#FFD600'];
-
 const ToolsScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
@@ -30,41 +27,6 @@ const ToolsScreen = ({ navigation }: any) => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
-        {/* Community */}
-        <TouchableOpacity activeOpacity={0.7}>
-          <Card style={styles.toolCard}>
-            <View style={styles.toolRow}>
-              <View style={[styles.toolIconWrap, { backgroundColor: colors.orange + '18' }]}>
-                <Icon name="account-group-outline" size={26} color={colors.orange} />
-              </View>
-              <View style={styles.toolInfo}>
-                <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>COMMUNITY</Text>
-                  <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
-                  </View>
-                </View>
-                <Text style={styles.toolDesc}>Join groups, chat & find squads</Text>
-              </View>
-              <Icon name="chevron-right" size={20} color={colors.textMuted} />
-            </View>
-            {/* Avatars */}
-            <View style={styles.avatarRow}>
-              {AVATAR_COLORS.map((c, i) => (
-                <View
-                  key={i}
-                  style={[
-                    styles.avatar,
-                    { backgroundColor: c + '30', borderColor: c, marginLeft: i > 0 ? -8 : 0 },
-                  ]}>
-                  <Icon name="account" size={16} color={c} />
-                </View>
-              ))}
-              <Text style={styles.avatarCount}>+142 online</Text>
-            </View>
-          </Card>
-        </TouchableOpacity>
-
         {/* Traders */}
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('TraderList')}>
           <Card style={styles.toolCard}>
@@ -138,7 +100,7 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <Text style={styles.toolName}>BLUEPRINT TRACKER</Text>
-                <Text style={styles.toolDesc}>0 / 176 blueprints collected</Text>
+                <Text style={styles.toolDesc}>79 BLUEPRINTS · TRACK YOUR FINDS</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -246,7 +208,7 @@ const ToolsScreen = ({ navigation }: any) => {
         </TouchableOpacity>
 
         {/* Tier List Maker */}
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('TierList')}>
           <Card style={styles.toolCard}>
             <View style={styles.toolRow}>
               <View style={[styles.toolIconWrap, { backgroundColor: colors.purple + '18' }]}>
@@ -255,6 +217,90 @@ const ToolsScreen = ({ navigation }: any) => {
               <View style={styles.toolInfo}>
                 <Text style={styles.toolName}>TIER LIST MAKER</Text>
                 <Text style={styles.toolDesc}>Create & share tier rankings</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Loadout Builder */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('LoadoutBuilder')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#F4433618' }]}>
+                <Icon name="shield-sword" size={26} color="#F44336" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>LOADOUT BUILDER</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>BUILD & COMPARE LOADOUTS</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Quest Tree */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('QuestTree')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FF980018' }]}>
+                <Icon name="source-branch" size={26} color="#FF9800" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>QUEST TREE</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>VISUAL QUEST CHAINS & DEPS</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Cosmetics Browser */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Cosmetics')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#E040FB18' }]}>
+                <Icon name="palette" size={26} color="#E040FB" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>COSMETICS</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>OUTFITS, COLORS & ATTACHMENTS</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Collectible Tracker */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('CollectibleTracker')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FFC10718' }]}>
+                <Icon name="diamond-stone" size={26} color="#FFC107" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>COLLECTIBLES</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>NEW</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>DUCKS, REELS & SNOW GLOBES</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -341,27 +387,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Avatars
-  avatarRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: spacing.md,
-    paddingLeft: spacing.xxxl + spacing.lg,
-  },
-  avatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarCount: {
-    fontSize: fonts.sizes.xs,
-    color: colors.textMuted,
-    fontWeight: '600',
-    marginLeft: spacing.sm,
-  },
+
 });
 
 export default ToolsScreen;

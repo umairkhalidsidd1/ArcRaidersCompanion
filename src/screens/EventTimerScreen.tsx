@@ -177,8 +177,11 @@ const EventTimerScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <View>
-          <Text style={styles.headerTitle}>EVENT TIMERS</Text>
+        <View style={styles.headerIconWrap}>
+          <Icon name="clock-outline" size={18} color={colors.cyan} />
+        </View>
+        <View style={{flex: 1}}>
+          <Text style={styles.headerTitle}>Event Timers</Text>
           <Text style={styles.headerSubtitle}>{events.length} scheduled events · Live</Text>
         </View>
         <View style={styles.liveDot} />
@@ -193,7 +196,7 @@ const EventTimerScreen = ({navigation}: any) => {
               <View style={styles.mapHeader}>
                 <View style={[styles.mapDot, {backgroundColor: mapColor}]} />
                 <Text style={[styles.mapName, {color: mapColor}]}>
-                  {group.map.toUpperCase()}
+                  {group.map}
                 </Text>
                 <View style={styles.mapLine} />
               </View>
@@ -240,7 +243,7 @@ const EventTimerScreen = ({navigation}: any) => {
                         <Icon
                           name={isNotifyOn ? 'bell' : 'bell-outline'}
                           size={16}
-                          color={isNotifyOn ? colors.orange : colors.textMuted}
+                          color={isNotifyOn ? colors.cyan : colors.textMuted}
                         />
                       </TouchableOpacity>
                     </View>
@@ -308,11 +311,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  headerIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   headerTitle: {
     fontSize: fonts.sizes.xl,
-    fontWeight: '900',
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
   },
   headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
   liveDot: {
@@ -331,7 +341,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   mapDot: {width: 8, height: 8, borderRadius: 4},
-  mapName: {fontSize: 12, fontWeight: '800', letterSpacing: 2},
+  mapName: {fontSize: 12, fontWeight: '700'},
   mapLine: {flex: 1, height: 1, backgroundColor: colors.border},
 
   // Event Card
@@ -379,7 +389,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   notifyBtnActive: {
-    backgroundColor: colors.orange + '20',
+    backgroundColor: colors.cyan + '20',
   },
 
   // Countdown
@@ -409,9 +419,8 @@ const styles = StyleSheet.create({
   },
   activeBadgeText: {
     fontSize: 9,
-    fontWeight: '800',
+    fontWeight: '700',
     color: '#66BB6A',
-    letterSpacing: 1,
   },
   countdownText: {
     fontSize: 12,

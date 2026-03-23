@@ -9,7 +9,8 @@ import {
   View,
 } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import Svg, {Path} from 'react-native-svg';
+import Svg, {Defs, LinearGradient as SvgLinearGradient, Path, RadialGradient, Rect, Stop} from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,14 +19,15 @@ const SKILL_STORAGE_KEY = '@arcc_skilltree_v6';
 const {width: SW} = Dimensions.get('window');
 
 // ── Layout geometric constants ──
-const ROW_H = 90;
-const NODE_R = 21;
-const ROOT_R = 28;
-const CANVAS_PAD_TOP = 150;
-const CANVAS_PAD_BOT = 120;
+const ROW_H = 110;
+const NODE_R = 30;
+const ROOT_R = 42;
+const CANVAS_PAD_TOP = 180;
+const CANVAS_PAD_BOT = 160;
 const CANVAS_H = CANVAS_PAD_TOP + 8 * ROW_H + CANVAS_PAD_BOT;
+const CANVAS_W = SW * 2; // Wide canvas for 3-branch spread
 
-const DX = SW * 0.095; // Tighter horizontal spread to match screenshots
+const DX = SW * 0.13; // Horizontal spread per helix offset
 
 const HELIX = [
   { p: 0, x: 0, y: 0, parents: [] },         // 0: Root (Bottom)
@@ -118,7 +120,7 @@ SKILLS_C.forEach((s, i) => NODES.push({...s, branch: 'c', pos: i+1} as N));
 
 const getXY = (n: N) => {
   const cfg = HELIX[n.pos];
-  const cx = {s: SW * 0.20, m: SW * 0.50, c: SW * 0.80}[n.branch];
+  const cx = {s: CANVAS_W * 0.18, m: CANVAS_W * 0.50, c: CANVAS_W * 0.82}[n.branch];
   return {
     x: cx + cfg.x * DX,
     y: CANVAS_H - CANVAS_PAD_BOT - cfg.y * ROW_H,
@@ -219,7 +221,14 @@ const SkillTreeScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#0B131D" />
+      <StatusBar barStyle="light-content" backgroundColor="#060A11" />
+
+      {/* Gradient background overlay */}
+      <LinearGradient
+        colors={['#060A11', '#0D1520', '#0A1018', '#060A11']}
+        locations={[0, 0.35, 0.65, 1]}
+        style={StyleSheet.absoluteFillObject}
+      />
 
       {/* Header absolutely positioned */}
       <View style={[styles.header, {top: insets.top + 8}]}>
@@ -229,42 +238,48 @@ const SkillTreeScreen = ({navigation}: any) => {
         
         <View style={styles.pointsContainer}>
           <View style={styles.pointsBox}>
-            <View style={styles.pointsLabelRow}>
-              <Text style={styles.pointsLabel}>SKILL POINTS</Text>
-              <TouchableOpacity style={styles.pmBtn} onPress={() => { const tp = Math.max(0, totalPoints - 1); setTotalPoints(tp); save(alloc, tp); }}>
-                <Icon name="minus" size={14} color="#8A9AA8" />
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.pointsLabel}>SKILL POINTS</Text>
             <View style={styles.pointsBoxRow}>
               <Text style={styles.pointsBig}>{remaining}</Text>
               <Text style={styles.pointsSmall}> / {totalPoints}</Text>
-              <TouchableOpacity style={[styles.pmBtn, {marginLeft: 8}]} onPress={() => { const tp = Math.min(80, totalPoints + 1); setTotalPoints(tp); save(alloc, tp); }}>
-                <Icon name="plus" size={12} color="#8A9AA8" />
-              </TouchableOpacity>
+              <View style={styles.pmGroup}>
+                <TouchableOpacity style={styles.pmBtn} onPress={() => { const tp = Math.max(0, totalPoints - 1); setTotalPoints(tp); save(alloc, tp); }}>
+                  <Icon name="minus" size={14} color="#8A9AA8" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.pmBtn} onPress={() => { const tp = Math.min(80, totalPoints + 1); setTotalPoints(tp); save(alloc, tp); }}>
+                  <Icon name="plus" size={14} color="#8A9AA8" />
+                </TouchableOpacity>
+              </View>
             </View>
+            <TouchableOpacity onPress={reset} style={styles.resetBtn}>
+              <Icon name="refresh" size={13} color="#FF3A59" />
+              <Text style={styles.resetText}>RESET</Text>
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity onPress={reset} style={styles.resetBtn}>
-            <Icon name="refresh" size={14} color="#FF3A59" />
-            <Text style={styles.resetText}>RESET</Text>
-          </TouchableOpacity>
         </View>
       </View>
 
       {/* Tree Canvas */}
       <ScrollView
-        contentContainerStyle={{height: CANVAS_H, width: SW}}
+        contentContainerStyle={{height: CANVAS_H, width: CANVAS_W}}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        maximumZoomScale={2.5}
-        minimumZoomScale={0.8}
+        maximumZoomScale={3}
+        minimumZoomScale={0.45}
         centerContent={true}
         bouncesZoom={true}
-        contentOffset={{x: 0, y: CANVAS_H - SW * 2}} // start scrolled to bottom
+        contentOffset={{x: (CANVAS_W - SW) / 2, y: CANVAS_H - SW * 2}} // center horizontally, start scrolled to bottom
         bounces={false}>
 
-        {/* SVG connection lines - Bezier Curves! */}
-        <Svg height={CANVAS_H} width={SW} style={StyleSheet.absoluteFillObject}>
+        {/* SVG connection lines + subtle glow bg */}
+        <Svg height={CANVAS_H} width={CANVAS_W} style={StyleSheet.absoluteFillObject}>
+          <Defs>
+            <RadialGradient id="canvasGlow" cx="50%" cy="55%" r="50%">
+              <Stop offset="0" stopColor="#1A2A3A" stopOpacity="0.4" />
+              <Stop offset="1" stopColor="#060A11" stopOpacity="0" />
+            </RadialGradient>
+          </Defs>
+          <Rect x="0" y="0" width={CANVAS_W} height={CANVAS_H} fill="url(#canvasGlow)" />
           {HELIX.map(h => {
              return h.parents.map(p_pos => {
                return ['s', 'm', 'c'].map(b => {
@@ -276,14 +291,19 @@ const SkillTreeScreen = ({navigation}: any) => {
                  const p_pos_xy = getXY(parent);
                  
                  const active = isUnlocked(child.id) && (parent.pos === 0 || isUnlocked(parent.id));
-                 const color = active ? BC[b] : '#2A3B4C';
+                 const color = active ? BC[b] : '#1E2D3D';
 
                  // Cubic bezier curve for beautiful S-shaped connections
                  const midY = (p_pos_xy.y + c_pos.y) / 2;
                  const pR = parent.pos === 0 ? ROOT_R : NODE_R;
                  const path = `M ${p_pos_xy.x} ${p_pos_xy.y - pR} C ${p_pos_xy.x} ${midY}, ${c_pos.x} ${midY}, ${c_pos.x} ${c_pos.y + NODE_R}`;
 
-                 return <Path key={`${b}-${p_pos}-${h.p}`} d={path} stroke={color} strokeWidth={active ? 2 : 1.2} fill="none" />;
+                 return (
+                   <React.Fragment key={`${b}-${p_pos}-${h.p}`}>
+                     {active && <Path d={path} stroke={color} strokeWidth={4} fill="none" opacity={0.2} />}
+                     <Path d={path} stroke={color} strokeWidth={active ? 2 : 0.8} fill="none" opacity={active ? 1 : 0.6} />
+                   </React.Fragment>
+                 );
                });
              });
           })}
@@ -320,17 +340,17 @@ const SkillTreeScreen = ({navigation}: any) => {
                   {
                     left: x - r, top: y - r,
                     width: r * 2, height: r * 2, borderRadius: r,
-                    borderWidth: node.pos === 0 ? 1.5 : 1,
-                    borderColor: active ? bc : (isAvailable ? bc + '80' : '#2A3B4C'),
-                    backgroundColor: active ? bc + '20' : '#0B131D',
+                    borderWidth: active ? (node.pos === 0 ? 2 : 1.5) : 1,
+                    borderColor: active ? bc : (isAvailable ? bc + '30' : '#1A2838'),
+                    backgroundColor: active ? bc + '18' : 'rgba(7, 11, 19, 0.96)',
                   },
                   active && {
                     shadowColor: bc, shadowOffset: {width: 0, height: 0},
-                    shadowOpacity: 0.8, shadowRadius: 10, elevation: 8,
+                    shadowOpacity: 1, shadowRadius: 16, elevation: 12,
                   },
                 ]}>
-                <Icon name={node.icon} size={node.pos === 0 ? 28 : 18}
-                  color={active ? bc : (isAvailable ? '#8C9BAA' : '#2A3B4C')} />
+                <Icon name={node.icon} size={node.pos === 0 ? 34 : 22}
+                  color={active ? bc : (isAvailable ? '#4A5A6A' : '#1E2D3D')} />
               </TouchableOpacity>
 
               {/* Point dots beneath node */}
@@ -341,8 +361,8 @@ const SkillTreeScreen = ({navigation}: any) => {
                     return (
                       <View key={i} style={[
                         styles.dot,
-                        {backgroundColor: filled ? bc : '#2A3B4C'},
-                        filled && {shadowColor: bc, shadowOpacity: 1, shadowRadius: 3}
+                        {backgroundColor: filled ? bc : '#1E2D3D'},
+                        filled && {shadowColor: bc, shadowOpacity: 1, shadowRadius: 4, elevation: 3}
                       ]} />
                     );
                   })}
@@ -394,7 +414,7 @@ const SkillTreeScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#0B131D'},
+  container: {flex: 1, backgroundColor: '#060A11'},
   
   header: {
     position: 'absolute',
@@ -404,42 +424,45 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   backBtn: {
-    width: 44, height: 44, borderRadius: 12,
-    backgroundColor: '#1E252D',
+    width: 48, height: 48, borderRadius: 14,
+    backgroundColor: '#181F28',
     alignItems: 'center', justifyContent: 'center',
-    borderWidth: 1, borderColor: '#2A3B4C',
+    borderWidth: 1, borderColor: '#2A3444',
+    shadowColor: '#000', shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.4, shadowRadius: 4, elevation: 4,
   },
   pointsContainer: {
-    alignItems: 'flex-end', gap: 6,
+    alignItems: 'flex-end',
   },
   pointsBox: {
-    backgroundColor: '#050A10',
-    borderRadius: 10, paddingLeft: 14, paddingRight: 6, paddingVertical: 8,
-    borderWidth: 1, borderColor: '#1F344A',
-    minWidth: 150,
-  },
-  pointsLabelRow: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    marginBottom: 2,
+    backgroundColor: '#050A12',
+    borderRadius: 12, paddingHorizontal: 16, paddingVertical: 10,
+    borderWidth: 1, borderColor: '#1A2A3D',
+    minWidth: 200,
+    shadowColor: '#000', shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5, shadowRadius: 6, elevation: 5,
   },
   pointsLabel: {
-    fontSize: 9, fontWeight: '800', color: '#8A9AA8', 
-    letterSpacing: 2, marginRight: 8,
+    fontSize: 10, fontWeight: '800', color: '#7A8A98',
+    letterSpacing: 2, marginBottom: 4,
   },
   pmBtn: {
-    padding: 2, borderRadius: 4, borderWidth: 1, borderColor: '#2A3B4C', marginLeft: 4,
+    padding: 5, borderRadius: 6, borderWidth: 1, borderColor: '#2A3444',
+  },
+  pmGroup: {
+    flexDirection: 'row', alignItems: 'center', gap: 6, marginLeft: 10,
   },
   pointsBoxRow: {
-    flexDirection: 'row', alignItems: 'baseline', justifyContent: 'flex-end',
-    paddingRight: 8,
+    flexDirection: 'row', alignItems: 'center',
   },
-  pointsBig: {fontSize: 26, fontWeight: 'bold', color: '#44D5E8'},
-  pointsSmall: {fontSize: 14, fontWeight: '600', color: '#6A7A8A'},
+  pointsBig: {fontSize: 30, fontWeight: '900', color: '#44D5E8'},
+  pointsSmall: {fontSize: 15, fontWeight: '600', color: '#5A6A7A'},
   resetBtn: {
-    flexDirection: 'row', alignItems: 'center', gap: 6,
-    paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8,
-    backgroundColor: 'rgba(255, 58, 89, 0.1)', 
-    borderWidth: 1, borderColor: 'rgba(255, 58, 89, 0.3)',
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5,
+    paddingVertical: 6, borderRadius: 7, marginTop: 8,
+    backgroundColor: 'rgba(255, 58, 89, 0.08)',
+    borderWidth: 1, borderColor: 'rgba(255, 58, 89, 0.25)',
+    alignSelf: 'stretch',
   },
   resetText: {fontSize: 10, fontWeight: '800', color: '#FF3A59', letterSpacing: 1.5},
 
@@ -449,37 +472,39 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   dotsRow: {
-    position: 'absolute', flexDirection: 'row', gap: 2.5,
+    position: 'absolute', flexDirection: 'row', gap: 3,
   },
-  dot: {width: 4, height: 4, borderRadius: 2},
+  dot: {width: 4.5, height: 4.5, borderRadius: 2.25},
   rootLabelBox: {
     position: 'absolute', width: 100, alignItems: 'center',
   },
-  rootLabel: {fontSize: 8, fontWeight: '900', letterSpacing: 1.5},
-  rootScore: {fontSize: 12, fontWeight: 'bold', marginTop: 2},
+  rootLabel: {fontSize: 9, fontWeight: '900', letterSpacing: 2},
+  rootScore: {fontSize: 14, fontWeight: '900', marginTop: 3},
 
   // Dark Tooltip
   tooltipOverlay: {
     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
     justifyContent: 'center', alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.7)',
   },
   tooltip: {
-    backgroundColor: '#1E252D',
-    borderRadius: 12, padding: 20,
-    width: SW * 0.8, maxWidth: 320,
-    borderWidth: 1, borderColor: '#2A3B4C',
+    backgroundColor: '#151C26',
+    borderRadius: 14, padding: 22,
+    width: SW * 0.82, maxWidth: 340,
+    borderWidth: 1, borderColor: '#1E2D3D',
+    shadowColor: '#000', shadowOffset: {width: 0, height: 8},
+    shadowOpacity: 0.6, shadowRadius: 20, elevation: 10,
   },
   tooltipName: {
-    fontSize: 16, fontWeight: '800', color: '#FFFFFF',
-    letterSpacing: 1.2,
+    fontSize: 17, fontWeight: '800', color: '#FFFFFF',
+    letterSpacing: 1,
   },
   tooltipDivider: {
-    height: 1, backgroundColor: '#2A3B4C', marginVertical: 12,
+    height: 1, backgroundColor: '#1E2D3D', marginVertical: 14,
   },
   tooltipDesc: {
-    fontSize: 14, color: '#9EA8B3', lineHeight: 22,
-    marginBottom: 16,
+    fontSize: 14, color: '#8A9AAA', lineHeight: 22,
+    marginBottom: 18,
   },
   tooltipBottom: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
@@ -487,11 +512,11 @@ const styles = StyleSheet.create({
   tooltipReq: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
   },
-  tooltipReqText: {fontSize: 11, fontWeight: 'bold', color: '#9EA8B3', letterSpacing: 0.5},
+  tooltipReqText: {fontSize: 11, fontWeight: 'bold', color: '#8A9AAA', letterSpacing: 0.5},
   tooltipPtsBox: {
-    paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6,
+    paddingHorizontal: 12, paddingVertical: 5, borderRadius: 8,
   },
-  tooltipPtsText: {fontSize: 12, fontWeight: '800'},
+  tooltipPtsText: {fontSize: 13, fontWeight: '800'},
 });
 
 export default SkillTreeScreen;

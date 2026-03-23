@@ -52,8 +52,11 @@ const ExpeditionScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
+        <View style={styles.headerIconWrap}>
+          <Icon name="rocket-launch" size={18} color={colors.cyan} />
+        </View>
         <View style={{flex: 1}}>
-          <Text style={styles.headerTitle}>EXPEDITIONS</Text>
+          <Text style={styles.headerTitle}>Expeditions</Text>
           <Text style={styles.headerSubtitle}>Prestige system · 6 stages</Text>
         </View>
         <View style={styles.levelBadge}>
@@ -66,7 +69,7 @@ const ExpeditionScreen = ({navigation}: any) => {
         {/* Progress Overview */}
         <View style={styles.progressCard}>
           <View style={styles.progressHeader}>
-            <Icon name="rocket-launch" size={20} color={colors.orange} />
+            <Icon name="rocket-launch" size={20} color={colors.cyan} />
             <Text style={styles.progressTitle}>Expedition Progress</Text>
             <Text style={styles.progressCount}>
               {completedCount}/{expeditionData.stages.length}
@@ -81,7 +84,7 @@ const ExpeditionScreen = ({navigation}: any) => {
         </View>
 
         {/* Stages */}
-        <Text style={styles.sectionTitle}>STAGES</Text>
+        <Text style={styles.sectionTitle}>Stages</Text>
         {expeditionData.stages.map((stage, idx) => {
           const isComplete = completedStages[stage.id] || false;
           const stageColor = STAGE_COLORS[idx];
@@ -114,7 +117,7 @@ const ExpeditionScreen = ({navigation}: any) => {
                 <View style={styles.stageContent}>
                   <View style={styles.stageTitleRow}>
                     <Icon name={stage.icon} size={18} color={stageColor} />
-                    <Text style={styles.stageName}>{stage.name.toUpperCase()}</Text>
+                    <Text style={styles.stageName}>{stage.name}</Text>
                   </View>
                   <Text style={styles.stageDesc}>{stage.description}</Text>
 
@@ -143,7 +146,7 @@ const ExpeditionScreen = ({navigation}: any) => {
           onPress={() => setShowRewards(!showRewards)}>
           <Icon name="gift" size={18} color={colors.yellow} />
           <Text style={[styles.sectionTitle, {marginBottom: 0, marginTop: 0, flex: 1}]}>
-            REWARDS
+            Rewards
           </Text>
           <Icon
             name={showRewards ? 'chevron-up' : 'chevron-down'}
@@ -155,7 +158,7 @@ const ExpeditionScreen = ({navigation}: any) => {
         {showRewards && (
           <View style={styles.rewardsContainer}>
             {/* Permanent */}
-            <Text style={styles.rewardType}>PERMANENT</Text>
+            <Text style={styles.rewardType}>Permanent</Text>
             {expeditionData.rewards.permanent.map((r, i) => (
               <View key={i} style={styles.rewardRow}>
                 <View style={[styles.rewardIcon, {backgroundColor: colors.green + '20'}]}>
@@ -170,7 +173,7 @@ const ExpeditionScreen = ({navigation}: any) => {
 
             {/* Temporary */}
             <Text style={[styles.rewardType, {marginTop: spacing.lg}]}>
-              TEMPORARY (STACKS ×3)
+              Temporary (Stacks ×3)
             </Text>
             {expeditionData.rewards.temporary.map((r, i) => (
               <View key={i} style={styles.rewardRow}>
@@ -190,9 +193,9 @@ const ExpeditionScreen = ({navigation}: any) => {
         <TouchableOpacity
           style={styles.sectionHeader}
           onPress={() => setShowTransfer(!showTransfer)}>
-          <Icon name="swap-horizontal" size={18} color={colors.orange} />
+          <Icon name="swap-horizontal" size={18} color={colors.cyan} />
           <Text style={[styles.sectionTitle, {marginBottom: 0, marginTop: 0, flex: 1}]}>
-            WHAT TRANSFERS
+            What Transfers
           </Text>
           <Icon
             name={showTransfer ? 'chevron-up' : 'chevron-down'}
@@ -205,7 +208,7 @@ const ExpeditionScreen = ({navigation}: any) => {
           <View style={styles.transferContainer}>
             {/* Keeps */}
             <Text style={styles.transferLabel}>
-              <Icon name="check-circle" size={12} color={colors.green} /> KEEPS
+              <Icon name="check-circle" size={12} color={colors.green} /> Keeps
             </Text>
             <View style={styles.transferGrid}>
               {expeditionData.keeps.map((item, i) => (
@@ -218,7 +221,7 @@ const ExpeditionScreen = ({navigation}: any) => {
 
             {/* Loses */}
             <Text style={[styles.transferLabel, {marginTop: spacing.lg}]}>
-              <Icon name="close-circle" size={12} color={colors.red} /> LOSES
+              <Icon name="close-circle" size={12} color={colors.red} /> Loses
             </Text>
             <View style={styles.transferGrid}>
               {expeditionData.loses.map((item, i) => (
@@ -249,7 +252,12 @@ const styles = StyleSheet.create({
     width: 36, height: 36, borderRadius: 18,
     backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center',
   },
-  headerTitle: {fontSize: fonts.sizes.xl, fontWeight: '900', color: colors.textPrimary, letterSpacing: 2},
+  headerIconWrap: {
+    width: 32, height: 32, borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  headerTitle: {fontSize: fonts.sizes.xl, fontWeight: '700', color: colors.textPrimary},
   headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
   levelBadge: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
@@ -267,14 +275,14 @@ const styles = StyleSheet.create({
   },
   progressHeader: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: spacing.md},
   progressTitle: {flex: 1, fontSize: fonts.sizes.md, fontWeight: '600', color: colors.textPrimary},
-  progressCount: {fontSize: fonts.sizes.lg, fontWeight: '700', color: colors.orange},
+  progressCount: {fontSize: fonts.sizes.lg, fontWeight: '700', color: colors.cyan},
   progressBarBg: {height: 6, backgroundColor: colors.bgElevated, borderRadius: 3, overflow: 'hidden'},
-  progressBarFill: {height: '100%', backgroundColor: colors.orange, borderRadius: 3},
+  progressBarFill: {height: '100%', backgroundColor: colors.cyan, borderRadius: 3},
   progressPercent: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: spacing.xs, textAlign: 'right'},
 
   // Sections
   sectionTitle: {
-    fontSize: 11, fontWeight: '700', color: colors.textMuted, letterSpacing: 2,
+    fontSize: 11, fontWeight: '600', color: colors.textMuted,
     marginBottom: spacing.md, marginTop: spacing.lg,
   },
   sectionHeader: {
@@ -300,7 +308,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg, marginBottom: spacing.sm,
   },
   stageTitleRow: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: spacing.xs},
-  stageName: {fontSize: fonts.sizes.md, fontWeight: '800', color: colors.textPrimary, letterSpacing: 1},
+  stageName: {fontSize: fonts.sizes.md, fontWeight: '700', color: colors.textPrimary},
   stageDesc: {fontSize: fonts.sizes.sm, color: colors.textSecondary, lineHeight: 20, marginBottom: spacing.sm},
   objectivesBox: {
     backgroundColor: colors.bgElevated, borderRadius: borderRadius.md,
@@ -316,7 +324,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border, borderTopWidth: 0, borderTopLeftRadius: 0,
     borderTopRightRadius: 0, padding: spacing.lg,
   },
-  rewardType: {fontSize: 10, fontWeight: '700', color: colors.textMuted, letterSpacing: 1, marginBottom: spacing.sm},
+  rewardType: {fontSize: 10, fontWeight: '600', color: colors.textMuted, marginBottom: spacing.sm},
   rewardRow: {flexDirection: 'row', alignItems: 'center', gap: spacing.md, marginBottom: spacing.sm},
   rewardIcon: {
     width: 32, height: 32, borderRadius: borderRadius.sm,
@@ -332,7 +340,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border, borderTopWidth: 0, borderTopLeftRadius: 0,
     borderTopRightRadius: 0, padding: spacing.lg,
   },
-  transferLabel: {fontSize: 10, fontWeight: '700', color: colors.textMuted, letterSpacing: 1, marginBottom: spacing.sm},
+  transferLabel: {fontSize: 10, fontWeight: '600', color: colors.textMuted, marginBottom: spacing.sm},
   transferGrid: {flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs},
   keepChip: {
     flexDirection: 'row', alignItems: 'center', gap: 4,

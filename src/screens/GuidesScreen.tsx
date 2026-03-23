@@ -44,27 +44,26 @@ const GuidesScreen = ({navigation}: any) => {
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
+      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <View>
-          <Text style={styles.headerTitle}>GUIDES</Text>
-          <Text style={styles.headerSubtitle}>{guides.length} guides available</Text>
+        <View style={styles.headerIconWrap}>
+          <Icon name="text-box" size={18} color={colors.cyan} />
         </View>
+        <Text style={styles.headerTitle}>Guides</Text>
       </View>
 
-      {/* Tab Bar */}
+      {/* Tab Bar - underline style */}
       <View style={styles.tabBar}>
         {(['general', 'quest'] as const).map(tab => (
           <TouchableOpacity
             key={tab}
-            style={[styles.tab, activeTab === tab && styles.tabActive]}
+            style={styles.tab}
             onPress={() => setActiveTab(tab)}>
             <Text
               style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
               {tab.toUpperCase()}
             </Text>
+            {activeTab === tab && <View style={styles.tabIndicator} />}
           </TouchableOpacity>
         ))}
       </View>
@@ -92,32 +91,24 @@ const GuidesScreen = ({navigation}: any) => {
                 navigation.navigate('GuideDetail', {guideId: guide.id});
               }
             }}>
-            <Image
-              source={{uri: guide.thumbnail}}
-              style={[styles.guideThumb, guide.locked && {opacity: 0.3}]}
-              resizeMode="contain"
-            />
+            {guide.thumbnail ? (
+              <Image
+                source={{uri: guide.thumbnail}}
+                style={[styles.guideThumb, guide.locked && {opacity: 0.3}]}
+                resizeMode="cover"
+              />
+            ) : null}
             <View style={styles.guideInfo}>
               <Text style={[styles.guideTitle, guide.locked && {color: colors.textMuted}]}>
                 {guide.title}
               </Text>
-              <View style={styles.guideMetaRow}>
-                <Text style={styles.guideAuthor}>{guide.author}</Text>
-                <View style={styles.xpBadge}>
-                  <Icon name="star" size={10} color={colors.yellow} />
-                  <Text style={styles.xpText}>{guide.xpReward} XP</Text>
-                </View>
-                <Text style={styles.stepsCount}>
-                  {guide.steps.length} steps
-                </Text>
-              </View>
+              <Text style={styles.guideAuthor}>by {guide.author}</Text>
             </View>
-            {guide.locked && (
-              <View style={styles.lockOverlay}>
-                <Icon name="lock" size={16} color={colors.textMuted} />
+            {guide.locked ? (
+              <View style={styles.lockBadge}>
+                <Icon name="lock" size={14} color={colors.textMuted} />
               </View>
-            )}
-            {!guide.locked && (
+            ) : (
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             )}
           </TouchableOpacity>
@@ -142,42 +133,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.xl,
     paddingBottom: spacing.md,
-    gap: spacing.md,
+    gap: spacing.sm,
   },
-  backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.bgCard,
+  headerIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
     fontSize: fonts.sizes.xl,
-    fontWeight: '900',
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
   },
-  headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
   tabBar: {
     flexDirection: 'row',
     marginHorizontal: spacing.lg,
     marginBottom: spacing.md,
-    backgroundColor: colors.bgCard,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-    overflow: 'hidden',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
   tab: {
-    flex: 1,
     paddingVertical: spacing.sm,
-    alignItems: 'center',
-  },
-  tabActive: {
-    backgroundColor: colors.orange + '20',
+    paddingHorizontal: spacing.lg,
+    position: 'relative',
   },
   tabText: {
     fontSize: 12,
@@ -185,7 +168,16 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     letterSpacing: 2,
   },
-  tabTextActive: {color: colors.orange},
+  tabTextActive: {color: colors.cyan},
+  tabIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: spacing.lg,
+    right: spacing.lg,
+    height: 2,
+    backgroundColor: colors.cyan,
+    borderRadius: 1,
+  },
   searchWrap: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -215,10 +207,8 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     gap: spacing.md,
   },
-  guideCardLocked: {
-    opacity: 0.6,
-  },
-  guideThumb: {width: 40, height: 40, borderRadius: borderRadius.md},
+  guideCardLocked: {opacity: 0.5},
+  guideThumb: {width: 44, height: 44, borderRadius: borderRadius.md},
   guideInfo: {flex: 1},
   guideTitle: {
     fontSize: fonts.sizes.md,
@@ -226,27 +216,11 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     marginBottom: 4,
   },
-  guideMetaRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
-  guideAuthor: {fontSize: 10, color: colors.textMuted, fontWeight: '600'},
-  xpBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-    backgroundColor: colors.yellow + '15',
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-    borderRadius: borderRadius.sm,
-  },
-  xpText: {fontSize: 9, fontWeight: '800', color: colors.yellow},
-  stepsCount: {fontSize: 10, color: colors.textMuted, fontWeight: '600'},
-  lockOverlay: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+  guideAuthor: {fontSize: 11, color: colors.textMuted},
+  lockBadge: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     backgroundColor: colors.bgElevated,
     alignItems: 'center',
     justifyContent: 'center',

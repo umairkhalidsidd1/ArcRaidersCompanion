@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
+import {getFavorites, toggleFavorite} from '../utils/storage';
 
 /* ═══════════════ DATA NORMALISATION ═══════════════ */
 type Item = {
@@ -28,7 +29,6 @@ type Item = {
   workbench: string | null;
 };
 
-// Normalise inconsistent types from the DB
 const normaliseType = (t: string | null): string => {
   if (!t) return 'Misc';
   const lower = t.toLowerCase().trim();
@@ -45,9 +45,15 @@ const items: Item[] = (rawItems as any[]).map(i => ({
   rarity: i.rarity || 'Common',
 }));
 
+/* ═══════════════ MATERIAL LISTS ═══════════════ */
+const MATERIAL_LISTS = [
+  {key: 'workbench', title: 'Workbench Upgrades', desc: 'Materials needed to upgrade workbenches', icon: 'hammer-wrench'},
+  {key: 'expedition', title: 'Expedition', desc: 'Materials required to send expedition(prestige)', icon: 'rocket-launch'},
+];
+
 /* ═══════════════ CATEGORY TABS ═══════════════ */
 const CATEGORIES = [
-  {key: 'All', icon: 'view-grid', color: colors.orange},
+  {key: 'All', icon: 'view-grid', color: colors.cyan},
   {key: 'Weapon', icon: 'crosshairs-gps', color: '#F44336'},
   {key: 'Blueprint', icon: 'file-document-outline', color: '#AB47BC'},
   {key: 'Modification', icon: 'cog', color: '#42A5F5'},
@@ -65,7 +71,6 @@ const CATEGORIES = [
   {key: 'Misc', icon: 'dots-horizontal', color: '#90A4AE'},
 ];
 
-// Merge material sub-types into "Material"
 const MATERIAL_TYPES = [
   'Advanced Material',
   'Basic Material',
@@ -93,23 +98,56 @@ const getRarityColor = (r: string) => RARITY_COLORS[r] || '#9E9E9E';
 
 /* ═══════════════ LAYOUT ═══════════════ */
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
-const CARD_WIDTH = (SCREEN_WIDTH - spacing.lg * 2 - spacing.sm) / 2;
+const NUM_COLS = 3;
+const CARD_GAP = spacing.sm;
+const CARD_WIDTH = (SCREEN_WIDTH - spacing.lg * 2 - CARD_GAP * (NUM_COLS - 1)) / NUM_COLS;
+
+/* ═══════════════ SORT OPTIONS ═══════════════ */
+type SortMode = 'name' | 'value' | 'rarity';
+
+const getCatIconForItem = (type: string) => {
+  const cat = CATEGORIES.find(c => c.key === getCategory(type));
+  return {icon: cat?.icon || 'help-circle', color: cat?.color || colors.textMuted};
+};
 
 /* ═══════════════ COMPONENT ═══════════════ */
 const ItemListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [showFavOnly, setShowFavOnly] = useState(false);
+  const [sortMode, setSortMode] = useState<SortMode>('name');
+  const [showFilter, setShowFilter] = useState(false);
+
+  useEffect(() => {
+    getFavorites().then(setFavorites);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getFavorites().then(setFavorites);
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const handleToggleFav = useCallback(async (id: string) => {
+    const isNow = await toggleFavorite(id);
+    setFavorites(prev => (isNow ? [...prev, id] : prev.filter(f => f !== id)));
+  }, []);
+
+  const cycleSortMode = () => {
+    setSortMode(prev => prev === 'name' ? 'value' : prev === 'value' ? 'rarity' : 'name');
+  };
 
   const filteredItems = useMemo(() => {
     let result = items;
-
-    // Category filter
+    if (showFavOnly) {
+      result = result.filter(i => favorites.includes(i.id));
+    }
     if (activeCategory !== 'All') {
       result = result.filter(i => getCategory(i.item_type) === activeCategory);
     }
-
-    // Search filter
     if (search.trim()) {
       const q = search.toLowerCase().trim();
       result = result.filter(
@@ -120,26 +158,53 @@ const ItemListScreen = ({navigation}: any) => {
       );
     }
 
+    // Sort
+    result = [...result].sort((a, b) => {
+      if (sortMode === 'value') return b.value - a.value;
+      if (sortMode === 'rarity') {
+        const rarityOrder = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+        return rarityOrder.indexOf(b.rarity) - rarityOrder.indexOf(a.rarity);
+      }
+      return a.name.localeCompare(b.name);
+    });
+
     return result;
-  }, [search, activeCategory]);
+  }, [search, activeCategory, showFavOnly, favorites, sortMode]);
 
   const renderItem = useCallback(
     ({item}: {item: Item}) => {
       const rarityColor = getRarityColor(item.rarity);
-      const catColor =
-        CATEGORIES.find(c => c.key === getCategory(item.item_type))?.color ||
-        colors.textMuted;
+      const catInfo = getCatIconForItem(item.item_type);
+      const isFav = favorites.includes(item.id);
 
       return (
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.itemCardWrap}
-          onPress={() =>
-            navigation.navigate('ItemDetail', {itemId: item.id})
-          }>
-          <View style={styles.itemCard}>
-            {/* Icon */}
-            <View style={[styles.itemIcon, {backgroundColor: catColor + '10'}]}>
+          onPress={() => navigation.navigate('ItemDetail', {itemId: item.id})}>
+          <View style={[styles.itemCard, isFav && styles.itemCardSelected]}>
+            {/* Price badge */}
+            {item.value > 0 && (
+              <View style={styles.priceBadge}>
+                <Text style={styles.priceCurrency}>₿</Text>
+                <Text style={styles.priceValue}>{item.value}</Text>
+              </View>
+            )}
+
+            {/* Category icon */}
+            <View style={styles.catIconBadge}>
+              <Icon name={catInfo.icon} size={12} color={catInfo.color} />
+            </View>
+
+            {/* Selected check */}
+            {isFav && (
+              <View style={styles.checkBadge}>
+                <Icon name="check" size={14} color={colors.cyan} />
+              </View>
+            )}
+
+            {/* Image */}
+            <View style={styles.itemIconArea}>
               {item.icon ? (
                 <Image
                   source={{uri: item.icon}}
@@ -147,45 +212,22 @@ const ItemListScreen = ({navigation}: any) => {
                   resizeMode="contain"
                 />
               ) : (
-                <Icon
-                  name={
-                    CATEGORIES.find(c => c.key === getCategory(item.item_type))
-                      ?.icon || 'help-circle'
-                  }
-                  size={36}
-                  color={catColor}
-                />
+                <Icon name={catInfo.icon} size={36} color={catInfo.color} />
               )}
             </View>
 
+            {/* Name */}
+            <Text style={styles.itemName} numberOfLines={2}>
+              {item.name}
+            </Text>
+
             {/* Rarity bar */}
             <View style={[styles.rarityBar, {backgroundColor: rarityColor}]} />
-
-            {/* Info */}
-            <View style={styles.itemCardContent}>
-              <Text style={styles.itemName} numberOfLines={2}>
-                {item.name}
-              </Text>
-              <Text style={[styles.itemType, {color: catColor}]}>
-                {item.item_type}
-              </Text>
-              <View style={styles.itemMetaRow}>
-                <Text style={[styles.itemRarity, {color: rarityColor}]}>
-                  {item.rarity.toUpperCase()}
-                </Text>
-                {item.value > 0 && (
-                  <View style={styles.valueChip}>
-                    <Icon name="currency-usd" size={10} color={colors.yellow} />
-                    <Text style={styles.valueText}>{item.value}</Text>
-                  </View>
-                )}
-              </View>
-            </View>
           </View>
         </TouchableOpacity>
       );
     },
-    [navigation],
+    [navigation, favorites, handleToggleFav],
   );
 
   return (
@@ -194,87 +236,67 @@ const ItemListScreen = ({navigation}: any) => {
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>CATALOG</Text>
-        <Text style={styles.headerSubtitle}>
-          {filteredItems.length} of {items.length} items
-        </Text>
+        <View style={styles.headerLeft}>
+          <View style={styles.headerIconWrap}>
+            <Icon name="flask" size={18} color={colors.cyan} />
+          </View>
+          <Text style={styles.headerTitle}>Materials</Text>
+        </View>
       </View>
 
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Icon name="magnify" size={20} color={colors.textMuted} />
-        <TextInput
-          style={styles.searchInput}
-          value={search}
-          onChangeText={setSearch}
-          placeholder="Search items, weapons, materials..."
-          placeholderTextColor={colors.textMuted}
-        />
-        {search.length > 0 && (
-          <TouchableOpacity onPress={() => setSearch('')}>
-            <Icon name="close-circle" size={18} color={colors.textMuted} />
-          </TouchableOpacity>
-        )}
-      </View>
-
-      {/* Category Tabs */}
+      {/* Material Lists */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tabsContainer}>
-        {CATEGORIES.map(cat => {
-          const isActive = activeCategory === cat.key;
-          const count =
-            cat.key === 'All'
-              ? items.length
-              : items.filter(i => getCategory(i.item_type) === cat.key).length;
-
-          if (cat.key !== 'All' && count === 0) return null;
-
-          return (
-            <TouchableOpacity
-              key={cat.key}
-              style={[
-                styles.tab,
-                isActive && {backgroundColor: cat.color + '20', borderColor: cat.color},
-              ]}
-              onPress={() => setActiveCategory(cat.key)}>
-              <Icon
-                name={cat.icon}
-                size={14}
-                color={isActive ? cat.color : colors.textMuted}
-              />
-              <Text
-                style={[
-                  styles.tabText,
-                  isActive && {color: cat.color},
-                ]}>
-                {cat.key}
-              </Text>
-              <View
-                style={[
-                  styles.tabBadge,
-                  {backgroundColor: isActive ? cat.color + '30' : colors.bgElevated},
-                ]}>
-                <Text
-                  style={[
-                    styles.tabBadgeText,
-                    isActive && {color: cat.color},
-                  ]}>
-                  {count}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+        contentContainerStyle={styles.listsContainer}>
+        {MATERIAL_LISTS.map(list => (
+          <TouchableOpacity key={list.key} style={styles.listCard} activeOpacity={0.7}>
+            <View style={styles.listCardIcon}>
+              <Icon name="format-list-bulleted" size={16} color={colors.cyan} />
+            </View>
+            <Text style={styles.listCardTitle}>{list.title}</Text>
+            <Text style={styles.listCardDesc}>{list.desc}</Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
+
+      {/* Search + Filter Row */}
+      <View style={styles.searchRow}>
+        <View style={styles.searchContainer}>
+          <Icon name="magnify" size={18} color={colors.textMuted} />
+          <TextInput
+            style={styles.searchInput}
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Search materials..."
+            placeholderTextColor={colors.textMuted}
+          />
+          {search.length > 0 && (
+            <TouchableOpacity onPress={() => setSearch('')}>
+              <Icon name="close-circle" size={16} color={colors.textMuted} />
+            </TouchableOpacity>
+          )}
+        </View>
+        <TouchableOpacity
+          style={styles.filterBtn}
+          onPress={() => setShowFavOnly(v => !v)}>
+          <Icon
+            name={showFavOnly ? 'filter' : 'filter-outline'}
+            size={18}
+            color={showFavOnly ? colors.cyan : colors.textMuted}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.filterBtn} onPress={cycleSortMode}>
+          <Icon name="sort-alphabetical-ascending" size={18} color={colors.textMuted} />
+        </TouchableOpacity>
+      </View>
 
       {/* Items Grid */}
       <FlatList
         data={filteredItems}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        numColumns={2}
+        numColumns={NUM_COLS}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
@@ -296,29 +318,80 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
   },
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.xl,
     paddingBottom: spacing.sm,
   },
-  headerTitle: {
-    fontSize: fonts.sizes.xxl,
-    fontWeight: '900',
-    color: colors.orange,
-    letterSpacing: 3,
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
   },
-  headerSubtitle: {
-    fontSize: fonts.sizes.sm,
-    color: colors.textSecondary,
-    marginTop: 2,
+  headerIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerTitle: {
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
+    color: colors.textPrimary,
   },
 
-  // Search
+  // Material Lists
+  listsContainer: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    gap: spacing.md,
+  },
+  listCard: {
+    width: 200,
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.lg,
+  },
+  listCardIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(0, 229, 255, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.sm,
+  },
+  listCardTitle: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    marginBottom: 4,
+  },
+  listCardDesc: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textSecondary,
+    lineHeight: 16,
+  },
+
+  // Search Row
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.md,
+    gap: spacing.sm,
+  },
   searchContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.bgCard,
-    marginHorizontal: spacing.lg,
-    marginVertical: spacing.sm,
     paddingHorizontal: spacing.md,
     paddingVertical: 10,
     borderRadius: borderRadius.lg,
@@ -332,109 +405,114 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     padding: 0,
   },
-
-  // Category Tabs
-  tabsContainer: {
-    paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.sm,
-    gap: spacing.xs,
-  },
-  tab: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 6,
+  filterBtn: {
+    width: 40,
+    height: 40,
     borderRadius: borderRadius.md,
-    borderWidth: 1,
-    borderColor: 'transparent',
     backgroundColor: colors.bgCard,
-  },
-  tabText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: colors.textMuted,
-  },
-  tabBadge: {
-    paddingHorizontal: 5,
-    paddingVertical: 1,
-    borderRadius: 8,
-    minWidth: 22,
+    borderWidth: 1,
+    borderColor: colors.border,
     alignItems: 'center',
-  },
-  tabBadgeText: {
-    fontSize: 9,
-    fontWeight: '800',
-    color: colors.textMuted,
+    justifyContent: 'center',
   },
 
   // Grid
   row: {
-    gap: spacing.sm,
+    gap: CARD_GAP,
   },
   listContent: {
     paddingHorizontal: spacing.lg,
     paddingBottom: 100,
-    gap: spacing.sm,
+    gap: CARD_GAP,
   },
   itemCardWrap: {
     width: CARD_WIDTH,
   },
   itemCard: {
-    borderRadius: borderRadius.lg,
+    borderRadius: borderRadius.md,
     overflow: 'hidden',
     backgroundColor: colors.bgCard,
     borderWidth: 1,
     borderColor: colors.border,
+    position: 'relative',
   },
-  itemIcon: {
-    width: '100%',
-    height: 90,
+  itemCardSelected: {
+    borderColor: colors.cyan,
+    borderWidth: 1.5,
+  },
+  priceBadge: {
+    position: 'absolute',
+    top: 6,
+    left: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: 4,
+    zIndex: 2,
+  },
+  priceCurrency: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: colors.cyan,
+  },
+  priceValue: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  catIconBadge: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
+  },
+  checkBadge: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: 'rgba(0, 229, 255, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 3,
+  },
+  itemIconArea: {
+    width: '100%',
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.bgElevated,
   },
   itemImage: {
-    width: 56,
-    height: 56,
+    width: '65%',
+    height: '65%',
+  },
+  itemName: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: colors.textPrimary,
+    textAlign: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 6,
+    minHeight: 36,
   },
   rarityBar: {
     height: 3,
-    width: '100%',
-  },
-  itemCardContent: {
-    padding: spacing.sm,
-  },
-  itemName: {
-    fontSize: fonts.sizes.sm,
-    fontWeight: '700',
-    color: colors.textPrimary,
-    minHeight: 34,
-    marginBottom: 2,
-  },
-  itemType: {
-    fontSize: 10,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  itemMetaRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  itemRarity: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1,
-  },
-  valueChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 1,
-  },
-  valueText: {
-    fontSize: 9,
-    fontWeight: '700',
-    color: colors.yellow,
+    width: '60%',
+    alignSelf: 'center',
+    borderRadius: 2,
+    marginBottom: 6,
   },
 
   // Empty

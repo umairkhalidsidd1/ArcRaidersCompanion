@@ -1,12 +1,16 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {
   ActivityIndicator,
+  Alert,
+  Dimensions,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
+  Modal,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,8 +19,10 @@ import FilterModal from '../components/FilterModal';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import maps from '../data/maps.json';
 import localMarkers from '../data/markers.json';
+import {getWaypoints, saveWaypoint, deleteWaypoint, Waypoint} from '../utils/storage';
 
 /* ─────────────── MAP URLs & DB NAMES ─────────────── */
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const BASE = 'https://arcmap-dun.vercel.app/index-flutter-collab.html?map=';
 const MAP_URLS: Record<string, string> = {
   'dam-battlegrounds': `${BASE}Dam`,
@@ -114,7 +120,22 @@ const MapDetailScreen = ({route, navigation}: any) => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [mapLoading, setMapLoading] = useState(true);
 
+  // Waypoints
+  const [waypointMode, setWaypointMode] = useState(false);
+  const [waypoints, setWaypoints] = useState<Waypoint[]>([]);
+  const [wpModalVisible, setWpModalVisible] = useState(false);
+  const [pendingWpCoords, setPendingWpCoords] = useState<{lat: number; lng: number} | null>(null);
+  const [wpLabel, setWpLabel] = useState('');
+  const [wpColor, setWpColor] = useState('#FF6B2C');
+
+  const WP_COLORS = ['#FF6B2C', '#00FF88', '#00E5FF', '#FF4444', '#AB47BC', '#FFC107', '#FF80AB'];
+
   const webViewRef = useRef<WebView>(null);
+
+  // Load waypoints
+  useEffect(() => {
+    getWaypoints(currentMapId).then(setWaypoints);
+  }, [currentMapId]);
 
   /* ─── run JS inside the WebView ─── */
   const runJS = useCallback((js: string, debugTag = '') => {
@@ -157,12 +178,38 @@ const MapDetailScreen = ({route, navigation}: any) => {
   const handleMessage = useCallback((event: any) => {
     try {
       const data = JSON.parse(event.nativeEvent.data);
-      // We can log exactly what the map responds with internally to Metro console
-      // console.log('WebView Message:', data);
+      // Handle waypoint placement tap
+      if (data.tag === 'WAYPOINT_TAP') {
+        setPendingWpCoords({lat: data.lat, lng: data.lng});
+        setWpLabel('');
+        setWpColor('#FF6B2C');
+        setWpModalVisible(true);
+      }
     } catch (e) {
-      // console.log('WebView Raw Message:', event.nativeEvent.data);
+      // ignore
     }
   }, []);
+
+  /* ─── INJECT SAVED WAYPOINTS INTO WEBVIEW ─── */
+  const injectSavedWaypoints = useCallback(() => {
+    waypoints.forEach(wp => {
+      const safeLabel = (wp.label || 'Waypoint').replace(/'/g, "\\'");
+      runJS(`
+        (function() {
+          var el = document.createElement('div');
+          el.className = 'custom-waypoint';
+          el.id = 'wp-${wp.id}';
+          el.style.cssText = 'width:20px;height:20px;border-radius:10px;background:${wp.color};border:2px solid white;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.5);';
+          el.title = '${safeLabel}';
+          var m = new maplibregl.Marker({element: el, anchor: 'center'})
+            .setLngLat([${wp.lng}, ${wp.lat}])
+            .addTo(map);
+          if (!window.__customWaypoints) window.__customWaypoints = [];
+          window.__customWaypoints.push({id: '${wp.id}', marker: m});
+        })();
+      `, 'WP_ADD');
+    });
+  }, [waypoints, runJS]);
 
   /* ─── MAP LOADED ─── */
   const handleMapLoaded = useCallback(() => {
@@ -262,8 +309,78 @@ const MapDetailScreen = ({route, navigation}: any) => {
     setTimeout(() => {
       setMapLoading(false);
       runJS(injectLocalMarkers, 'LOCAL_MARKER_INJECT');
+      // Inject waypoint click listener for the map
+      runJS(`
+        if (typeof map !== 'undefined') {
+          map.on('click', function(e) {
+            if (window.__waypointMode) {
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                tag: 'WAYPOINT_TAP',
+                lat: e.lngLat.lat,
+                lng: e.lngLat.lng
+              }));
+            }
+          });
+        }
+      `, 'WP_LISTENER');
+      // Inject existing waypoints
+      injectSavedWaypoints();
     }, 1000);
+  }, [runJS, injectSavedWaypoints]);
+
+  /* ─── ADD WAYPOINT ─── */
+  const handleAddWaypoint = useCallback(async () => {
+    if (!pendingWpCoords || !wpLabel.trim()) return;
+    const wp: Waypoint = {
+      id: Date.now().toString(),
+      lat: pendingWpCoords.lat,
+      lng: pendingWpCoords.lng,
+      mapId: currentMapId,
+      label: wpLabel.trim(),
+      color: wpColor,
+    };
+    await saveWaypoint(wp);
+    setWaypoints(prev => [...prev, wp]);
+    setWpModalVisible(false);
+    setPendingWpCoords(null);
+
+    // Inject the new waypoint marker
+    const safeLabel = wp.label.replace(/'/g, "\\'");
+    runJS(`
+      (function() {
+        var el = document.createElement('div');
+        el.className = 'custom-waypoint';
+        el.id = 'wp-${wp.id}';
+        el.style.cssText = 'width:20px;height:20px;border-radius:10px;background:${wp.color};border:2px solid white;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.5);';
+        el.title = '${safeLabel}';
+        var m = new maplibregl.Marker({element: el, anchor: 'center'})
+          .setLngLat([${wp.lng}, ${wp.lat}])
+          .addTo(map);
+        if (!window.__customWaypoints) window.__customWaypoints = [];
+        window.__customWaypoints.push({id: '${wp.id}', marker: m});
+      })();
+    `, 'WP_ADD');
+  }, [pendingWpCoords, wpLabel, wpColor, currentMapId, runJS]);
+
+  /* ─── DELETE WAYPOINT ─── */
+  const handleDeleteWaypoint = useCallback(async (id: string) => {
+    await deleteWaypoint(id);
+    setWaypoints(prev => prev.filter(w => w.id !== id));
+    runJS(`
+      if (window.__customWaypoints) {
+        var wp = window.__customWaypoints.find(function(w) { return w.id === '${id}'; });
+        if (wp) { wp.marker.remove(); }
+        window.__customWaypoints = window.__customWaypoints.filter(function(w) { return w.id !== '${id}'; });
+      }
+    `, 'WP_DEL');
   }, [runJS]);
+
+  /* ─── TOGGLE WAYPOINT MODE ─── */
+  const toggleWaypointMode = useCallback(() => {
+    const newMode = !waypointMode;
+    setWaypointMode(newMode);
+    runJS(`window.__waypointMode = ${newMode};`, 'WP_MODE');
+  }, [waypointMode, runJS]);
 
   /* ─── SWITCH MAP ─── */
   const handleSwitchMap = useCallback(
@@ -319,14 +436,53 @@ const MapDetailScreen = ({route, navigation}: any) => {
         <Text style={styles.headerTitle}>{map?.name.toUpperCase()}</Text>
         
         <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.headerBtn}>
-            <Icon name="map-marker-plus-outline" size={20} color={colors.textPrimary} />
+          <TouchableOpacity
+            style={[styles.headerBtn, waypointMode && styles.headerBtnActive]}
+            onPress={toggleWaypointMode}>
+            <Icon
+              name="map-marker-plus-outline"
+              size={20}
+              color={waypointMode ? colors.green : colors.textPrimary}
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerBtn}>
             <Icon name="routes" size={20} color={colors.textPrimary} />
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Waypoint Mode Banner */}
+      {waypointMode && (
+        <View style={[styles.wpBanner, {top: Math.max(insets.top, 20) + 56}]}>
+          <Icon name="map-marker-plus" size={16} color={colors.green} />
+          <Text style={styles.wpBannerText}>TAP MAP TO PLACE WAYPOINT</Text>
+          <TouchableOpacity onPress={toggleWaypointMode}>
+            <Icon name="close" size={18} color={colors.textMuted} />
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Waypoints List (small floating panel) */}
+      {waypoints.length > 0 && !waypointMode && (
+        <View style={[styles.wpListPanel, {top: Math.max(insets.top, 20) + 56}]}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{gap: 6}}>
+            {waypoints.map(wp => (
+              <TouchableOpacity
+                key={wp.id}
+                style={styles.wpChip}
+                onLongPress={() => {
+                  Alert.alert('Delete Waypoint', `Remove "${wp.label}"?`, [
+                    {text: 'Cancel', style: 'cancel'},
+                    {text: 'Delete', style: 'destructive', onPress: () => handleDeleteWaypoint(wp.id)},
+                  ]);
+                }}>
+                <View style={[styles.wpDot, {backgroundColor: wp.color}]} />
+                <Text style={styles.wpChipText}>{wp.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      )}
 
       {/* ── Floating Filter Button ── */}
       <View style={[styles.floatingFilterWrap, { bottom: Math.max(insets.bottom, 24) }]}>
@@ -347,6 +503,48 @@ const MapDetailScreen = ({route, navigation}: any) => {
         selected={selectedCategories}
         onApply={handleFilterApply}
       />
+
+      {/* ── Waypoint Creation Modal ── */}
+      <Modal visible={wpModalVisible} transparent animationType="fade">
+        <View style={styles.wpModalOverlay}>
+          <View style={styles.wpModalContent}>
+            <Text style={styles.wpModalTitle}>ADD WAYPOINT</Text>
+            <TextInput
+              style={styles.wpInput}
+              value={wpLabel}
+              onChangeText={setWpLabel}
+              placeholder="Waypoint name..."
+              placeholderTextColor={colors.textMuted}
+              autoFocus
+              maxLength={30}
+            />
+            <Text style={styles.wpColorLabel}>COLOR</Text>
+            <View style={styles.wpColorRow}>
+              {WP_COLORS.map(c => (
+                <TouchableOpacity
+                  key={c}
+                  style={[styles.wpColorBtn, {backgroundColor: c}, wpColor === c && styles.wpColorBtnActive]}
+                  onPress={() => setWpColor(c)}
+                />
+              ))}
+            </View>
+            <View style={styles.wpModalActions}>
+              <TouchableOpacity
+                style={styles.wpCancelBtn}
+                onPress={() => {setWpModalVisible(false); setPendingWpCoords(null);}}>
+                <Text style={styles.wpCancelText}>CANCEL</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.wpSaveBtn, !wpLabel.trim() && {opacity: 0.4}]}
+                onPress={handleAddWaypoint}
+                disabled={!wpLabel.trim()}>
+                <Icon name="map-marker-check" size={16} color={colors.textInverse} />
+                <Text style={styles.wpSaveText}>PLACE</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -434,6 +632,95 @@ const styles = StyleSheet.create({
     color: colors.textMuted, letterSpacing: 0.5,
   },
   mapTabTextActive: {color: colors.textInverse},
+
+  // Waypoint mode
+  headerBtnActive: {
+    backgroundColor: colors.green + '30',
+    borderWidth: 1,
+    borderColor: colors.green,
+  },
+  wpBanner: {
+    position: 'absolute',
+    left: spacing.lg, right: spacing.lg,
+    flexDirection: 'row', alignItems: 'center',
+    justifyContent: 'center', gap: spacing.sm,
+    backgroundColor: colors.green + '18',
+    borderWidth: 1, borderColor: colors.green + '40',
+    paddingVertical: spacing.sm, paddingHorizontal: spacing.md,
+    borderRadius: borderRadius.md, zIndex: 99,
+  },
+  wpBannerText: {
+    flex: 1, fontSize: 11, fontWeight: '800',
+    color: colors.green, letterSpacing: 1, textAlign: 'center',
+  },
+  wpListPanel: {
+    position: 'absolute',
+    left: spacing.md, right: spacing.md,
+    zIndex: 98,
+  },
+  wpChip: {
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+    backgroundColor: 'rgba(15, 16, 28, 0.85)',
+    paddingHorizontal: spacing.sm, paddingVertical: 4,
+    borderRadius: borderRadius.sm,
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)',
+  },
+  wpDot: {width: 8, height: 8, borderRadius: 4},
+  wpChipText: {fontSize: 10, fontWeight: '700', color: colors.textPrimary},
+
+  // Waypoint modal
+  wpModalOverlay: {
+    flex: 1, backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center', alignItems: 'center',
+  },
+  wpModalContent: {
+    width: SCREEN_WIDTH - 60,
+    backgroundColor: colors.bgSecondary,
+    borderRadius: borderRadius.lg, padding: spacing.xl,
+    borderWidth: 1, borderColor: colors.border,
+  },
+  wpModalTitle: {
+    fontSize: fonts.sizes.md, fontWeight: '900',
+    color: colors.textPrimary, letterSpacing: 2, marginBottom: spacing.lg,
+  },
+  wpInput: {
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.md, padding: spacing.md,
+    fontSize: fonts.sizes.sm, color: colors.textPrimary,
+    borderWidth: 1, borderColor: colors.border, marginBottom: spacing.md,
+  },
+  wpColorLabel: {
+    fontSize: 10, fontWeight: '700', color: colors.textMuted,
+    letterSpacing: 1, marginBottom: spacing.sm,
+  },
+  wpColorRow: {
+    flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.xl,
+  },
+  wpColorBtn: {
+    width: 28, height: 28, borderRadius: 14,
+    borderWidth: 2, borderColor: 'transparent',
+  },
+  wpColorBtnActive: {borderColor: '#FFFFFF'},
+  wpModalActions: {
+    flexDirection: 'row', gap: spacing.md,
+  },
+  wpCancelBtn: {
+    flex: 1, alignItems: 'center',
+    paddingVertical: spacing.md, borderRadius: borderRadius.md,
+    backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border,
+  },
+  wpCancelText: {
+    fontSize: 12, fontWeight: '800', color: colors.textMuted, letterSpacing: 1,
+  },
+  wpSaveBtn: {
+    flex: 1, flexDirection: 'row', alignItems: 'center',
+    justifyContent: 'center', gap: 4,
+    paddingVertical: spacing.md, borderRadius: borderRadius.md,
+    backgroundColor: colors.orange,
+  },
+  wpSaveText: {
+    fontSize: 12, fontWeight: '800', color: colors.textInverse, letterSpacing: 1,
+  },
 });
 
 export default MapDetailScreen;

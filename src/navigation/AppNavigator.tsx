@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts, spacing } from '../theme/theme';
 
 // Screens
+import HomeScreen from '../screens/HomeScreen';
 import MapListScreen from '../screens/MapListScreen';
 import MapDetailScreen from '../screens/MapDetailScreen';
 import ItemListScreen from '../screens/ItemListScreen';
@@ -26,66 +27,87 @@ import TrialsScreen from '../screens/TrialsScreen';
 import GuidesScreen from '../screens/GuidesScreen';
 import GuideDetailScreen from '../screens/GuideDetailScreen';
 import MaterialsScreen from '../screens/MaterialsScreen';
+import TierListScreen from '../screens/TierListScreen';
+import LoadoutBuilderScreen from '../screens/LoadoutBuilderScreen';
+import WeaponsScreen from '../screens/WeaponsScreen';
+import QuestTreeScreen from '../screens/QuestTreeScreen';
+import CosmeticsScreen from '../screens/CosmeticsScreen';
+import CollectibleTrackerScreen from '../screens/CollectibleTrackerScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
 
-const MapsStack = createNativeStackNavigator();
-const CatalogStack = createNativeStackNavigator();
-const SubmitStack = createNativeStackNavigator();
-const ToolsStack = createNativeStackNavigator();
+const BunkerStack = createNativeStackNavigator();
+const TrialsStack = createNativeStackNavigator();
+const MaterialsStack = createNativeStackNavigator();
+const EnemiesStack = createNativeStackNavigator();
+const GuidesStack = createNativeStackNavigator();
 
-function MapsStackScreen() {
+function BunkerStackScreen() {
   return (
-    <MapsStack.Navigator screenOptions={{ headerShown: false }}>
-      <MapsStack.Screen name="MapList" component={MapListScreen} />
-    </MapsStack.Navigator>
+    <BunkerStack.Navigator screenOptions={{ headerShown: false }}>
+      <BunkerStack.Screen name="BunkerHome" component={HomeScreen} />
+      <BunkerStack.Screen name="MapList" component={MapListScreen} />
+      <BunkerStack.Screen name="BlueprintTracker" component={BlueprintTrackerScreen} />
+      <BunkerStack.Screen name="LoadoutBuilder" component={LoadoutBuilderScreen} />
+      <BunkerStack.Screen name="ItemDetail" component={ItemDetailScreen} />
+      <BunkerStack.Screen name="TraderList" component={TraderListScreen} />
+      <BunkerStack.Screen name="TraderDetail" component={TraderDetailScreen} />
+      <BunkerStack.Screen name="QuestList" component={QuestListScreen} />
+      <BunkerStack.Screen name="EventTimers" component={EventTimerScreen} />
+      <BunkerStack.Screen name="Expedition" component={ExpeditionScreen} />
+      <BunkerStack.Screen name="TierList" component={TierListScreen} />
+      <BunkerStack.Screen name="QuestTree" component={QuestTreeScreen} />
+      <BunkerStack.Screen name="Cosmetics" component={CosmeticsScreen} />
+      <BunkerStack.Screen name="CollectibleTracker" component={CollectibleTrackerScreen} />
+      <BunkerStack.Screen name="Submit" component={SubmitScreen} />
+    </BunkerStack.Navigator>
   );
 }
 
-function CatalogStackScreen() {
+function TrialsStackScreen() {
   return (
-    <CatalogStack.Navigator screenOptions={{ headerShown: false }}>
-      <CatalogStack.Screen name="ItemList" component={ItemListScreen} />
-      <CatalogStack.Screen name="ItemDetail" component={ItemDetailScreen} />
-    </CatalogStack.Navigator>
+    <TrialsStack.Navigator screenOptions={{ headerShown: false }}>
+      <TrialsStack.Screen name="TrialsMain" component={TrialsScreen} />
+    </TrialsStack.Navigator>
   );
 }
 
-function SubmitStackScreen() {
+function MaterialsStackScreen() {
   return (
-    <SubmitStack.Navigator screenOptions={{ headerShown: false }}>
-      <SubmitStack.Screen name="SubmitMain" component={SubmitScreen} />
-    </SubmitStack.Navigator>
+    <MaterialsStack.Navigator screenOptions={{ headerShown: false }}>
+      <MaterialsStack.Screen name="ItemList" component={ItemListScreen} />
+      <MaterialsStack.Screen name="ItemDetail" component={ItemDetailScreen} />
+      <MaterialsStack.Screen name="Materials" component={MaterialsScreen} />
+    </MaterialsStack.Navigator>
   );
 }
 
-function ToolsStackScreen() {
+function EnemiesStackScreen() {
   return (
-    <ToolsStack.Navigator screenOptions={{ headerShown: false }}>
-      <ToolsStack.Screen name="ToolsMain" component={ToolsScreen} />
-      <ToolsStack.Screen name="TraderList" component={TraderListScreen} />
-      <ToolsStack.Screen name="TraderDetail" component={TraderDetailScreen} />
-      <ToolsStack.Screen name="BlueprintTracker" component={BlueprintTrackerScreen} />
-      <ToolsStack.Screen name="QuestList" component={QuestListScreen} />
-      <ToolsStack.Screen name="ArcList" component={ArcListScreen} />
-      <ToolsStack.Screen name="EventTimers" component={EventTimerScreen} />
-      <ToolsStack.Screen name="SkillTree" component={SkillTreeScreen} />
-      <ToolsStack.Screen name="ArcDetail" component={ArcDetailScreen} />
-      <ToolsStack.Screen name="Expedition" component={ExpeditionScreen} />
-      <ToolsStack.Screen name="Trials" component={TrialsScreen} />
-      <ToolsStack.Screen name="Guides" component={GuidesScreen} />
-      <ToolsStack.Screen name="GuideDetail" component={GuideDetailScreen} />
-      <ToolsStack.Screen name="Materials" component={MaterialsScreen} />
-    </ToolsStack.Navigator>
+    <EnemiesStack.Navigator screenOptions={{ headerShown: false }}>
+      <EnemiesStack.Screen name="ArcList" component={ArcListScreen} />
+      <EnemiesStack.Screen name="ArcDetail" component={ArcDetailScreen} />
+      <EnemiesStack.Screen name="ItemDetail" component={ItemDetailScreen} />
+    </EnemiesStack.Navigator>
+  );
+}
+
+function GuidesStackScreen() {
+  return (
+    <GuidesStack.Navigator screenOptions={{ headerShown: false }}>
+      <GuidesStack.Screen name="GuidesMain" component={GuidesScreen} />
+      <GuidesStack.Screen name="GuideDetail" component={GuideDetailScreen} />
+    </GuidesStack.Navigator>
   );
 }
 
 const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
-  Maps: { active: 'map', inactive: 'map-outline' },
-  Catalog: { active: 'package-variant-closed', inactive: 'package-variant' },
-  Submit: { active: 'plus-circle', inactive: 'plus-circle-outline' },
-  Tools: { active: 'wrench', inactive: 'wrench-outline' },
+  Bunker: { active: 'shield-check', inactive: 'shield-check-outline' },
+  Trials: { active: 'information', inactive: 'information-outline' },
+  Materials: { active: 'flask', inactive: 'flask-outline' },
+  Enemies: { active: 'lightning-bolt', inactive: 'lightning-bolt-outline' },
+  Guides: { active: 'text-box', inactive: 'text-box-outline' },
 };
 
 /* ── Tab Navigator (with bottom bar) ── */
@@ -95,21 +117,24 @@ function TabNavigator() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: colors.orange,
+        tabBarActiveTintColor: colors.cyan,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarLabelStyle: styles.tabLabel,
         tabBarIcon: ({ focused, color }) => {
           const icons = TAB_ICONS[route.name];
           const iconName = focused ? icons.active : icons.inactive;
           return (
-            <Icon name={iconName} size={24} color={color} />
+            <View style={focused ? styles.activeIconWrap : undefined}>
+              <Icon name={iconName} size={22} color={color} />
+            </View>
           );
         },
       })}>
-      <Tab.Screen name="Maps" component={MapsStackScreen} />
-      <Tab.Screen name="Catalog" component={CatalogStackScreen} />
-      <Tab.Screen name="Submit" component={SubmitStackScreen} />
-      <Tab.Screen name="Tools" component={ToolsStackScreen} />
+      <Tab.Screen name="Bunker" component={BunkerStackScreen} />
+      <Tab.Screen name="Trials" component={TrialsStackScreen} />
+      <Tab.Screen name="Materials" component={MaterialsStackScreen} />
+      <Tab.Screen name="Enemies" component={EnemiesStackScreen} />
+      <Tab.Screen name="Guides" component={GuidesStackScreen} />
     </Tab.Navigator>
   );
 }
@@ -121,6 +146,8 @@ const AppNavigator = () => {
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Screen name="MainTabs" component={TabNavigator} />
         <RootStack.Screen name="MapDetail" component={MapDetailScreen} />
+        <RootStack.Screen name="Weapons" component={WeaponsScreen} />
+        <RootStack.Screen name="SkillTree" component={SkillTreeScreen} options={{ gestureEnabled: false }} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
@@ -131,21 +158,26 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgSecondary,
     borderTopWidth: 1,
     borderTopColor: colors.border,
-    height: 75,
+    height: 80,
     paddingTop: spacing.xs,
-    paddingBottom: spacing.lg,
+    paddingBottom: spacing.lg + 2,
     elevation: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.4,
     shadowRadius: 12,
   },
   tabLabel: {
     fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 0.5,
+    fontWeight: '600',
+    letterSpacing: 0.3,
     marginTop: 2,
-    textTransform: 'uppercase',
+  },
+  activeIconWrap: {
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
   },
 });
 

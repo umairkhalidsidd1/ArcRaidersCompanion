@@ -112,8 +112,8 @@ const SubmitScreen = ({navigation}: any) => {
     <View style={styles.content}>
       {/* Add Location */}
       <TouchableOpacity style={styles.optionCard} activeOpacity={0.7} onPress={() => setMode('add-location')}>
-        <View style={[styles.optionIconWrap, {backgroundColor: colors.orange + '18'}]}>
-          <Icon name="map-marker-plus-outline" size={32} color={colors.orange} />
+        <View style={[styles.optionIconWrap, {backgroundColor: colors.cyan + '18'}]}>
+          <Icon name="map-marker-plus-outline" size={32} color={colors.cyan} />
         </View>
         <View style={styles.optionInfo}>
           <Text style={styles.optionTitle}>Add Location</Text>
@@ -291,11 +291,14 @@ const SubmitScreen = ({navigation}: any) => {
             <Icon name="arrow-left" size={22} color={colors.textPrimary} />
           </TouchableOpacity>
         ) : null}
+        <View style={styles.headerIconWrap}>
+          <Icon name="send" size={18} color={colors.cyan} />
+        </View>
         <View>
           <Text style={styles.headerTitle}>
-            {mode === 'add-location' ? 'ADD LOCATION' :
-             mode === 'report-issue' ? 'REPORT ISSUE' :
-             mode === 'suggest-item' ? 'SUGGEST ITEM' : 'SUBMIT'}
+            {mode === 'add-location' ? 'Add Location' :
+             mode === 'report-issue' ? 'Report Issue' :
+             mode === 'suggest-item' ? 'Suggest Item' : 'Submit'}
           </Text>
           <Text style={styles.headerSubtitle}>
             {mode ? 'Fill in the details below' : 'Contribute locations & data'}
@@ -322,7 +325,12 @@ const styles = StyleSheet.create({
     width: 36, height: 36, borderRadius: 18,
     backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center',
   },
-  headerTitle: {fontSize: fonts.sizes.xxl, fontWeight: '900', color: colors.orange, letterSpacing: 3},
+  headerIconWrap: {
+    width: 32, height: 32, borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  headerTitle: {fontSize: fonts.sizes.xxl, fontWeight: '700', color: colors.textPrimary},
   headerSubtitle: {fontSize: fonts.sizes.sm, color: colors.textSecondary, marginTop: spacing.xs},
   content: {paddingHorizontal: spacing.lg, gap: spacing.sm},
   formContent: {paddingHorizontal: spacing.xl, paddingBottom: 100},
@@ -343,8 +351,8 @@ const styles = StyleSheet.create({
 
   // Form labels
   formLabel: {
-    fontSize: 10, fontWeight: '700', color: colors.textMuted,
-    letterSpacing: 2, marginTop: spacing.xl, marginBottom: spacing.sm,
+    fontSize: 11, fontWeight: '600', color: colors.textMuted,
+    marginTop: spacing.xl, marginBottom: spacing.sm,
   },
 
   // Map grid
@@ -378,11 +386,11 @@ const styles = StyleSheet.create({
   // Submit button
   submitBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    gap: spacing.sm, backgroundColor: colors.orange,
+    gap: spacing.sm, backgroundColor: colors.cyan,
     paddingVertical: spacing.lg, borderRadius: borderRadius.md,
     marginTop: spacing.xxl,
   },
-  submitBtnText: {fontSize: fonts.sizes.md, fontWeight: '800', color: colors.textInverse, letterSpacing: 2},
+  submitBtnText: {fontSize: fonts.sizes.md, fontWeight: '800', color: colors.textInverse},
 });
 
 export default SubmitScreen;

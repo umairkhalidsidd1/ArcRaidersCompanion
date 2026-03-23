@@ -6,6 +6,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -22,9 +23,9 @@ type Blueprint = {
   name: string;
   icon: string | null;
   rarity: string;
+  value: number;
 };
 
-// Extract all Blueprint items from the real item database
 const blueprints: Blueprint[] = (rawItems as any[])
   .filter(i => i.item_type === 'Blueprint')
   .map(i => ({
@@ -32,22 +33,35 @@ const blueprints: Blueprint[] = (rawItems as any[])
     name: i.name.replace(' Blueprint', ''),
     icon: i.icon,
     rarity: i.rarity || 'Common',
+    value: i.value || 0,
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
-const TABS = ['ALL', 'NEEDED', 'OBTAINED', 'DUPLICATE'] as const;
-type Tab = typeof TABS[number];
+const TABS = ['ALL', 'NEEDED', 'OBTAINED'] as const;
+type Tab = (typeof TABS)[number];
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
-const NUM_COLUMNS = 4;
-const CARD_MARGIN = 4;
-const CARD_SIZE =
-  (SCREEN_WIDTH - spacing.lg * 2 - CARD_MARGIN * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
+const NUM_COLUMNS = 3;
+const CARD_GAP = spacing.sm;
+const PADDING = spacing.lg;
+const CARD_W = (SCREEN_WIDTH - PADDING * 2 - CARD_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
+
+const getRarityColor = (rarity: string) => {
+  switch (rarity.toLowerCase()) {
+    case 'common': return '#B0BEC5';
+    case 'uncommon': return '#66BB6A';
+    case 'rare': return '#42A5F5';
+    case 'epic': return '#AB47BC';
+    case 'legendary': return '#FFA000';
+    default: return colors.textSecondary;
+  }
+};
 
 const BlueprintTrackerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const [collected, setCollected] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>('ALL');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     loadCollected();
@@ -76,57 +90,61 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
     totalCount > 0 ? Math.round((collectedCount / totalCount) * 100) : 0;
 
   const filteredBlueprints = useMemo(() => {
+    let list = blueprints;
     switch (activeTab) {
       case 'NEEDED':
-        return blueprints.filter(bp => !collected.includes(bp.id));
+        list = list.filter(bp => !collected.includes(bp.id));
+        break;
       case 'OBTAINED':
-        return blueprints.filter(bp => collected.includes(bp.id));
-      case 'DUPLICATE':
-        return []; // For future use
-      default:
-        return blueprints;
+        list = list.filter(bp => collected.includes(bp.id));
+        break;
     }
-  }, [activeTab, collected]);
+    if (search) {
+      list = list.filter(bp =>
+        bp.name.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
+    return list;
+  }, [activeTab, collected, search]);
 
   const renderBlueprint = useCallback(
     ({item}: {item: Blueprint}) => {
       const isCollected = collected.includes(item.id);
-
       return (
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => toggleBlueprint(item.id)}
-          style={styles.cardWrap}>
-          <View
-            style={[
-              styles.card,
-              isCollected && styles.cardCollected,
-            ]}>
-            {/* Blueprint Grid Background */}
-            <View style={styles.imageWrap}>
-              {item.icon ? (
-                <Image
-                  source={{uri: item.icon}}
-                  style={styles.itemImage}
-                  resizeMode="contain"
-                />
-              ) : (
-                <Icon name="file-document-outline" size={32} color={colors.textMuted} />
-              )}
-
-              {/* Collected Checkmark */}
-              {isCollected && (
-                <View style={styles.checkOverlay}>
-                  <Icon name="check-circle" size={20} color={colors.green} />
-                </View>
-              )}
+          style={styles.card}>
+          {/* Value badge */}
+          {item.value > 0 && (
+            <View style={styles.valueBadge}>
+              <Text style={styles.valueBadgeText}>
+                {'\u20BF'} {item.value.toLocaleString()}
+              </Text>
             </View>
+          )}
 
-            {/* Name */}
-            <Text style={styles.cardName} numberOfLines={2}>
-              {item.name}
-            </Text>
+          {/* Collected check */}
+          {isCollected && (
+            <View style={styles.checkBadge}>
+              <Icon name="check" size={12} color="#000" />
+            </View>
+          )}
+
+          {/* Icon */}
+          <View style={styles.imageWrap}>
+            {item.icon ? (
+              <Image source={{uri: item.icon}} style={styles.itemImage} resizeMode="contain" />
+            ) : (
+              <Icon name="file-document-outline" size={28} color={colors.textMuted} />
+            )}
           </View>
+
+          {/* Name */}
+          <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
+
+          {/* Rarity bar */}
+          <View style={[styles.rarityBar, {backgroundColor: getRarityColor(item.rarity)}]} />
         </TouchableOpacity>
       );
     },
@@ -139,61 +157,65 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backBtn}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>BLUEPRINT TRACKER</Text>
+        <Text style={styles.headerTitle}>Blueprints</Text>
       </View>
 
       {/* Progress */}
       <View style={styles.progressRow}>
-        <Text style={styles.progressLabel}>COLLECTION PROGRESS</Text>
-        <Text style={styles.progressValue}>
-          {collectedCount} / {totalCount} ({progress}%)
+        <Text style={styles.progressText}>
+          {collectedCount}/{totalCount} collected ({progress}%)
         </Text>
+        <View style={styles.progressBarBg}>
+          <View style={[styles.progressBarFill, {width: `${progress}%`}]} />
+        </View>
       </View>
 
-      {/* Filter Tabs */}
+      {/* Search */}
+      <View style={styles.searchWrap}>
+        <Icon name="magnify" size={18} color={colors.textMuted} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search blueprints..."
+          placeholderTextColor={colors.textMuted}
+          value={search}
+          onChangeText={setSearch}
+        />
+      </View>
+
+      {/* Tabs */}
       <View style={styles.tabsRow}>
         {TABS.map(tab => {
           const isActive = activeTab === tab;
           return (
             <TouchableOpacity
               key={tab}
-              style={[styles.tab, isActive && styles.tabActive]}
+              style={styles.tab}
               onPress={() => setActiveTab(tab)}>
               <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
                 {tab}
               </Text>
+              {isActive && <View style={styles.tabIndicator} />}
             </TouchableOpacity>
           );
         })}
       </View>
 
-      {/* Blueprint Grid */}
+      {/* Grid */}
       <FlatList
         data={filteredBlueprints}
         renderItem={renderBlueprint}
         keyExtractor={item => item.id}
         numColumns={NUM_COLUMNS}
+        columnWrapperStyle={styles.row}
         contentContainerStyle={styles.grid}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <View style={styles.emptyState}>
-            <Icon
-              name={activeTab === 'OBTAINED' ? 'trophy-outline' : 'clipboard-text-search-outline'}
-              size={48}
-              color={colors.textMuted}
-            />
-            <Text style={styles.emptyText}>
-              {activeTab === 'OBTAINED'
-                ? 'No blueprints collected yet'
-                : activeTab === 'DUPLICATE'
-                ? 'Duplicate tracking coming soon'
-                : 'No blueprints found'}
-            </Text>
+            <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
+            <Text style={styles.emptyText}>No blueprints found</Text>
           </View>
         }
       />
@@ -207,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.xl,
     paddingBottom: spacing.sm,
     gap: spacing.md,
   },
@@ -220,120 +242,145 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: fonts.sizes.lg,
-    fontWeight: '900',
-    color: colors.textPrimary,
-    letterSpacing: 2,
-  },
-
-  // Progress
-  progressRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-  },
-  progressLabel: {
-    fontSize: 11,
+    fontSize: fonts.sizes.xl,
     fontWeight: '700',
-    color: colors.textMuted,
-    letterSpacing: 1,
+    color: colors.textPrimary,
   },
-  progressValue: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.orange,
+  progressRow: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.md,
   },
-
-  // Tabs
+  progressText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginBottom: 6,
+  },
+  progressBarBg: {
+    height: 4,
+    backgroundColor: colors.bgElevated,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: 4,
+    backgroundColor: colors.cyan,
+    borderRadius: 2,
+  },
+  searchWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: spacing.md,
+    gap: spacing.sm,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    color: colors.textPrimary,
+    fontSize: fonts.sizes.sm,
+  },
   tabsRow: {
     flexDirection: 'row',
     paddingHorizontal: spacing.lg,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    marginBottom: spacing.sm,
+    marginBottom: spacing.md,
   },
   tab: {
-    flex: 1,
     paddingVertical: spacing.sm,
-    alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
-  },
-  tabActive: {
-    borderBottomColor: colors.orange,
+    paddingHorizontal: spacing.lg,
+    position: 'relative',
   },
   tabText: {
     fontSize: 11,
     fontWeight: '700',
     color: colors.textMuted,
-    letterSpacing: 0.5,
+    letterSpacing: 1,
   },
-  tabTextActive: {
-    color: colors.orange,
+  tabTextActive: {color: colors.cyan},
+  tabIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: spacing.lg,
+    right: spacing.lg,
+    height: 2,
+    backgroundColor: colors.cyan,
+    borderRadius: 1,
   },
-
-  // Grid
-  grid: {
-    paddingHorizontal: spacing.lg,
-    paddingBottom: 100,
-  },
-  cardWrap: {
-    width: CARD_SIZE,
-    marginRight: CARD_MARGIN,
-    marginBottom: CARD_MARGIN,
-  },
+  grid: {paddingHorizontal: PADDING, paddingBottom: 100},
+  row: {gap: CARD_GAP, marginBottom: CARD_GAP},
   card: {
-    borderRadius: borderRadius.md,
-    overflow: 'hidden',
-    backgroundColor: '#0D1B2A',
+    width: CARD_W,
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.lg,
     borderWidth: 1,
-    borderColor: '#1A3048',
+    borderColor: colors.border,
+    alignItems: 'center',
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.sm,
+    position: 'relative',
+    overflow: 'hidden',
   },
-  cardCollected: {
-    borderColor: colors.green + '40',
-    backgroundColor: '#0D2A1B',
+  valueBadge: {
+    position: 'absolute',
+    top: 6,
+    left: 6,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: 4,
+    zIndex: 1,
   },
-  imageWrap: {
-    width: '100%',
-    aspectRatio: 1,
+  valueBadgeText: {
+    fontSize: 8,
+    fontWeight: '700',
+    color: '#FFC107',
+  },
+  checkBadge: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: colors.cyan,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#0A1622',
-    // Grid pattern effect
-    borderBottomWidth: 1,
-    borderBottomColor: '#1A3048',
+    zIndex: 1,
   },
-  itemImage: {
-    width: '70%',
-    height: '70%',
+  imageWrap: {
+    width: CARD_W * 0.5,
+    height: CARD_W * 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.sm,
   },
-  checkOverlay: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
-  },
+  itemImage: {width: '100%', height: '100%'},
   cardName: {
-    fontSize: 9,
-    fontWeight: '600',
-    color: colors.textSecondary,
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.textPrimary,
     textAlign: 'center',
-    paddingHorizontal: 2,
-    paddingVertical: 4,
-    minHeight: 30,
+    paddingHorizontal: 4,
+    marginBottom: spacing.sm,
   },
-
-  // Empty
+  rarityBar: {
+    width: '60%',
+    height: 3,
+    borderRadius: 1.5,
+    marginBottom: 4,
+  },
   emptyState: {
     alignItems: 'center',
     paddingTop: 60,
     gap: spacing.md,
   },
-  emptyText: {
-    fontSize: fonts.sizes.md,
-    color: colors.textMuted,
-  },
+  emptyText: {fontSize: fonts.sizes.md, color: colors.textMuted},
 });
 
 export default BlueprintTrackerScreen;
