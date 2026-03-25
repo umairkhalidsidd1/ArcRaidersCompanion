@@ -48,26 +48,26 @@ const ArcListScreen = ({navigation}: any) => {
         data={arcs}
         numColumns={NUM_COLS}
         columnWrapperStyle={styles.row}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={styles.arcCard}
-            activeOpacity={0.7}
-            onPress={() => navigation.navigate('ArcDetail', {arcId: item.id, arc: item})}>
-            <View style={styles.iconWrap}>
-              {item.icon ? (
-                <Image
-                  source={{uri: item.icon}}
-                  style={styles.arcIcon}
-                  resizeMode="contain"
-                />
-              ) : (
-                <Icon name="robot" size={32} color={colors.textMuted} />
-              )}
-            </View>
-            <Text style={styles.arcName} numberOfLines={1}>
-              {item.name.toUpperCase()}
-            </Text>
-          </TouchableOpacity>
+        renderItem={({item, index}) => (
+            <TouchableOpacity
+              style={styles.arcCard}
+              activeOpacity={0.7}
+              onPress={() => navigation.navigate('ArcDetail', {arcId: item.id, arc: item})}>
+              <View style={styles.iconWrap}>
+                {item.icon ? (
+                  <Image
+                    source={{uri: item.icon}}
+                    style={styles.arcIcon}
+                    resizeMode="contain"
+                  />
+                ) : (
+                  <Icon name="robot" size={32} color={colors.textMuted} />
+                )}
+              </View>
+              <Text style={styles.arcName} numberOfLines={1}>
+                {item.name.toUpperCase()}
+              </Text>
+            </TouchableOpacity>
         )}
         keyExtractor={item => String(item.id)}
         contentContainerStyle={styles.list}

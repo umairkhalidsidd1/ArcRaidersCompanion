@@ -1,7 +1,7 @@
 {
   "quest_data": {
     "description": "ARC Raiders Quest Data with Prerequisites and Unlock Order",
-    "last_updated": "2025-12-26",
+    "last_updated": "2026-03-24",
     "source": "https://arcraiders.wiki/wiki/Quests"
   },
   "unlock_requirements": {
@@ -2556,20 +2556,92 @@
       ],
       "unlock_requirement": null,
       "tree_position": "endgame_final"
+    },
+    {
+      "id": 81,
+      "name": "Stable Housing",
+      "quest_giver": "Tian Wen",
+      "location": "Stella Montis",
+      "objectives": [
+        "Find a stable location in Stella Montis",
+        "Secure the area for Tian Wen"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "Stella Montis Unlocked",
+      "tree_position": "root"
+    },
+    {
+      "id": 82,
+      "name": "Keeping An Eye Out",
+      "quest_giver": "Celeste",
+      "location": "The Blue Gate",
+      "objectives": [
+        "Scout the area around The Blue Gate",
+        "Report findings to Celeste"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "The Blue Gate Unlocked",
+      "tree_position": "root"
+    },
+    {
+      "id": 83,
+      "name": "A Dead End",
+      "quest_giver": "Shani",
+      "location": "The Blue Gate",
+      "objectives": [
+        "Investigate the dead end at The Blue Gate",
+        "Find a way through"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "The Blue Gate Unlocked",
+      "tree_position": "root"
+    },
+    {
+      "id": 84,
+      "name": "A Rising Tide",
+      "quest_giver": "Celeste",
+      "location": "Buried City, Dam Battlegrounds",
+      "objectives": [
+        "Investigate the rising tide in the area",
+        "Help Celeste secure supplies"
+      ],
+      "rewards": [],
+      "prerequisites": [
+        "A Dead End"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 85,
+      "name": "Making Do",
+      "quest_giver": "Tian Wen",
+      "location": "Any",
+      "objectives": [
+        "Gather basic crafting materials",
+        "Bring supplies to Tian Wen"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "Dam Battlegrounds Unlocked",
+      "tree_position": "root"
     }
   ],
   "quest_givers": [
     {
       "name": "Shani",
-      "quest_count": 28
+      "quest_count": 29
     },
     {
       "name": "Celeste",
-      "quest_count": 22
+      "quest_count": 24
     },
     {
       "name": "Tian Wen",
-      "quest_count": 14
+      "quest_count": 15
     },
     {
       "name": "Apollo",

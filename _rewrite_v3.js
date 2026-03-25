@@ -1,13 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
+const fs = require('fs');
+const c = `import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Alert,
+  Animated,
   Dimensions,
-  FlatList,
   Image,
-  InteractionManager,
-  KeyboardAvoidingView,
   Modal,
-  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -19,14 +17,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {captureScreen} from 'react-native-view-shot';
-import {CameraRoll, iosRequestAddOnlyGalleryPermission} from '@react-native-camera-roll/camera-roll';
 import {colors} from '../theme/theme';
 import rawItems from '../data/items.json';
 
 const STORAGE_KEY = '@arc_raiders_tier_lists_v2';
 const {width: SW} = Dimensions.get('window');
-const ITEM_IMG_SIZE = Math.floor((SW - 48) / 4);
+const ITEM_IMG_SIZE = Math.floor((SW - 48 - 24) / 4);
 
 type Item = {id: string; name: string; item_type: string; rarity: string; icon: string | null};
 type TierDef = {id: string; label: string; color: string};
@@ -76,58 +72,10 @@ const allItems: Item[] = (rawItems as any[]).map(i => ({
   item_type: normaliseType(i.item_type),
   rarity: i.rarity || 'Common',
   icon: i.icon || null,
-})).sort((a, b) => a.name.localeCompare(b.name));
-
-const itemMap = new Map(allItems.map(i => [i.id, i]));
-const EMPTY_IDS: string[] = [];
-
-const PoolItemCard = memo(({item, isSelected, onSelect}: {item: Item; isSelected: boolean; onSelect: (id: string) => void}) => (
-  <TouchableOpacity style={[s.itemCard, isSelected && s.itemCardSelected]} onPress={() => onSelect(item.id)} activeOpacity={0.7}>
-    {item.icon ? <Image source={{uri: item.icon}} style={s.itemImg} /> : <View style={[s.itemImg, s.itemImgPlaceholder]}><Icon name="cube-outline" size={28} color={colors.textMuted} /></View>}
-    <Text style={s.itemName} numberOfLines={2}>{item.name}</Text>
-    {isSelected && <View style={s.itemSelectedBadge}><Icon name="check-circle" size={22} color={colors.cyan} /></View>}
-  </TouchableOpacity>
-));
-
-const TierRow = memo(({tier, itemIds, isDropTarget, onEdit, onTap, onRemove}: {
-  tier: TierDef;
-  itemIds: string[];
-  isDropTarget: boolean;
-  onEdit: (tier: TierDef) => void;
-  onTap: (tierId: string) => void;
-  onRemove: (itemId: string, tierId: string) => void;
-}) => {
-  const tierItems = itemIds.map(id => itemMap.get(id)).filter(Boolean) as Item[];
-  const isEmpty = tierItems.length === 0;
-  return (
-    <View style={s.tierRow}>
-      <TouchableOpacity onPress={() => onEdit(tier)} activeOpacity={0.7} style={[s.tierLabel, {backgroundColor: tier.color}]}>
-        <Text style={s.tierLetter}>{tier.label}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={isDropTarget ? 0.7 : 1.0} onPress={() => onTap(tier.id)} style={{flex: 1}}>
-        <View style={[s.tierContent, isDropTarget && s.tierContentHighlight]}>
-          {isEmpty && <Text style={s.tierPlaceholder}>{isDropTarget ? '— Tap to place selected item here —' : 'Tap an item below to rank it'}</Text>}
-          {tierItems.length > 0 && (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tierItemsScroll}>
-              {tierItems.map(item => (
-                <TouchableOpacity key={item.id} onPress={() => onRemove(item.id, tier.id)} style={s.tierItemCard}>
-                  {item.icon ? <Image source={{uri: item.icon}} style={s.tierItemImg} /> : <View style={[s.tierItemImg, s.tierItemPlaceholder]}><Icon name="cube-outline" size={18} color={colors.textMuted} /></View>}
-                  <View style={s.tierItemRemove}><Icon name="close" size={8} color="#fff" /></View>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          )}
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-});
-
-const NUM_COLUMNS = 4;
+}));
 
 const TierListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
-  const [ready, setReady] = useState(false);
   const [tiers, setTiers] = useState<TierDef[]>(DEFAULT_TIERS);
   const [assignments, setAssignments] = useState<Record<string, string[]>>({});
   const [filter, setFilter] = useState('All');
@@ -137,30 +85,39 @@ const TierListScreen = ({navigation}: any) => {
   const [editColor, setEditColor] = useState('');
   const [addingTier, setAddingTier] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const selectedItemRef = useRef<string | null>(null);
-  const tiersRef = useRef(tiers);
-  tiersRef.current = tiers;
+  const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      AsyncStorage.getItem(STORAGE_KEY).then(json => {
-        if (json) {
-          try {
-            const saved: SavedState = JSON.parse(json);
-            if (saved.tiers) setTiers(saved.tiers);
-            if (saved.assignments) setAssignments(saved.assignments);
-          } catch {}
-        }
-        setReady(true);
-      });
+    AsyncStorage.getItem(STORAGE_KEY).then(json => {
+      if (json) {
+        try {
+          const saved: SavedState = JSON.parse(json);
+          if (saved.tiers) setTiers(saved.tiers);
+          if (saved.assignments) setAssignments(saved.assignments);
+        } catch {}
+      }
     });
-    return () => task.cancel();
   }, []);
 
-  const save = useCallback((t: TierDef[], a: Record<string, string[]>) => {
+  useEffect(() => {
+    if (selectedItem) {
+      const loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {toValue: 0.6, duration: 800, useNativeDriver: true}),
+          Animated.timing(pulseAnim, {toValue: 1, duration: 800, useNativeDriver: true}),
+        ]),
+      );
+      loop.start();
+      return () => loop.stop();
+    } else {
+      pulseAnim.setValue(1);
+    }
+  }, [selectedItem, pulseAnim]);
+
+  const save = useCallback(async (t: TierDef[], a: Record<string, string[]>) => {
     setTiers(t);
     setAssignments(a);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({tiers: t, assignments: a})).catch(() => {});
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({tiers: t, assignments: a}));
   }, []);
 
   const assignedIds = useMemo(() => {
@@ -176,36 +133,28 @@ const TierListScreen = ({navigation}: any) => {
       const q = searchQuery.toLowerCase();
       items = items.filter(i => i.name.toLowerCase().includes(q));
     }
+    items.sort((a, b) => a.name.localeCompare(b.name));
     return items;
   }, [assignedIds, filter, searchQuery]);
 
   const totalAssigned = assignedIds.size;
 
   const assignToTier = useCallback((itemId: string, tierId: string) => {
-    selectedItemRef.current = null;
+    const updated = {...assignments};
+    for (const tid of Object.keys(updated)) {
+      updated[tid] = updated[tid].filter(id => id !== itemId);
+    }
+    if (!updated[tierId]) updated[tierId] = [];
+    updated[tierId].push(itemId);
+    save(tiers, updated);
     setSelectedItem(null);
-    setAssignments(prev => {
-      const updated = {...prev};
-      for (const tid of Object.keys(updated)) {
-        if (updated[tid].includes(itemId)) {
-          updated[tid] = updated[tid].filter(id => id !== itemId);
-        }
-      }
-      if (!updated[tierId]) updated[tierId] = [];
-      updated[tierId] = [...updated[tierId], itemId];
-      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({tiers: tiersRef.current, assignments: updated})).catch(() => {});
-      return updated;
-    });
-  }, []);
+  }, [assignments, tiers, save]);
 
   const removeFromTier = useCallback((itemId: string, tierId: string) => {
-    setAssignments(prev => {
-      const updated = {...prev};
-      if (updated[tierId]) updated[tierId] = updated[tierId].filter(id => id !== itemId);
-      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({tiers: tiersRef.current, assignments: updated})).catch(() => {});
-      return updated;
-    });
-  }, []);
+    const updated = {...assignments};
+    if (updated[tierId]) updated[tierId] = updated[tierId].filter(id => id !== itemId);
+    save(tiers, updated);
+  }, [assignments, tiers, save]);
 
   const resetAll = useCallback(() => {
     Alert.alert('Reset Tier List', 'Remove all items from all tiers?', [
@@ -213,21 +162,6 @@ const TierListScreen = ({navigation}: any) => {
       {text: 'Reset', style: 'destructive', onPress: () => save(DEFAULT_TIERS, {})},
     ]);
   }, [save]);
-
-  const handleDownload = useCallback(async () => {
-    try {
-      const status = await iosRequestAddOnlyGalleryPermission();
-      if (status === 'denied' || status === 'blocked') {
-        Alert.alert('Permission Denied', 'Please allow photo library access in Settings.');
-        return;
-      }
-      const uri = await captureScreen({format: 'png', quality: 1});
-      await CameraRoll.saveAsset(uri, {type: 'photo'});
-      Alert.alert('Saved!', 'Tier list saved to your Photos.');
-    } catch (e: any) {
-      Alert.alert('Error', e?.message || 'Could not save tier list image.');
-    }
-  }, []);
 
   const handleAddTier = useCallback(() => {
     setEditLabel('');
@@ -270,41 +204,17 @@ const TierListScreen = ({navigation}: any) => {
     setAddingTier(false);
   }, []);
 
+  const getItem = useCallback((id: string) => allItems.find(i => i.id === id), []);
+
   const handlePoolItemTap = useCallback((itemId: string) => {
-    setSelectedItem(prev => {
-      const next = prev === itemId ? null : itemId;
-      selectedItemRef.current = next;
-      return next;
-    });
+    setSelectedItem(prev => (prev === itemId ? null : itemId));
   }, []);
 
   const handleTierRowTap = useCallback((tierId: string) => {
-    const sel = selectedItemRef.current;
-    if (sel) assignToTier(sel, tierId);
-  }, [assignToTier]);
+    if (selectedItem) assignToTier(selectedItem, tierId);
+  }, [selectedItem, assignToTier]);
 
   const showEditModal = editingTier !== null || addingTier;
-
-  const renderPoolItem = useCallback(({item}: {item: Item}) => (
-    <PoolItemCard item={item} isSelected={selectedItemRef.current === item.id} onSelect={handlePoolItemTap} />
-  ), [handlePoolItemTap]);
-
-  const keyExtractor = useCallback((item: Item) => item.id, []);
-
-  if (!ready) {
-    return (
-      <View style={[s.root, {paddingTop: insets.top}]}>
-        <StatusBar barStyle="light-content" backgroundColor="#000" />
-        <View style={s.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
-            <Icon name="chevron-left" size={28} color={colors.textPrimary} />
-          </TouchableOpacity>
-          <Text style={s.headerTitle}>TIER LIST MAKER</Text>
-          <View style={s.headerRight} />
-        </View>
-      </View>
-    );
-  }
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
@@ -318,7 +228,7 @@ const TierListScreen = ({navigation}: any) => {
           <TouchableOpacity onPress={resetAll} style={s.headerIcon}>
             <Icon name="refresh" size={22} color={colors.orange} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleDownload} style={s.headerIcon}>
+          <TouchableOpacity style={s.headerIcon}>
             <Icon name="download" size={22} color={colors.orange} />
           </TouchableOpacity>
         </View>
@@ -327,82 +237,89 @@ const TierListScreen = ({navigation}: any) => {
         <Text style={s.subtitleText}>MY TIER LIST</Text>
         <Text style={s.subtitleCount}>{totalAssigned} items ranked</Text>
       </View>
-      <FlatList
-        data={filteredItems}
-        extraData={selectedItem}
-        renderItem={renderPoolItem}
-        keyExtractor={keyExtractor}
-        numColumns={NUM_COLUMNS}
-        showsVerticalScrollIndicator={false}
-        columnWrapperStyle={s.itemsRow}
-        contentContainerStyle={{paddingBottom: insets.bottom + 20, gap: 8}}
-        initialNumToRender={16}
-        maxToRenderPerBatch={16}
-        windowSize={5}
-        removeClippedSubviews
-        keyboardShouldPersistTaps="handled"
-        ListHeaderComponent={
-          <>
-            <View collapsable={false} style={s.tiersContainer}>
-              {tiers.map(tier => (
-                <TierRow
-                  key={tier.id}
-                  tier={tier}
-                  itemIds={assignments[tier.id] || EMPTY_IDS}
-                  isDropTarget={selectedItem !== null}
-                  onEdit={handleEditTier}
-                  onTap={handleTierRowTap}
-                  onRemove={removeFromTier}
-                />
-              ))}
-              <TouchableOpacity style={s.addTierBtn} onPress={handleAddTier} activeOpacity={0.7}>
-                <Icon name="plus" size={20} color={colors.orange} />
-                <Text style={s.addTierText}>Add new tier</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={s.poolSection}>
-              <View style={s.searchRow}>
-                <Icon name="magnify" size={20} color={colors.textMuted} />
-                <TextInput style={s.searchInput} placeholder="Search items by name..." placeholderTextColor={colors.textMuted} value={searchQuery} onChangeText={setSearchQuery} autoCorrect={false} />
-                {searchQuery.length > 0 && <TouchableOpacity onPress={() => setSearchQuery('')}><Icon name="close-circle" size={18} color={colors.textMuted} /></TouchableOpacity>}
-              </View>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.filterRow}>
-                {CATEGORIES.map(cat => {
-                  const active = filter === cat.key;
-                  return (
-                    <TouchableOpacity key={cat.key} style={[s.filterChip, active && s.filterChipActive]} onPress={() => setFilter(cat.key)} activeOpacity={0.7}>
-                      <Text style={[s.filterChipText, active && s.filterChipTextActive]}>{cat.label}</Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </ScrollView>
-              {selectedItem && (
-                <View style={s.hintBar}>
-                  <Icon name="gesture-tap" size={16} color={colors.cyan} />
-                  <Text style={s.hintText} numberOfLines={1}>Tap a tier row above to place "{itemMap.get(selectedItem)?.name}"</Text>
-                  <TouchableOpacity onPress={() => setSelectedItem(null)}><Icon name="close" size={16} color={colors.textMuted} /></TouchableOpacity>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: insets.bottom + 20}}>
+        <View style={s.tiersContainer}>
+          {tiers.map(tier => {
+            const tierItems = (assignments[tier.id] || []).map(id => getItem(id)).filter(Boolean) as Item[];
+            const isEmpty = tierItems.length === 0;
+            const isDropTarget = selectedItem !== null;
+            return (
+              <TouchableOpacity key={tier.id} activeOpacity={isDropTarget ? 0.7 : 1.0} onPress={() => handleTierRowTap(tier.id)} onLongPress={() => handleEditTier(tier)} style={s.tierRow}>
+                <View style={[s.tierLabel, {backgroundColor: tier.color}]}>
+                  <Text style={s.tierLetter}>{tier.label}</Text>
                 </View>
-              )}
+                <Animated.View style={[s.tierContent, isDropTarget && {borderColor: tier.color + '40', borderWidth: 1, opacity: pulseAnim}]}>
+                  {isEmpty && <Text style={s.tierPlaceholder}>{isDropTarget ? 'Tap to place here' : 'Drop items here'}</Text>}
+                  {tierItems.length > 0 && (
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tierItemsScroll}>
+                      {tierItems.map(item => (
+                        <TouchableOpacity key={item.id} onPress={() => removeFromTier(item.id, tier.id)} style={s.tierItemCard}>
+                          {item.icon ? <Image source={{uri: item.icon}} style={s.tierItemImg} /> : <View style={[s.tierItemImg, s.tierItemPlaceholder]}><Icon name="cube-outline" size={18} color={colors.textMuted} /></View>}
+                          <View style={s.tierItemRemove}><Icon name="close" size={8} color="#fff" /></View>
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
+                  )}
+                </Animated.View>
+              </TouchableOpacity>
+            );
+          })}
+          <TouchableOpacity style={s.addTierBtn} onPress={handleAddTier} activeOpacity={0.7}>
+            <Icon name="plus" size={20} color={colors.orange} />
+            <Text style={s.addTierText}>Add new tier</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={s.poolSection}>
+          <View style={s.searchRow}>
+            <Icon name="magnify" size={20} color={colors.textMuted} />
+            <TextInput style={s.searchInput} placeholder="Search items by name..." placeholderTextColor={colors.textMuted} value={searchQuery} onChangeText={setSearchQuery} autoCorrect={false} />
+            {searchQuery.length > 0 && <TouchableOpacity onPress={() => setSearchQuery('')}><Icon name="close-circle" size={18} color={colors.textMuted} /></TouchableOpacity>}
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.filterRow}>
+            {CATEGORIES.map(cat => {
+              const active = filter === cat.key;
+              return (
+                <TouchableOpacity key={cat.key} style={[s.filterChip, active && s.filterChipActive]} onPress={() => setFilter(cat.key)} activeOpacity={0.7}>
+                  <Text style={[s.filterChipText, active && s.filterChipTextActive]}>{cat.label}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+          {selectedItem && (
+            <View style={s.hintBar}>
+              <Icon name="gesture-tap" size={16} color={colors.cyan} />
+              <Text style={s.hintText} numberOfLines={1}>Tap a tier row above to place "{getItem(selectedItem)?.name}"</Text>
+              <TouchableOpacity onPress={() => setSelectedItem(null)}><Icon name="close" size={16} color={colors.textMuted} /></TouchableOpacity>
             </View>
-          </>
-        }
-        ListEmptyComponent={
-          !searchQuery ? (
-            <View style={s.emptyState}>
-              <Icon name="check-circle-outline" size={40} color={colors.green + '60'} />
-              <Text style={s.emptyTitle}>All Ranked!</Text>
-              <Text style={s.emptySub}>Every item has been placed in a tier</Text>
-            </View>
-          ) : (
-            <View style={s.emptyState}>
-              <Icon name="magnify-close" size={36} color={colors.textMuted} />
-              <Text style={s.emptyTitle}>No Matches</Text>
-            </View>
-          )
-        }
-      />
+          )}
+          <View style={s.itemsGrid}>
+            {filteredItems.map(item => {
+              const isSelected = selectedItem === item.id;
+              return (
+                <TouchableOpacity key={item.id} style={[s.itemCard, isSelected && s.itemCardSelected]} onPress={() => handlePoolItemTap(item.id)} activeOpacity={0.7}>
+                  {item.icon ? <Image source={{uri: item.icon}} style={s.itemImg} /> : <View style={[s.itemImg, s.itemImgPlaceholder]}><Icon name="cube-outline" size={28} color={colors.textMuted} /></View>}
+                  <Text style={s.itemName} numberOfLines={2}>{item.name}</Text>
+                  {isSelected && <View style={s.itemSelectedBadge}><Icon name="check-circle" size={22} color={colors.cyan} /></View>}
+                </TouchableOpacity>
+              );
+            })}
+            {filteredItems.length === 0 && !searchQuery && (
+              <View style={s.emptyState}>
+                <Icon name="check-circle-outline" size={40} color={colors.green + '60'} />
+                <Text style={s.emptyTitle}>All Ranked!</Text>
+                <Text style={s.emptySub}>Every item has been placed in a tier</Text>
+              </View>
+            )}
+            {filteredItems.length === 0 && searchQuery.length > 0 && (
+              <View style={s.emptyState}>
+                <Icon name="magnify-close" size={36} color={colors.textMuted} />
+                <Text style={s.emptyTitle}>No Matches</Text>
+              </View>
+            )}
+          </View>
+        </View>
+      </ScrollView>
       <Modal visible={showEditModal} transparent animationType="slide">
-        <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <TouchableOpacity style={s.modalOverlay} activeOpacity={1} onPress={() => { setEditingTier(null); setAddingTier(false); }}>
           <View style={s.modalSheet} onStartShouldSetResponder={() => true}>
             <View style={s.modalHandle} />
@@ -426,7 +343,6 @@ const TierListScreen = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
-        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
@@ -447,7 +363,6 @@ const s = StyleSheet.create({
   tierLabel: {width: 54, minHeight: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 4},
   tierLetter: {fontSize: 26, fontWeight: '900', color: '#fff', textShadowColor: 'rgba(0,0,0,0.4)', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 3},
   tierContent: {flex: 1, backgroundColor: 'rgba(255,255,255,0.04)', borderTopRightRadius: 4, borderBottomRightRadius: 4, justifyContent: 'center', minHeight: 60, marginLeft: 2, paddingHorizontal: 8, borderWidth: 1, borderColor: 'transparent'},
-  tierContentHighlight: {borderColor: 'rgba(255,107,44,0.35)', backgroundColor: 'rgba(255,107,44,0.06)'},
   tierPlaceholder: {fontSize: 13, color: 'rgba(255,255,255,0.20)', textAlign: 'center', letterSpacing: 0.5},
   tierItemsScroll: {flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 6},
   tierItemCard: {width: 46, height: 46, borderRadius: 4, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)'},
@@ -466,8 +381,7 @@ const s = StyleSheet.create({
   filterChipTextActive: {color: colors.orange},
   hintBar: {flexDirection: 'row', alignItems: 'center', marginHorizontal: 16, marginBottom: 8, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: 'rgba(0,229,255,0.06)', borderRadius: 8, borderWidth: 1, borderColor: 'rgba(0,229,255,0.15)', gap: 8},
   hintText: {flex: 1, fontSize: 12, color: colors.cyan, fontWeight: '600'},
-  itemsRow: {justifyContent: 'flex-start', gap: 8, paddingHorizontal: 12},
-  itemsListContent: {paddingHorizontal: 0, paddingBottom: 20, gap: 8},
+  itemsGrid: {flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 12, paddingBottom: 20, gap: 8},
   itemCard: {width: ITEM_IMG_SIZE, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 6, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)', overflow: 'hidden'},
   itemCardSelected: {borderColor: colors.cyan, borderWidth: 2, backgroundColor: 'rgba(0,229,255,0.08)'},
   itemImg: {width: '100%', height: ITEM_IMG_SIZE - 10, backgroundColor: 'rgba(255,255,255,0.03)'},
@@ -494,3 +408,6 @@ const s = StyleSheet.create({
 });
 
 export default TierListScreen;
+`;
+fs.writeFileSync('/Users/umairkhalid/Desktop/ArcRaidersCompanion/src/screens/TierListScreen.tsx', c);
+console.log('Written ' + c.length + ' bytes');

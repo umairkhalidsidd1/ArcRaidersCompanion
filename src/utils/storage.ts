@@ -160,3 +160,36 @@ export const getLoadouts = async (): Promise<Loadout[]> => {
 export const saveLoadouts = async (loadouts: Loadout[]): Promise<void> => {
   await AsyncStorage.setItem(LOADOUTS_KEY, JSON.stringify(loadouts));
 };
+
+/* ═══════ COMPLETED QUESTS ═══════ */
+const COMPLETED_QUESTS_KEY = '@arc_raiders_completed_quests';
+
+export const getCompletedQuests = async (): Promise<number[]> => {
+  try {
+    const json = await AsyncStorage.getItem(COMPLETED_QUESTS_KEY);
+    return json ? JSON.parse(json) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const toggleCompletedQuest = async (questId: number): Promise<boolean> => {
+  try {
+    const ids = await getCompletedQuests();
+    const idx = ids.indexOf(questId);
+    const isNowCompleted = idx === -1;
+    if (isNowCompleted) {
+      ids.push(questId);
+    } else {
+      ids.splice(idx, 1);
+    }
+    await AsyncStorage.setItem(COMPLETED_QUESTS_KEY, JSON.stringify(ids));
+    return isNowCompleted;
+  } catch {
+    return false;
+  }
+};
+
+export const resetCompletedQuests = async (): Promise<void> => {
+  await AsyncStorage.setItem(COMPLETED_QUESTS_KEY, JSON.stringify([]));
+};

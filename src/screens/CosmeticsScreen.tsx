@@ -95,7 +95,7 @@ const CosmeticsScreen = ({navigation}: any) => {
   }, [search, activeCategory]);
 
   const renderItem = useCallback(
-    ({item}: {item: CosmeticItem}) => {
+    ({item, index}: {item: CosmeticItem; index: number}) => {
       const rc = RARITY_COLORS[item.rarity] || '#9E9E9E';
       return (
         <TouchableOpacity

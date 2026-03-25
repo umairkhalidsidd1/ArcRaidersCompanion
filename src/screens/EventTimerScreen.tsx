@@ -1,21 +1,23 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
-  Alert,
-  FlatList,
+  ActivityIndicator,
   Image,
+  RefreshControl,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawEvents from '../data/events.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {colors} from '../theme/theme';
+import localEvents from '../data/events.json';
 
+/* ── Types ────────────────────────────────────────────────── */
 type TimeSlot = {start: string; end: string};
-
 type GameEvent = {
   id: number;
   name: string;
@@ -25,15 +27,52 @@ type GameEvent = {
   days: string;
   times: string;
 };
-
-const MAP_COLORS: Record<string, string> = {
-  Dam: '#42A5F5',
-  'Buried City': '#FF7043',
-  Spaceport: '#AB47BC',
-  'Blue Gate': '#26C6DA',
-  'Stella Montis': '#66BB6A',
+type EventWithStatus = GameEvent & {
+  slots: TimeSlot[];
+  status: EventStatus;
+};
+type EventStatus = {
+  isActive: boolean;
+  secondsRemaining: number;
+  label: string;
+  activeSlot?: TimeSlot;
+  nextSlot?: TimeSlot;
 };
 
+/** A single row in the ALL EVENTS expanded card */
+type SlotRow = {
+  map: string;
+  slot: TimeSlot;
+  isLive: boolean;
+  localStartSec: number; // for sorting
+};
+
+/** Grouped event for ALL EVENTS */
+type GroupedEvent = {
+  name: string;
+  icon: string;
+  rows: SlotRow[];
+};
+
+/* ── Constants ────────────────────────────────────────────── */
+const REMOTE_URL = 'https://trendyapptemplates.com/um/ArcRaider/events.json';
+const CACHE_KEY = '@arcc_events_cache_v2';
+const CACHE_TS_KEY = '@arcc_events_cache_ts';
+const CACHE_TTL = 30 * 60 * 1000;
+const ORANGE = '#FF6B2C';
+const GREEN = '#4ADE80';
+const CYAN = '#22D3EE';
+const STARTING_SOON_THRESHOLD = 3600;
+
+const MAP_DISPLAY: Record<string, string> = {
+  Dam: 'Dam Battlegrounds',
+  'Buried City': 'Buried City',
+  Spaceport: 'Spaceport',
+  'Blue Gate': 'Blue Gate',
+  'Stella Montis': 'Stella Montis',
+};
+
+/* ── Helpers ──────────────────────────────────────────────── */
 const parseTimeSlots = (raw: string): TimeSlot[] => {
   try {
     return JSON.parse(raw);
@@ -42,407 +81,513 @@ const parseTimeSlots = (raw: string): TimeSlot[] => {
   }
 };
 
-/* ─── Time Calculation Helpers ─── */
-
-/** Returns total minutes from midnight for current UTC time */
-const getNowMinutes = (): number => {
-  const now = new Date();
-  return now.getUTCHours() * 60 + now.getUTCMinutes();
-};
-
-/** Returns total seconds from midnight for current UTC time */
 const getNowSeconds = (): number => {
   const now = new Date();
   return now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
 };
 
-/** Parse "HH:MM" to seconds from midnight */
 const parseToSeconds = (time: string): number => {
   const [h, m] = time.split(':').map(Number);
   return h * 3600 + (m || 0) * 60;
 };
 
-type EventStatus = {
-  isActive: boolean;
-  /** Seconds remaining until event ends (if active) or starts (if upcoming) */
-  secondsRemaining: number;
-  /** Label like "ACTIVE" or "STARTS IN" */
-  label: string;
+const isSlotActive = (slot: TimeSlot): boolean => {
+  const nowSec = getNowSeconds();
+  const startSec = parseToSeconds(slot.start);
+  const endSec = parseToSeconds(slot.end);
+  if (endSec > startSec) return nowSec >= startSec && nowSec < endSec;
+  return nowSec >= startSec || nowSec < endSec;
 };
 
 const getEventStatus = (slots: TimeSlot[]): EventStatus => {
-  if (slots.length === 0) return {isActive: false, secondsRemaining: -1, label: 'No schedule'};
+  if (slots.length === 0)
+    return {isActive: false, secondsRemaining: -1, label: 'No schedule'};
 
   const nowSec = getNowSeconds();
-  const DAY_SEC = 24 * 3600;
+  const DAY = 24 * 3600;
 
-  // Check if currently active
   for (const s of slots) {
     const startSec = parseToSeconds(s.start);
     const endSec = parseToSeconds(s.end);
-
     if (endSec > startSec) {
-      // Normal range
-      if (nowSec >= startSec && nowSec < endSec) {
-        return {isActive: true, secondsRemaining: endSec - nowSec, label: 'ACTIVE'};
-      }
+      if (nowSec >= startSec && nowSec < endSec)
+        return {isActive: true, secondsRemaining: endSec - nowSec, label: 'ACTIVE', activeSlot: s};
     } else {
-      // Wraps midnight
       if (nowSec >= startSec || nowSec < endSec) {
-        const remaining = nowSec >= startSec
-          ? (DAY_SEC - nowSec) + endSec
-          : endSec - nowSec;
-        return {isActive: true, secondsRemaining: remaining, label: 'ACTIVE'};
+        const rem = nowSec >= startSec ? DAY - nowSec + endSec : endSec - nowSec;
+        return {isActive: true, secondsRemaining: rem, label: 'ACTIVE', activeSlot: s};
       }
     }
   }
 
-  // Find next upcoming slot
-  const sortedStarts = slots
-    .map(s => parseToSeconds(s.start))
-    .sort((a, b) => a - b);
-
-  const nextStart = sortedStarts.find(s => s > nowSec);
-  if (nextStart !== undefined) {
-    return {isActive: false, secondsRemaining: nextStart - nowSec, label: 'STARTS IN'};
-  }
-
-  // Next day — wrap to first slot
-  const first = sortedStarts[0];
-  const remaining = (DAY_SEC - nowSec) + first;
-  return {isActive: false, secondsRemaining: remaining, label: 'STARTS IN'};
+  const sorted = [...slots].sort(
+    (a, b) => parseToSeconds(a.start) - parseToSeconds(b.start),
+  );
+  const next = sorted.find(s => parseToSeconds(s.start) > nowSec);
+  if (next)
+    return {isActive: false, secondsRemaining: parseToSeconds(next.start) - nowSec, label: 'STARTS IN', nextSlot: next};
+  return {isActive: false, secondsRemaining: DAY - nowSec + parseToSeconds(sorted[0].start), label: 'STARTS IN', nextSlot: sorted[0]};
 };
 
-/** Format seconds to "Xh Ym Zs" or "Ym Zs" */
-const formatCountdown = (totalSeconds: number): string => {
-  if (totalSeconds < 0) return '--';
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = totalSeconds % 60;
-  if (h > 0) {
-    return `${h}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+/** Format "HH:MM" UTC → local Date object */
+const utcToLocalDate = (utcTime: string): Date => {
+  const [h, m] = utcTime.split(':').map(Number);
+  const now = new Date();
+  return new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), h, m || 0),
+  );
+};
+
+/** Format "HH:MM" UTC → "Day H:MM AM/PM" */
+const utcSlotToLocal = (utcTime: string): string => {
+  const d = utcToLocalDate(utcTime);
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  let lh = d.getHours();
+  const ampm = lh >= 12 ? 'PM' : 'AM';
+  lh = lh % 12 || 12;
+  return `${days[d.getDay()]} ${lh}:${String(d.getMinutes()).padStart(2, '0')} ${ampm}`;
+};
+
+const formatSlotLocal = (slot: TimeSlot): string => {
+  const startStr = utcSlotToLocal(slot.start);
+  const endD = utcToLocalDate(slot.end);
+  const startD = utcToLocalDate(slot.start);
+  let lh = endD.getHours();
+  const ampm = lh >= 12 ? 'PM' : 'AM';
+  lh = lh % 12 || 12;
+  const endTime = `${lh}:${String(endD.getMinutes()).padStart(2, '0')} ${ampm}`;
+  // If end is on a different day, show the day name
+  if (endD.getDay() !== startD.getDay()) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return `${startStr} - ${days[endD.getDay()]} ${endTime}`;
   }
+  return `${startStr} - ${endTime}`;
+};
+
+const formatBadge = (sec: number): string => {
+  if (sec < 0) return '--';
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  if (h > 0) return `${h}h ${m}m ${String(s).padStart(2, '0')}s`;
   return `${m}m ${String(s).padStart(2, '0')}s`;
 };
 
-/* ─── Notification Tracking ─── */
-// In-memory set for demo; production would use react-native-push-notification
-const notifiedEvents = new Set<number>();
-
+/* ══════════════════════════════════════════════════════════ */
 const EventTimerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
-  const events = rawEvents as GameEvent[];
+  const [events, setEvents] = useState<GameEvent[]>(localEvents as GameEvent[]);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [tick, setTick] = useState(0);
-  const [notifySet, setNotifySet] = useState<Set<number>>(new Set());
 
-  // Tick every second for live countdown
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTick(t => t + 1);
-    }, 1000);
-    return () => clearInterval(interval);
+    const iv = setInterval(() => setTick(t => t + 1), 1000);
+    return () => clearInterval(iv);
   }, []);
 
-  const toggleNotify = useCallback((eventId: number, eventName: string) => {
-    setNotifySet(prev => {
-      const next = new Set(prev);
-      if (next.has(eventId)) {
-        next.delete(eventId);
-        Alert.alert('Notification Off', `Removed reminder for ${eventName}`);
-      } else {
-        next.add(eventId);
-        Alert.alert(
-          'Notification Set',
-          `You'll be reminded 1 minute before ${eventName} ends`,
-        );
+  /* ── Fetch logic ─────────────────────────────────────── */
+  const fetchEvents = useCallback(async (options?: {silent?: boolean; force?: boolean}) => {
+    const silent = options?.silent ?? false;
+    const force = options?.force ?? false;
+    if (!silent) setLoading(true);
+    try {
+      // Check cache (skip if force-refreshing)
+      if (!force) {
+        try {
+          const [cachedRaw, cachedTs] = await Promise.all([
+            AsyncStorage.getItem(CACHE_KEY),
+            AsyncStorage.getItem(CACHE_TS_KEY),
+          ]);
+          if (cachedRaw && cachedTs) {
+            const ts = parseInt(cachedTs, 10);
+            const parsed = JSON.parse(cachedRaw);
+            if (Array.isArray(parsed) && parsed.length > 0) setEvents(parsed);
+            if (Date.now() - ts < CACHE_TTL) return;
+          }
+        } catch {}
       }
-      return next;
-    });
+      // Fetch remote
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      try {
+        const res = await fetch(REMOTE_URL, {signal: controller.signal});
+        clearTimeout(timeout);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setEvents(data);
+            await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+            await AsyncStorage.setItem(CACHE_TS_KEY, String(Date.now()));
+          }
+        }
+      } catch {
+        clearTimeout(timeout);
+      }
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
   }, []);
 
-  const grouped = useMemo(() => {
-    const g: Record<string, GameEvent[]> = {};
-    events.forEach(e => {
-      if (!g[e.map]) g[e.map] = [];
-      g[e.map].push(e);
-    });
-    return Object.entries(g).map(([map, items]) => ({map, items}));
-  }, []);
+  useEffect(() => {
+    fetchEvents({silent: true});
+  }, [fetchEvents]);
 
-  return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await AsyncStorage.removeItem(CACHE_KEY);
+      await AsyncStorage.removeItem(CACHE_TS_KEY);
+    } catch {}
+    await fetchEvents({force: true});
+  }, [fetchEvents]);
 
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <View style={styles.headerIconWrap}>
-          <Icon name="clock-outline" size={18} color={colors.cyan} />
+  /* ── Computed ─────────────────────────────────────────── */
+  const eventsWithStatus: EventWithStatus[] = useMemo(
+    () =>
+      events.map(e => {
+        const slots = parseTimeSlots(e.times);
+        return {...e, slots, status: getEventStatus(slots)};
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [events, tick],
+  );
+
+  const activeEvents = useMemo(
+    () => eventsWithStatus.filter(e => e.status.isActive),
+    [eventsWithStatus],
+  );
+
+  const startingSoon = useMemo(
+    () =>
+      eventsWithStatus
+        .filter(
+          e =>
+            !e.status.isActive &&
+            e.status.secondsRemaining <= STARTING_SOON_THRESHOLD &&
+            e.status.secondsRemaining > 0,
+        )
+        .sort((a, b) => a.status.secondsRemaining - b.status.secondsRemaining),
+    [eventsWithStatus],
+  );
+
+  /* ── ALL EVENTS: group by event name, flatten slots ── */
+  const groupedEvents: GroupedEvent[] = useMemo(() => {
+    const map = new Map<string, GroupedEvent>();
+
+    for (const ev of eventsWithStatus) {
+      if (!map.has(ev.name)) {
+        map.set(ev.name, {name: ev.name, icon: ev.icon, rows: []});
+      }
+      const group = map.get(ev.name)!;
+      for (const slot of ev.slots) {
+        const live = isSlotActive(slot);
+        const localD = utcToLocalDate(slot.start);
+        group.rows.push({
+          map: ev.map,
+          slot,
+          isLive: live,
+          localStartSec: localD.getTime(),
+        });
+      }
+    }
+
+    // Sort rows within each group by local start time
+    for (const g of map.values()) {
+      g.rows.sort((a, b) => a.localStartSec - b.localStartSec);
+    }
+
+    return Array.from(map.values());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventsWithStatus, tick]);
+
+  /* ── Card for ACTIVE / STARTING SOON ─────────────────── */
+  const renderCard = (ev: EventWithStatus, type: 'active' | 'soon') => {
+    const isActive = type === 'active';
+    const displaySlot = isActive ? ev.status.activeSlot : ev.status.nextSlot;
+    const timeStr = displaySlot ? formatSlotLocal(displaySlot) : '';
+
+    return (
+      <View
+        key={`${ev.id}-${type}`}
+        style={[st.card, isActive ? st.cardActive : st.cardSoon]}>
+        <View style={st.cardLeft}>
+          {ev.icon ? (
+            <Image source={{uri: ev.icon}} style={st.cardIcon} resizeMode="cover" />
+          ) : (
+            <View style={st.cardIconFb}>
+              <Icon name="weather-lightning" size={20} color="#999" />
+            </View>
+          )}
+          <View style={st.cardInfo}>
+            <Text style={st.cardName} numberOfLines={1}>
+              {ev.name}
+            </Text>
+            <Text style={st.cardMap} numberOfLines={1}>
+              {MAP_DISPLAY[ev.map] || ev.map}
+            </Text>
+          </View>
         </View>
-        <View style={{flex: 1}}>
-          <Text style={styles.headerTitle}>Event Timers</Text>
-          <Text style={styles.headerSubtitle}>{events.length} scheduled events · Live</Text>
+        <View style={st.cardRight}>
+          <View style={[st.badge, isActive ? st.badgeActive : st.badgeSoon]}>
+            <Text
+              style={[
+                st.badgeText,
+                isActive ? st.badgeTextActive : st.badgeTextSoon,
+              ]}>
+              {isActive
+                ? `Ends in ${formatBadge(ev.status.secondsRemaining)}`
+                : `Starts in ${formatBadge(ev.status.secondsRemaining)}`}
+            </Text>
+          </View>
+          {timeStr !== '' && (
+            <Text style={st.cardTime} numberOfLines={1}>
+              {timeStr}
+            </Text>
+          )}
         </View>
-        <View style={styles.liveDot} />
+      </View>
+    );
+  };
+
+  /* ── Expanded event card for ALL EVENTS ──────────────── */
+  const renderGroupedCard = (group: GroupedEvent) => (
+    <View key={group.name} style={st.allCard}>
+      {/* Header */}
+      <View style={st.allCardHeader}>
+        <Text style={st.allCardTitle}>{group.name}</Text>
+        <View style={st.bellWrap}>
+          <Icon name="bell-outline" size={18} color="rgba(255,255,255,0.4)" />
+        </View>
       </View>
 
-      <FlatList
-        data={grouped}
-        renderItem={({item: group}) => {
-          const mapColor = MAP_COLORS[group.map] || colors.orange;
-          return (
-            <View style={styles.mapSection}>
-              <View style={styles.mapHeader}>
-                <View style={[styles.mapDot, {backgroundColor: mapColor}]} />
-                <Text style={[styles.mapName, {color: mapColor}]}>
-                  {group.map}
-                </Text>
-                <View style={styles.mapLine} />
-              </View>
+      {/* Divider */}
+      <View style={st.allCardDivider} />
 
-              {group.items.map(event => {
-                const slots = parseTimeSlots(event.times);
-                const status = getEventStatus(slots);
-                const isNotifyOn = notifySet.has(event.id);
-
-                return (
-                  <View
-                    key={event.id}
-                    style={[
-                      styles.eventCard,
-                      status.isActive && styles.eventCardActive,
-                    ]}>
-                    <View style={styles.eventRow}>
-                      {event.icon ? (
-                        <Image
-                          source={{uri: event.icon}}
-                          style={styles.eventIcon}
-                          resizeMode="contain"
-                        />
-                      ) : (
-                        <View style={styles.eventIconPlaceholder}>
-                          <Icon name="clock-outline" size={22} color={colors.textMuted} />
-                        </View>
-                      )}
-
-                      <View style={styles.eventInfo}>
-                        <Text style={styles.eventName}>{event.name}</Text>
-                        <Text style={styles.eventSchedule}>
-                          {slots.map(s => `${s.start}–${s.end}`).join(' · ')} UTC
-                        </Text>
-                      </View>
-
-                      {/* Notification Bell */}
-                      <TouchableOpacity
-                        onPress={() => toggleNotify(event.id, event.name)}
-                        style={[
-                          styles.notifyBtn,
-                          isNotifyOn && styles.notifyBtnActive,
-                        ]}>
-                        <Icon
-                          name={isNotifyOn ? 'bell' : 'bell-outline'}
-                          size={16}
-                          color={isNotifyOn ? colors.cyan : colors.textMuted}
-                        />
-                      </TouchableOpacity>
-                    </View>
-
-                    {/* Live Countdown Row */}
-                    <View style={styles.countdownRow}>
-                      {status.isActive ? (
-                        <>
-                          <View style={styles.activeBadge}>
-                            <View style={styles.activePulse} />
-                            <Text style={styles.activeBadgeText}>ACTIVE</Text>
-                          </View>
-                          <Text style={styles.countdownText}>
-                            Ends in{' '}
-                            <Text style={styles.countdownValue}>
-                              {formatCountdown(status.secondsRemaining)}
-                            </Text>
-                          </Text>
-                        </>
-                      ) : (
-                        <>
-                          <Icon
-                            name="timer-sand"
-                            size={12}
-                            color={colors.textMuted}
-                          />
-                          <Text style={styles.upcomingLabel}>
-                            {status.label}{' '}
-                          </Text>
-                          <Text style={styles.countdownValueMuted}>
-                            {formatCountdown(status.secondsRemaining)}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                  </View>
-                );
-              })}
+      {/* Rows */}
+      {group.rows.map((row, idx) => (
+        <View key={`${row.map}-${row.slot.start}-${idx}`}>
+          <View style={st.slotRow}>
+            <View style={st.slotLeft}>
+              <Text style={[st.slotMap, row.isLive && {color: '#fff'}]}>
+                {MAP_DISPLAY[row.map] || row.map}
+              </Text>
+              {row.isLive && (
+                <View style={st.liveBadge}>
+                  <Text style={st.liveText}>LIVE</Text>
+                </View>
+              )}
             </View>
-          );
-        }}
-        keyExtractor={item => item.map}
-        contentContainerStyle={styles.list}
+            <Text style={[st.slotTime, row.isLive && st.slotTimeLive]}>
+              {formatSlotLocal(row.slot)}
+            </Text>
+          </View>
+          {idx < group.rows.length - 1 && <View style={st.slotDivider} />}
+        </View>
+      ))}
+    </View>
+  );
+
+  return (
+    <View style={[st.root, {paddingTop: insets.top}]}>
+      <StatusBar barStyle="light-content" backgroundColor="#050A14" />
+
+      {/* ── Header ─────────────────────────────────────── */}
+      <View style={st.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
+          <Icon name="arrow-left" size={20} color="#fff" />
+        </TouchableOpacity>
+        <Text style={st.headerTitle}>EVENTS SCHEDULE</Text>
+        <TouchableOpacity onPress={handleRefresh} style={st.refreshBtn}>
+          {loading ? (
+            <ActivityIndicator size="small" color={CYAN} />
+          ) : (
+            <Icon name="refresh" size={18} color={CYAN} />
+          )}
+        </TouchableOpacity>
+      </View>
+
+      {/* ── Content ────────────────────────────────────── */}
+      <ScrollView
         showsVerticalScrollIndicator={false}
-      />
+        contentContainerStyle={st.scroll}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            tintColor={CYAN}
+          />
+        }>
+        {/* ACTIVE NOW */}
+        {activeEvents.length > 0 && (
+          <>
+            <View style={st.sectionRow}>
+              <View style={[st.sectionDot, {backgroundColor: GREEN}]} />
+              <Text style={[st.sectionTitle, {color: GREEN}]}>ACTIVE NOW</Text>
+            </View>
+            {activeEvents.map(ev => renderCard(ev, 'active'))}
+          </>
+        )}
+
+        {/* STARTING SOON */}
+        {startingSoon.length > 0 && (
+          <>
+            <View style={[st.sectionRow, {marginTop: activeEvents.length > 0 ? 24 : 0}]}>
+              <View style={[st.sectionDot, {backgroundColor: CYAN}]} />
+              <Text style={[st.sectionTitle, {color: CYAN}]}>STARTING SOON</Text>
+            </View>
+            <Text style={st.sectionSub}>Events starting in the next hour</Text>
+            {startingSoon.map(ev => renderCard(ev, 'soon'))}
+          </>
+        )}
+
+        {/* ALL EVENTS */}
+        <View
+          style={[
+            st.sectionRow,
+            {marginTop: activeEvents.length > 0 || startingSoon.length > 0 ? 24 : 0},
+          ]}>
+          <View style={st.sectionBar} />
+          <Text style={[st.sectionTitle, {color: ORANGE}]}>ALL EVENTS</Text>
+        </View>
+        {groupedEvents.map(g => renderGroupedCard(g))}
+
+        {eventsWithStatus.length === 0 && (
+          <View style={st.emptyWrap}>
+            <Icon name="calendar-remove" size={48} color="#555" />
+            <Text style={st.emptyTitle}>No Events</Text>
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+/* ══════════════════════════════════════════════════════════ */
+const st = StyleSheet.create({
+  root: {flex: 1, backgroundColor: '#050A14'},
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
-    paddingBottom: spacing.lg,
-    gap: spacing.md,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.bgCard,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerIconWrap: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: fonts.sizes.xl,
-    fontWeight: '700',
-    color: colors.textPrimary,
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#fff',
+    letterSpacing: 2,
   },
-  headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
-  liveDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#66BB6A',
-    marginLeft: 'auto',
-  },
-  list: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.xl},
-  mapSection: {gap: spacing.sm},
-  mapHeader: {
+  refreshBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
+
+  scroll: {paddingHorizontal: 20, paddingTop: 8, paddingBottom: 100},
+
+  /* Sections */
+  sectionRow: {flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 4},
+  sectionDot: {width: 10, height: 10, borderRadius: 5},
+  sectionBar: {width: 4, height: 22, borderRadius: 2, backgroundColor: ORANGE},
+  sectionTitle: {fontSize: 18, fontWeight: '800', letterSpacing: 1},
+  sectionSub: {fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 10, marginLeft: 20},
+
+  /* Active/Soon cards */
+  card: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.xs,
-  },
-  mapDot: {width: 8, height: 8, borderRadius: 4},
-  mapName: {fontSize: 12, fontWeight: '700'},
-  mapLine: {flex: 1, height: 1, backgroundColor: colors.border},
-
-  // Event Card
-  eventCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-  },
-  eventCardActive: {
-    borderColor: '#66BB6A40',
-    backgroundColor: 'rgba(102, 187, 106, 0.06)',
-  },
-  eventRow: {flexDirection: 'row', alignItems: 'center', gap: spacing.md},
-  eventIcon: {width: 40, height: 40, borderRadius: borderRadius.md},
-  eventIconPlaceholder: {
-    width: 40,
-    height: 40,
-    borderRadius: borderRadius.md,
-    backgroundColor: colors.bgElevated,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  eventInfo: {flex: 1},
-  eventName: {
-    fontSize: fonts.sizes.md,
-    fontWeight: '700',
-    color: colors.textPrimary,
-  },
-  eventSchedule: {
-    fontSize: 10,
-    color: colors.textMuted,
-    fontWeight: '600',
-    marginTop: 2,
-  },
-
-  // Notification
-  notifyBtn: {
-    width: 32,
-    height: 32,
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(255,255,255,0.04)',
     borderRadius: 16,
-    backgroundColor: colors.bgElevated,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    paddingHorizontal: 14,
+    paddingVertical: 16,
+    marginTop: 10,
+  },
+  cardActive: {borderColor: 'rgba(74,222,128,0.2)', backgroundColor: 'rgba(74,222,128,0.04)'},
+  cardSoon: {borderColor: 'rgba(34,211,238,0.2)', backgroundColor: 'rgba(34,211,238,0.03)'},
+  cardLeft: {flexDirection: 'row', alignItems: 'center', flex: 1, gap: 12},
+  cardIcon: {width: 42, height: 42, borderRadius: 12},
+  cardIconFb: {
+    width: 42, height: 42, borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  cardInfo: {flex: 1},
+  cardName: {fontSize: 16, fontWeight: '700', color: '#fff'},
+  cardMap: {fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 2},
+  cardRight: {alignItems: 'flex-end', gap: 4, marginLeft: 8},
+  badge: {paddingHorizontal: 12, paddingVertical: 5, borderRadius: 8, borderWidth: 1},
+  badgeActive: {backgroundColor: 'rgba(74,222,128,0.12)', borderColor: 'rgba(74,222,128,0.35)'},
+  badgeSoon: {backgroundColor: 'rgba(34,211,238,0.12)', borderColor: 'rgba(34,211,238,0.35)'},
+  badgeText: {fontSize: 12, fontWeight: '700', fontVariant: ['tabular-nums']},
+  badgeTextActive: {color: GREEN},
+  badgeTextSoon: {color: CYAN},
+  cardTime: {fontSize: 11, color: 'rgba(255,255,255,0.35)', fontWeight: '600'},
+
+  /* ALL EVENTS expanded card */
+  allCard: {
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    marginTop: 12,
+    overflow: 'hidden',
+  },
+  allCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+  },
+  allCardTitle: {fontSize: 17, fontWeight: '700', color: '#fff'},
+  bellWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.06)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  notifyBtnActive: {
-    backgroundColor: colors.cyan + '20',
-  },
+  allCardDivider: {height: 1, backgroundColor: 'rgba(255,255,255,0.08)'},
 
-  // Countdown
-  countdownRow: {
+  /* Slot rows */
+  slotRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
-    marginTop: spacing.sm,
-    paddingTop: spacing.sm,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
+    justifyContent: 'space-between',
+    paddingHorizontal: 18,
+    paddingVertical: 14,
   },
-  activeBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#66BB6A20',
-    paddingHorizontal: spacing.sm,
+  slotLeft: {flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1},
+  slotMap: {fontSize: 14, color: 'rgba(255,255,255,0.5)', fontWeight: '500'},
+  liveBadge: {
+    backgroundColor: 'rgba(74,222,128,0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(74,222,128,0.4)',
+    paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: borderRadius.sm,
+    borderRadius: 5,
   },
-  activePulse: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#66BB6A',
-  },
-  activeBadgeText: {
-    fontSize: 9,
-    fontWeight: '700',
-    color: '#66BB6A',
-  },
-  countdownText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: colors.textSecondary,
-  },
-  countdownValue: {
-    fontWeight: '800',
-    color: '#66BB6A',
-    fontVariant: ['tabular-nums'],
-  },
-  upcomingLabel: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: colors.textMuted,
-  },
-  countdownValueMuted: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textSecondary,
-    fontVariant: ['tabular-nums'],
-  },
+  liveText: {fontSize: 10, fontWeight: '800', color: GREEN, letterSpacing: 0.5},
+  slotTime: {fontSize: 13, color: 'rgba(255,255,255,0.55)', fontWeight: '600', fontVariant: ['tabular-nums']},
+  slotTimeLive: {color: GREEN},
+  slotDivider: {height: 1, backgroundColor: 'rgba(255,255,255,0.05)', marginHorizontal: 18},
+
+  /* Empty */
+  emptyWrap: {alignItems: 'center', paddingTop: 80, gap: 12},
+  emptyTitle: {fontSize: 16, fontWeight: '700', color: '#555'},
 });
 
 export default EventTimerScreen;

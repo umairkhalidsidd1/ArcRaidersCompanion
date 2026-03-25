@@ -1,6 +1,7 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useCallback, useEffect} from 'react';
 import {
-  Dimensions,
+  FlatList,
+  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -10,19 +11,26 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import {useIsFocused} from '@react-navigation/native';
+import {colors} from '../theme/theme';
 import questData from '../data/quests.json';
+import {getCompletedQuests} from '../utils/storage';
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+/* ── Portraits & colors ──────────────────────────────────── */
+const TRADER_PORTRAITS: Record<string, any> = {
+  'Tian Wen': require('../assets/traders/tian-wen.png'),
+  Shani: require('../assets/traders/shani.png'),
+  Lance: require('../assets/traders/lance.png'),
+  Celeste: require('../assets/traders/celeste.png'),
+  Apollo: require('../assets/traders/apollo.png'),
+};
 
-/* ═══════ QUEST GIVER CONFIG ═══════ */
-const GIVER_CONFIG: Record<string, {color: string; icon: string}> = {
-  Shani: {color: '#FF6B2C', icon: 'account-star'},
-  Celeste: {color: '#AB47BC', icon: 'account-heart'},
-  Lance: {color: '#42A5F5', icon: 'account-cowboy-hat'},
-  Apollo: {color: '#66BB6A', icon: 'account-tie'},
-  TianWen: {color: '#FF7043', icon: 'account-circle'},
-  All: {color: colors.cyan, icon: 'account-group'},
+const GIVER_COLORS: Record<string, string> = {
+  Shani: '#66BB6A',
+  Celeste: '#AB47BC',
+  Lance: '#42A5F5',
+  Apollo: '#FF7043',
+  'Tian Wen': '#FDD835',
 };
 
 type Quest = {
@@ -31,357 +39,433 @@ type Quest = {
   quest_giver: string;
   location: string;
   objectives: string[];
-  rewards: {name: string; quantity: number}[];
+  rewards: {item_id: string; name: string; quantity: number}[];
   prerequisites: string[];
+  unlock_requirement: string | null;
   tree_position: string;
 };
 
-const quests: Quest[] = (questData as any).quests || [];
+const allQuests: Quest[] = ((questData as any).quests || []) as Quest[];
 
-/* ═══════ BUILD TREE STRUCTURE ═══════ */
-type TreeNode = Quest & {children: TreeNode[]; depth: number; x: number};
+/* ── Build tree & flatten ────────────────────────────────── */
+type TreeNode = Quest & {children: TreeNode[]};
+type FlatRow = Quest & {depth: number; isLastChild: boolean; isChainStart: boolean};
 
 const buildForest = (qs: Quest[]): TreeNode[] => {
   const byName = new Map<string, Quest>();
   qs.forEach(q => byName.set(q.name, q));
-
-  // Find root quests (no prerequisites or prerequisites not in our data)
   const roots = qs.filter(
-    q =>
-      q.prerequisites.length === 0 ||
-      q.prerequisites.every(p => !byName.has(p)),
+    q => q.prerequisites.length === 0 || q.prerequisites.every(p => !byName.has(p)),
   );
-
   const visited = new Set<number>();
-
-  const buildNode = (q: Quest, depth: number): TreeNode => {
+  const build = (q: Quest): TreeNode => {
     visited.add(q.id);
     const children = qs
-      .filter(
-        c =>
-          !visited.has(c.id) &&
-          c.prerequisites.some(p => p === q.name),
-      )
-      .map(c => buildNode(c, depth + 1));
-    return {...q, children, depth, x: 0};
+      .filter(c => !visited.has(c.id) && c.prerequisites.some(p => p === q.name))
+      .map(c => build(c));
+    return {...q, children};
   };
-
-  return roots.map(r => buildNode(r, 0));
+  return roots.map(r => build(r));
 };
 
-/* ═══════ COMPONENT ═══════ */
+const flattenTree = (forest: TreeNode[]): FlatRow[] => {
+  const rows: FlatRow[] = [];
+  const walk = (node: TreeNode, depth: number, isLast: boolean, isChainStart: boolean) => {
+    rows.push({...node, depth, isLastChild: isLast, isChainStart});
+    node.children.forEach((child, idx) =>
+      walk(child, depth + 1, idx === node.children.length - 1, false),
+    );
+  };
+  forest.forEach((root, idx) => walk(root, 0, idx === forest.length - 1, true));
+  return rows;
+};
+
+/* ══════════════════════════════════════════════════════════ */
 const QuestTreeScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const isFocused = useIsFocused();
   const [activeGiver, setActiveGiver] = useState('All');
-  const [expandedQuests, setExpandedQuests] = useState<Set<number>>(new Set());
+  const [completedIds, setCompletedIds] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (isFocused) getCompletedQuests().then(setCompletedIds);
+  }, [isFocused]);
+
+  const completedNames = useMemo(() => {
+    const set = new Set<string>();
+    allQuests.forEach(q => {
+      if (completedIds.includes(q.id)) set.add(q.name);
+    });
+    return set;
+  }, [completedIds]);
 
   const givers = useMemo(() => {
-    const set = new Set(quests.map(q => q.quest_giver));
+    const set = new Set(allQuests.map(q => q.quest_giver));
     return ['All', ...Array.from(set)];
   }, []);
 
-  const filteredQuests = useMemo(() => {
-    if (activeGiver === 'All') return quests;
-    return quests.filter(q => q.quest_giver === activeGiver);
-  }, [activeGiver]);
+  const filtered = useMemo(
+    () => (activeGiver === 'All' ? allQuests : allQuests.filter(q => q.quest_giver === activeGiver)),
+    [activeGiver],
+  );
 
-  const forest = useMemo(() => buildForest(filteredQuests), [filteredQuests]);
+  const forest = useMemo(() => buildForest(filtered), [filtered]);
+  const flatRows = useMemo(() => flattenTree(forest), [forest]);
 
-  const toggleExpand = (id: number) => {
-    setExpandedQuests(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
+  const getStatus = useCallback(
+    (q: Quest): 'completed' | 'available' | 'locked' => {
+      if (completedIds.includes(q.id)) return 'completed';
+      if (q.prerequisites.length > 0 && !q.prerequisites.every(p => completedNames.has(p)))
+        return 'locked';
+      return 'available';
+    },
+    [completedIds, completedNames],
+  );
 
-  /* ═══════ RENDER TREE NODE ═══════ */
-  const renderNode = (node: TreeNode) => {
-    const cfg = GIVER_CONFIG[node.quest_giver] || GIVER_CONFIG.All;
-    const isExpanded = expandedQuests.has(node.id);
-    const hasChildren = node.children.length > 0;
+  /* ── Stats ───────────────────────────────────────────── */
+  const chainCount = forest.length;
+  const totalCount = filtered.length;
+  const completedCount = filtered.filter(q => completedIds.includes(q.id)).length;
+  const progressRatio = totalCount > 0 ? completedCount / totalCount : 0;
 
-    return (
-      <View key={node.id} style={styles.nodeContainer}>
-        {/* Connector line */}
-        {node.depth > 0 && (
-          <View style={[styles.connectorLine, {backgroundColor: cfg.color + '40'}]} />
-        )}
+  /* ── Render row ──────────────────────────────────────── */
+  const renderRow = useCallback(
+    ({item}: {item: FlatRow}) => {
+      const status = getStatus(item);
+      const gc = GIVER_COLORS[item.quest_giver] || colors.orange;
+      const portrait = TRADER_PORTRAITS[item.quest_giver];
+      const depth = item.depth;
 
-        <TouchableOpacity
-          style={[styles.questCard, {borderLeftColor: cfg.color, borderLeftWidth: 3}]}
-          activeOpacity={0.7}
-          onPress={() => toggleExpand(node.id)}>
-          {/* Quest header */}
-          <View style={styles.questHeader}>
-            <View style={[styles.questGiverBadge, {backgroundColor: cfg.color + '18'}]}>
-              <Icon name={cfg.icon} size={14} color={cfg.color} />
-              <Text style={[styles.questGiverText, {color: cfg.color}]}>
-                {node.quest_giver}
-              </Text>
-            </View>
-            {hasChildren && (
-              <View style={styles.childBadge}>
-                <Text style={styles.childBadgeText}>
-                  {node.children.length} NEXT
-                </Text>
-              </View>
-            )}
-          </View>
+      const statusIcon =
+        status === 'completed'
+          ? 'check-circle'
+          : status === 'locked'
+          ? 'lock'
+          : 'play-circle-outline';
+      const statusColor =
+        status === 'completed'
+          ? colors.green
+          : status === 'locked'
+          ? colors.textMuted
+          : colors.green;
 
-          {/* Quest name */}
-          <Text style={styles.questName}>{node.name}</Text>
+      return (
+        <View>
+          {/* Chain separator */}
+          {item.isChainStart && item.depth === 0 && (
+            <View style={st.chainSep} />
+          )}
 
-          {/* Location */}
-          <View style={styles.locationRow}>
-            <Icon name="map-marker" size={12} color={colors.textMuted} />
-            <Text style={styles.locationText}>{node.location}</Text>
-          </View>
-
-          {/* Expanded details */}
-          {isExpanded && (
-            <View style={styles.expandedSection}>
-              {/* Objectives */}
-              <Text style={styles.sectionLabel}>Objectives</Text>
-              {node.objectives.map((obj, idx) => (
-                <View key={idx} style={styles.objectiveRow}>
-                  <Icon name="checkbox-blank-circle-outline" size={10} color={colors.cyan} />
-                  <Text style={styles.objectiveText}>{obj}</Text>
-                </View>
-              ))}
-
-              {/* Rewards */}
-              {node.rewards.length > 0 && (
-                <>
-                  <Text style={[styles.sectionLabel, {marginTop: spacing.md}]}>Rewards</Text>
-                  <View style={styles.rewardsRow}>
-                    {node.rewards.map((rw, idx) => (
-                      <View key={idx} style={styles.rewardChip}>
-                        <Icon name="gift" size={10} color={colors.yellow} />
-                        <Text style={styles.rewardText}>
-                          {rw.name}{rw.quantity > 1 ? ` x${rw.quantity}` : ''}
-                        </Text>
-                      </View>
-                    ))}
-                  </View>
-                </>
-              )}
-
-              {/* Prerequisites */}
-              {node.prerequisites.length > 0 && (
-                <>
-                  <Text style={[styles.sectionLabel, {marginTop: spacing.md}]}>Requires</Text>
-                  {node.prerequisites.map((p, idx) => (
-                    <View key={idx} style={styles.prereqRow}>
-                      <Icon name="arrow-right-bold" size={10} color={colors.cyan} />
-                      <Text style={styles.prereqText}>{p}</Text>
-                    </View>
-                  ))}
-                </>
-              )}
+          {/* Connector line for non-root */}
+          {depth > 0 && (
+            <View style={[st.connector, {marginLeft: 16 + Math.min(depth - 1, 3) * 12}]}>
+              <View style={[st.connLine, {backgroundColor: gc, shadowColor: gc, shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.9, shadowRadius: 6}]} />
+              <View style={[st.connDot, {backgroundColor: gc, shadowColor: gc, shadowOffset: {width: 0, height: 0}, shadowOpacity: 1, shadowRadius: 8}]} />
             </View>
           )}
 
-          {/* Expand indicator */}
-          <View style={styles.expandIndicator}>
-            <Icon
-              name={isExpanded ? 'chevron-up' : 'chevron-down'}
-              size={18}
-              color={colors.textMuted}
+          {/* Card */}
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('QuestDetail', {questId: item.id})}
+            style={[
+              st.card,
+              {marginLeft: Math.min(depth, 3) * 12},
+              status === 'completed' && st.cardDone,
+              status === 'locked' && st.cardLocked,
+            ]}>
+            {/* Accent bar */}
+            <View style={[st.accent, {backgroundColor: gc}]} />
+
+            {/* Portrait */}
+            {portrait ? (
+              <Image source={portrait} style={st.portrait} />
+            ) : (
+              <View style={[st.portraitFb, {backgroundColor: gc + '25'}]}>
+                <Icon name="account" size={18} color={gc} />
+              </View>
+            )}
+
+            {/* Info */}
+            <View style={st.info}>
+              <Text
+                style={[st.name, status === 'locked' && st.nameLocked]}
+                numberOfLines={1}>
+                {item.name}
+              </Text>
+              <View style={st.meta}>
+                <Text style={[st.giver, {color: gc}]}>{item.quest_giver}</Text>
+                {item.location !== 'Any' && (
+                  <>
+                    <View style={st.dot} />
+                    <Icon name="map-marker" size={10} color={colors.textMuted} />
+                    <Text style={st.loc} numberOfLines={1}>{item.location}</Text>
+                  </>
+                )}
+              </View>
+            </View>
+
+            {/* Depth badge for nested */}
+            {depth > 0 && (
+              <View style={st.depthBadge}>
+                <Text style={st.depthText}>LV{depth}</Text>
+              </View>
+            )}
+
+            {/* Status */}
+            <Icon name={statusIcon} size={18} color={statusColor} />
+          </TouchableOpacity>
+        </View>
+      );
+    },
+    [getStatus, navigation],
+  );
+
+  const keyExtractor = useCallback((item: FlatRow) => String(item.id), []);
+
+  const ListHeader = useMemo(
+    () => (
+      <>
+        {/* Progress */}
+        <View style={st.progressWrap}>
+          <View style={st.progressLabelRow}>
+            <Text style={st.progressLabel}>CHAIN PROGRESS</Text>
+            <Text style={st.progressCount}>
+              <Text style={st.progressHi}>{completedCount}</Text>
+              {' / '}
+              {totalCount}
+            </Text>
+          </View>
+          <View style={st.progressBg}>
+            <View
+              style={[st.progressFill, {width: `${Math.min(progressRatio * 100, 100)}%`}]}
             />
           </View>
-        </TouchableOpacity>
-
-        {/* Children */}
-        {hasChildren && (
-          <View style={[styles.childrenContainer, {borderLeftColor: cfg.color + '30'}]}>
-            {node.children.map(child => renderNode(child))}
-          </View>
-        )}
-      </View>
-    );
-  };
-
-  /* ═══════ STATS ═══════ */
-  const totalQuests = filteredQuests.length;
-  const rootQuests = forest.length;
-
-  return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <View style={styles.headerIconWrap}>
-          <Icon name="file-tree" size={18} color={colors.cyan} />
-        </View>
-        <View style={{flex: 1}}>
-          <Text style={styles.headerTitle}>Quest Tree</Text>
-          <Text style={styles.headerSubtitle}>
-            {totalQuests} quests · {rootQuests} chains
+          <Text style={st.chainsText}>
+            {chainCount} quest chain{chainCount !== 1 ? 's' : ''}
           </Text>
         </View>
+
+        {/* Giver pills */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={st.pillRow}>
+          {givers.map(g => {
+            const isActive = activeGiver === g;
+            const gc2 = GIVER_COLORS[g] || colors.orange;
+            const pt = TRADER_PORTRAITS[g];
+            return (
+              <TouchableOpacity
+                key={g}
+                activeOpacity={0.7}
+                onPress={() => setActiveGiver(g)}
+                style={[
+                  st.pill,
+                  isActive && {backgroundColor: gc2 + '25', borderColor: gc2},
+                ]}>
+                {g !== 'All' && pt ? (
+                  <Image source={pt} style={st.pillPt} />
+                ) : g === 'All' ? (
+                  <Icon
+                    name="account-group"
+                    size={14}
+                    color={isActive ? colors.orange : colors.textMuted}
+                  />
+                ) : null}
+                <Text style={[st.pillText, isActive && {color: gc2}]}>
+                  {g.toUpperCase()}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+
+        <View style={st.sep} />
+      </>
+    ),
+    [completedCount, totalCount, progressRatio, chainCount, givers, activeGiver],
+  );
+
+  const emptyComponent = useMemo(
+    () => (
+      <View style={st.emptyWrap}>
+        <Icon name="file-tree-outline" size={56} color={colors.textMuted} />
+        <Text style={st.emptyTitle}>NO QUEST CHAINS</Text>
+        <Text style={st.emptySub}>Select a different trader to view chains</Text>
+      </View>
+    ),
+    [],
+  );
+
+  return (
+    <View style={[st.root, {paddingTop: insets.top}]}>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+
+      {/* Header */}
+      <View style={st.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
+          <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+        </TouchableOpacity>
+        <Text style={st.headerTitle}>QUEST TREE</Text>
+        <View style={st.backBtn} />
       </View>
 
-      {/* Giver Tabs */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tabBar}>
-        {givers.map(g => {
-          const isActive = activeGiver === g;
-          return (
-            <TouchableOpacity
-              key={g}
-              style={styles.tab}
-              onPress={() => setActiveGiver(g)}>
-              <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
-                {g.toUpperCase()}
-              </Text>
-              {isActive && <View style={styles.tabIndicator} />}
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-
-      {/* Tree */}
-      <ScrollView
-        contentContainerStyle={styles.treeContainer}
-        showsVerticalScrollIndicator={false}>
-        {forest.map(node => renderNode(node))}
-      </ScrollView>
+      <FlatList
+        data={flatRows}
+        renderItem={renderRow}
+        keyExtractor={keyExtractor}
+        ListHeaderComponent={ListHeader}
+        ListEmptyComponent={emptyComponent}
+        contentContainerStyle={st.listContent}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      />
     </View>
   );
 };
 
-/* ═══════ STYLES ═══════ */
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+/* ══════════════════════════════════════════════════════════ */
+const st = StyleSheet.create({
+  root: {flex: 1, backgroundColor: '#000'},
+
+  /* Header */
   header: {
-    flexDirection: 'row', alignItems: 'center',
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg, paddingBottom: spacing.md,
-    gap: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
-  backBtn: {
-    width: 36, height: 36, borderRadius: 18,
-    backgroundColor: colors.bgCard,
-    alignItems: 'center', justifyContent: 'center',
-  },
-  headerIconWrap: {
-    width: 32, height: 32, borderRadius: 16,
-    backgroundColor: 'rgba(0, 229, 255, 0.12)',
-    alignItems: 'center', justifyContent: 'center',
-  },
+  backBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
   headerTitle: {
-    fontSize: fonts.sizes.xl, fontWeight: '700',
+    fontSize: 20,
+    fontWeight: '900',
     color: colors.textPrimary,
-  },
-  headerSubtitle: {
-    fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 2,
+    letterSpacing: 2,
   },
 
-  // Tabs
-  tabBar: {
-    paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.border, marginBottom: spacing.md,
+  /* Progress */
+  progressWrap: {paddingHorizontal: 16, paddingBottom: 12},
+  progressLabelRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
   },
-  tab: {
-    paddingVertical: spacing.sm, paddingHorizontal: spacing.lg, position: 'relative' as const,
+  progressLabel: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 1.5,
   },
-  tabText: {
-    fontSize: 12, fontWeight: '700', color: colors.textMuted, letterSpacing: 2,
+  progressCount: {fontSize: 12, fontWeight: '700', color: colors.textMuted},
+  progressHi: {color: colors.orange, fontWeight: '900'},
+  progressBg: {
+    height: 4,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 2,
+    overflow: 'hidden',
+    marginBottom: 6,
   },
-  tabTextActive: {color: colors.cyan},
-  tabIndicator: {
-    position: 'absolute' as const, bottom: 0, left: spacing.lg, right: spacing.lg, height: 2, backgroundColor: colors.cyan, borderRadius: 1,
-  },
+  progressFill: {height: 4, backgroundColor: colors.orange, borderRadius: 2},
+  chainsText: {fontSize: 11, color: colors.textMuted, fontWeight: '600'},
 
-  // Tree
-  treeContainer: {
-    paddingHorizontal: spacing.lg, paddingBottom: 120,
-  },
-  nodeContainer: {
-    marginBottom: spacing.sm,
-  },
-  connectorLine: {
-    width: 2, height: 16, marginLeft: 20, borderRadius: 1,
-  },
-  questCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: borderRadius.lg,
+  /* Pills */
+  pillRow: {paddingHorizontal: 16, gap: 8, paddingBottom: 12},
+  pill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.05)',
     borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.lg,
+    borderColor: 'rgba(255,255,255,0.08)',
   },
-  questHeader: {
-    flexDirection: 'row', alignItems: 'center',
-    justifyContent: 'space-between', marginBottom: spacing.sm,
+  pillPt: {width: 20, height: 20, borderRadius: 10},
+  pillText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 1,
   },
-  questGiverBadge: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    paddingHorizontal: spacing.sm, paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-  },
-  questGiverText: {fontSize: 9, fontWeight: '700'},    
-  childBadge: {
-    backgroundColor: colors.bgElevated,
-    paddingHorizontal: spacing.sm, paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-  },
-  childBadgeText: {
-    fontSize: 9, fontWeight: '700', color: colors.textMuted,
-  },
-  questName: {
-    fontSize: fonts.sizes.md, fontWeight: '700',
-    color: colors.textPrimary, marginBottom: spacing.xs,
-  },
-  locationRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-  },
-  locationText: {fontSize: 11, color: colors.textMuted, fontWeight: '600'},
 
-  // Expanded
-  expandedSection: {
-    marginTop: spacing.md, paddingTop: spacing.md,
-    borderTopWidth: 1, borderTopColor: colors.border,
-  },
-  sectionLabel: {
-    fontSize: 11, fontWeight: '600', color: colors.textMuted,
-    marginBottom: spacing.sm,
-  },
-  objectiveRow: {
-    flexDirection: 'row', alignItems: 'flex-start', gap: 6,
-    marginBottom: spacing.xs, paddingLeft: 4,
-  },
-  objectiveText: {
-    fontSize: fonts.sizes.sm, color: colors.textSecondary, flex: 1,
-  },
-  rewardsRow: {flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs},
-  rewardChip: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    backgroundColor: colors.bgElevated,
-    paddingHorizontal: spacing.sm, paddingVertical: 3,
-    borderRadius: borderRadius.sm,
-  },
-  rewardText: {fontSize: 10, color: colors.yellow, fontWeight: '600'},
-  prereqRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    marginBottom: spacing.xs,
-  },
-  prereqText: {fontSize: 11, color: colors.orange, fontWeight: '600'},
+  sep: {height: 1, backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: 8},
 
-  expandIndicator: {alignItems: 'center', marginTop: spacing.sm},
+  /* List */
+  listContent: {paddingBottom: 100},
 
-  // Children
-  childrenContainer: {
-    marginLeft: spacing.xl,
-    paddingLeft: spacing.md,
-    borderLeftWidth: 2,
+  /* Chain separator */
+  chainSep: {height: 20},
+
+  /* Connector */
+  connector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 22,
   },
+  connLine: {width: 2, height: 22, borderRadius: 1, opacity: 0.85},
+  connDot: {width: 8, height: 8, borderRadius: 4, marginLeft: -5},
+
+  /* Card */
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.07)',
+    marginHorizontal: 16,
+    marginBottom: 2,
+    overflow: 'hidden',
+    gap: 10,
+    paddingRight: 14,
+  },
+  cardDone: {
+    borderColor: 'rgba(0,255,136,0.15)',
+    backgroundColor: 'rgba(0,255,136,0.04)',
+  },
+  cardLocked: {opacity: 0.5},
+  accent: {width: 4, alignSelf: 'stretch'},
+  portrait: {width: 36, height: 36, borderRadius: 18, marginLeft: 10},
+  portraitFb: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  info: {flex: 1, paddingVertical: 12, gap: 3},
+  name: {fontSize: 14, fontWeight: '700', color: colors.textPrimary},
+  nameLocked: {color: colors.textMuted},
+  meta: {flexDirection: 'row', alignItems: 'center', gap: 4},
+  giver: {fontSize: 11, fontWeight: '700'},
+  dot: {
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    backgroundColor: colors.textMuted,
+  },
+  loc: {fontSize: 10, color: colors.textMuted, flex: 1},
+  depthBadge: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  depthText: {fontSize: 9, fontWeight: '800', color: colors.textMuted, letterSpacing: 0.5},
+
+  /* Empty */
+  emptyWrap: {alignItems: 'center', paddingTop: 80, gap: 10},
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: '900',
+    color: colors.textMuted,
+    letterSpacing: 2,
+  },
+  emptySub: {fontSize: 13, color: colors.textMuted},
 });
 
 export default QuestTreeScreen;

@@ -72,7 +72,7 @@ const TrialsScreen = ({navigation}: any) => {
 
       <FlatList
         data={trials}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <TouchableOpacity
             style={styles.trialCard}
             onPress={() => openMetaforge(item.metaforgeUrl)}

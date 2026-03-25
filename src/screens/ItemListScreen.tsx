@@ -172,7 +172,7 @@ const ItemListScreen = ({navigation}: any) => {
   }, [search, activeCategory, showFavOnly, favorites, sortMode]);
 
   const renderItem = useCallback(
-    ({item}: {item: Item}) => {
+    ({item, index}: {item: Item; index: number}) => {
       const rarityColor = getRarityColor(item.rarity);
       const catInfo = getCatIconForItem(item.item_type);
       const isFav = favorites.includes(item.id);

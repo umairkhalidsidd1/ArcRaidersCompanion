@@ -82,7 +82,7 @@ const GuidesScreen = ({navigation}: any) => {
 
       <FlatList
         data={filtered}
-        renderItem={({item: guide}) => (
+        renderItem={({item: guide, index}) => (
           <TouchableOpacity
             style={[styles.guideCard, guide.locked && styles.guideCardLocked]}
             activeOpacity={guide.locked ? 1 : 0.7}

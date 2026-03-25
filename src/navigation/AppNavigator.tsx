@@ -33,6 +33,7 @@ import WeaponsScreen from '../screens/WeaponsScreen';
 import QuestTreeScreen from '../screens/QuestTreeScreen';
 import CosmeticsScreen from '../screens/CosmeticsScreen';
 import CollectibleTrackerScreen from '../screens/CollectibleTrackerScreen';
+import QuestDetailScreen from '../screens/QuestDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
@@ -47,20 +48,6 @@ function BunkerStackScreen() {
   return (
     <BunkerStack.Navigator screenOptions={{ headerShown: false }}>
       <BunkerStack.Screen name="BunkerHome" component={HomeScreen} />
-      <BunkerStack.Screen name="MapList" component={MapListScreen} />
-      <BunkerStack.Screen name="BlueprintTracker" component={BlueprintTrackerScreen} />
-      <BunkerStack.Screen name="LoadoutBuilder" component={LoadoutBuilderScreen} />
-      <BunkerStack.Screen name="ItemDetail" component={ItemDetailScreen} />
-      <BunkerStack.Screen name="TraderList" component={TraderListScreen} />
-      <BunkerStack.Screen name="TraderDetail" component={TraderDetailScreen} />
-      <BunkerStack.Screen name="QuestList" component={QuestListScreen} />
-      <BunkerStack.Screen name="EventTimers" component={EventTimerScreen} />
-      <BunkerStack.Screen name="Expedition" component={ExpeditionScreen} />
-      <BunkerStack.Screen name="TierList" component={TierListScreen} />
-      <BunkerStack.Screen name="QuestTree" component={QuestTreeScreen} />
-      <BunkerStack.Screen name="Cosmetics" component={CosmeticsScreen} />
-      <BunkerStack.Screen name="CollectibleTracker" component={CollectibleTrackerScreen} />
-      <BunkerStack.Screen name="Submit" component={SubmitScreen} />
     </BunkerStack.Navigator>
   );
 }
@@ -77,8 +64,6 @@ function MaterialsStackScreen() {
   return (
     <MaterialsStack.Navigator screenOptions={{ headerShown: false }}>
       <MaterialsStack.Screen name="ItemList" component={ItemListScreen} />
-      <MaterialsStack.Screen name="ItemDetail" component={ItemDetailScreen} />
-      <MaterialsStack.Screen name="Materials" component={MaterialsScreen} />
     </MaterialsStack.Navigator>
   );
 }
@@ -87,8 +72,6 @@ function EnemiesStackScreen() {
   return (
     <EnemiesStack.Navigator screenOptions={{ headerShown: false }}>
       <EnemiesStack.Screen name="ArcList" component={ArcListScreen} />
-      <EnemiesStack.Screen name="ArcDetail" component={ArcDetailScreen} />
-      <EnemiesStack.Screen name="ItemDetail" component={ItemDetailScreen} />
     </EnemiesStack.Navigator>
   );
 }
@@ -97,7 +80,6 @@ function GuidesStackScreen() {
   return (
     <GuidesStack.Navigator screenOptions={{ headerShown: false }}>
       <GuidesStack.Screen name="GuidesMain" component={GuidesScreen} />
-      <GuidesStack.Screen name="GuideDetail" component={GuideDetailScreen} />
     </GuidesStack.Navigator>
   );
 }
@@ -145,9 +127,27 @@ const AppNavigator = () => {
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Screen name="MainTabs" component={TabNavigator} />
+        <RootStack.Screen name="MapList" component={MapListScreen} />
         <RootStack.Screen name="MapDetail" component={MapDetailScreen} />
+        <RootStack.Screen name="ItemDetail" component={ItemDetailScreen} />
+        <RootStack.Screen name="BlueprintTracker" component={BlueprintTrackerScreen} />
+        <RootStack.Screen name="LoadoutBuilder" component={LoadoutBuilderScreen} />
+        <RootStack.Screen name="TraderList" component={TraderListScreen} />
+        <RootStack.Screen name="TraderDetail" component={TraderDetailScreen} />
+        <RootStack.Screen name="QuestList" component={QuestListScreen} />
+        <RootStack.Screen name="QuestDetail" component={QuestDetailScreen} />
+        <RootStack.Screen name="EventTimers" component={EventTimerScreen} />
+        <RootStack.Screen name="Expedition" component={ExpeditionScreen} />
+        <RootStack.Screen name="TierList" component={TierListScreen} />
+        <RootStack.Screen name="QuestTree" component={QuestTreeScreen} />
+        <RootStack.Screen name="Cosmetics" component={CosmeticsScreen} />
+        <RootStack.Screen name="CollectibleTracker" component={CollectibleTrackerScreen} />
+        <RootStack.Screen name="Submit" component={SubmitScreen} />
         <RootStack.Screen name="Weapons" component={WeaponsScreen} />
         <RootStack.Screen name="SkillTree" component={SkillTreeScreen} options={{ gestureEnabled: false }} />
+        <RootStack.Screen name="ArcDetail" component={ArcDetailScreen} />
+        <RootStack.Screen name="Materials" component={MaterialsScreen} />
+        <RootStack.Screen name="GuideDetail" component={GuideDetailScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

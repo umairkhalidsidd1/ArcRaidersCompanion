@@ -44,17 +44,17 @@ const DB_MAP_NAME: Record<string, string> = {
 const MapListScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
-  const renderMap = ({ item, index }: { item: typeof maps[0]; index: number }) => {
+  const renderMap = ({ item, index }: { item: (typeof maps)[0]; index: number }) => {
     const mapDbName = DB_MAP_NAME[item.id] || 'Dam';
     const markerCount = ((markers as Record<string, any[]>)[mapDbName] || []).length;
     const tags = MAP_TAGS[item.id] || [];
     const mapImage = getMapImage(item.id);
 
     return (
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={() => navigation.navigate('MapDetail', { mapId: item.id })}>
-        <View style={styles.mapCard}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => navigation.navigate('MapDetail', { mapId: item.id })}>
+          <View style={styles.mapCard}>
           <ImageBackground
             source={mapImage}
             style={[styles.mapImageContainer, { backgroundColor: item.bgColor }]}
@@ -107,7 +107,7 @@ const MapListScreen = ({ navigation }: any) => {
             </View>
           </ImageBackground>
         </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
     );
   };
 

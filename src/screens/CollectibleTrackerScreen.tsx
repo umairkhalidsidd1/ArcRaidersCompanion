@@ -114,7 +114,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
   const progress = totalCount > 0 ? Math.round((foundCount / totalCount) * 100) : 0;
 
   const renderItem = useCallback(
-    ({item}: {item: CollectibleItem}) => {
+    ({item, index}: {item: CollectibleItem; index: number}) => {
       const isFound = collected.includes(item.id);
       const rc = RARITY_COLORS[item.rarity] || '#9E9E9E';
       const catCfg = CATEGORY_ICONS[item.category] || CATEGORY_ICONS.Other;

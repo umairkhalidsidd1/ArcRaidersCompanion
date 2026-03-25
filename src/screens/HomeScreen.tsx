@@ -210,10 +210,8 @@ const HomeScreen = ({ navigation }: any) => {
         </View>
 
         <View style={styles.toolsList}>
-          {RAIDER_TOOLS.map(tool => (
+          {RAIDER_TOOLS.map((tool, i) => (
             <TouchableOpacity
-              key={tool.key}
-              activeOpacity={0.7}
               style={styles.toolCard}
               onPress={() => {
                 if (tool.url) {

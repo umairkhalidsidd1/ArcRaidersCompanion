@@ -93,7 +93,7 @@ const MaterialsScreen = ({navigation}: any) => {
 
       <FlatList
         data={filtered}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <TouchableOpacity
             style={styles.itemCard}
             activeOpacity={0.7}
