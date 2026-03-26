@@ -20,7 +20,7 @@ import {colors, fonts, spacing, borderRadius, getRarityColor} from '../theme/the
 import items from '../data/items.json';
 
 const {width: SCREEN_W} = Dimensions.get('window');
-const CAROUSEL_CARD_W = SCREEN_W * 0.52;
+const CAROUSEL_CARD_W = SCREEN_W * 0.58;
 const CAROUSEL_GAP = 10;
 const SNAP_INTERVAL = CAROUSEL_CARD_W + CAROUSEL_GAP;
 const CAROUSEL_SIDE = (SCREEN_W - CAROUSEL_CARD_W) / 2;
@@ -102,22 +102,22 @@ const STAT_META: Record<string, {label: string; max: number}> = {
 
 /* upgrade perk keys — shown as "↑ Key  value" */
 const UPGRADE_KEYS: {key: string; label: string}[] = [
-  {key: 'increasedFireRate', label: 'FireRate'},
-  {key: 'reducedReloadTime', label: 'ReloadTime'},
-  {key: 'reducedVerticalRecoil', label: 'VerticalRecoil'},
-  {key: 'reducedDispersionRecoveryTime', label: 'DispersionRecovery'},
-  {key: 'increasedBulletVelocity', label: 'BulletVelocity'},
-  {key: 'reducedDurabilityBurnRate', label: 'DurabilityBurn'},
-  {key: 'magazineSize', label: 'MagazineSize'},
+  {key: 'increasedFireRate', label: 'Fire Rate'},
+  {key: 'reducedReloadTime', label: 'Reload Time'},
+  {key: 'reducedVerticalRecoil', label: 'Vertical Recoil'},
+  {key: 'reducedDispersionRecoveryTime', label: 'Dispersion Recovery'},
+  {key: 'increasedBulletVelocity', label: 'Bullet Velocity'},
+  {key: 'reducedDurabilityBurnRate', label: 'Durability Burn'},
 ];
 
 /* ── component ── */
 const WeaponsScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const carouselRef = useRef<FlatList>(null);
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const [familyIndex, setFamilyIndex] = useState(0);
+  const scrollX = useRef(new Animated.Value(1 * SNAP_INTERVAL)).current;
+  const [familyIndex, setFamilyIndex] = useState(1);
   const [levelIndex, setLevelIndex] = useState(0);
+  const lastFiredIndex = useRef(-1);
 
   /* build weapon families */
   const families = useMemo(() => {
@@ -139,6 +139,11 @@ const WeaponsScreen = ({navigation}: any) => {
       });
     });
     result.sort((a, b) => a.baseName.localeCompare(b.baseName));
+    // Move last weapon to front so it appears on the left of the first weapon
+    if (result.length > 1) {
+      const last = result.pop()!;
+      result.unshift(last);
+    }
     return result;
   }, []);
 
@@ -149,16 +154,17 @@ const WeaponsScreen = ({navigation}: any) => {
   const totalLevels = family?.variants.length ?? 1;
   const rarityColor = weapon ? getRarityColor(weapon.rarity) : colors.textMuted;
 
-  const onCarouselScroll = useCallback(
+  const onScrollUpdate = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const x = e.nativeEvent.contentOffset.x;
       const idx = Math.round(x / SNAP_INTERVAL);
-      if (idx >= 0 && idx < families.length && idx !== familyIndex) {
+      if (idx >= 0 && idx < families.length && idx !== lastFiredIndex.current) {
+        lastFiredIndex.current = idx;
         setFamilyIndex(idx);
         setLevelIndex(0);
       }
     },
-    [families.length, familyIndex],
+    [families.length],
   );
 
   /* gather upgrade perks that have non-zero values */
@@ -195,13 +201,14 @@ const WeaponsScreen = ({navigation}: any) => {
           showsHorizontalScrollIndicator={false}
           snapToInterval={SNAP_INTERVAL}
           decelerationRate="fast"
+          initialScrollIndex={familyIndex}
           contentContainerStyle={{paddingHorizontal: CAROUSEL_SIDE}}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
-            {useNativeDriver: true},
+            {useNativeDriver: true, listener: onScrollUpdate},
           )}
           scrollEventThrottle={16}
-          onMomentumScrollEnd={onCarouselScroll}
+          onMomentumScrollEnd={onScrollUpdate}
           getItemLayout={(_: any, index: number) => ({
             length: SNAP_INTERVAL,
             offset: index * SNAP_INTERVAL,
@@ -236,6 +243,7 @@ const WeaponsScreen = ({navigation}: any) => {
                     offset: index * SNAP_INTERVAL,
                     animated: true,
                   });
+                  lastFiredIndex.current = index;
                   setFamilyIndex(index);
                   setLevelIndex(0);
                 }}>
@@ -244,6 +252,12 @@ const WeaponsScreen = ({navigation}: any) => {
                     styles.carouselCard,
                     {transform: [{scale}, {translateY}], opacity},
                   ]}>
+                  <LinearGradient
+                    colors={['rgba(0,80,200,0.18)', 'rgba(0,180,255,0.06)', 'transparent']}
+                    start={{x: 0, y: 0.5}}
+                    end={{x: 1, y: 0.5}}
+                    style={StyleSheet.absoluteFill}
+                  />
                   <Image
                     source={{uri: item.variants[0].icon}}
                     style={styles.carouselImage}
@@ -318,7 +332,7 @@ const WeaponsScreen = ({navigation}: any) => {
                   <View key={u.key} style={styles.upgradeRow}>
                     <Icon name="arrow-top-right" size={14} color={colors.cyan} />
                     <Text style={styles.upgradeLabel}>{u.label}</Text>
-                    <Text style={styles.upgradeValue}>{stats[u.key]}</Text>
+                    <Text style={styles.upgradeValue}>+{stats[u.key]}%</Text>
                   </View>
                 ))}
               </View>
@@ -403,7 +417,7 @@ const styles = StyleSheet.create({
   /* Carousel */
   carouselCard: {
     width: CAROUSEL_CARD_W,
-    height: 160,
+    height: 170,
     marginRight: CAROUSEL_GAP,
     borderRadius: borderRadius.lg,
     backgroundColor: 'rgba(255,255,255,0.05)',
@@ -412,10 +426,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: spacing.sm,
+    overflow: 'hidden',
   },
   carouselImage: {
-    width: '70%',
-    height: 100,
+    width: '80%',
+    height: 115,
   },
   carouselName: {
     fontSize: fonts.sizes.xs,

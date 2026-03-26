@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Dimensions,
   FlatList,
+  Image,
   ImageBackground,
   Linking,
   ScrollView,
@@ -15,12 +16,118 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
-import { getMapImage } from '../data/mapImages';
+import { getMapFullImage } from '../data/mapImages';
 import maps from '../data/maps.json';
 import events from '../data/events.json';
+import rawItems from '../data/items.json';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const MAP_CARD_WIDTH = SCREEN_WIDTH - spacing.lg * 2 - 40;
+const MAP_CARD_WIDTH = SCREEN_WIDTH * 0.82;
+
+/* ── Event helpers (UTC‑based, matching EventTimerScreen) ── */
+type TimeSlot = { start: string; end: string };
+type GameEvent = { id: number; name: string; map: string; icon: string; times: string };
+
+const MAP_NAME_TO_ID: Record<string, string> = {
+  Dam: 'dam-battlegrounds',
+  'Buried City': 'buried-city',
+  Spaceport: 'the-spaceport',
+  'Blue Gate': 'blue-gate',
+  'Stella Montis': 'stella-montis',
+};
+
+const parseTimeSlots = (raw: string): TimeSlot[] => {
+  try { return JSON.parse(raw); } catch { return []; }
+};
+const getNowSeconds = (): number => {
+  const n = new Date();
+  return n.getUTCHours() * 3600 + n.getUTCMinutes() * 60 + n.getUTCSeconds();
+};
+const parseToSeconds = (t: string): number => {
+  const [h, m] = t.split(':').map(Number);
+  return h * 3600 + (m || 0) * 60;
+};
+const utcToLocalDate = (utcTime: string): Date => {
+  const [h, m] = utcTime.split(':').map(Number);
+  const now = new Date();
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), h, m || 0));
+};
+const formatLocalTime = (utcTime: string): string => {
+  const d = utcToLocalDate(utcTime);
+  let lh = d.getHours();
+  const ampm = lh >= 12 ? 'PM' : 'AM';
+  lh = lh % 12 || 12;
+  return `${lh}:${String(d.getMinutes()).padStart(2, '0')} ${ampm}`;
+};
+
+type MapEventInfo = { isActive: boolean; name: string; endsIn: string; startsAt: string; startsIn: string } | null;
+
+const getMapEventInfo = (mapId: string): MapEventInfo => {
+  const nowSec = getNowSeconds();
+  const DAY = 24 * 3600;
+
+  const mapEvents = (events as GameEvent[]).filter(e => MAP_NAME_TO_ID[e.map] === mapId);
+  // Check for active event first
+  for (const ev of mapEvents) {
+    const slots = parseTimeSlots(ev.times);
+    for (const s of slots) {
+      const startSec = parseToSeconds(s.start);
+      const endSec = parseToSeconds(s.end);
+      let active = false;
+      let rem = 0;
+      if (endSec > startSec) {
+        if (nowSec >= startSec && nowSec < endSec) { active = true; rem = endSec - nowSec; }
+      } else {
+        if (nowSec >= startSec) { active = true; rem = DAY - nowSec + endSec; }
+        else if (nowSec < endSec) { active = true; rem = endSec - nowSec; }
+      }
+      if (active) {
+        const m = Math.floor(rem / 60);
+        const s = rem % 60;
+        return { isActive: true, name: ev.name, endsIn: `${m}m ${s}s`, startsAt: '', startsIn: '' };
+      }
+    }
+  }
+  // Find next upcoming event
+  let bestDist = Infinity;
+  let bestEvent: GameEvent | null = null;
+  let bestSlot: TimeSlot | null = null;
+  for (const ev of mapEvents) {
+    const slots = parseTimeSlots(ev.times);
+    for (const s of slots) {
+      const startSec = parseToSeconds(s.start);
+      let dist = startSec - nowSec;
+      if (dist <= 0) dist += DAY;
+      if (dist < bestDist) { bestDist = dist; bestEvent = ev; bestSlot = s; }
+    }
+  }
+  if (bestEvent && bestSlot) {
+    const totalSec = Math.floor(bestDist);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    const h = Math.floor(m / 60);
+    const mm = m % 60;
+    const countdown = h > 0 ? `${h}h ${mm}m ${s}s` : `${mm}m ${s}s`;
+    return { isActive: false, name: bestEvent.name, endsIn: '', startsAt: formatLocalTime(bestSlot.start), startsIn: countdown };
+  }
+  return null;
+};
+
+/* ── Key items per map ── */
+const MAP_KEY_PREFIX: Record<string, string> = {
+  'dam-battlegrounds': 'Dam',
+  'buried-city': 'Buried City',
+  'the-spaceport': 'Spaceport',
+  'blue-gate': 'Blue Gate',
+  'stella-montis': 'Stella Montis',
+};
+
+const keyItems = (rawItems as any[]).filter(i => i.item_type === 'Key');
+const getKeysForMap = (mapId: string) => {
+  const prefix = MAP_KEY_PREFIX[mapId];
+  if (!prefix) return [];
+  return keyItems.filter(k => k.name.startsWith(prefix));
+};
 
 const RAIDER_TOOLS = [
   {
@@ -131,16 +238,13 @@ const RAIDER_TOOLS = [
 
 const HomeScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const [, setTick] = useState(0);
 
-  const getNextEvent = (mapId: string) => {
-    const mapEvents = (events as any[]).filter(
-      (e: any) => e.mapId === mapId || !e.mapId,
-    );
-    if (mapEvents.length > 0) {
-      return mapEvents[0];
-    }
-    return null;
-  };
+  // Re-render every 60s for event countdowns
+  useEffect(() => {
+    const iv = setInterval(() => setTick(t => t + 1), 1000);
+    return () => clearInterval(iv);
+  }, []);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -168,10 +272,13 @@ const HomeScreen = ({ navigation }: any) => {
           data={maps}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.mapCarousel}
+          snapToInterval={MAP_CARD_WIDTH + spacing.md}
+          decelerationRate="fast"
           keyExtractor={item => item.id}
           renderItem={({ item }) => {
-            const mapImage = getMapImage(item.id);
-            const nextEvent = getNextEvent(item.id);
+            const mapImage = getMapFullImage(item.id);
+            const eventInfo = getMapEventInfo(item.id);
+            const keys = getKeysForMap(item.id);
             return (
               <TouchableOpacity
                 activeOpacity={0.9}
@@ -182,20 +289,96 @@ const HomeScreen = ({ navigation }: any) => {
                   style={styles.mapCard}
                   imageStyle={styles.mapCardImage}
                   resizeMode="cover">
+                  {/* Bottom fade */}
                   <LinearGradient
-                    colors={['transparent', 'rgba(10, 14, 23, 0.7)', 'rgba(10, 14, 23, 0.95)']}
-                    style={StyleSheet.absoluteFillObject}
+                    colors={['transparent', 'rgba(5,8,15,0.92)', 'rgba(5,8,15,1)']}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: '25%',
+                    }}
+                  />
+                  {/* Left fade */}
+                  <LinearGradient
+                    colors={['rgba(5,8,15,0.5)', 'rgba(5,8,15,0.3)', 'transparent']}
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      width: '10%',
+                    }}
+                  />
+                  {/* Right fade */}
+                  <LinearGradient
+                    colors={['transparent', 'rgba(5,8,15,0.3)', 'rgba(5,8,15,0.5)']}
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      width: '10%',
+                    }}
                   />
                   <View style={styles.mapCardContent}>
-                    {nextEvent && (
-                      <View style={styles.eventBadge}>
-                        <Icon name="clock-outline" size={12} color={colors.textPrimary} />
-                        <Text style={styles.eventBadgeText}>
-                          NEXT: {nextEvent.name || 'Event'}
-                        </Text>
+                    {/* Event Badge */}
+                    {eventInfo && (
+                      <View style={[styles.eventBadge, eventInfo.isActive && styles.eventBadgeActive]}>
+                        {eventInfo.isActive ? (
+                          <>
+                            <View style={styles.activeDot} />
+                            <View>
+                              <Text style={[styles.eventBadgeTitle, { color: '#4ADE80' }]}>
+                                ACTIVE: {eventInfo.name}
+                              </Text>
+                              <Text style={styles.eventBadgeSub}>
+                                Ends in {eventInfo.endsIn}
+                              </Text>
+                            </View>
+                          </>
+                        ) : (
+                          <>
+                            <Icon name="clock-outline" size={14} color={colors.textSecondary} />
+                            <View>
+                              <Text style={styles.eventBadgeTitle}>
+                                NEXT: {eventInfo.name}
+                              </Text>
+                              <Text style={styles.eventBadgeSub}>
+                                Starts {eventInfo.startsAt} ({eventInfo.startsIn})
+                              </Text>
+                            </View>
+                          </>
+                        )}
                       </View>
                     )}
+
                     <View style={{ flex: 1 }} />
+
+                    {/* Keys Row */}
+                    {keys.length > 0 && (
+                      <View style={styles.keysRow}>
+                        <Text style={styles.keysLabel}>KEYS</Text>
+                        <View style={styles.keysIcons}>
+                          {keys.slice(0, 5).map(k => (
+                            <View key={k.id} style={styles.keyIconWrap}>
+                              {k.icon ? (
+                                <Image source={{ uri: k.icon }} style={styles.keyIcon} />
+                              ) : (
+                                <Icon name="key-variant" size={16} color={colors.yellow} />
+                              )}
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                    )}
+
+                    {/* Map Name */}
                     <Text style={styles.mapCardName}>{item.name}</Text>
                   </View>
                 </ImageBackground>
@@ -212,6 +395,7 @@ const HomeScreen = ({ navigation }: any) => {
         <View style={styles.toolsList}>
           {RAIDER_TOOLS.map((tool, i) => (
             <TouchableOpacity
+              key={tool.screen || tool.url || String(i)}
               style={styles.toolCard}
               onPress={() => {
                 if (tool.url) {
@@ -285,17 +469,17 @@ const styles = StyleSheet.create({
   },
   mapCardWrap: {
     width: MAP_CARD_WIDTH,
-    height: 200,
-    borderRadius: borderRadius.lg,
+    height: 260,
+    borderRadius: 16,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'rgba(255,255,255,0.08)',
   },
   mapCard: {
     flex: 1,
   },
   mapCardImage: {
-    borderRadius: borderRadius.lg,
+    borderRadius: 16,
   },
   mapCardContent: {
     flex: 1,
@@ -304,24 +488,69 @@ const styles = StyleSheet.create({
   eventBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    alignSelf: 'flex-start',
-    backgroundColor: 'rgba(0, 0, 0, 0.65)',
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 4,
-    borderRadius: borderRadius.sm,
+    gap: 8,
+    alignSelf: 'flex-end',
+    backgroundColor: 'rgba(10, 14, 23, 0.82)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
   },
-  eventBadgeText: {
+  eventBadgeActive: {
+    borderWidth: 1,
+    borderColor: 'rgba(74, 222, 128, 0.15)',
+  },
+  activeDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#4ADE80',
+    marginTop: 2,
+  },
+  eventBadgeTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    letterSpacing: 0.3,
+  },
+  eventBadgeSub: {
+    fontSize: 11,
+    color: colors.textSecondary,
+    marginTop: 1,
+  },
+  keysRow: {
+    marginBottom: 10,
+  },
+  keysLabel: {
     fontSize: 10,
     fontWeight: '700',
-    color: colors.textPrimary,
-    letterSpacing: 0.5,
+    color: '#FFFFFF',
+    letterSpacing: 3,
+    marginBottom: 6,
+  },
+  keysIcons: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  keyIconWrap: {
+    width: 38,
+    height: 38,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+  },
+  keyIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 4,
   },
   mapCardName: {
-    fontSize: fonts.sizes.lg,
+    fontSize: 22,
     fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
   },
 
   // Raider Tools

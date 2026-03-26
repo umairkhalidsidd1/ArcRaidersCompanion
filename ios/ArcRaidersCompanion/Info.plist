@@ -33,12 +33,14 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Take a photo to attach to your custom map marker</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save your tier list as an image to your photo library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Save your tier list as an image to your photo library</string>
+	<string>Access your photo library to attach images to markers or save tier lists</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

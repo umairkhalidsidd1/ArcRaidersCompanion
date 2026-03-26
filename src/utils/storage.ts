@@ -86,6 +86,12 @@ export type Waypoint = {
   mapId: string;
   label: string;
   color: string;
+  markerType?: string;      // key from MARKER_TYPES
+  markerTypeLabel?: string;  // display label
+  markerIcon?: string;       // icon name
+  note?: string;
+  photo?: string;            // local URI of attached photo
+  isPublished?: boolean;
 };
 
 export const getWaypoints = async (mapId: string): Promise<Waypoint[]> => {

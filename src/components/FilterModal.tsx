@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Modal,
+  PanResponder,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { BlurView } from '@react-native-community/blur';
 import { colors, fonts, spacing, borderRadius } from '../theme/theme';
 
 interface FilterCategory {
@@ -17,7 +19,7 @@ interface FilterCategory {
   label: string;
   icon: string;
   color: string;
-  premium?: boolean;
+  description?: string;
 }
 
 interface FilterModalProps {
@@ -37,6 +39,20 @@ const FilterModal: React.FC<FilterModalProps> = ({
 }) => {
   const [localSelected, setLocalSelected] = useState<string[]>(selected);
   const [search, setSearch] = useState('');
+  const scrollOffsetRef = useRef(0);
+
+  // Swipe-to-close: dismiss modal when swiping down on handle or when scroll is at top
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, gs) => gs.dy > 10,
+      onPanResponderRelease: (_, gs) => {
+        if (gs.dy > 80) {
+          onClose();
+        }
+      },
+    }),
+  ).current;
 
   const filteredCategories = categories.filter(c =>
     c.label.toLowerCase().includes(search.toLowerCase()),
@@ -78,11 +94,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
       <View style={styles.overlay}>
         <Pressable style={styles.dismissArea} onPress={onClose} />
         <View style={styles.container}>
-          {/* Orange top line */}
+          {/* Cyan top line */}
           <View style={styles.topLine} />
 
-          {/* Handle */}
-          <View style={styles.handleWrap}>
+          {/* Handle - swipe down to close */}
+          <View {...panResponder.panHandlers} style={styles.handleWrap}>
             <View style={styles.handle} />
           </View>
 
@@ -98,7 +114,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
               onChangeText={setSearch}
               placeholder="Search categories..."
               placeholderTextColor={colors.textMuted}
-              selectionColor={colors.orange}
+              selectionColor={colors.cyan}
             />
           </View>
 
@@ -115,16 +131,21 @@ const FilterModal: React.FC<FilterModalProps> = ({
           {/* Category List */}
           <ScrollView
             style={styles.list}
-            showsVerticalScrollIndicator={false}>
+            contentContainerStyle={{paddingBottom: 80}}
+            showsVerticalScrollIndicator={false}
+            onScroll={(e) => { scrollOffsetRef.current = e.nativeEvent.contentOffset.y; }}
+            scrollEventThrottle={16}
+            onScrollEndDrag={(e) => {
+              if (scrollOffsetRef.current <= 0 && e.nativeEvent.velocity && e.nativeEvent.velocity.y > 0.5) {
+                onClose();
+              }
+            }}>
             {filteredCategories.map(cat => {
               const isChecked = localSelected.includes(cat.key);
               return (
                 <TouchableOpacity
                   key={cat.key}
-                  style={[
-                    styles.categoryItem,
-                    cat.premium && styles.categoryItemPremium,
-                  ]}
+                  style={styles.categoryItem}
                   activeOpacity={0.6}
                   onPress={() => handleToggle(cat.key)}>
                   {/* Icon */}
@@ -140,15 +161,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   <View style={styles.catLabelWrap}>
                     <View style={styles.catLabelRow}>
                       <Text style={styles.catLabel}>{cat.label}</Text>
-                      {cat.premium && (
-                        <View style={styles.premiumBadge}>
-                          <Text style={styles.premiumText}>PREMIUM</Text>
-                        </View>
-                      )}
                     </View>
-                    {cat.premium && (
+                    {cat.description && (
                       <Text style={styles.catDesc}>
-                        Where players find blueprints most
+                        {cat.description}
                       </Text>
                     )}
                   </View>
@@ -168,13 +184,19 @@ const FilterModal: React.FC<FilterModalProps> = ({
             })}
           </ScrollView>
 
-          {/* Apply Button */}
-          <TouchableOpacity
-            style={styles.applyBtn}
-            activeOpacity={0.8}
-            onPress={handleApply}>
-            <Text style={styles.applyText}>APPLY FILTER</Text>
-          </TouchableOpacity>
+          {/* Apply Button - floating over content */}
+          <BlurView
+            style={styles.applyBlur}
+            blurType="dark"
+            blurAmount={20}
+            reducedTransparencyFallbackColor="rgba(0, 150, 255, 0.75)">
+            <TouchableOpacity
+              style={styles.applyBtn}
+              activeOpacity={0.8}
+              onPress={handleApply}>
+              <Text style={styles.applyText}>APPLY FILTER</Text>
+            </TouchableOpacity>
+          </BlurView>
         </View>
       </View>
     </Modal>
@@ -184,24 +206,19 @@ const FilterModal: React.FC<FilterModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'transparent',
     justifyContent: 'flex-end',
   },
   dismissArea: {
     flex: 1,
   },
   container: {
-    backgroundColor: '#0F0F0F',
-    borderTopLeftRadius: borderRadius.xl,
-    borderTopRightRadius: borderRadius.xl,
+    backgroundColor: colors.bg,
     maxHeight: '88%',
-    paddingBottom: spacing.xxl,
   },
   topLine: {
     height: 3,
-    backgroundColor: colors.orange,
-    borderTopLeftRadius: borderRadius.xl,
-    borderTopRightRadius: borderRadius.xl,
+    backgroundColor: colors.cyan,
   },
   handleWrap: {
     alignItems: 'center',
@@ -225,14 +242,14 @@ const styles = StyleSheet.create({
   searchWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.bgSecondary,
     marginHorizontal: spacing.xl,
     borderRadius: borderRadius.md,
     paddingHorizontal: spacing.md,
     height: 44,
     marginBottom: spacing.md,
     borderWidth: 1,
-    borderColor: '#2A2A2A',
+    borderColor: colors.border,
   },
   searchInput: {
     flex: 1,
@@ -249,12 +266,12 @@ const styles = StyleSheet.create({
   },
   actionBtn: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.bgSecondary,
     borderRadius: borderRadius.md,
     paddingVertical: spacing.md,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#2A2A2A',
+    borderColor: colors.border,
   },
   actionText: {
     fontSize: fonts.sizes.sm,
@@ -271,15 +288,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
-    backgroundColor: '#141414',
+    backgroundColor: colors.bgSecondary,
     borderRadius: borderRadius.md,
     marginBottom: spacing.xs,
     borderWidth: 1,
-    borderColor: '#1E1E1E',
-  },
-  categoryItemPremium: {
-    borderColor: colors.orange + '40',
-    backgroundColor: '#1A1408',
+    borderColor: colors.border,
   },
   catIconWrap: {
     width: 36,
@@ -308,18 +321,6 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     marginTop: 2,
   },
-  premiumBadge: {
-    backgroundColor: colors.orange,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-  },
-  premiumText: {
-    fontSize: 9,
-    fontWeight: '800',
-    color: colors.textInverse,
-    letterSpacing: 0.5,
-  },
   checkbox: {
     width: 24,
     height: 24,
@@ -331,21 +332,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   checkboxActive: {
-    backgroundColor: colors.orange,
-    borderColor: colors.orange,
+    backgroundColor: colors.cyan,
+    borderColor: colors.cyan,
+  },
+  applyBlur: {
+    position: 'absolute',
+    bottom: 40,
+    left: spacing.xl,
+    right: spacing.xl,
+    borderRadius: 24,
+    overflow: 'hidden',
   },
   applyBtn: {
-    backgroundColor: colors.orange,
-    marginHorizontal: spacing.xl,
-    marginTop: spacing.lg,
+    backgroundColor: 'rgba(0, 150, 255, 0.45)',
     paddingVertical: spacing.lg,
-    borderRadius: borderRadius.md,
     alignItems: 'center',
+    borderRadius: 24,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0, 150, 255, 0.5)',
   },
   applyText: {
     fontSize: fonts.sizes.md,
     fontWeight: '800',
-    color: colors.textInverse,
+    color: colors.textPrimary,
     letterSpacing: 2,
   },
 });

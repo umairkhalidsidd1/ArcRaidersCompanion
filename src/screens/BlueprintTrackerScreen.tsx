@@ -1,8 +1,9 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState, useRef} from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
+  InteractionManager,
   StatusBar,
   StyleSheet,
   Text,
@@ -15,6 +16,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Svg, {Defs, Pattern, Rect, Line} from 'react-native-svg';
 
 const BP_STORAGE_KEY = '@arcc_blueprints_v2';
 
@@ -37,83 +39,78 @@ const blueprints: Blueprint[] = (rawItems as any[])
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
-const TABS = ['ALL', 'OBTAINED'] as const;
-type Tab = (typeof TABS)[number];
-
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const NUM_COLUMNS = 3;
 const CARD_GAP = spacing.sm;
 const PADDING = spacing.lg;
 const CARD_W = (SCREEN_WIDTH - PADDING * 2 - CARD_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
-const CARD_H = spacing.xl + CARD_W * 0.5 + spacing.sm + 14 + spacing.sm + 3 + 4 + spacing.sm;
+const CARD_H = CARD_W * 1.3;
 const ROW_H = CARD_H + CARD_GAP;
 
-/* ── Grid lines background ── */
 const GRID_CELL = 14;
 const GRID_LINE_COLOR = 'rgba(30,80,180,0.5)';
 
-// Pre-build grid lines once (constant card size)
-const GRID_H_COUNT = Math.ceil(CARD_H / GRID_CELL) + 1;
-const GRID_V_COUNT = Math.ceil(CARD_W / GRID_CELL) + 1;
-const gridHStyles = Array.from({length: GRID_H_COUNT}, (_, i) =>
-  StyleSheet.create({
-    l: {
-      position: 'absolute' as const,
-      left: 0,
-      top: i * GRID_CELL,
-      width: CARD_W,
-      height: StyleSheet.hairlineWidth,
-      backgroundColor: GRID_LINE_COLOR,
-    },
-  }).l,
-);
-const gridVStyles = Array.from({length: GRID_V_COUNT}, (_, i) =>
-  StyleSheet.create({
-    l: {
-      position: 'absolute' as const,
-      top: 0,
-      left: i * GRID_CELL,
-      width: StyleSheet.hairlineWidth,
-      height: CARD_H,
-      backgroundColor: GRID_LINE_COLOR,
-    },
-  }).l,
-);
-
+/* Single SVG grid background — 1 native view instead of ~16 Views */
 const GridBg = React.memo(() => (
   <View style={StyleSheet.absoluteFill} pointerEvents="none">
-    {gridHStyles.map((s, i) => <View key={i} style={s} />)}
-    {gridVStyles.map((s, i) => <View key={`v${i}`} style={s} />)}
+    <Svg width={CARD_W} height={CARD_H}>
+      <Defs>
+        <Pattern id="grid" width={GRID_CELL} height={GRID_CELL} patternUnits="userSpaceOnUse">
+          <Line x1="0" y1={GRID_CELL} x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={StyleSheet.hairlineWidth} />
+          <Line x1={GRID_CELL} y1="0" x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={StyleSheet.hairlineWidth} />
+        </Pattern>
+      </Defs>
+      <Rect width={CARD_W} height={CARD_H} fill="url(#grid)" />
+    </Svg>
   </View>
 ));
 
+const getRarityColor = (rarity: string) => {
+  switch (rarity.toLowerCase()) {
+    case 'common': return '#B0BEC5';
+    case 'uncommon': return '#66BB6A';
+    case 'rare': return '#42A5F5';
+    case 'epic': return '#AB47BC';
+    case 'legendary': return '#FFA000';
+    default: return colors.textSecondary;
+  }
+};
+
 /* ── Blueprint Card ── */
 const BlueprintCard = React.memo(
-  ({item, onPress}: {item: Blueprint; onPress: (id: string) => void}) => (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      onPress={() => onPress(item.id)}
-      style={cardStyles.card}>
-      <GridBg />
-      {item.value > 0 && (
-        <View style={cardStyles.valueBadge}>
-          <Text style={cardStyles.valueBadgeText}>
-            {'\u20BF'} {item.value.toLocaleString()}
-          </Text>
-        </View>
-      )}
-      <View style={cardStyles.imageWrap}>
-        {item.icon ? (
-          <Image source={{uri: item.icon}} style={cardStyles.itemImage} resizeMode="contain" />
-        ) : (
-          <Icon name="file-document-outline" size={28} color={colors.textMuted} />
+  ({item, collected, onPress}: {item: Blueprint; collected: boolean; onPress: (id: string) => void}) => {
+    const rarityColor = getRarityColor(item.rarity);
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => onPress(item.id)}
+        style={[cardStyles.card, collected && cardStyles.cardCollected]}>
+        <GridBg />
+        {collected && (
+          <View style={cardStyles.tickBadge}>
+            <Icon name="check-circle" size={18} color="#4ADE80" />
+          </View>
         )}
-      </View>
-      <Text style={cardStyles.cardName} numberOfLines={1}>{item.name}</Text>
-      <View style={cardStyles.rarityBar} />
-    </TouchableOpacity>
-  ),
-  (prev, next) => prev.item.id === next.item.id,
+        {item.value > 0 && (
+          <View style={cardStyles.valueBadge}>
+            <Text style={cardStyles.valueBadgeText}>
+              {'\u20BF'} {item.value.toLocaleString()}
+            </Text>
+          </View>
+        )}
+        <View style={cardStyles.imageWrap}>
+          {item.icon ? (
+            <Image source={{uri: item.icon}} style={cardStyles.itemImage} resizeMode="contain" />
+          ) : (
+            <Icon name="file-document-outline" size={28} color={colors.textMuted} />
+          )}
+        </View>
+        <Text style={cardStyles.cardName} numberOfLines={1}>{item.name}</Text>
+        <View style={[cardStyles.rarityBar, {backgroundColor: rarityColor, shadowColor: rarityColor}]} />
+      </TouchableOpacity>
+    );
+  },
+  (prev, next) => prev.item.id === next.item.id && prev.collected === next.collected,
 );
 
 const cardStyles = StyleSheet.create({
@@ -125,10 +122,19 @@ const cardStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(100,180,255,0.15)',
     alignItems: 'center',
-    paddingTop: spacing.xl,
+    justifyContent: 'center',
+    paddingTop: spacing.md,
     paddingBottom: spacing.sm,
     position: 'relative',
     overflow: 'hidden',
+  },
+  cardCollected: {
+  },
+  tickBadge: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    zIndex: 2,
   },
   valueBadge: {
     position: 'absolute',
@@ -162,8 +168,6 @@ const cardStyles = StyleSheet.create({
     height: 3,
     borderRadius: 1.5,
     marginBottom: 4,
-    backgroundColor: '#22D3EE',
-    shadowColor: '#22D3EE',
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
     shadowRadius: 6,
@@ -171,33 +175,29 @@ const cardStyles = StyleSheet.create({
   },
 });
 
-const getRarityColor = (rarity: string) => {
-  switch (rarity.toLowerCase()) {
-    case 'common': return '#B0BEC5';
-    case 'uncommon': return '#66BB6A';
-    case 'rare': return '#42A5F5';
-    case 'epic': return '#AB47BC';
-    case 'legendary': return '#FFA000';
-    default: return colors.textSecondary;
-  }
-};
-
 const BlueprintTrackerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const [collected, setCollected] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<Tab>('ALL');
+  const [initialOrder, setInitialOrder] = useState<string[]>(() => blueprints.map(bp => bp.id));
   const [search, setSearch] = useState('');
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    loadCollected();
+    const task = InteractionManager.runAfterInteractions(() => {
+      AsyncStorage.getItem(BP_STORAGE_KEY)
+        .then(raw => {
+          const saved: string[] = raw ? JSON.parse(raw) : [];
+          setCollected(saved);
+          const savedSet = new Set(saved);
+          const uncollected = blueprints.filter(bp => !savedSet.has(bp.id)).map(bp => bp.id);
+          const obtained = blueprints.filter(bp => savedSet.has(bp.id)).map(bp => bp.id);
+          setInitialOrder([...uncollected, ...obtained]);
+        })
+        .catch(() => {})
+        .finally(() => setReady(true));
+    });
+    return () => task.cancel();
   }, []);
-
-  const loadCollected = async () => {
-    try {
-      const raw = await AsyncStorage.getItem(BP_STORAGE_KEY);
-      if (raw) setCollected(JSON.parse(raw));
-    } catch {}
-  };
 
   const toggleBlueprint = useCallback((id: string) => {
     setCollected(prev => {
@@ -205,6 +205,13 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         ? prev.filter(c => c !== id)
         : [...prev, id];
       AsyncStorage.setItem(BP_STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
+
+      // Re-sort: uncollected first, then collected, both alphabetical
+      const updatedSet = new Set(updated);
+      const uncollected = blueprints.filter(bp => !updatedSet.has(bp.id)).map(bp => bp.id);
+      const obtained = blueprints.filter(bp => updatedSet.has(bp.id)).map(bp => bp.id);
+      setInitialOrder([...uncollected, ...obtained]);
+
       return updated;
     });
   }, []);
@@ -219,28 +226,25 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
   const progress =
     totalCount > 0 ? Math.round((collectedCount / totalCount) * 100) : 0;
 
-  const filteredBlueprints = useMemo(() => {
+  // Stable order: only re-sort based on initialOrder, not live toggles
+  const sortedBlueprints = useMemo(() => {
+    const orderMap = new Map(initialOrder.map((id, i) => [id, i]));
     let list = blueprints;
-    switch (activeTab) {
-      case 'ALL':
-        list = list.filter(bp => !collectedSet.has(bp.id));
-        break;
-      case 'OBTAINED':
-        list = list.filter(bp => collectedSet.has(bp.id));
-        break;
-    }
     if (search) {
       const q = search.toLowerCase();
       list = list.filter(bp => bp.name.toLowerCase().includes(q));
     }
-    return list;
-  }, [activeTab, collectedSet, search]);
+    return [...list].sort((a, b) => (orderMap.get(a.id) ?? 0) - (orderMap.get(b.id) ?? 0));
+  }, [initialOrder, search]);
 
   const renderBlueprint = useCallback(
-    ({item}: {item: Blueprint}) => (
-      <BlueprintCard item={item} onPress={toggleBlueprint} />
-    ),
-    [toggleBlueprint],
+    ({item}: {item: Blueprint}) => {
+      const isCollected = collectedSet.has(item.id);
+      return (
+        <BlueprintCard item={item} collected={isCollected} onPress={toggleBlueprint} />
+      );
+    },
+    [toggleBlueprint, collectedSet],
   );
 
   return (
@@ -278,38 +282,26 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         />
       </View>
 
-      {/* Tabs */}
-      <View style={styles.tabsRow}>
-        {TABS.map(tab => {
-          const isActive = activeTab === tab;
-          return (
-            <TouchableOpacity
-              key={tab}
-              style={styles.tab}
-              onPress={() => setActiveTab(tab)}>
-              <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
-                {tab}
-              </Text>
-              {isActive && <View style={styles.tabIndicator} />}
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+      {/* Hint */}
+      {collectedCount > 0 && (
+        <Text style={styles.hintText}>
+          Tap to select — obtained items move to the bottom
+        </Text>
+      )}
 
       {/* Grid */}
       <FlatList
-        data={filteredBlueprints}
+        data={sortedBlueprints}
         renderItem={renderBlueprint}
         keyExtractor={item => item.id}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.grid}
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews
-        maxToRenderPerBatch={12}
-        windowSize={5}
-        initialNumToRender={12}
-        getItemLayout={(_, index) => ({length: ROW_H, offset: ROW_H * Math.floor(index / NUM_COLUMNS), index})}
+        removeClippedSubviews={false}
+        maxToRenderPerBatch={ready ? 30 : 9}
+        windowSize={ready ? 21 : 5}
+        initialNumToRender={9}
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
@@ -327,8 +319,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.sm,
+    paddingVertical: spacing.sm,
     gap: spacing.md,
   },
   backBtn: {
@@ -385,33 +376,26 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontSize: fonts.sizes.sm,
   },
-  tabsRow: {
+  hintText: {
+    fontSize: 11,
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginBottom: spacing.sm,
+    fontStyle: 'italic',
+  },
+  sectionHeader: {
+    width: SCREEN_WIDTH - PADDING * 2,
     flexDirection: 'row',
-    paddingHorizontal: spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    marginBottom: spacing.md,
-  },
-  tab: {
+    alignItems: 'center',
+    gap: 6,
     paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.lg,
-    position: 'relative',
+    marginBottom: spacing.xs,
   },
-  tabText: {
+  sectionHeaderText: {
     fontSize: 11,
     fontWeight: '700',
-    color: colors.textMuted,
-    letterSpacing: 1,
-  },
-  tabTextActive: {color: colors.cyan},
-  tabIndicator: {
-    position: 'absolute',
-    bottom: 0,
-    left: spacing.lg,
-    right: spacing.lg,
-    height: 2,
-    backgroundColor: colors.cyan,
-    borderRadius: 1,
+    color: '#4ADE80',
+    letterSpacing: 0.5,
   },
   grid: {paddingHorizontal: PADDING, paddingBottom: 100},
   row: {gap: CARD_GAP, marginBottom: CARD_GAP},
