@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
 import {
   Alert,
+  Animated,
   Dimensions,
+  Easing,
   FlatList,
   Image,
   InteractionManager,
@@ -21,7 +23,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {captureScreen} from 'react-native-view-shot';
 import {CameraRoll, iosRequestAddOnlyGalleryPermission} from '@react-native-camera-roll/camera-roll';
-import {colors} from '../theme/theme';
+import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 
 const STORAGE_KEY = '@arc_raiders_tier_lists_v2';
@@ -99,13 +101,35 @@ const TierRow = memo(({tier, itemIds, isDropTarget, onEdit, onTap, onRemove}: {
 }) => {
   const tierItems = itemIds.map(id => itemMap.get(id)).filter(Boolean) as Item[];
   const isEmpty = tierItems.length === 0;
+  const pulseAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (isDropTarget) {
+      const loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {toValue: 1, duration: 800, easing: Easing.inOut(Easing.ease), useNativeDriver: false}),
+          Animated.timing(pulseAnim, {toValue: 0, duration: 800, easing: Easing.inOut(Easing.ease), useNativeDriver: false}),
+        ]),
+      );
+      loop.start();
+      return () => loop.stop();
+    } else {
+      pulseAnim.setValue(0);
+    }
+  }, [isDropTarget, pulseAnim]);
+
+  const animatedBorderColor = pulseAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(168,85,247,1)', 'rgba(0,229,255,1)'],
+  });
+
   return (
     <View style={s.tierRow}>
       <TouchableOpacity onPress={() => onEdit(tier)} activeOpacity={0.7} style={[s.tierLabel, {backgroundColor: tier.color}]}>
         <Text style={s.tierLetter}>{tier.label}</Text>
       </TouchableOpacity>
       <TouchableOpacity activeOpacity={isDropTarget ? 0.7 : 1.0} onPress={() => onTap(tier.id)} style={{flex: 1}}>
-        <View style={[s.tierContent, isDropTarget && s.tierContentHighlight]}>
+        <Animated.View style={[s.tierContent, isDropTarget && {borderColor: animatedBorderColor}]}>
           {isEmpty && <Text style={s.tierPlaceholder}>{isDropTarget ? '— Tap to place selected item here —' : 'Tap an item below to rank it'}</Text>}
           {tierItems.length > 0 && (
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tierItemsScroll}>
@@ -117,7 +141,7 @@ const TierRow = memo(({tier, itemIds, isDropTarget, onEdit, onTap, onRemove}: {
               ))}
             </ScrollView>
           )}
-        </View>
+        </Animated.View>
       </TouchableOpacity>
     </View>
   );
@@ -294,13 +318,13 @@ const TierListScreen = ({navigation}: any) => {
   if (!ready) {
     return (
       <View style={[s.root, {paddingTop: insets.top}]}>
-        <StatusBar barStyle="light-content" backgroundColor="#000" />
+        <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
         <View style={s.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
-            <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+            <Icon name="arrow-left" size={22} color={colors.textPrimary} />
           </TouchableOpacity>
-          <Text style={s.headerTitle}>TIER LIST MAKER</Text>
-          <View style={s.headerRight} />
+          <Text style={s.headerTitle}>Tier List</Text>
+          <View style={s.headerActions} />
         </View>
       </View>
     );
@@ -308,18 +332,18 @@ const TierListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
-          <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitle}>TIER LIST MAKER</Text>
-        <View style={s.headerRight}>
+        <Text style={s.headerTitle}>Tier List</Text>
+        <View style={s.headerActions}>
           <TouchableOpacity onPress={resetAll} style={s.headerIcon}>
-            <Icon name="refresh" size={22} color={colors.orange} />
+            <Icon name="refresh" size={20} color={colors.cyan} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDownload} style={s.headerIcon}>
-            <Icon name="download" size={22} color={colors.orange} />
+            <Icon name="download" size={20} color={colors.cyan} />
           </TouchableOpacity>
         </View>
       </View>
@@ -433,64 +457,64 @@ const TierListScreen = ({navigation}: any) => {
 };
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: '#000'},
-  header: {flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 10},
-  backBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
-  headerTitle: {flex: 1, fontSize: 20, fontWeight: '900', color: colors.textPrimary, textAlign: 'center', letterSpacing: 2},
-  headerRight: {flexDirection: 'row', gap: 8},
-  headerIcon: {width: 36, height: 36, alignItems: 'center', justifyContent: 'center'},
-  subtitleBar: {flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', gap: 12},
-  subtitleText: {fontSize: 13, fontWeight: '700', color: colors.textSecondary, letterSpacing: 1.5},
-  subtitleCount: {fontSize: 11, color: colors.textMuted},
-  tiersContainer: {paddingHorizontal: 12, paddingTop: 8, paddingBottom: 4},
-  tierRow: {flexDirection: 'row', marginBottom: 4, minHeight: 60},
-  tierLabel: {width: 54, minHeight: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 4},
+  root: {flex: 1, backgroundColor: colors.bg},
+  header: {flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, gap: spacing.md},
+  backBtn: {width: 36, height: 36, borderRadius: 18, backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center'},
+  headerTitle: {flex: 1, fontSize: fonts.sizes.xl, fontWeight: '700', color: colors.textPrimary, textAlign: 'center', marginRight: -36},
+  headerActions: {flexDirection: 'row', gap: spacing.sm},
+  headerIcon: {width: 36, height: 36, borderRadius: 18, backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center'},
+  subtitleBar: {flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border, gap: spacing.md},
+  subtitleText: {fontSize: fonts.sizes.sm, fontWeight: '700', color: colors.textSecondary, letterSpacing: 1.5},
+  subtitleCount: {fontSize: fonts.sizes.xs, color: colors.textMuted},
+  tiersContainer: {paddingHorizontal: spacing.md, paddingTop: spacing.sm, paddingBottom: spacing.xs},
+  tierRow: {flexDirection: 'row', marginBottom: spacing.xs, minHeight: 60},
+  tierLabel: {width: 54, minHeight: 60, alignItems: 'center', justifyContent: 'center', borderTopLeftRadius: borderRadius.sm, borderBottomLeftRadius: borderRadius.sm, borderTopRightRadius: 0, borderBottomRightRadius: 0},
   tierLetter: {fontSize: 26, fontWeight: '900', color: '#fff', textShadowColor: 'rgba(0,0,0,0.4)', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 3},
-  tierContent: {flex: 1, backgroundColor: 'rgba(255,255,255,0.04)', borderTopRightRadius: 4, borderBottomRightRadius: 4, justifyContent: 'center', minHeight: 60, marginLeft: 2, paddingHorizontal: 8, borderWidth: 1, borderColor: 'transparent'},
-  tierContentHighlight: {borderColor: 'rgba(255,107,44,0.35)', backgroundColor: 'rgba(255,107,44,0.06)'},
-  tierPlaceholder: {fontSize: 13, color: 'rgba(255,255,255,0.20)', textAlign: 'center', letterSpacing: 0.5},
+  tierContent: {flex: 1, backgroundColor: colors.bgCard, borderTopRightRadius: borderRadius.sm, borderBottomRightRadius: borderRadius.sm, justifyContent: 'center', minHeight: 60, paddingHorizontal: spacing.sm, borderTopWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderLeftWidth: 0, borderColor: 'transparent'},
+  tierContentHighlight: {borderColor: colors.borderAccent},
+  tierPlaceholder: {fontSize: fonts.sizes.sm, color: colors.textMuted, textAlign: 'center', letterSpacing: 0.5},
   tierItemsScroll: {flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 6},
-  tierItemCard: {width: 46, height: 46, borderRadius: 4, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)'},
-  tierItemImg: {width: '100%', height: '100%', borderRadius: 3},
-  tierItemPlaceholder: {alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.04)'},
+  tierItemCard: {width: 46, height: 46, borderRadius: borderRadius.sm, overflow: 'hidden', backgroundColor: colors.bgElevated, borderWidth: 1, borderColor: colors.borderLight},
+  tierItemImg: {width: '100%', height: '100%', borderRadius: borderRadius.sm - 1},
+  tierItemPlaceholder: {alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bgCard},
   tierItemRemove: {position: 'absolute', top: 1, right: 1, width: 14, height: 14, borderRadius: 7, backgroundColor: 'rgba(0,0,0,0.7)', alignItems: 'center', justifyContent: 'center'},
-  addTierBtn: {flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 8, marginBottom: 4, paddingVertical: 14, borderRadius: 6, borderWidth: 2, borderColor: colors.orange, borderStyle: 'dashed', gap: 8},
-  addTierText: {fontSize: 14, fontWeight: '700', color: colors.orange, letterSpacing: 0.5},
-  poolSection: {marginTop: 12, backgroundColor: 'rgba(255,255,255,0.02)', borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.06)', paddingTop: 12},
-  searchRow: {flexDirection: 'row', alignItems: 'center', marginHorizontal: 16, backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 8, paddingHorizontal: 12, height: 44, gap: 8},
-  searchInput: {flex: 1, fontSize: 14, color: colors.textPrimary, padding: 0},
-  filterRow: {flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 10, gap: 8},
-  filterChip: {paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)'},
-  filterChipActive: {backgroundColor: colors.orange + '20', borderColor: colors.orange + '50'},
-  filterChipText: {fontSize: 12, fontWeight: '600', color: colors.textMuted},
-  filterChipTextActive: {color: colors.orange},
-  hintBar: {flexDirection: 'row', alignItems: 'center', marginHorizontal: 16, marginBottom: 8, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: 'rgba(0,229,255,0.06)', borderRadius: 8, borderWidth: 1, borderColor: 'rgba(0,229,255,0.15)', gap: 8},
-  hintText: {flex: 1, fontSize: 12, color: colors.cyan, fontWeight: '600'},
-  itemsRow: {justifyContent: 'flex-start', gap: 8, paddingHorizontal: 12},
-  itemsListContent: {paddingHorizontal: 0, paddingBottom: 20, gap: 8},
-  itemCard: {width: ITEM_IMG_SIZE, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 6, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)', overflow: 'hidden'},
+  addTierBtn: {flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm, marginBottom: spacing.xs, paddingVertical: 14, borderRadius: borderRadius.sm, borderWidth: 2, borderColor: colors.cyan, borderStyle: 'dashed', gap: spacing.sm},
+  addTierText: {fontSize: 14, fontWeight: '700', color: colors.cyan, letterSpacing: 0.5},
+  poolSection: {marginTop: spacing.md, backgroundColor: colors.bg, borderTopWidth: 1, borderTopColor: colors.border, paddingTop: spacing.md},
+  searchRow: {flexDirection: 'row', alignItems: 'center', marginHorizontal: spacing.lg, backgroundColor: colors.bgCard, borderRadius: borderRadius.md, paddingHorizontal: spacing.md, height: 44, gap: spacing.sm, borderWidth: 1, borderColor: colors.border},
+  searchInput: {flex: 1, fontSize: fonts.sizes.sm, color: colors.textPrimary, padding: 0},
+  filterRow: {flexDirection: 'row', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, gap: spacing.sm},
+  filterChip: {paddingHorizontal: 14, paddingVertical: 6, borderRadius: borderRadius.full, backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border},
+  filterChipActive: {backgroundColor: 'rgba(0,229,255,0.12)', borderColor: colors.borderAccent},
+  filterChipText: {fontSize: fonts.sizes.xs, fontWeight: '600', color: colors.textMuted},
+  filterChipTextActive: {color: colors.cyan},
+  hintBar: {flexDirection: 'row', alignItems: 'center', marginHorizontal: spacing.lg, marginBottom: spacing.sm, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, backgroundColor: 'rgba(0,229,255,0.06)', borderRadius: borderRadius.md, borderWidth: 1, borderColor: colors.borderAccent, gap: spacing.sm},
+  hintText: {flex: 1, fontSize: fonts.sizes.xs, color: colors.cyan, fontWeight: '600'},
+  itemsRow: {justifyContent: 'flex-start', gap: spacing.sm, paddingHorizontal: spacing.md},
+  itemsListContent: {paddingHorizontal: 0, paddingBottom: 20, gap: spacing.sm},
+  itemCard: {width: ITEM_IMG_SIZE, backgroundColor: colors.bgCard, borderRadius: borderRadius.md, borderWidth: 1, borderColor: colors.border, overflow: 'hidden'},
   itemCardSelected: {borderColor: colors.cyan, borderWidth: 2, backgroundColor: 'rgba(0,229,255,0.08)'},
-  itemImg: {width: '100%', height: ITEM_IMG_SIZE - 10, backgroundColor: 'rgba(255,255,255,0.03)'},
+  itemImg: {width: '100%', height: ITEM_IMG_SIZE - 10, backgroundColor: colors.bgElevated},
   itemImgPlaceholder: {alignItems: 'center', justifyContent: 'center'},
   itemName: {fontSize: 10, fontWeight: '600', color: colors.textSecondary, textAlign: 'center', paddingHorizontal: 4, paddingVertical: 6},
   itemSelectedBadge: {position: 'absolute', top: 4, right: 4},
   emptyState: {width: '100%', alignItems: 'center', paddingVertical: 40, gap: 8},
   emptyTitle: {fontSize: 16, fontWeight: '700', color: colors.textPrimary},
   emptySub: {fontSize: 12, color: colors.textMuted},
-  modalOverlay: {flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end'},
-  modalSheet: {backgroundColor: '#111', borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingHorizontal: 24, paddingTop: 12, paddingBottom: 40},
-  modalHandle: {width: 40, height: 4, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.15)', alignSelf: 'center', marginBottom: 16},
-  modalHeader: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24},
-  modalTitle: {fontSize: 16, fontWeight: '900', color: colors.textPrimary, letterSpacing: 1.5},
-  modalDeleteBtn: {width: 40, height: 40, borderRadius: 8, backgroundColor: 'rgba(255,77,106,0.10)', alignItems: 'center', justifyContent: 'center'},
-  modalFieldLabel: {fontSize: 11, fontWeight: '800', color: colors.textMuted, letterSpacing: 2, marginBottom: 8, marginTop: 8},
-  labelInputWrap: {backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 10, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)', marginBottom: 20, height: 70, alignItems: 'center', justifyContent: 'center'},
+  modalOverlay: {flex: 1, backgroundColor: 'transparent', justifyContent: 'flex-end'},
+  modalSheet: {backgroundColor: colors.bg, borderTopLeftRadius: borderRadius.xl, borderTopRightRadius: borderRadius.xl, paddingHorizontal: spacing.xl, paddingTop: spacing.md, paddingBottom: 40, borderWidth: 1, borderBottomWidth: 0, borderColor: colors.borderLight},
+  modalHandle: {width: 40, height: 4, borderRadius: 2, backgroundColor: colors.textMuted, alignSelf: 'center', marginBottom: spacing.lg},
+  modalHeader: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.xl},
+  modalTitle: {fontSize: fonts.sizes.lg, fontWeight: '700', color: colors.textPrimary, letterSpacing: 1.5},
+  modalDeleteBtn: {width: 40, height: 40, borderRadius: borderRadius.md, backgroundColor: 'rgba(255,68,68,0.10)', alignItems: 'center', justifyContent: 'center'},
+  modalFieldLabel: {fontSize: fonts.sizes.xs, fontWeight: '800', color: colors.textMuted, letterSpacing: 2, marginBottom: spacing.sm, marginTop: spacing.sm},
+  labelInputWrap: {backgroundColor: colors.bgCard, borderRadius: borderRadius.md, borderWidth: 1, borderColor: colors.border, marginBottom: spacing.xl, height: 70, alignItems: 'center', justifyContent: 'center'},
   labelInput: {fontSize: 32, fontWeight: '900', width: '100%', textAlign: 'center'},
-  colorGrid: {flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 28, marginTop: 4},
-  colorSwatch: {width: 42, height: 42, borderRadius: 8, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'transparent'},
+  colorGrid: {flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginBottom: spacing.xxl, marginTop: spacing.xs},
+  colorSwatch: {width: 42, height: 42, borderRadius: borderRadius.md, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'transparent'},
   colorSwatchActive: {borderColor: '#fff', borderWidth: 3},
-  saveBtn: {backgroundColor: colors.orange, borderRadius: 10, paddingVertical: 16, alignItems: 'center'},
-  saveBtnText: {fontSize: 16, fontWeight: '800', color: '#fff', letterSpacing: 1},
+  saveBtn: {backgroundColor: 'rgba(0,229,255,0.10)', borderRadius: borderRadius.md, paddingVertical: spacing.lg, alignItems: 'center', borderWidth: 1, borderColor: colors.borderAccent},
+  saveBtnText: {fontSize: fonts.sizes.md, fontWeight: '800', color: colors.cyan, letterSpacing: 1},
 });
 
 export default TierListScreen;

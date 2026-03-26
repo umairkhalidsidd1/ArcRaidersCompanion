@@ -9,8 +9,9 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors} from '../theme/theme';
+import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import questData from '../data/quests.json';
 import {getCompletedQuests, toggleCompletedQuest} from '../utils/storage';
 
@@ -206,15 +207,14 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
-          <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitle}>QUEST DETAILS</Text>
-        <View style={s.backBtn} />
+        <Text style={s.headerTitleAbs}>Quest Details</Text>
       </View>
 
       <ScrollView
@@ -222,56 +222,76 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         contentContainerStyle={s.scrollContent}
         showsVerticalScrollIndicator={false}>
         {/* Quest info card */}
-        <View style={s.infoCard}>
-          {/* Status badge */}
-          <View
-            style={[
-              s.statusBadge,
-              {
-                backgroundColor:
-                  status === 'AVAILABLE'
-                    ? 'rgba(0,255,136,0.15)'
-                    : status === 'COMPLETED'
-                    ? 'rgba(0,255,136,0.15)'
-                    : 'rgba(255,255,255,0.1)',
-              },
-            ]}>
-            <Text
-              style={[
-                s.statusText,
-                {
-                  color:
-                    status === 'AVAILABLE' || status === 'COMPLETED'
-                      ? colors.green
-                      : colors.textMuted,
-                },
-              ]}>
-              {status}
-            </Text>
-          </View>
-
-          {/* Quest name */}
-          <Text style={s.questName}>{quest.name}</Text>
-
-          {/* Giver */}
-          <View style={s.giverRow}>
-            <Icon name="account-outline" size={16} color={giverColor} />
-            <Text style={[s.giverName, {color: giverColor}]}>
-              {quest.quest_giver}
-            </Text>
-            <Icon name="keyboard" size={14} color={giverColor} />
-          </View>
-
-          {/* Location */}
-          {quest.location ? (
-            <View style={s.locationRow}>
-              <Icon name="map-marker" size={14} color={colors.textMuted} />
-              <View style={s.locationBadge}>
-                <Text style={s.locationText}>{quest.location}</Text>
+        <LinearGradient
+          colors={['#0d2530', '#0A1520', '#0A0E17']}
+          start={{x: 0, y: 0.5}}
+          end={{x: 1, y: 0.5}}
+          style={s.infoCard}>
+          <View style={s.infoCardInner}>
+            {/* Left content */}
+            <View style={s.infoCardLeft}>
+              {/* Status badge */}
+              <View
+                style={[
+                  s.statusBadge,
+                  {
+                    backgroundColor:
+                      status === 'AVAILABLE'
+                        ? 'rgba(0,255,136,0.15)'
+                        : status === 'COMPLETED'
+                        ? 'rgba(0,255,136,0.15)'
+                        : 'rgba(255,255,255,0.1)',
+                  },
+                ]}>
+                <Text
+                  style={[
+                    s.statusText,
+                    {
+                      color:
+                        status === 'AVAILABLE' || status === 'COMPLETED'
+                          ? colors.green
+                          : colors.textMuted,
+                    },
+                  ]}>
+                  {status}
+                </Text>
               </View>
+
+              {/* Quest name */}
+              <Text style={s.questName}>{quest.name}</Text>
+
+              {/* Giver */}
+              <View style={s.giverRow}>
+                <Icon name="account-outline" size={16} color={giverColor} />
+                <Text style={[s.giverName, {color: giverColor}]}>
+                  {quest.quest_giver}
+                </Text>
+              </View>
+
+              {/* Location */}
+              {quest.location ? (
+                <View style={s.locationRow}>
+                  <Icon name="map-marker" size={14} color={colors.textMuted} />
+                  <View style={s.locationBadge}>
+                    <Text style={s.locationText}>{quest.location}</Text>
+                  </View>
+                </View>
+              ) : null}
             </View>
-          ) : null}
-        </View>
+
+            {/* Trader portrait */}
+            {TRADER_PORTRAITS[quest.quest_giver] && (
+              <View style={s.portraitWrap}>
+                <Image
+                  source={TRADER_PORTRAITS[quest.quest_giver]}
+                  style={s.portrait}
+                  resizeMode="cover"
+                />
+                <Text style={[s.portraitLabel, {color: giverColor}]}>{quest.quest_giver}</Text>
+              </View>
+            )}
+          </View>
+        </LinearGradient>
 
         {/* Prerequisites */}
         {quest.prerequisites.length > 0 && (
@@ -281,18 +301,11 @@ const QuestDetailScreen = ({route, navigation}: any) => {
               const isDone = completedNames.has(prereq);
               return (
                 <View key={prereq} style={s.prereqCard}>
-                  <View
-                    style={[
-                      s.prereqCircle,
-                      isDone && {
-                        backgroundColor: colors.green,
-                        borderColor: colors.green,
-                      },
-                    ]}>
-                    {isDone && (
-                      <Icon name="check" size={12} color="#000" />
-                    )}
-                  </View>
+                  {isDone ? (
+                    <Icon name="check-circle" size={20} color={colors.green} />
+                  ) : (
+                    <Icon name="lock-outline" size={18} color={colors.textMuted} />
+                  )}
                   <Text
                     style={[s.prereqName, isDone && s.prereqNameDone]}
                     numberOfLines={1}>
@@ -313,7 +326,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
             <Text style={s.sectionLabel}>OBJECTIVES</Text>
             {quest.objectives.map((obj, idx) => (
               <View key={idx} style={s.objectiveCard}>
-                <View style={s.checkbox} />
+                <Icon name="checkbox-blank-circle-outline" size={20} color={colors.borderLight} />
                 <Text style={s.objectiveText}>{obj}</Text>
               </View>
             ))}
@@ -348,7 +361,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         {/* Preparation */}
         <View style={s.prepCard}>
           <View style={s.prepHeader}>
-            <Icon name="clipboard-check-outline" size={16} color={colors.orange} />
+            <Icon name="clipboard-check-outline" size={16} color={colors.cyan} />
             <Text style={s.prepTitle}>PREPARATION</Text>
           </View>
           {guide.preparation.map((item, idx) => (
@@ -368,7 +381,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
             <View style={s.stepContent}>
               <Text style={s.stepObj}>{step.objective}</Text>
               <View style={s.tipRow}>
-                <Icon name="lightbulb-outline" size={13} color={colors.orange} />
+                <Icon name="lightbulb-outline" size={13} color={colors.cyan} />
                 <Text style={s.tipText}>{step.tip}</Text>
               </View>
             </View>
@@ -378,7 +391,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         {/* Pro Tips */}
         <View style={s.tipsCard}>
           <View style={s.tipsHeader}>
-            <Icon name="lightning-bolt" size={16} color={colors.orange} />
+            <Icon name="lightning-bolt" size={16} color={colors.cyan} />
             <Text style={s.tipsTitle}>PRO TIPS</Text>
           </View>
           {guide.proTips.map((tip, idx) => (
@@ -388,85 +401,112 @@ const QuestDetailScreen = ({route, navigation}: any) => {
             </View>
           ))}
         </View>
-      </ScrollView>
 
-      {/* Bottom button */}
-      <View style={[s.bottomWrap, {paddingBottom: insets.bottom + 12}]}>
-        {isLocked ? (
-          <TouchableOpacity
-            style={s.btnOutline}
-            activeOpacity={0.7}
-            onPress={handleMarkPrereqsCompleted}>
-            <Icon
-              name="check-circle-outline"
-              size={18}
-              color={colors.orange}
-            />
-            <Text style={s.btnOutlineText}>MARK PREREQUISITES COMPLETED</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={[
-              s.btnFilled,
-              isCompleted && {backgroundColor: colors.green},
-            ]}
-            activeOpacity={0.7}
-            onPress={handleMarkCompleted}>
-            <Text style={s.btnFilledText}>
-              {isCompleted ? 'MARK AS INCOMPLETE' : 'MARK AS COMPLETED'}
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
+        {/* Action button */}
+        <View style={{marginTop: spacing.xl, marginBottom: spacing.xl}}>
+          {isLocked ? (
+            <TouchableOpacity
+              style={s.btnOutline}
+              activeOpacity={0.7}
+              onPress={handleMarkPrereqsCompleted}>
+              <Icon
+                name="check-circle-outline"
+                size={18}
+                color={colors.cyan}
+              />
+              <Text style={s.btnOutlineText}>MARK PREREQUISITES COMPLETED</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[
+                s.btnFilled,
+                isCompleted && {backgroundColor: colors.green, borderColor: colors.green},
+              ]}
+              activeOpacity={0.7}
+              onPress={handleMarkCompleted}>
+              <Text style={[s.btnFilledText, isCompleted && {color: colors.textInverse}]}>
+                {isCompleted ? 'MARK AS INCOMPLETE' : 'MARK AS COMPLETED'}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: '#000'},
+  root: {flex: 1, backgroundColor: colors.bg},
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    minHeight: 44,
   },
-  backBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: '900',
+  backBtn: {width: 36, height: 36, borderRadius: 18, backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center', zIndex: 2},
+  headerTitleAbs: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
+    textAlign: 'center',
   },
   scroll: {flex: 1},
-  scrollContent: {paddingHorizontal: 16, paddingBottom: 20},
+  scrollContent: {paddingHorizontal: spacing.lg, paddingBottom: 20},
 
   /* Info card */
   infoCard: {
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 18,
+    borderRadius: br.lg,
     marginBottom: 20,
+  },
+  infoCardInner: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+        padding: spacing.lg,
+
+  },
+  infoCardLeft: {
+    flex: 1,
+    marginRight: spacing.md,
+  },
+  portraitWrap: {
+    alignItems: 'center',
+    gap: spacing.xs,
+    paddingTop: spacing.xs,
+    paddingRight: spacing.xs,
+  },
+  portrait: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    borderWidth: 2,
+    borderColor: colors.borderLight,
+  },
+  portraitLabel: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   statusBadge: {
     alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 6,
-    marginBottom: 12,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: br.sm,
+    marginBottom: spacing.md,
   },
   statusText: {
-    fontSize: 11,
+    fontSize: fonts.sizes.xs,
     fontWeight: '800',
     letterSpacing: 1,
   },
   questName: {
-    fontSize: 22,
+    fontSize: fonts.sizes.xl,
     fontWeight: '800',
     color: colors.textPrimary,
-    marginBottom: 10,
+    marginBottom: spacing.sm,
   },
   giverRow: {
     flexDirection: 'row',
@@ -484,51 +524,43 @@ const s = StyleSheet.create({
     gap: 6,
   },
   locationBadge: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 6,
+    backgroundColor: colors.bgElevated,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: br.sm,
   },
   locationText: {
-    fontSize: 12,
+    fontSize: fonts.sizes.xs,
     color: colors.textPrimary,
     fontWeight: '600',
   },
 
   /* Section labels */
   sectionLabel: {
-    fontSize: 11,
+    fontSize: fonts.sizes.xs,
     fontWeight: '800',
     color: colors.textMuted,
     letterSpacing: 2,
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: spacing.sm,
+    marginTop: spacing.sm,
   },
 
   /* Prerequisites */
   prereqCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 14,
-    marginBottom: 8,
-    gap: 12,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    gap: spacing.md,
   },
-  prereqCircle: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   prereqName: {
     flex: 1,
-    fontSize: 14,
+    fontSize: fonts.sizes.sm,
     color: colors.textSecondary,
     fontWeight: '600',
   },
@@ -537,9 +569,9 @@ const s = StyleSheet.create({
     color: colors.textMuted,
   },
   prereqView: {
-    fontSize: 13,
+    fontSize: fonts.sizes.sm,
     fontWeight: '800',
-    color: colors.orange,
+    color: colors.cyan,
     letterSpacing: 0.5,
   },
 
@@ -547,24 +579,18 @@ const s = StyleSheet.create({
   objectiveCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 14,
-    marginBottom: 8,
-    gap: 12,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    gap: spacing.md,
   },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.2)',
-  },
+
   objectiveText: {
     flex: 1,
-    fontSize: 13,
+    fontSize: fonts.sizes.sm,
     color: colors.textSecondary,
     lineHeight: 18,
   },
@@ -573,46 +599,46 @@ const s = StyleSheet.create({
   rewardCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 12,
-    marginBottom: 8,
-    gap: 12,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    gap: spacing.md,
   },
   rewardIcon: {
     width: 44,
     height: 44,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,107,44,0.12)',
+    borderRadius: br.sm,
+    backgroundColor: 'rgba(0,229,255,0.08)',
   },
   rewardName: {
     flex: 1,
-    fontSize: 14,
+    fontSize: fonts.sizes.sm,
     color: colors.textPrimary,
     fontWeight: '600',
   },
   rewardQtyBadge: {
-    backgroundColor: 'rgba(255,107,44,0.15)',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 6,
+    backgroundColor: 'rgba(0,229,255,0.10)',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: br.sm,
   },
   rewardQtyText: {
-    fontSize: 13,
+    fontSize: fonts.sizes.sm,
     fontWeight: '800',
-    color: colors.orange,
+    color: colors.cyan,
   },
 
   /* Guide */
   prepCard: {
-    backgroundColor: 'rgba(255,107,44,0.06)',
-    borderRadius: 12,
+    backgroundColor: 'rgba(0,229,255,0.06)',
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,107,44,0.15)',
-    padding: 14,
-    marginBottom: 12,
+    borderColor: colors.borderAccent,
+    padding: spacing.md,
+    marginBottom: spacing.md,
   },
   prepHeader: {
     flexDirection: 'row',
@@ -621,9 +647,9 @@ const s = StyleSheet.create({
     marginBottom: 10,
   },
   prepTitle: {
-    fontSize: 12,
+    fontSize: fonts.sizes.xs,
     fontWeight: '800',
-    color: colors.orange,
+    color: colors.cyan,
     letterSpacing: 1.5,
   },
   prepItem: {
@@ -640,26 +666,26 @@ const s = StyleSheet.create({
   },
   stepCard: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 14,
-    marginBottom: 8,
-    gap: 12,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    gap: spacing.md,
   },
   stepNumCircle: {
     width: 26,
     height: 26,
     borderRadius: 13,
-    backgroundColor: colors.orange,
+    backgroundColor: colors.cyan,
     alignItems: 'center',
     justifyContent: 'center',
   },
   stepNum: {
-    fontSize: 13,
+    fontSize: fonts.sizes.sm,
     fontWeight: '900',
-    color: '#000',
+    color: colors.textInverse,
   },
   stepContent: {
     flex: 1,
@@ -684,12 +710,12 @@ const s = StyleSheet.create({
     fontStyle: 'italic',
   },
   tipsCard: {
-    backgroundColor: 'rgba(255,107,44,0.06)',
-    borderRadius: 12,
+    backgroundColor: 'rgba(0,229,255,0.06)',
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,107,44,0.15)',
-    padding: 14,
-    marginBottom: 10,
+    borderColor: colors.borderAccent,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
   },
   tipsHeader: {
     flexDirection: 'row',
@@ -698,9 +724,9 @@ const s = StyleSheet.create({
     marginBottom: 10,
   },
   tipsTitle: {
-    fontSize: 12,
+    fontSize: fonts.sizes.xs,
     fontWeight: '800',
-    color: colors.orange,
+    color: colors.cyan,
     letterSpacing: 1.5,
   },
   tipItem: {
@@ -713,7 +739,7 @@ const s = StyleSheet.create({
     width: 5,
     height: 5,
     borderRadius: 2.5,
-    backgroundColor: colors.orange,
+    backgroundColor: colors.cyan,
     marginTop: 6,
   },
   tipItemText: {
@@ -723,40 +749,37 @@ const s = StyleSheet.create({
     lineHeight: 18,
   },
 
-  /* Bottom button */
-  bottomWrap: {
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.06)',
-  },
+  /* Action button */
   btnFilled: {
-    backgroundColor: colors.orange,
-    borderRadius: 12,
-    paddingVertical: 16,
+    backgroundColor: 'rgba(0,229,255,0.10)',
+    borderRadius: br.lg,
+    paddingVertical: spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.borderAccent,
   },
   btnFilledText: {
-    fontSize: 14,
+    fontSize: fonts.sizes.sm,
     fontWeight: '900',
-    color: '#000',
+    color: colors.cyan,
     letterSpacing: 1.5,
   },
   btnOutline: {
-    borderWidth: 2,
-    borderColor: colors.orange,
-    borderRadius: 12,
-    paddingVertical: 14,
+    borderWidth: 1,
+    borderColor: colors.borderAccent,
+    backgroundColor: 'rgba(0,229,255,0.06)',
+    borderRadius: br.lg,
+    paddingVertical: spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: spacing.sm,
   },
   btnOutlineText: {
-    fontSize: 13,
+    fontSize: fonts.sizes.sm,
     fontWeight: '900',
-    color: colors.orange,
+    color: colors.cyan,
     letterSpacing: 1,
   },
 });

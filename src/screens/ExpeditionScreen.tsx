@@ -1,403 +1,613 @@
 import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
 import {
   Animated,
+  Dimensions,
+  LayoutAnimation,
+  Platform,
+  Pressable,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  UIManager,
   View,
 } from 'react-native';
+import Svg, {
+  Circle,
+  Defs,
+  LinearGradient as SvgGrad,
+  Stop,
+  Path,
+} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {colors} from '../theme/theme';
+import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import expeditionData from '../data/expeditions.json';
 
-const STAGE_KEY = '@arcc_exp_stages_v2';
-const ITEMS_KEY = '@arcc_exp_items_v2';
-const COIN_KEY = '@arcc_exp_coins_v2';
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
-type ItemChecked = Record<string, boolean>; // "stageId-itemIdx" → checked
-type CoinValues = Record<string, string>; // "stageId-itemIdx" → user input
+const {width: SW} = Dimensions.get('window');
+const ITEMS_KEY = '@arcc_exp_items_v3';
+const COIN_KEY = '@arcc_exp_coins_v3';
 
-const STAGE_COLORS = ['#66BB6A', '#42A5F5', '#AB47BC', '#FF9800', '#FF5722', '#FF1744'];
-const ORANGE = '#FF6B2C';
-const GREEN = '#00FF88';
+type ItemChecked = Record<string, boolean>;
+type CoinValues = Record<string, string>;
+
 const CYAN = '#00E5FF';
+const GREEN = '#00FF88';
+const PURPLE = '#A855F7';
+const AMBER = '#FFAB00';
+const ROSE = '#FF4C6E';
 
-/* ── Helpers ──────────────────────────────────────────────── */
-const formatNum = (n: number) =>
-  n >= 1000000
-    ? `${(n / 1000000).toFixed(1)}M`
-    : n >= 1000
-    ? `${(n / 1000).toFixed(0)}K`
-    : String(n);
+const STAGE_COLORS = [CYAN, '#42A5F5', PURPLE, AMBER, ROSE, GREEN];
 
-const allMaterials = expeditionData.stages.flatMap((s, si) =>
-  s.objectives.map((o, oi) => ({
-    key: `${s.id}-${oi}`,
-    stageIdx: si,
-    stageId: s.id,
-    stageName: s.name,
-    ...o,
-  })),
+const fmt = (n: number) =>
+  n >= 1000000 ? `${(n / 1000000).toFixed(1)}M` : n >= 1000 ? `${(n / 1000).toFixed(0)}K` : String(n);
+
+const totalMats = expeditionData.stages.reduce((s, st) => s + st.objectives.length, 0);
+
+const anim = () =>
+  LayoutAnimation.configureNext({
+    duration: 260,
+    create: {type: LayoutAnimation.Types.easeInEaseOut, property: LayoutAnimation.Properties.opacity},
+    update: {type: LayoutAnimation.Types.easeInEaseOut},
+    delete: {type: LayoutAnimation.Types.easeInEaseOut, property: LayoutAnimation.Properties.opacity},
+  });
+
+/* ─────────────────────────────────────────────────────
+   ARC PROGRESS — Semicircle arc meter
+   ───────────────────────────────────────────────────── */
+const ARC_SIZE = 200;
+const ARC_STROKE = 8;
+const ARC_R = 80;
+const ARC_CX = ARC_SIZE / 2;
+const ARC_CY = ARC_R + ARC_STROKE; // center Y so arc baseline is at this Y
+
+// Build a semicircle path from left to right through the top
+const arcPath = (r: number) =>
+  `M ${ARC_CX - r} ${ARC_CY} A ${r} ${r} 0 1 1 ${ARC_CX + r} ${ARC_CY}`;
+
+// Build a partial arc path for progress (0→1)
+const arcFillPath = (r: number, p: number) => {
+  if (p <= 0) return '';
+  if (p >= 1) return arcPath(r);
+  const angle = Math.PI * (1 - p); // end angle from right
+  const ex = ARC_CX + r * Math.cos(angle);
+  const ey = ARC_CY - r * Math.sin(angle);
+  const large = p > 0.5 ? 1 : 0;
+  return `M ${ARC_CX - r} ${ARC_CY} A ${r} ${r} 0 ${large} 1 ${ex} ${ey}`;
+};
+
+const ARC_H = ARC_CY + ARC_STROKE + 4; // total SVG height
+
+const ArcMeter = React.memo(({progress, label, sub}: {progress: number; label: string; sub: string}) => {
+  return (
+    <View style={{alignItems: 'center'}}>
+      <Svg width={ARC_SIZE} height={ARC_H} viewBox={`0 0 ${ARC_SIZE} ${ARC_H}`}>
+        <Defs>
+          <SvgGrad id="arcG" x1="0" y1="0" x2="1" y2="0">
+            <Stop offset="0" stopColor={CYAN} stopOpacity="1" />
+            <Stop offset="0.5" stopColor={PURPLE} stopOpacity="0.9" />
+            <Stop offset="1" stopColor={ROSE} stopOpacity="0.8" />
+          </SvgGrad>
+        </Defs>
+        {/* track */}
+        <Path
+          d={arcPath(ARC_R)}
+          stroke="rgba(255,255,255,0.06)"
+          strokeWidth={ARC_STROKE}
+          fill="none"
+          strokeLinecap="round"
+        />
+        {/* fill */}
+        {progress > 0 && (
+          <Path
+            d={arcFillPath(ARC_R, progress)}
+            stroke="url(#arcG)"
+            strokeWidth={ARC_STROKE + 1}
+            fill="none"
+            strokeLinecap="round"
+          />
+        )}
+        {/* glow dot at start */}
+        <Circle cx={ARC_CX - ARC_R} cy={ARC_CY} r={4} fill={CYAN} opacity={0.6} />
+      </Svg>
+      <View style={[s.arcTextWrap, {top: ARC_CY - 36}]}>
+        <Text style={s.arcPct}>{Math.round(progress * 100)}</Text>
+        <Text style={s.arcPctSign}>%</Text>
+      </View>
+      <Text style={s.arcLabel}>{label}</Text>
+      <Text style={s.arcSub}>{sub}</Text>
+    </View>
+  );
+});
+
+/* ─────────────────────────────────────────────────────
+   MINI RING — Small progress ring for cards
+   ───────────────────────────────────────────────────── */
+const MINI_R = 16;
+const MINI_C = 2 * Math.PI * MINI_R;
+const MiniRing = React.memo(({pct, color}: {pct: number; color: string}) => (
+  <Svg width={40} height={40}>
+    <Circle cx={20} cy={20} r={MINI_R} stroke="rgba(255,255,255,0.06)" strokeWidth={3} fill="none" />
+    <Circle
+      cx={20}
+      cy={20}
+      r={MINI_R}
+      stroke={color}
+      strokeWidth={3}
+      fill="none"
+      strokeDasharray={`${MINI_C}`}
+      strokeDashoffset={MINI_C * (1 - pct)}
+      strokeLinecap="round"
+      transform="rotate(-90 20 20)"
+    />
+  </Svg>
+));
+
+/* ─────────────────────────────────────────────────────
+   SECTION HEADER
+   ───────────────────────────────────────────────────── */
+const SectionHeader = ({icon, title, color, right}: {icon: string; title: string; color: string; right?: React.ReactNode}) => (
+  <View style={s.secHead}>
+    <View style={[s.secDot, {backgroundColor: color}]} />
+    <Icon name={icon} size={14} color={color} style={{marginRight: 6}} />
+    <Text style={[s.secTitle, {color}]}>{title}</Text>
+    <View style={{flex: 1}} />
+    {right}
+  </View>
 );
 
-const totalMaterialCount = allMaterials.length;
-
-/* ══════════════════════════════════════════════════════════ */
+/* ═════════════════════════════════════════════════════
+   MAIN
+   ═════════════════════════════════════════════════════ */
 const ExpeditionScreen = ({navigation}: any) => {
-  const insets = useSafeAreaInsets();
-  const [checkedItems, setCheckedItems] = useState<ItemChecked>({});
-  const [coinValues, setCoinValues] = useState<CoinValues>({});
-  const [expandedStage, setExpandedStage] = useState<number | null>(null);
-  const [showRewards, setShowRewards] = useState(false);
-  const [showTransfer, setShowTransfer] = useState(false);
-  const [showCalc, setShowCalc] = useState(false);
-  const pulseAnim = useRef(new Animated.Value(0.3)).current;
+  const ins = useSafeAreaInsets();
+  const [checked, setChecked] = useState<ItemChecked>({});
+  const [coins, setCoins] = useState<CoinValues>({});
+  const [openStage, setOpenStage] = useState<number | null>(null);
+  const [section, setSection] = useState<'build' | 'load' | 'info'>('build');
+  const breathe = useRef(new Animated.Value(0)).current;
 
-  /* Pulse animation for active stage */
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(pulseAnim, {toValue: 1, duration: 1200, useNativeDriver: true}),
-        Animated.timing(pulseAnim, {toValue: 0.3, duration: 1200, useNativeDriver: true}),
+        Animated.timing(breathe, {toValue: 1, duration: 2000, useNativeDriver: true}),
+        Animated.timing(breathe, {toValue: 0, duration: 2000, useNativeDriver: true}),
       ]),
     ).start();
-  }, [pulseAnim]);
+  }, [breathe]);
 
-  /* Load persisted data */
+  const breatheScale = breathe.interpolate({inputRange: [0, 1], outputRange: [1, 1.04]});
+
   useEffect(() => {
-    Promise.all([
-      AsyncStorage.getItem(ITEMS_KEY),
-      AsyncStorage.getItem(COIN_KEY),
-    ]).then(([items, coins]) => {
-      if (items) setCheckedItems(JSON.parse(items));
-      if (coins) setCoinValues(JSON.parse(coins));
+    Promise.all([AsyncStorage.getItem(ITEMS_KEY), AsyncStorage.getItem(COIN_KEY)]).then(([i, c]) => {
+      if (i) setChecked(JSON.parse(i));
+      if (c) setCoins(JSON.parse(c));
     });
   }, []);
 
-  /* Toggle material */
-  const toggleItem = useCallback((key: string) => {
-    setCheckedItems(prev => {
-      const next = {...prev, [key]: !prev[key]};
-      AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(next));
-      return next;
+  const toggle = useCallback((k: string) => {
+    setChecked(p => {
+      const n = {...p, [k]: !p[k]};
+      AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(n));
+      return n;
     });
   }, []);
 
-  /* Update coin value */
-  const updateCoin = useCallback((key: string, val: string) => {
-    setCoinValues(prev => {
-      const next = {...prev, [key]: val};
-      AsyncStorage.setItem(COIN_KEY, JSON.stringify(next));
-      return next;
+  const setCoin = useCallback((k: string, v: string) => {
+    setCoins(p => {
+      const n = {...p, [k]: v};
+      AsyncStorage.setItem(COIN_KEY, JSON.stringify(n));
+      return n;
     });
   }, []);
 
-  /* Reset all */
-  const resetAll = useCallback(() => {
-    setCheckedItems({});
-    setCoinValues({});
-    AsyncStorage.multiRemove([ITEMS_KEY, COIN_KEY]);
+  const reset = useCallback(() => {
+    setChecked({});
+    setCoins({});
+    AsyncStorage.removeItem(ITEMS_KEY);
+    AsyncStorage.removeItem(COIN_KEY);
   }, []);
 
-  /* ── Computed ─────────────────────────────────────────── */
-  const checkedCount = useMemo(
-    () => Object.values(checkedItems).filter(Boolean).length,
-    [checkedItems],
-  );
-  const overallProgress = totalMaterialCount > 0 ? checkedCount / totalMaterialCount : 0;
+  // ── computed ──
+  const checkedCount = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
 
-  /* Per-stage progress */
-  const stageProgress = useMemo(() => {
-    return expeditionData.stages.map((stage, si) => {
-      const total = stage.objectives.length;
-      if (total === 0) return {done: 0, total: 0, ratio: 1};
-      const done = stage.objectives.filter((_, oi) => checkedItems[`${stage.id}-${oi}`]).length;
-      return {done, total, ratio: done / total};
-    });
-  }, [checkedItems]);
-
-  /* Find current active stage (first incomplete) */
-  const activeStageIdx = useMemo(
-    () => stageProgress.findIndex(s => s.ratio < 1),
-    [stageProgress],
+  const stageProg = useMemo(
+    () =>
+      expeditionData.stages.map(stage => {
+        const t = stage.objectives.length;
+        if (!t) return {done: 0, total: 0, pct: 1};
+        const d = stage.objectives.filter((_, i) => checked[`${stage.id}-${i}`]).length;
+        return {done: d, total: t, pct: d / t};
+      }),
+    [checked],
   );
 
-  /* Coin calculator - Stage 5 (Load Stage) */
+  const activeIdx = useMemo(() => stageProg.findIndex(sp => sp.pct < 1), [stageProg]);
+  const doneCount = useMemo(() => stageProg.filter(sp => sp.pct >= 1).length, [stageProg]);
+
+  // build stages = first 4, load stage = 5th
+  const buildStages = expeditionData.stages.slice(0, 4);
   const loadStage = expeditionData.stages[4];
+
   const coinTotals = useMemo(() => {
-    let totalValue = 0;
-    let totalRequired = 0;
-    loadStage.objectives.forEach((obj, oi) => {
-      const val = parseInt(coinValues[`${loadStage.id}-${oi}`] || '0', 10) || 0;
-      totalValue += val;
-      totalRequired += obj.quantity;
+    let val = 0, req = 0;
+    loadStage.objectives.forEach((o, i) => {
+      val += parseInt(coins[`${loadStage.id}-${i}`] || '0', 10) || 0;
+      req += o.quantity;
     });
-    return {totalValue, totalRequired, ratio: totalRequired > 0 ? Math.min(totalValue / totalRequired, 1) : 0};
-  }, [coinValues, loadStage]);
+    return {val, req, pct: req > 0 ? Math.min(val / req, 1) : 0};
+  }, [coins, loadStage]);
 
-  /* Estimated rewards */
-  const estimatedSkillPts = useMemo(() => {
-    return Math.min(5, Math.floor(coinTotals.totalValue / 1000000));
-  }, [coinTotals.totalValue]);
+  // Count load stage objectives that are met (tracked via coins, not checkboxes)
+  const loadMetCount = useMemo(() => {
+    return loadStage.objectives.filter((o, i) => {
+      const v = parseInt(coins[`${loadStage.id}-${i}`] || '0', 10) || 0;
+      return v >= o.quantity;
+    }).length;
+  }, [coins, loadStage]);
 
+  const progress = totalMats > 0 ? (checkedCount + loadMetCount) / totalMats : 0;
+
+  const skillPts = Math.min(5, Math.floor(coinTotals.val / 1000000));
+
+  /* ═══════════════════════════════════════════════════
+     RENDER
+     ═══════════════════════════════════════════════════ */
   return (
-    <View style={[st.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#000" />
+    <View style={[s.root, {paddingTop: ins.top}]}>
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
-      {/* ── Header ─────────────────────────────────────── */}
-      <View style={st.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
-          <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+      {/* HEADER */}
+      <View style={s.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={s.headerBtn} activeOpacity={0.7}>
+          <Icon name="chevron-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <View style={st.headerCenter}>
-          <Text style={st.headerTitle}>EXPEDITIONS</Text>
-          <Text style={st.headerSub}>PRESTIGE SYSTEM · LEVEL {expeditionData.unlock_level}+</Text>
+        <View style={s.headerCenter}>
+          <Text style={s.headerTitle}>EXPEDITION</Text>
+          <View style={s.headerBadge}>
+            <Text style={s.headerBadgeTxt}>LVL {expeditionData.unlock_level}+</Text>
+          </View>
         </View>
-        <TouchableOpacity onPress={resetAll} style={st.resetBtn}>
-          <Icon name="restart" size={18} color={ORANGE} />
+        <TouchableOpacity onPress={reset} style={s.headerBtn} activeOpacity={0.7}>
+          <Icon name="refresh" size={18} color={colors.textMuted} />
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        contentContainerStyle={st.scroll}>
+      <ScrollView showsVerticalScrollIndicator={false} bounces={false} contentContainerStyle={s.scroll}>
 
-        {/* ── Overview Card ────────────────────────────── */}
-        <View style={st.overviewCard}>
-          <View style={st.overviewTop}>
-            <View style={st.overviewIconWrap}>
-              <Icon name="rocket-launch" size={22} color={CYAN} />
-            </View>
-            <View style={{flex: 1}}>
-              <Text style={st.overviewTitle}>EXPEDITION PROGRESS</Text>
-              <Text style={st.overviewSub}>
-                {checkedCount} of {totalMaterialCount} materials collected
-              </Text>
-            </View>
-            <Text style={st.overviewPct}>{Math.round(overallProgress * 100)}%</Text>
-          </View>
-          <View style={st.progressBg}>
-            <View style={[st.progressFill, {width: `${overallProgress * 100}%`}]} />
-          </View>
+        {/* ═══════════════════════════════════════════
+            HERO ARC METER
+            ═══════════════════════════════════════════ */}
+        <View style={s.heroCard}>
+          <LinearGradient
+            colors={['rgba(0,229,255,0.1)', 'rgba(168,85,247,0.06)', 'rgba(255,76,110,0.04)', 'transparent']}
+            start={{x: 0, y: 0.3}}
+            end={{x: 1, y: 0.7}}
+            style={s.heroGrad}>
+            <View style={s.heroInner}>
+              <ArcMeter
+                progress={progress}
+                label={`${checkedCount + loadMetCount} / ${totalMats} Materials`}
+                sub={`${doneCount} of 6 stages complete`}
+              />
 
-          {/* Stage dots */}
-          <View style={st.stageDots}>
-            {expeditionData.stages.map((s, i) => {
-              const sp = stageProgress[i];
-              const isActive = i === activeStageIdx;
-              const isDone = sp.ratio >= 1;
-              const sc = STAGE_COLORS[i];
-              return (
-                <View key={s.id} style={st.stageDotsItem}>
-                  {isDone ? (
-                    <View style={[st.stageDot, {backgroundColor: sc}]}>
-                      <Icon name="check" size={8} color="#000" />
-                    </View>
-                  ) : isActive ? (
-                    <Animated.View
-                      style={[
-                        st.stageDot,
-                        {backgroundColor: sc, opacity: pulseAnim},
-                      ]}>
-                      <Text style={st.stageDotNum}>{i + 1}</Text>
-                    </Animated.View>
+              {/* Quick stats strip */}
+              <View style={s.statsStrip}>
+              {[
+                {label: 'Stages', val: `${doneCount}/6`, color: CYAN, icon: 'flag-variant'},
+                {label: 'Skill Pts', val: `+${skillPts}`, color: GREEN, icon: 'star-four-points'},
+                {label: 'Load', val: `${Math.round(coinTotals.pct * 100)}%`, color: AMBER, icon: 'package-variant'},
+              ].map((item, i) => (
+                <View key={i} style={s.statChip}>
+                  <Icon name={item.icon} size={12} color={item.color} />
+                  <Text style={[s.statVal, {color: item.color}]}>{item.val}</Text>
+                  <Text style={s.statLabel}>{item.label}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+          </LinearGradient>
+        </View>
+
+        {/* ═══════════════════════════════════════════
+            STAGE MILESTONE TRACK
+            ═══════════════════════════════════════════ */}
+        <View style={s.milestoneBar}>
+          {expeditionData.stages.map((st, i) => {
+            const done = stageProg[i].pct >= 1;
+            const active = i === activeIdx;
+            const sc = STAGE_COLORS[i];
+            return (
+              <React.Fragment key={i}>
+                {i > 0 && (
+                  <View style={[s.msLine, done && {backgroundColor: STAGE_COLORS[i - 1]}]} />
+                )}
+                <View
+                  style={[
+                    s.msNode,
+                    done && {backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)'},
+                    active && {borderColor: sc, borderWidth: 2.5, backgroundColor: 'rgba(255,255,255,0.06)'},
+                  ]}>
+                  {done ? (
+                    <Icon name="check-bold" size={10} color={sc} />
                   ) : (
-                    <View style={[st.stageDot, st.stageDotInactive]}>
-                      <Text style={st.stageDotNumDim}>{i + 1}</Text>
+                    <Icon name={st.icon} size={10} color={active ? sc : colors.textMuted} />
+                  )}
+                </View>
+              </React.Fragment>
+            );
+          })}
+        </View>
+
+        {/* ═══════════════════════════════════════════
+            SECTION SWITCHER
+            ═══════════════════════════════════════════ */}
+        <View style={s.switcher}>
+          {([
+            {key: 'build' as const, icon: 'hammer-wrench', label: 'Build'},
+            {key: 'load' as const, icon: 'package-variant', label: 'Load'},
+            {key: 'info' as const, icon: 'information-outline', label: 'Info'},
+          ]).map(tab => {
+            const sel = section === tab.key;
+            return (
+              <TouchableOpacity
+                key={tab.key}
+                activeOpacity={0.7}
+                onPress={() => setSection(tab.key)}
+                style={[s.switchTab, sel && s.switchTabActive]}>
+                <Icon name={tab.icon} size={15} color={sel ? CYAN : colors.textMuted} />
+                <Text style={[s.switchLabel, sel && {color: CYAN}]}>{tab.label}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
+        {/* ═══════════════════════════════════════════
+            SECTION: BUILD (Stages 1-4 + Departure)
+            ═══════════════════════════════════════════ */}
+        {section === 'build' && (
+          <View style={s.content}>
+            {buildStages.map((stage, idx) => {
+              const sc = STAGE_COLORS[idx];
+              const sp = stageProg[idx];
+              const isOpen = openStage === idx;
+              const isDone = sp.pct >= 1;
+              const isActive = idx === activeIdx;
+              const isLocked = activeIdx >= 0 && idx > activeIdx;
+
+              return (
+                <View key={stage.id} style={isLocked ? {opacity: 0.4} : undefined}>
+                  <Pressable
+                    onPress={() => {
+                      anim();
+                      setOpenStage(isOpen ? null : idx);
+                    }}>
+                    <View style={[s.stageCard, isActive && {borderColor: sc + '50'}]}>
+                      <LinearGradient
+                        colors={[sc + '08', 'transparent']}
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 1}}
+                        style={StyleSheet.absoluteFill}
+                      />
+                      <View style={s.stageCardInner}>
+                        {/* Left: stage icon */}
+                        <View style={[s.stageIconWrap, {backgroundColor: sc + '14'}]}>
+                          <Icon name={stage.icon} size={20} color={sc} />
+                          <View style={[s.stageIconBadge, {backgroundColor: isDone ? GREEN : isActive ? sc : colors.bgElevated}]}>
+                            {isDone ? (
+                              <Icon name="check-bold" size={7} color="#000" />
+                            ) : (
+                              <Text style={[s.stageIconBadgeNum, {color: isActive ? '#000' : colors.textMuted}]}>{sp.done}</Text>
+                            )}
+                          </View>
+                        </View>
+
+                        {/* Center */}
+                        <View style={{flex: 1}}>
+                          <View style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
+                            <Text style={s.stageName}>{stage.name}</Text>
+                            {isDone && (
+                              <View style={[s.tagDone]}>
+                                <Icon name="check-circle" size={9} color={GREEN} />
+                                <Text style={s.tagDoneTxt}>DONE</Text>
+                              </View>
+                            )}
+                            {isActive && (
+                              <View style={[s.tagActive, {borderColor: sc + '40'}]}>
+                                <View style={[s.tagActiveDot, {backgroundColor: sc}]} />
+                                <Text style={[s.tagActiveTxt, {color: sc}]}>ACTIVE</Text>
+                              </View>
+                            )}
+                          </View>
+                          <Text style={s.stageDesc} numberOfLines={1}>{stage.description}</Text>
+
+                          {/* Progress bar */}
+                          <View style={s.stageBarBg}>
+                            <View style={[s.stageBarFill, {width: `${Math.max(sp.pct * 100, 2)}%`, backgroundColor: sc}]} />
+                          </View>
+                        </View>
+
+                        {/* Expand chevron */}
+                        <Icon
+                          name={isOpen ? 'chevron-up' : 'chevron-down'}
+                          size={18}
+                          color={colors.textMuted}
+                          style={{marginLeft: 8}}
+                        />
+                      </View>
+                    </View>
+                  </Pressable>
+
+                  {/* Expanded items */}
+                  {isOpen && (
+                    <View style={s.itemsGrid}>
+                      {stage.objectives.map((obj, oi) => {
+                        const k = `${stage.id}-${oi}`;
+                        const c = checked[k] || false;
+                        return (
+                          <Pressable key={oi} onPress={() => toggle(k)} style={s.itemCard}>
+                            <View
+                              style={[
+                                s.itemCardInner,
+                                c && {borderColor: GREEN + '30', backgroundColor: GREEN + '06'},
+                              ]}>
+                              <View
+                                style={[
+                                  s.itemCheck,
+                                  c
+                                    ? {backgroundColor: GREEN, borderColor: GREEN}
+                                    : {borderColor: sc + '50'},
+                                ]}>
+                                {c && <Icon name="check" size={11} color="#000" />}
+                              </View>
+                              <View style={{flex: 1}}>
+                                <Text style={[s.itemName, c && {color: colors.textMuted, textDecorationLine: 'line-through'}]}>
+                                  {obj.item}
+                                </Text>
+                              </View>
+                              <View style={[s.itemQty, {backgroundColor: sc + '14'}]}>
+                                <Text style={[s.itemQtyTxt, {color: sc}]}>×{obj.quantity}</Text>
+                              </View>
+                            </View>
+                          </Pressable>
+                        );
+                      })}
                     </View>
                   )}
-                  <Text style={[st.stageDotLabel, isDone && {color: sc}]} numberOfLines={1}>
-                    {s.name}
-                  </Text>
                 </View>
               );
             })}
+
+            {/* DEPARTURE CARD */}
+            <View style={s.departureCard}>
+              <LinearGradient
+                colors={[GREEN + '0A', CYAN + '05', 'transparent']}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 1}}
+                style={StyleSheet.absoluteFill}
+              />
+              <View style={s.departureInner}>
+                <View style={s.departureIcon}>
+                  <Icon name="rocket-launch" size={24} color={GREEN} />
+                </View>
+                <View style={{flex: 1}}>
+                  <Text style={s.departureName}>Departure</Text>
+                  <Text style={s.departureDesc}>
+                    Register during the departure window to earn all rewards
+                  </Text>
+                </View>
+                <View style={[s.tagDone, {backgroundColor: doneCount >= 5 ? GREEN + '12' : 'rgba(255,255,255,0.04)'}]}>
+                  <Text style={[s.tagDoneTxt, {color: doneCount >= 5 ? GREEN : colors.textMuted}]}>
+                    {doneCount >= 5 ? 'READY' : `${doneCount}/5`}
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
-        </View>
+        )}
 
-        {/* ── Stages ───────────────────────────────────── */}
-        <Text style={st.sectionLabel}>MATERIAL CHECKLIST</Text>
-
-        {expeditionData.stages.map((stage, idx) => {
-          const sc = STAGE_COLORS[idx];
-          const sp = stageProgress[idx];
-          const isExpanded = expandedStage === idx;
-          const isActive = idx === activeStageIdx;
-          const isDone = sp.ratio >= 1;
-          const isCoinStage = stage.objectives.some(o => o.quantity >= 100000);
-
-          return (
-            <View key={stage.id}>
-              {/* Stage header */}
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => setExpandedStage(isExpanded ? null : idx)}
-                style={[
-                  st.stageHeader,
-                  isActive && {borderColor: sc + '40'},
-                  isDone && {borderColor: GREEN + '20', backgroundColor: GREEN + '05'},
-                ]}>
-                {/* Accent */}
-                <View style={[st.stageAccent, {backgroundColor: sc}]} />
-
-                {/* Number circle */}
-                <View
-                  style={[
-                    st.stageNum,
-                    {borderColor: sc},
-                    isDone && {backgroundColor: sc},
-                  ]}>
-                  {isDone ? (
-                    <Icon name="check" size={14} color="#000" />
-                  ) : (
-                    <Text style={[st.stageNumTxt, {color: sc}]}>{stage.id}</Text>
-                  )}
-                </View>
-
-                {/* Info */}
-                <View style={{flex: 1, gap: 2}}>
-                  <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-                    <Icon name={stage.icon} size={16} color={sc} />
-                    <Text style={st.stageName}>{stage.name}</Text>
-                    {isActive && (
-                      <View style={[st.activeBadge, {backgroundColor: sc + '20'}]}>
-                        <Text style={[st.activeBadgeTxt, {color: sc}]}>ACTIVE</Text>
-                      </View>
-                    )}
+        {/* ═══════════════════════════════════════════
+            SECTION: LOAD (Calculator + Coin Values)
+            ═══════════════════════════════════════════ */}
+        {section === 'load' && (
+          <View style={s.content}>
+            {/* Value summary */}
+            <View style={s.loadSummary}>
+              <LinearGradient
+                colors={['rgba(255,171,0,0.08)', 'rgba(255,171,0,0.02)', 'transparent']}
+                start={{x: 0, y: 0}}
+                end={{x: 0.5, y: 1}}
+                style={StyleSheet.absoluteFill}
+              />
+              <View style={s.loadSummaryInner}>
+                <View style={s.loadLeft}>
+                  <MiniRing pct={coinTotals.pct} color={AMBER} />
+                  <View>
+                    <Text style={s.loadValBig}>{fmt(coinTotals.val)}</Text>
+                    <Text style={s.loadValSub}>of {fmt(coinTotals.req)} target</Text>
                   </View>
-                  {/* Mini progress */}
-                  <View style={st.miniProgressRow}>
-                    <View style={st.miniProgressBg}>
-                      <View
-                        style={[
-                          st.miniProgressFill,
-                          {width: `${sp.ratio * 100}%`, backgroundColor: sc},
-                        ]}
-                      />
+                </View>
+                <View style={s.loadRight}>
+                  <Text style={s.loadPct}>{Math.round(coinTotals.pct * 100)}%</Text>
+                </View>
+              </View>
+            </View>
+
+            {/* Skill points */}
+            <SectionHeader icon="star-four-points" title="BONUS SKILL POINTS" color={GREEN} />
+            <View style={s.spRow}>
+              {[1, 2, 3, 4, 5].map(n => {
+                const earned = n <= skillPts;
+                const spIcons = ['star-outline', 'star-half-full', 'star', 'star-circle', 'star-shooting'];
+                return (
+                  <View key={n} style={s.spItem}>
+                    <View style={[s.spCircle, earned && {backgroundColor: GREEN + '18', borderColor: GREEN + '50'}]}>
+                      {earned ? (
+                        <Icon name="star-four-points" size={16} color={GREEN} />
+                      ) : (
+                        <Icon name={spIcons[n - 1]} size={16} color={colors.textMuted} />
+                      )}
                     </View>
-                    <Text style={[st.miniProgressTxt, {color: sc}]}>
-                      {sp.done}/{sp.total}
-                    </Text>
+                    <Text style={[s.spLabel, earned && {color: GREEN}]}>{n}M</Text>
                   </View>
-                </View>
+                );
+              })}
+            </View>
 
-                <Icon
-                  name={isExpanded ? 'chevron-up' : 'chevron-down'}
-                  size={20}
-                  color={colors.textMuted}
-                />
-              </TouchableOpacity>
+            {/* Input cards */}
+            <SectionHeader icon="package-variant" title="LOAD STAGE VALUES" color={AMBER} />
+            {loadStage.objectives.map((obj, oi) => {
+              const k = `${loadStage.id}-${oi}`;
+              const v = parseInt(coins[k] || '0', 10) || 0;
+              const ratio = obj.quantity > 0 ? Math.min(v / obj.quantity, 1) : 0;
+              const met = v >= obj.quantity;
 
-              {/* Expanded: material checklist */}
-              {isExpanded && (
-                <View style={st.stageBody}>
-                  <Text style={st.stageDesc}>{stage.description}</Text>
-
-                  {stage.objectives.length > 0 ? (
-                    stage.objectives.map((obj, oi) => {
-                      const itemKey = `${stage.id}-${oi}`;
-                      const checked = checkedItems[itemKey] || false;
-                      return (
-                        <TouchableOpacity
-                          key={oi}
-                          activeOpacity={0.7}
-                          onPress={() => toggleItem(itemKey)}
-                          style={[st.matRow, checked && st.matRowDone]}>
-                          <View
-                            style={[
-                              st.matCheck,
-                              checked
-                                ? {backgroundColor: GREEN, borderColor: GREEN}
-                                : {borderColor: sc + '60'},
-                            ]}>
-                            {checked && <Icon name="check" size={12} color="#000" />}
-                          </View>
-                          <View style={{flex: 1}}>
-                            <Text
-                              style={[st.matName, checked && st.matNameDone]}
-                              numberOfLines={1}>
-                              {obj.item}
-                            </Text>
-                          </View>
-                          <View style={[st.matQty, {backgroundColor: sc + '15'}]}>
-                            <Text style={[st.matQtyTxt, {color: sc}]}>
-                              {isCoinStage ? formatNum(obj.quantity) : `×${obj.quantity}`}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    })
-                  ) : (
-                    <View style={st.departureBanner}>
-                      <Icon name="rocket-launch" size={28} color={sc} />
-                      <Text style={st.departureTitle}>DEPARTURE</Text>
-                      <Text style={st.departureSub}>
-                        Register during the departure window. All remaining stash items contribute to your Expedition value.
+              return (
+                <View key={oi} style={[s.loadCard, met && {borderColor: GREEN + '30'}]}>
+                  <View style={s.loadCardInner}>
+                    <View style={s.loadCardHead}>
+                      <View style={[s.loadCatIcon, {backgroundColor: met ? GREEN + '14' : AMBER + '14'}]}>
+                        <Icon
+                          name={oi === 0 ? 'cube-outline' : oi === 1 ? 'sword-cross' : oi === 2 ? 'campfire' : 'food-apple'}
+                          size={16}
+                          color={met ? GREEN : AMBER}
+                        />
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text style={s.loadCatName}>{obj.item}</Text>
+                        <Text style={s.loadCatTarget}>Target: {fmt(obj.quantity)}</Text>
+                      </View>
+                      <Text style={[s.loadCatPct, {color: met ? GREEN : AMBER}]}>
+                        {Math.round(ratio * 100)}%
                       </Text>
                     </View>
-                  )}
-                </View>
-              )}
-            </View>
-          );
-        })}
 
-        {/* ── Coin Calculator ──────────────────────────── */}
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => setShowCalc(!showCalc)}
-          style={st.sectionBtn}>
-          <Icon name="calculator-variant" size={18} color={ORANGE} />
-          <Text style={st.sectionBtnText}>COIN VALUE CALCULATOR</Text>
-          <View style={{flex: 1}} />
-          <Icon
-            name={showCalc ? 'chevron-up' : 'chevron-down'}
-            size={20}
-            color={colors.textMuted}
-          />
-        </TouchableOpacity>
+                    <View style={s.loadInputRow}>
+                      <TextInput
+                        style={s.loadInput}
+                        keyboardType="number-pad"
+                        placeholder="0"
+                        placeholderTextColor={colors.textMuted}
+                        value={coins[k] || ''}
+                        onChangeText={t => setCoin(k, t.replace(/[^0-9]/g, ''))}
+                      />
+                    </View>
 
-        {showCalc && (
-          <View style={st.calcBody}>
-            <Text style={st.calcInfo}>
-              Enter your current coin values for Load Stage items to see if you meet the thresholds.
-            </Text>
-
-            {loadStage.objectives.map((obj, oi) => {
-              const coinKey = `${loadStage.id}-${oi}`;
-              const val = parseInt(coinValues[coinKey] || '0', 10) || 0;
-              const ratio = obj.quantity > 0 ? Math.min(val / obj.quantity, 1) : 0;
-              const met = val >= obj.quantity;
-              return (
-                <View key={oi} style={st.calcRow}>
-                  <View style={st.calcLabelRow}>
-                    <Text style={st.calcLabel}>{obj.item}</Text>
-                    <Text style={[st.calcTarget, met && {color: GREEN}]}>
-                      {met ? 'MET' : `Need ${formatNum(obj.quantity)}`}
-                    </Text>
-                  </View>
-                  <View style={st.calcInputRow}>
-                    <TextInput
-                      style={st.calcInput}
-                      keyboardType="number-pad"
-                      placeholder="0"
-                      placeholderTextColor={colors.textMuted}
-                      value={coinValues[coinKey] || ''}
-                      onChangeText={v => updateCoin(coinKey, v.replace(/[^0-9]/g, ''))}
-                    />
-                    <View style={st.calcBarBg}>
+                    <View style={s.loadBarBg}>
                       <View
                         style={[
-                          st.calcBarFill,
+                          s.loadBarFill,
                           {
-                            width: `${ratio * 100}%`,
-                            backgroundColor: met ? GREEN : ORANGE,
+                            width: `${Math.max(ratio * 100, 1)}%`,
+                            backgroundColor: met ? GREEN : AMBER,
                           },
                         ]}
                       />
@@ -406,325 +616,399 @@ const ExpeditionScreen = ({navigation}: any) => {
                 </View>
               );
             })}
-
-            {/* Total */}
-            <View style={st.calcTotal}>
-              <View style={{flex: 1}}>
-                <Text style={st.calcTotalLabel}>TOTAL VALUE</Text>
-                <Text style={st.calcTotalNum}>{formatNum(coinTotals.totalValue)}</Text>
-              </View>
-              <View style={st.calcTotalDivider} />
-              <View style={{flex: 1, alignItems: 'center'}}>
-                <Text style={st.calcTotalLabel}>REQUIRED</Text>
-                <Text style={st.calcTotalNum}>{formatNum(coinTotals.totalRequired)}</Text>
-              </View>
-              <View style={st.calcTotalDivider} />
-              <View style={{flex: 1, alignItems: 'flex-end'}}>
-                <Text style={st.calcTotalLabel}>SKILL PTS</Text>
-                <Text style={[st.calcTotalNum, {color: ORANGE}]}>+{estimatedSkillPts}</Text>
-              </View>
-            </View>
           </View>
         )}
 
-        {/* ── Reward Preview ───────────────────────────── */}
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => setShowRewards(!showRewards)}
-          style={st.sectionBtn}>
-          <Icon name="gift" size={18} color={colors.yellow} />
-          <Text style={st.sectionBtnText}>EXPEDITION REWARDS</Text>
-          <View style={{flex: 1}} />
-          <Icon
-            name={showRewards ? 'chevron-up' : 'chevron-down'}
-            size={20}
-            color={colors.textMuted}
-          />
-        </TouchableOpacity>
-
-        {showRewards && (
-          <View style={st.rewardsBody}>
-            {/* Permanent */}
-            <Text style={st.rewardTypeLabel}>
-              <Icon name="shield-check" size={11} color={GREEN} /> PERMANENT
-            </Text>
+        {/* ═══════════════════════════════════════════
+            SECTION: INFO (Rewards + Transfer)
+            ═══════════════════════════════════════════ */}
+        {section === 'info' && (
+          <View style={s.content}>
+            {/* PERMANENT REWARDS */}
+            <SectionHeader icon="infinity" title="PERMANENT REWARDS" color={GREEN} />
             {expeditionData.rewards.permanent.map((r, i) => (
-              <View key={i} style={st.rewardRow}>
-                <View style={[st.rewardIcon, {backgroundColor: GREEN + '15'}]}>
+              <View key={i} style={s.infoRow}>
+                <View style={[s.infoIcon, {backgroundColor: GREEN + '10'}]}>
                   <Icon name={r.icon} size={16} color={GREEN} />
                 </View>
                 <View style={{flex: 1}}>
-                  <Text style={st.rewardName}>{r.name}</Text>
-                  <Text style={st.rewardDesc}>{r.description}</Text>
+                  <Text style={s.infoTitle}>{r.name}</Text>
+                  <Text style={s.infoDesc}>{r.description}</Text>
                 </View>
               </View>
             ))}
 
-            <View style={st.rewardSep} />
-
-            {/* Temporary */}
-            <Text style={st.rewardTypeLabel}>
-              <Icon name="clock-outline" size={11} color={CYAN} /> TEMPORARY (STACKS ×3)
-            </Text>
+            {/* TEMPORARY REWARDS */}
+            <View style={{marginTop: spacing.xl}} />
+            <SectionHeader icon="clock-fast" title="TEMPORARY · STACKS ×3" color={CYAN} />
             {expeditionData.rewards.temporary.map((r, i) => (
-              <View key={i} style={st.rewardRow}>
-                <View style={[st.rewardIcon, {backgroundColor: CYAN + '15'}]}>
+              <View key={i} style={s.infoRow}>
+                <View style={[s.infoIcon, {backgroundColor: CYAN + '10'}]}>
                   <Icon name={r.icon} size={16} color={CYAN} />
                 </View>
                 <View style={{flex: 1}}>
-                  <Text style={st.rewardName}>{r.name}</Text>
-                  <Text style={st.rewardDesc}>{r.description}</Text>
+                  <Text style={s.infoTitle}>{r.name}</Text>
+                  <Text style={s.infoDesc}>{r.description}</Text>
                 </View>
               </View>
             ))}
-          </View>
-        )}
 
-        {/* ── Transfer ─────────────────────────────────── */}
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => setShowTransfer(!showTransfer)}
-          style={st.sectionBtn}>
-          <Icon name="swap-horizontal" size={18} color={CYAN} />
-          <Text style={st.sectionBtnText}>WHAT TRANSFERS</Text>
-          <View style={{flex: 1}} />
-          <Icon
-            name={showTransfer ? 'chevron-up' : 'chevron-down'}
-            size={20}
-            color={colors.textMuted}
-          />
-        </TouchableOpacity>
+            {/* TRANSFER */}
+            <View style={{marginTop: spacing.xl}} />
+            <SectionHeader icon="swap-horizontal" title="WHAT TRANSFERS" color={PURPLE} />
 
-        {showTransfer && (
-          <View style={st.transferBody}>
-            {/* Keeps */}
-            <Text style={st.transferLabel}>
-              <Icon name="check-circle" size={11} color={GREEN} /> KEEPS
-            </Text>
-            <View style={st.chipGrid}>
-              {expeditionData.keeps.map((item, i) => (
-                <View key={i} style={st.keepChip}>
-                  <Icon name="check" size={10} color={GREEN} />
-                  <Text style={st.keepText}>{item}</Text>
+            <View style={s.xferCard}>
+              <View style={s.xferHalf}>
+                <View style={s.xferHeadRow}>
+                  <Icon name="shield-check" size={14} color={GREEN} />
+                  <Text style={[s.xferHeadTxt, {color: GREEN}]}>KEEPS</Text>
                 </View>
-              ))}
+                {expeditionData.keeps.map((item, i) => (
+                  <View key={i} style={s.xferItem}>
+                    <View style={[s.xferDot, {backgroundColor: GREEN}]} />
+                    <Text style={s.xferTxt} numberOfLines={1}>{item}</Text>
+                  </View>
+                ))}
+              </View>
+
+              <View style={s.xferDivider} />
+
+              <View style={s.xferHalf}>
+                <View style={s.xferHeadRow}>
+                  <Icon name="alert-circle-outline" size={14} color={ROSE} />
+                  <Text style={[s.xferHeadTxt, {color: ROSE}]}>RESETS</Text>
+                </View>
+                {expeditionData.loses.map((item, i) => (
+                  <View key={i} style={s.xferItem}>
+                    <View style={[s.xferDot, {backgroundColor: ROSE}]} />
+                    <Text style={s.xferTxt} numberOfLines={1}>{item}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
 
-            <View style={st.rewardSep} />
-
-            {/* Loses */}
-            <Text style={st.transferLabel}>
-              <Icon name="close-circle" size={11} color={colors.red} /> LOSES
-            </Text>
-            <View style={st.chipGrid}>
-              {expeditionData.loses.map((item, i) => (
-                <View key={i} style={st.loseChip}>
-                  <Icon name="close" size={10} color={colors.red} />
-                  <Text style={st.loseText}>{item}</Text>
-                </View>
-              ))}
+            {/* TIP */}
+            <View style={s.tipCard}>
+              <Icon name="lightbulb-on-outline" size={14} color={AMBER} />
+              <Text style={s.tipTxt}>
+                Complete all build stages, load your caravan, then register during the departure window to earn permanent rewards.
+              </Text>
             </View>
           </View>
         )}
 
-        {/* ── Tip ──────────────────────────────────────── */}
-        <View style={st.tipCard}>
-          <Icon name="lightbulb-on-outline" size={16} color={ORANGE} />
-          <Text style={st.tipText}>
-            Tap each material to check it off as you collect. Use the coin calculator to track Load Stage progress and estimate bonus skill points.
-          </Text>
-        </View>
+        <View style={{height: 100}} />
       </ScrollView>
     </View>
   );
 };
 
-/* ══════════════════════════════════════════════════════════ */
-const st = StyleSheet.create({
-  root: {flex: 1, backgroundColor: '#000'},
+/* ═════════════════════════════════════════════════════
+   STYLES
+   ═════════════════════════════════════════════════════ */
+const s = StyleSheet.create({
+  root: {flex: 1, backgroundColor: colors.bg},
 
-  /* Header */
+  /* header */
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
   },
-  backBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
-  headerCenter: {flex: 1, alignItems: 'center'},
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: '900',
-    color: colors.textPrimary,
-    letterSpacing: 2,
-  },
-  headerSub: {
-    fontSize: 9,
-    fontWeight: '700',
-    color: colors.textMuted,
-    letterSpacing: 1.5,
-    marginTop: 2,
-  },
-  resetBtn: {
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  scroll: {paddingHorizontal: 16, paddingBottom: 100},
-
-  /* ── Overview card ──────────────────────────────────── */
-  overviewCard: {
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 16,
+  headerBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.05)',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 16,
-    marginBottom: 20,
-  },
-  overviewTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 12,
-  },
-  overviewIconWrap: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: CYAN + '15',
+    borderColor: colors.border,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  overviewTitle: {
-    fontSize: 12,
-    fontWeight: '900',
+  headerCenter: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 4,
+  },
+  headerTitle: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '800',
     color: colors.textPrimary,
+    letterSpacing: 3,
+  },
+  headerBadge: {
+    backgroundColor: CYAN + '12',
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: CYAN + '20',
+  },
+  headerBadgeTxt: {
+    fontSize: 8,
+    fontWeight: '900',
+    color: CYAN,
     letterSpacing: 1.5,
   },
-  overviewSub: {
-    fontSize: 11,
+  scroll: {paddingHorizontal: 0},
+
+  /* ── hero arc ── */
+  heroCard: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  heroGrad: {
+    borderRadius: br.xl,
+    borderWidth: 1,
+    borderColor: 'rgba(0,229,255,0.15)',
+    overflow: 'hidden',
+  },
+  heroInner: {
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    alignItems: 'center',
+  },
+  arcTextWrap: {
+    position: 'absolute',
+    top: 52,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  arcPct: {
+    fontSize: 44,
+    fontWeight: '900',
+    color: colors.textPrimary,
+    lineHeight: 48,
+  },
+  arcPctSign: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: CYAN,
+    marginBottom: 6,
+    marginLeft: 2,
+  },
+  arcLabel: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '700',
+    color: colors.textSecondary,
+    marginTop: spacing.xs,
+    letterSpacing: 0.5,
+  },
+  arcSub: {
+    fontSize: 10,
     color: colors.textMuted,
     marginTop: 2,
   },
-  overviewPct: {
-    fontSize: 24,
-    fontWeight: '900',
-    color: ORANGE,
-  },
 
-  progressBg: {
-    height: 5,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 3,
-    overflow: 'hidden',
-    marginBottom: 14,
-  },
-  progressFill: {height: 5, backgroundColor: ORANGE, borderRadius: 3},
-
-  /* Stage dots */
-  stageDots: {
+  statsStrip: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: spacing.sm,
+    marginTop: spacing.lg,
+    width: '100%',
+    justifyContent: 'center',
   },
-  stageDotsItem: {alignItems: 'center', gap: 4, flex: 1},
-  stageDot: {
+  statChip: {
+    alignItems: 'center',
+    gap: 3,
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: br.md,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.06)',
+    minWidth: 76,
+  },
+  statVal: {fontSize: fonts.sizes.sm, fontWeight: '900'},
+  statLabel: {fontSize: 8, fontWeight: '700', color: colors.textMuted, letterSpacing: 0.8},
+
+  /* ── milestone bar ── */
+  milestoneBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: spacing.xl,
+    marginBottom: spacing.lg,
+    paddingVertical: spacing.sm,
+  },
+  msLine: {
     width: 22,
-    height: 22,
-    borderRadius: 11,
+    height: 2,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 1,
+  },
+  msNode: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: colors.bgElevated,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  stageDotInactive: {backgroundColor: 'rgba(255,255,255,0.08)'},
-  stageDotNum: {fontSize: 10, fontWeight: '900', color: '#000'},
-  stageDotNumDim: {fontSize: 10, fontWeight: '700', color: colors.textMuted},
-  stageDotLabel: {fontSize: 8, fontWeight: '700', color: colors.textMuted, letterSpacing: 0.3},
-
-  /* ── Section label ──────────────────────────────────── */
-  sectionLabel: {
-    fontSize: 10,
+  msNum: {
+    fontSize: 9,
     fontWeight: '800',
     color: colors.textMuted,
-    letterSpacing: 1.5,
-    marginBottom: 10,
   },
 
-  /* ── Stage header ───────────────────────────────────── */
-  stageHeader: {
+  /* ── section switcher ── */
+  switcher: {
+    flexDirection: 'row',
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    backgroundColor: 'rgba(255,255,255,0.03)',
+    borderRadius: br.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 3,
+  },
+  switchTab: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    overflow: 'hidden',
-    marginBottom: 2,
-    gap: 10,
-    paddingRight: 14,
-    paddingVertical: 12,
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: spacing.sm + 2,
+    borderRadius: br.md,
   },
-  stageAccent: {width: 4, alignSelf: 'stretch'},
-  stageNum: {
-    width: 28,
-    height: 28,
+  switchTabActive: {
+    backgroundColor: CYAN + '0C',
+  },
+  switchLabel: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 0.5,
+  },
+
+  /* ── content wrap ── */
+  content: {
+    paddingHorizontal: spacing.lg,
+    gap: spacing.sm,
+  },
+
+  /* ── section header ── */
+  secHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.sm,
+    marginTop: spacing.sm,
+  },
+  secDot: {
+    width: 4,
+    height: 14,
+    borderRadius: 2,
+    marginRight: 8,
+  },
+  secTitle: {
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1.8,
+  },
+
+  /* ── stage card ── */
+  stageCard: {
+    borderRadius: br.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    overflow: 'hidden',
+  },
+  stageCardInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.lg,
+    gap: spacing.md,
+  },
+  stageIconWrap: {
+    width: 46,
+    height: 46,
     borderRadius: 14,
-    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  stageNumTxt: {fontSize: 12, fontWeight: '900'},
-  stageName: {fontSize: 14, fontWeight: '700', color: colors.textPrimary},
-  activeBadge: {
-    paddingHorizontal: 6,
+  stageIconBadge: {
+    position: 'absolute',
+    bottom: -2,
+    right: -2,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: colors.bg,
+  },
+  stageIconBadgeNum: {
+    fontSize: 8,
+    fontWeight: '900',
+  },
+  stageName: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  stageDesc: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textMuted,
+    marginTop: 3,
+  },
+
+  tagDone: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    backgroundColor: GREEN + '12',
+    paddingHorizontal: 7,
     paddingVertical: 2,
     borderRadius: 4,
   },
-  activeBadgeTxt: {fontSize: 8, fontWeight: '900', letterSpacing: 1},
-  miniProgressRow: {
+  tagDoneTxt: {
+    fontSize: 7,
+    fontWeight: '900',
+    color: GREEN,
+    letterSpacing: 0.8,
+  },
+  tagActive: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginTop: 4,
+    gap: 4,
+    borderWidth: 1,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
-  miniProgressBg: {
-    flex: 1,
+  tagActiveDot: {width: 5, height: 5, borderRadius: 3},
+  tagActiveTxt: {fontSize: 7, fontWeight: '900', letterSpacing: 0.8},
+
+  stageBarBg: {
     height: 3,
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(255,255,255,0.06)',
     borderRadius: 2,
+    marginTop: spacing.sm,
     overflow: 'hidden',
   },
-  miniProgressFill: {height: 3, borderRadius: 2},
-  miniProgressTxt: {fontSize: 10, fontWeight: '800'},
+  stageBarFill: {height: 3, borderRadius: 2},
 
-  /* ── Stage body (expanded) ──────────────────────────── */
-  stageBody: {
-    backgroundColor: 'rgba(255,255,255,0.02)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
-    padding: 14,
-    marginBottom: 6,
-    gap: 8,
+  /* ── expanded items ── */
+  itemsGrid: {
+    gap: spacing.xs,
+    paddingTop: spacing.sm,
   },
-  stageDesc: {fontSize: 12, color: colors.textMuted, lineHeight: 18, marginBottom: 4},
-
-  /* Material rows */
-  matRow: {
+  itemCard: {},
+  itemCardInner: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    backgroundColor: 'rgba(255,255,255,0.03)',
-    borderRadius: 10,
-    padding: 12,
+    gap: spacing.md,
+    padding: spacing.md,
+    borderRadius: br.md,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
+    borderColor: colors.border,
+    backgroundColor: 'rgba(255,255,255,0.02)',
   },
-  matRowDone: {
-    backgroundColor: GREEN + '06',
-    borderColor: GREEN + '15',
-  },
-  matCheck: {
+  itemCheck: {
     width: 22,
     height: 22,
     borderRadius: 6,
@@ -732,202 +1016,270 @@ const st = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  matName: {fontSize: 13, fontWeight: '600', color: colors.textPrimary},
-  matNameDone: {color: colors.textMuted, textDecorationLine: 'line-through'},
-  matQty: {
+  itemName: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '600',
+    color: colors.textPrimary,
+  },
+  itemQty: {
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 3,
     borderRadius: 6,
   },
-  matQtyTxt: {fontSize: 11, fontWeight: '800'},
-
-  /* Departure banner */
-  departureBanner: {
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 20,
-  },
-  departureTitle: {
-    fontSize: 16,
-    fontWeight: '900',
-    color: colors.textPrimary,
-    letterSpacing: 2,
-  },
-  departureSub: {
-    fontSize: 12,
-    color: colors.textMuted,
-    textAlign: 'center',
-    lineHeight: 18,
-    paddingHorizontal: 16,
-  },
-
-  /* ── Section button ─────────────────────────────────── */
-  sectionBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 14,
-    marginTop: 16,
-  },
-  sectionBtnText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    letterSpacing: 1,
-  },
-
-  /* ── Calculator ─────────────────────────────────────── */
-  calcBody: {
-    backgroundColor: 'rgba(255,255,255,0.02)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
-    padding: 14,
-    gap: 12,
-  },
-  calcInfo: {fontSize: 11, color: colors.textMuted, lineHeight: 16, marginBottom: 4},
-  calcRow: {gap: 6},
-  calcLabelRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  calcLabel: {fontSize: 12, fontWeight: '600', color: colors.textPrimary},
-  calcTarget: {fontSize: 10, fontWeight: '800', color: ORANGE, letterSpacing: 0.5},
-  calcInputRow: {flexDirection: 'row', alignItems: 'center', gap: 10},
-  calcInput: {
-    width: 100,
-    height: 36,
-    backgroundColor: 'rgba(255,255,255,0.06)',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
-    color: colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '700',
-    paddingHorizontal: 10,
-  },
-  calcBarBg: {
-    flex: 1,
-    height: 6,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  calcBarFill: {height: 6, borderRadius: 3},
-  calcTotal: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 10,
-    padding: 14,
-    marginTop: 4,
-  },
-  calcTotalLabel: {
-    fontSize: 8,
-    fontWeight: '800',
-    color: colors.textMuted,
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  calcTotalNum: {fontSize: 18, fontWeight: '900', color: colors.textPrimary},
-  calcTotalDivider: {
-    width: 1,
-    height: 30,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    marginHorizontal: 10,
-  },
-
-  /* ── Rewards ────────────────────────────────────────── */
-  rewardsBody: {
-    backgroundColor: 'rgba(255,255,255,0.02)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
-    padding: 14,
-  },
-  rewardTypeLabel: {
+  itemQtyTxt: {
     fontSize: 10,
     fontWeight: '800',
-    color: colors.textMuted,
-    letterSpacing: 1,
-    marginBottom: 10,
   },
-  rewardRow: {
+
+  /* ── departure ── */
+  departureCard: {
+    borderRadius: br.lg,
+    borderWidth: 1,
+    borderColor: GREEN + '15',
+    overflow: 'hidden',
+    marginTop: spacing.sm,
+  },
+  departureInner: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    marginBottom: 10,
+    gap: spacing.md,
+    padding: spacing.lg,
   },
-  rewardIcon: {
+  departureIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: GREEN + '10',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  departureName: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  departureDesc: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textMuted,
+    marginTop: 2,
+    lineHeight: 16,
+  },
+
+  /* ── load section ── */
+  loadSummary: {
+    borderRadius: br.xl,
+    borderWidth: 1,
+    borderColor: AMBER + '18',
+    overflow: 'hidden',
+  },
+  loadSummaryInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: spacing.xl,
+  },
+  loadLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  loadValBig: {
+    fontSize: fonts.sizes.xl,
+    fontWeight: '900',
+    color: colors.textPrimary,
+  },
+  loadValSub: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textMuted,
+    marginTop: 1,
+  },
+  loadRight: {},
+  loadPct: {
+    fontSize: fonts.sizes.xxl,
+    fontWeight: '900',
+    color: AMBER,
+  },
+
+  spRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: spacing.sm,
+  },
+  spItem: {alignItems: 'center', gap: 4},
+  spCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(255,255,255,0.03)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  spCircleNum: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.textMuted,
+  },
+  spLabel: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: colors.textMuted,
+  },
+
+  loadCard: {
+    borderRadius: br.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: 'rgba(255,255,255,0.02)',
+    overflow: 'hidden',
+  },
+  loadCardInner: {
+    padding: spacing.lg,
+    gap: spacing.md,
+  },
+  loadCardHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  loadCatIcon: {
     width: 34,
     height: 34,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  rewardName: {fontSize: 13, fontWeight: '700', color: colors.textPrimary},
-  rewardDesc: {fontSize: 10, color: colors.textMuted, marginTop: 1},
-  rewardSep: {
-    height: 1,
-    backgroundColor: 'rgba(255,255,255,0.06)',
-    marginVertical: 12,
+  loadCatName: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '700',
+    color: colors.textPrimary,
   },
-
-  /* ── Transfer ───────────────────────────────────────── */
-  transferBody: {
-    backgroundColor: 'rgba(255,255,255,0.02)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
-    padding: 14,
-  },
-  transferLabel: {
-    fontSize: 10,
-    fontWeight: '800',
+  loadCatTarget: {
+    fontSize: fonts.sizes.xs,
     color: colors.textMuted,
-    letterSpacing: 1,
-    marginBottom: 8,
+    marginTop: 1,
   },
-  chipGrid: {flexDirection: 'row', flexWrap: 'wrap', gap: 6},
-  keepChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: GREEN + '10',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 6,
+  loadCatPct: {
+    fontSize: fonts.sizes.lg,
+    fontWeight: '900',
   },
-  keepText: {fontSize: 10, fontWeight: '700', color: GREEN},
-  loseChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: colors.red + '10',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 6,
+  loadInputRow: {},
+  loadInput: {
+    height: 44,
+    backgroundColor: 'rgba(10,14,23,0.9)',
+    borderRadius: br.md,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    color: colors.textPrimary,
+    fontSize: fonts.sizes.md,
+    fontWeight: '700',
+    paddingHorizontal: spacing.lg,
   },
-  loseText: {fontSize: 10, fontWeight: '700', color: colors.red},
+  loadBarBg: {
+    height: 3,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  loadBarFill: {
+    height: 3,
+    borderRadius: 2,
+  },
 
-  /* ── Tip card ───────────────────────────────────────── */
+  /* ── info/rewards ── */
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
+    borderRadius: br.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: 'rgba(255,255,255,0.02)',
+  },
+  infoIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoTitle: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  infoDesc: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textMuted,
+    marginTop: 2,
+    lineHeight: 16,
+  },
+
+  /* ── transfer ── */
+  xferCard: {
+    flexDirection: 'row',
+    borderRadius: br.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: 'rgba(255,255,255,0.02)',
+    overflow: 'hidden',
+  },
+  xferHalf: {
+    flex: 1,
+    padding: spacing.lg,
+    gap: spacing.sm,
+  },
+  xferDivider: {
+    width: 1,
+    backgroundColor: colors.border,
+  },
+  xferHeadRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: spacing.xs,
+  },
+  xferHeadTxt: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+  xferItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  xferDot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+  },
+  xferTxt: {
+    fontSize: 11,
+    color: colors.textSecondary,
+    flex: 1,
+  },
+
+  /* ── tip ── */
   tipCard: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-    backgroundColor: ORANGE + '08',
-    borderRadius: 12,
+    gap: spacing.sm,
+    padding: spacing.lg,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: ORANGE + '15',
-    padding: 14,
-    marginTop: 20,
+    borderColor: AMBER + '15',
+    backgroundColor: AMBER + '06',
+    marginTop: spacing.lg,
   },
-  tipText: {flex: 1, fontSize: 11, color: colors.textMuted, lineHeight: 16},
+  tipTxt: {
+    flex: 1,
+    fontSize: fonts.sizes.xs,
+    color: colors.textMuted,
+    lineHeight: 18,
+  },
 });
 
 export default ExpeditionScreen;

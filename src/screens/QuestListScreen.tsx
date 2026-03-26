@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
-import {colors, fonts, spacing} from '../theme/theme';
+import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import questData from '../data/quests.json';
 import {
   getCompletedQuests,
@@ -269,10 +269,10 @@ const QuestListScreen = ({navigation, route}: any) => {
       {/* Header */}
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
-          <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitle}>QUESTS</Text>
-        <TouchableOpacity onPress={handleReset}>
+        <Text style={s.headerTitleAbs}>Quests</Text>
+        <TouchableOpacity onPress={handleReset} style={s.resetBtn}>
           <Text style={s.resetText}>RESET</Text>
         </TouchableOpacity>
       </View>
@@ -332,32 +332,52 @@ const QuestListScreen = ({navigation, route}: any) => {
 };
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: '#000'},
+  root: {flex: 1, backgroundColor: colors.bg},
 
   /* Header */
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
   },
   backBtn: {
-    width: 40,
-    height: 40,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.bgCard,
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: 22,
-    fontWeight: '900',
+    flex: 1,
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 3,
+    textAlign: 'center',
+  },
+  headerTitleAbs: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    textAlign: 'center',
+  },
+  resetBtn: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: br.sm,
+    backgroundColor: 'rgba(255,68,68,0.10)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,68,68,0.25)',
   },
   resetText: {
-    fontSize: 13,
+    fontSize: fonts.sizes.xs,
     fontWeight: '700',
-    color: colors.textMuted,
+    color: colors.red,
     letterSpacing: 1,
   },
 
@@ -365,22 +385,22 @@ const s = StyleSheet.create({
   tabRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
+    borderBottomColor: colors.border,
   },
   tab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: spacing.md,
     position: 'relative',
   },
   tabText: {
-    fontSize: 12,
+    fontSize: fonts.sizes.xs,
     fontWeight: '700',
     color: colors.textMuted,
     letterSpacing: 1.5,
   },
   tabTextActive: {
-    color: colors.orange,
+    color: colors.cyan,
   },
   tabIndicator: {
     position: 'absolute',
@@ -388,73 +408,73 @@ const s = StyleSheet.create({
     left: 20,
     right: 20,
     height: 3,
-    backgroundColor: colors.orange,
+    backgroundColor: colors.cyan,
     borderTopLeftRadius: 2,
     borderTopRightRadius: 2,
   },
 
   /* Progress */
   progressWrap: {
-    paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 10,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.sm,
   },
   progressLabelRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: spacing.sm,
   },
   progressLabel: {
-    fontSize: 11,
+    fontSize: fonts.sizes.xs,
     fontWeight: '700',
     color: colors.textMuted,
     letterSpacing: 1.5,
   },
   progressCount: {
-    fontSize: 14,
+    fontSize: fonts.sizes.sm,
     fontWeight: '700',
     color: colors.textMuted,
   },
   progressCountHighlight: {
-    color: colors.orange,
+    color: colors.cyan,
     fontWeight: '800',
   },
   progressBarBg: {
     height: 4,
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: colors.bgElevated,
     borderRadius: 2,
     overflow: 'hidden',
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: colors.orange,
+    backgroundColor: colors.cyan,
     borderRadius: 2,
   },
 
   separator: {
     height: 1,
-    backgroundColor: 'rgba(255,255,255,0.06)',
+    backgroundColor: colors.border,
   },
 
   /* List */
   list: {
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.lg,
     paddingBottom: 100,
-    paddingTop: 8,
+    paddingTop: spacing.sm,
   },
 
   /* Card */
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 14,
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    padding: 14,
-    marginTop: 10,
-    gap: 12,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginTop: spacing.sm,
+    gap: spacing.md,
   },
   portrait: {
     width: 48,
@@ -472,12 +492,12 @@ const s = StyleSheet.create({
     flex: 1,
   },
   questName: {
-    fontSize: 15,
+    fontSize: fonts.sizes.md,
     fontWeight: '700',
     color: colors.textPrimary,
   },
   questGiver: {
-    fontSize: 12,
+    fontSize: fonts.sizes.xs,
     fontWeight: '700',
     marginTop: 2,
   },
@@ -488,12 +508,12 @@ const s = StyleSheet.create({
     marginTop: 3,
   },
   locationText: {
-    fontSize: 11,
+    fontSize: fonts.sizes.xs,
     color: colors.textMuted,
   },
   requiresText: {
-    fontSize: 11,
-    color: colors.orange,
+    fontSize: fonts.sizes.xs,
+    color: colors.cyan,
     fontStyle: 'italic',
     marginTop: 3,
   },

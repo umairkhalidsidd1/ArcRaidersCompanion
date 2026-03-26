@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
-import {colors} from '../theme/theme';
+import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import questData from '../data/quests.json';
 import {getCompletedQuests} from '../utils/storage';
 
@@ -270,7 +270,7 @@ const QuestTreeScreen = ({navigation}: any) => {
                   <Icon
                     name="account-group"
                     size={14}
-                    color={isActive ? colors.orange : colors.textMuted}
+                    color={isActive ? colors.cyan : colors.textMuted}
                   />
                 ) : null}
                 <Text style={[st.pillText, isActive && {color: gc2}]}>
@@ -300,15 +300,15 @@ const QuestTreeScreen = ({navigation}: any) => {
 
   return (
     <View style={[st.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
       <View style={st.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
-          <Icon name="chevron-left" size={28} color={colors.textPrimary} />
+          <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={st.headerTitle}>QUEST TREE</Text>
-        <View style={st.backBtn} />
+        <Text style={st.headerTitleAbs}>Quest Tree</Text>
+        <View style={{width: 36}} />
       </View>
 
       <FlatList
@@ -327,71 +327,82 @@ const QuestTreeScreen = ({navigation}: any) => {
 
 /* ══════════════════════════════════════════════════════════ */
 const st = StyleSheet.create({
-  root: {flex: 1, backgroundColor: '#000'},
+  root: {flex: 1, backgroundColor: colors.bg},
 
   /* Header */
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    minHeight: 44,
   },
-  backBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: '900',
+  backBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.bgCard,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+  },
+  headerTitleAbs: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
     color: colors.textPrimary,
-    letterSpacing: 2,
+    textAlign: 'center',
   },
 
   /* Progress */
-  progressWrap: {paddingHorizontal: 16, paddingBottom: 12},
+  progressWrap: {paddingHorizontal: spacing.lg, paddingBottom: spacing.md},
   progressLabelRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 6,
+    marginBottom: spacing.xs,
   },
   progressLabel: {
-    fontSize: 10,
+    fontSize: fonts.sizes.xs,
     fontWeight: '800',
     color: colors.textMuted,
     letterSpacing: 1.5,
   },
-  progressCount: {fontSize: 12, fontWeight: '700', color: colors.textMuted},
-  progressHi: {color: colors.orange, fontWeight: '900'},
+  progressCount: {fontSize: fonts.sizes.xs, fontWeight: '700', color: colors.textMuted},
+  progressHi: {color: colors.cyan, fontWeight: '900'},
   progressBg: {
     height: 4,
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: colors.bgElevated,
     borderRadius: 2,
     overflow: 'hidden',
-    marginBottom: 6,
+    marginBottom: spacing.xs,
   },
-  progressFill: {height: 4, backgroundColor: colors.orange, borderRadius: 2},
-  chainsText: {fontSize: 11, color: colors.textMuted, fontWeight: '600'},
+  progressFill: {height: 4, backgroundColor: colors.cyan, borderRadius: 2},
+  chainsText: {fontSize: fonts.sizes.xs, color: colors.textMuted, fontWeight: '600'},
 
   /* Pills */
-  pillRow: {paddingHorizontal: 16, gap: 8, paddingBottom: 12},
+  pillRow: {paddingHorizontal: spacing.lg, gap: spacing.sm, paddingBottom: spacing.md},
   pill: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.05)',
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: br.full,
+    backgroundColor: colors.bgCard,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
+    borderColor: colors.border,
   },
   pillPt: {width: 20, height: 20, borderRadius: 10},
   pillText: {
-    fontSize: 11,
+    fontSize: fonts.sizes.xs,
     fontWeight: '800',
     color: colors.textMuted,
     letterSpacing: 1,
   },
 
-  sep: {height: 1, backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: 8},
+  sep: {height: 1, backgroundColor: colors.border, marginBottom: spacing.sm},
 
   /* List */
   listContent: {paddingBottom: 100},
@@ -412,15 +423,15 @@ const st = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.07)',
-    marginHorizontal: 16,
+    borderColor: colors.border,
+    marginHorizontal: spacing.lg,
     marginBottom: 2,
     overflow: 'hidden',
-    gap: 10,
-    paddingRight: 14,
+    gap: spacing.sm,
+    paddingRight: spacing.md,
   },
   cardDone: {
     borderColor: 'rgba(0,255,136,0.15)',
@@ -428,44 +439,44 @@ const st = StyleSheet.create({
   },
   cardLocked: {opacity: 0.5},
   accent: {width: 4, alignSelf: 'stretch'},
-  portrait: {width: 36, height: 36, borderRadius: 18, marginLeft: 10},
+  portrait: {width: 36, height: 36, borderRadius: 18, marginLeft: spacing.sm},
   portraitFb: {
     width: 36,
     height: 36,
     borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: spacing.sm,
   },
-  info: {flex: 1, paddingVertical: 12, gap: 3},
-  name: {fontSize: 14, fontWeight: '700', color: colors.textPrimary},
+  info: {flex: 1, paddingVertical: spacing.md, gap: 3},
+  name: {fontSize: fonts.sizes.sm, fontWeight: '700', color: colors.textPrimary},
   nameLocked: {color: colors.textMuted},
   meta: {flexDirection: 'row', alignItems: 'center', gap: 4},
-  giver: {fontSize: 11, fontWeight: '700'},
+  giver: {fontSize: fonts.sizes.xs, fontWeight: '700'},
   dot: {
     width: 3,
     height: 3,
     borderRadius: 1.5,
     backgroundColor: colors.textMuted,
   },
-  loc: {fontSize: 10, color: colors.textMuted, flex: 1},
+  loc: {fontSize: fonts.sizes.xs, color: colors.textMuted, flex: 1},
   depthBadge: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    paddingHorizontal: 6,
+    backgroundColor: colors.bgElevated,
+    paddingHorizontal: spacing.xs,
     paddingVertical: 2,
-    borderRadius: 4,
+    borderRadius: br.sm,
   },
   depthText: {fontSize: 9, fontWeight: '800', color: colors.textMuted, letterSpacing: 0.5},
 
   /* Empty */
-  emptyWrap: {alignItems: 'center', paddingTop: 80, gap: 10},
+  emptyWrap: {alignItems: 'center', paddingTop: 80, gap: spacing.sm},
   emptyTitle: {
-    fontSize: 16,
+    fontSize: fonts.sizes.lg,
     fontWeight: '900',
     color: colors.textMuted,
     letterSpacing: 2,
   },
-  emptySub: {fontSize: 13, color: colors.textMuted},
+  emptySub: {fontSize: fonts.sizes.sm, color: colors.textMuted},
 });
 
 export default QuestTreeScreen;
