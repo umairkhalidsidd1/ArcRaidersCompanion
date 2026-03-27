@@ -33,8 +33,8 @@
       "objectives": [
         {"item": "Coffee Pot", "quantity": 1},
         {"item": "Battery", "quantity": 25},
-        {"item": "Firefly Burner", "quantity": 5},
-        {"item": "Exodus Module", "quantity": 1}
+        {"item": "Fireball Burner", "quantity": 5},
+        {"item": "Exodus Modules", "quantity": 1}
       ],
       "icon": "cube-outline"
     },
@@ -45,7 +45,7 @@
       "objectives": [
         {"item": "Broken Guidance System", "quantity": 1},
         {"item": "Advanced Electrical Components", "quantity": 10},
-        {"item": "Snow Globe", "quantity": 3},
+        {"item": "Breathtaking Snow Globe", "quantity": 3},
         {"item": "Bombardier Cell", "quantity": 2}
       ],
       "icon": "wrench"

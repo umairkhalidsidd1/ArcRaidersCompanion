@@ -186,27 +186,6 @@ const ToolsScreen = ({ navigation }: any) => {
           </Card>
         </TouchableOpacity>
 
-        {/* Materials */}
-        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Materials')}>
-          <Card style={styles.toolCard}>
-            <View style={styles.toolRow}>
-              <View style={[styles.toolIconWrap, { backgroundColor: '#FFC10718' }]}>
-                <Icon name="cube-outline" size={26} color="#FFC107" />
-              </View>
-              <View style={styles.toolInfo}>
-                <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>MATERIALS</Text>
-                  <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
-                  </View>
-                </View>
-                <Text style={styles.toolDesc}>WORKBENCH & EXPEDITION ITEMS</Text>
-              </View>
-              <Icon name="chevron-right" size={20} color={colors.textMuted} />
-            </View>
-          </Card>
-        </TouchableOpacity>
-
         {/* Tier List Maker */}
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('TierList')}>
           <Card style={styles.toolCard}>

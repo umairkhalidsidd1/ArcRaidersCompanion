@@ -44,7 +44,7 @@ const NUM_COLUMNS = 3;
 const CARD_GAP = spacing.sm;
 const PADDING = spacing.lg;
 const CARD_W = (SCREEN_WIDTH - PADDING * 2 - CARD_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
-const CARD_H = CARD_W * 1.3;
+const CARD_H = CARD_W * 1.15;
 const ROW_H = CARD_H + CARD_GAP;
 
 const GRID_CELL = 14;
@@ -106,7 +106,7 @@ const BlueprintCard = React.memo(
           )}
         </View>
         <Text style={cardStyles.cardName} numberOfLines={1}>{item.name}</Text>
-        <View style={[cardStyles.rarityBar, {backgroundColor: rarityColor, shadowColor: rarityColor}]} />
+        <View style={[cardStyles.rarityBar, {backgroundColor: '#2563EB', shadowColor: '#2563EB'}]} />
       </TouchableOpacity>
     );
   },
@@ -123,12 +123,13 @@ const cardStyles = StyleSheet.create({
     borderColor: 'rgba(100,180,255,0.15)',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: spacing.md,
-    paddingBottom: spacing.sm,
+    paddingTop: spacing.sm,
+    paddingBottom: 4,
     position: 'relative',
     overflow: 'hidden',
   },
   cardCollected: {
+    borderColor: '#4ADE80',
   },
   tickBadge: {
     position: 'absolute',
@@ -161,13 +162,13 @@ const cardStyles = StyleSheet.create({
     color: colors.textPrimary,
     textAlign: 'center',
     paddingHorizontal: 4,
-    marginBottom: spacing.sm,
+    marginBottom: 4,
   },
   rarityBar: {
-    width: '60%',
+    width: '30%',
     height: 3,
     borderRadius: 1.5,
-    marginBottom: 4,
+    marginBottom: 2,
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
     shadowRadius: 6,

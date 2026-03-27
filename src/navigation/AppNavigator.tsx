@@ -10,7 +10,6 @@ import { colors, fonts, spacing } from '../theme/theme';
 import HomeScreen from '../screens/HomeScreen';
 import MapListScreen from '../screens/MapListScreen';
 import MapDetailScreen from '../screens/MapDetailScreen';
-import ItemListScreen from '../screens/ItemListScreen';
 import ItemDetailScreen from '../screens/ItemDetailScreen';
 import SubmitScreen from '../screens/SubmitScreen';
 import ToolsScreen from '../screens/ToolsScreen';
@@ -26,7 +25,6 @@ import ExpeditionScreen from '../screens/ExpeditionScreen';
 import TrialsScreen from '../screens/TrialsScreen';
 import GuidesScreen from '../screens/GuidesScreen';
 import GuideDetailScreen from '../screens/GuideDetailScreen';
-import MaterialsScreen from '../screens/MaterialsScreen';
 import TierListScreen from '../screens/TierListScreen';
 import LoadoutBuilderScreen from '../screens/LoadoutBuilderScreen';
 import WeaponsScreen from '../screens/WeaponsScreen';
@@ -34,6 +32,7 @@ import QuestTreeScreen from '../screens/QuestTreeScreen';
 import CosmeticsScreen from '../screens/CosmeticsScreen';
 import CollectibleTrackerScreen from '../screens/CollectibleTrackerScreen';
 import QuestDetailScreen from '../screens/QuestDetailScreen';
+import MaterialsScreen from '../screens/MaterialsScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
@@ -63,7 +62,7 @@ function TrialsStackScreen() {
 function MaterialsStackScreen() {
   return (
     <MaterialsStack.Navigator screenOptions={{ headerShown: false }}>
-      <MaterialsStack.Screen name="ItemList" component={ItemListScreen} />
+      <MaterialsStack.Screen name="MaterialsMain" component={MaterialsScreen} />
     </MaterialsStack.Navigator>
   );
 }
@@ -146,7 +145,6 @@ const AppNavigator = () => {
         <RootStack.Screen name="Weapons" component={WeaponsScreen} />
         <RootStack.Screen name="SkillTree" component={SkillTreeScreen} options={{ gestureEnabled: false }} />
         <RootStack.Screen name="ArcDetail" component={ArcDetailScreen} />
-        <RootStack.Screen name="Materials" component={MaterialsScreen} />
         <RootStack.Screen name="GuideDetail" component={GuideDetailScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
