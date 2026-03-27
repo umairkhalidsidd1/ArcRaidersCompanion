@@ -61,7 +61,7 @@ function TrialsStackScreen() {
 
 function MaterialsStackScreen() {
   return (
-    <MaterialsStack.Navigator screenOptions={{ headerShown: false }}>
+    <MaterialsStack.Navigator screenOptions={{ headerShown: false, freezeOnBlur: false }}>
       <MaterialsStack.Screen name="MaterialsMain" component={MaterialsScreen} />
     </MaterialsStack.Navigator>
   );
@@ -113,7 +113,7 @@ function TabNavigator() {
       })}>
       <Tab.Screen name="Bunker" component={BunkerStackScreen} />
       <Tab.Screen name="Trials" component={TrialsStackScreen} />
-      <Tab.Screen name="Materials" component={MaterialsStackScreen} />
+      <Tab.Screen name="Materials" component={MaterialsStackScreen} options={{ lazy: false }} />
       <Tab.Screen name="Enemies" component={EnemiesStackScreen} />
       <Tab.Screen name="Guides" component={GuidesStackScreen} />
     </Tab.Navigator>

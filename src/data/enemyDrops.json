@@ -1,0 +1,628 @@
+{
+  "ARC Alloy": [
+    {
+      "name": "Snitch",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/snitch.webp"
+    },
+    {
+      "name": "Tick",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/tick.webp"
+    },
+    {
+      "name": "Turret",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/turret.webp"
+    },
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Fireball",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/fireball.webp"
+    },
+    {
+      "name": "Wasp",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/wasp.webp"
+    },
+    {
+      "name": "Pop",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+    },
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    },
+    {
+      "name": "Shredder",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+    },
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    },
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    },
+    {
+      "name": "Firefly",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+    },
+    {
+      "name": "Hornet",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/hornet.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    },
+    {
+      "name": "Spotter",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter.webp"
+    }
+  ],
+  "ARC Powercell": [
+    {
+      "name": "Snitch",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/snitch.webp"
+    },
+    {
+      "name": "Fireball",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/fireball.webp"
+    },
+    {
+      "name": "Wasp",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/wasp.webp"
+    },
+    {
+      "name": "Pop",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+    },
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    },
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    },
+    {
+      "name": "Shredder",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+    },
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    },
+    {
+      "name": "Firefly",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+    },
+    {
+      "name": "Hornet",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/hornet.webp"
+    },
+    {
+      "name": "Spotter",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter.webp"
+    }
+  ],
+  "Snitch Scanner": [
+    {
+      "name": "Snitch",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/snitch.webp"
+    }
+  ],
+  "ARC Synthetic Resin": [
+    {
+      "name": "Snitch",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/snitch.webp"
+    },
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "Sensors": [
+    {
+      "name": "Snitch",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/snitch.webp"
+    },
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Tick Pod": [
+    {
+      "name": "Tick",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/tick.webp"
+    }
+  ],
+  "Light Ammo": [
+    {
+      "name": "Turret",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/turret.webp"
+    },
+    {
+      "name": "Wasp",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/wasp.webp"
+    }
+  ],
+  "Simple Gun Parts": [
+    {
+      "name": "Turret",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/turret.webp"
+    },
+    {
+      "name": "Shredder",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+    },
+    {
+      "name": "Firefly",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+    },
+    {
+      "name": "Hornet",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/hornet.webp"
+    }
+  ],
+  "ARC Motion Core": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    },
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "ARC Circuitry": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    },
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    }
+  ],
+  "Advanced Mechanical Components": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    }
+  ],
+  "Advanced Electrical Components": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    }
+  ],
+  "Advanced ARC Powercell": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    },
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    },
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "Queen Reactor": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    }
+  ],
+  "ARC Coolant": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "ARC Flex Rubber": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    }
+  ],
+  "ARC Thermo Lining": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Pop",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "ARC Performance Steel": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    }
+  ],
+  "Magnetic Accelerator": [
+    {
+      "name": "Queen",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/queen.webp"
+    },
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    }
+  ],
+  "Fireball Burner": [
+    {
+      "name": "Fireball",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/fireball.webp"
+    }
+  ],
+  "Crude Explosives": [
+    {
+      "name": "Fireball",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/fireball.webp"
+    },
+    {
+      "name": "Pop",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+    },
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    }
+  ],
+  "Wasp Driver": [
+    {
+      "name": "Wasp",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/wasp.webp"
+    }
+  ],
+  "Pop Trigger": [
+    {
+      "name": "Pop",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+    }
+  ],
+  "Surveyor Vault": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Vita Spray Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Barricade Kit Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Extended Medium Mag III Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Heavy Gun Parts Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Extended Barrel Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Padded Stock Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Vita Shot Blueprint": [
+    {
+      "name": "Surveyor",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rollbot.webp"
+    }
+  ],
+  "Matriarch Reactor": [
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    }
+  ],
+  "Aphelion Rifle Blueprint": [
+    {
+      "name": "Matriarch",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+    }
+  ],
+  "Rocketeer Driver": [
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    }
+  ],
+  "Heavy Ammo": [
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    },
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "Heavy Gun Parts": [
+    {
+      "name": "Rocketeer",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/rocketeer.webp"
+    }
+  ],
+  "Shotgun ammo": [
+    {
+      "name": "Shredder",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+    }
+  ],
+  "Shredder Gyro": [
+    {
+      "name": "Shredder",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+    }
+  ],
+  "Bastion Cell": [
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    }
+  ],
+  "Mechanical Components": [
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    }
+  ],
+  "Medium Gun Parts": [
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    }
+  ],
+  "Medium Ammo": [
+    {
+      "name": "Bastion",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bastion.webp"
+    },
+    {
+      "name": "Hornet",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/hornet.webp"
+    }
+  ],
+  "Leaper Pulse Unit": [
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    }
+  ],
+  "Explosive Compound": [
+    {
+      "name": "Leaper",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bison.webp"
+    },
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    }
+  ],
+  "Bombardier Cell": [
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    }
+  ],
+  "Launcher Ammo": [
+    {
+      "name": "Bombardier",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/bombardier.webp"
+    }
+  ],
+  "Comet Igniter": [
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    }
+  ],
+  "Electrical Components": [
+    {
+      "name": "Comet",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+    }
+  ],
+  "Firefly Burner": [
+    {
+      "name": "Firefly",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+    }
+  ],
+  "Chemicals": [
+    {
+      "name": "Firefly",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+    }
+  ],
+  "Hornet Driver": [
+    {
+      "name": "Hornet",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/hornet.webp"
+    }
+  ],
+  "Sentinel Firing Core": [
+    {
+      "name": "Sentinel",
+      "icon": "https://unhbvkszwhczbjxgetgk.supabase.co/storage/v1/object/public/images/arc-raiders/icons/sentinel.webp"
+    }
+  ],
+  "Spotter Relay": [
+    {
+      "name": "Spotter",
+      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter.webp"
+    }
+  ]
+}

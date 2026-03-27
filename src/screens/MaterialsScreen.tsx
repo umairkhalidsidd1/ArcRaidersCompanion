@@ -4,7 +4,6 @@ import {
   Dimensions,
   FlatList,
   Image,
-  InteractionManager,
   PanResponder,
   ScrollView,
   StatusBar,
@@ -22,6 +21,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import expeditionData from '../data/expeditions.json';
+import tradersData from '../data/traders.json';
+import questsData from '../data/quests.json';
+import trophyDisplayData from '../data/trophyDisplay.json';
+import enemyDropsData from '../data/enemyDrops.json';
+import recycleOutputsData from '../data/recycleOutputs.json';
+import craftingRecipesData from '../data/craftingRecipes.json';
 import FilterModal from '../components/FilterModal';
 
 /* ═══════════════ CONSTANTS ═══════════════ */
@@ -31,6 +36,8 @@ const CARD_GAP = spacing.sm;
 const PADDING = spacing.lg;
 const CARD_W = (SCREEN_W - PADDING * 2 - CARD_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 const CARD_H = CARD_W * 1.15;
+const THUMB_COLS = 4;
+const THUMB_W = Math.floor((SCREEN_W - PADDING * 2 - 2 - spacing.sm * (THUMB_COLS - 1)) / THUMB_COLS);
 const BP_STORAGE_KEY = '@arcc_blueprints_v2';
 const GRID_CELL = 14;
 const GRID_LINE_COLOR = 'rgba(30,80,180,0.5)';
@@ -130,6 +137,13 @@ const MATERIAL_LISTS = [
     icon: 'compass',
     color: '#42A5F5',
   },
+  {
+    id: 'trophy',
+    name: 'Trophy Display',
+    description: 'Complete stages to earn rewards from your Trophy Display',
+    icon: 'format-list-bulleted',
+    color: '#26C6DA',
+  },
 ];
 
 /* ═══════════════ WORKBENCH UPGRADE DATA ═══════════════ */
@@ -222,59 +236,52 @@ const itemByName = new Map<string, RawItem>();
 /* ═══════════════ ANIMATED GRADIENT BORDER ═══════════════ */
 const GRADIENT_COLORS: [string, string, ...string[]] = ['#00E5FF', '#00FF88', '#FFD600', '#FF6B2C', '#FF2D87', '#A855F7', '#2196F3', '#00E5FF'];
 
+/* Single shared spin animation for all GradientBorder instances */
+const _sharedSpin = new Animated.Value(0);
+Animated.loop(
+  Animated.timing(_sharedSpin, {
+    toValue: 1,
+    duration: 3000,
+    easing: (t: number) => t,
+    useNativeDriver: true,
+  }),
+).start();
+const _sharedRotate = _sharedSpin.interpolate({
+  inputRange: [0, 1],
+  outputRange: ['0deg', '360deg'],
+});
+
 const GradientBorder = ({children, style, radius = borderRadius.lg, borderW = 1.5}: {
   children: React.ReactNode;
   style?: any;
   radius?: number;
   borderW?: number;
-}) => {
-  const spin = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.timing(spin, {
-        toValue: 1,
-        duration: 3000,
-        easing: (t: number) => t, // linear
-        useNativeDriver: true,
-      }),
-    ).start();
-  }, []);
-
-  const rotate = spin.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  });
-
-  return (
-    <View style={[{borderRadius: radius, overflow: 'hidden'}, style]}>
-      {/* Oversized rotating gradient behind everything */}
-      <View style={[StyleSheet.absoluteFill, {alignItems: 'center', justifyContent: 'center'}]} pointerEvents="none">
-        <Animated.View style={{
-          width: SCREEN_W * 2,
-          height: SCREEN_W * 2,
-          transform: [{rotate}],
-        }}>
-          <LinearGradient
-            colors={GRADIENT_COLORS}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 1}}
-            style={{flex: 1}}
-          />
-        </Animated.View>
-      </View>
-      {/* Inner content with bg cutout */}
-      <View style={{
-        margin: borderW,
-        borderRadius: radius - borderW,
-        backgroundColor: colors.bg,
-        overflow: 'hidden',
+}) => (
+  <View style={[{borderRadius: radius, overflow: 'hidden'}, style]}>
+    <View style={[StyleSheet.absoluteFill, {alignItems: 'center', justifyContent: 'center'}]} pointerEvents="none">
+      <Animated.View style={{
+        width: SCREEN_W * 2,
+        height: SCREEN_W * 2,
+        transform: [{rotate: _sharedRotate}],
       }}>
-        {children}
-      </View>
+        <LinearGradient
+          colors={GRADIENT_COLORS}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}
+          style={{flex: 1}}
+        />
+      </Animated.View>
     </View>
-  );
-};
+    <View style={{
+      margin: borderW,
+      borderRadius: radius - borderW,
+      backgroundColor: colors.bg,
+      overflow: 'hidden',
+    }}>
+      {children}
+    </View>
+  </View>
+);
 
 /* ═══════════════ ALL ITEMS SORTED ═══════════════ */
 const allItems: RawItem[] = (rawItems as RawItem[]).sort((a, b) =>
@@ -312,6 +319,35 @@ const StatBarRow = ({label, value, maxVal}: {label: string; value: number; maxVa
 };
 
 /* ═══════════════ ITEM CARD ═══════════════ */
+const TYPE_GRADIENT: Record<string, [string, string]> = {
+  Weapon:              ['#0D0818', '#1C1232'],
+  Modification:        ['#0D0818', '#1C1232'],
+  Mods:                ['#0D0818', '#1C1232'],
+  Recyclable:          ['#060F10', '#0E2022'],
+  'Quick Use':         ['#100F06', '#201E0E'],
+  'Quick use':         ['#100F06', '#201E0E'],
+  Consumable:          ['#100F06', '#201E0E'],
+  Medical:             ['#100F06', '#201E0E'],
+  Trinket:             ['#0A0614', '#181028'],
+  Cosmetic:            ['#0A0614', '#181028'],
+  Augment:             ['#060C14', '#101C2C'],
+  Shield:              ['#060C14', '#101C2C'],
+  Gadget:              ['#060C14', '#101C2C'],
+  Ammunition:          ['#100C06', '#201810'],
+  Throwable:           ['#100C06', '#201810'],
+  Key:                 ['#100D06', '#201A12'],
+  'Quest Item':        ['#100D06', '#201A12'],
+  'Topside Material':  ['#060F08', '#102016'],
+  Nature:              ['#060F08', '#102016'],
+  'Basic Material':    ['#081006', '#142010'],
+  'Refined Material':  ['#081006', '#142010'],
+  'Advanced Material': ['#081006', '#142010'],
+  Material:            ['#081006', '#142010'],
+  Refinement:          ['#081006', '#142010'],
+  Misc:                ['#080E16', '#12202E'],
+};
+const DEFAULT_GRADIENT: [string, string] = ['#080E16', '#0D1624'];
+
 const ItemCard = React.memo(
   ({item, isBlueprint, bpCollected, onPress}: {
     item: RawItem;
@@ -332,6 +368,14 @@ const ItemCard = React.memo(
           {borderColor: isBlueprint && bpCollected ? '#4ADE80' : rarityColor + '40'},
           isBlueprint && bpCollected && cardStyles.cardCollected,
         ]}>
+        {!isBlueprint && (
+          <LinearGradient
+            colors={TYPE_GRADIENT[item.item_type] || DEFAULT_GRADIENT}
+            start={{x: 0, y: 0}}
+            end={{x: 0.5, y: 1}}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
         {isBlueprint && <GridBg />}
 
         {/* Value badge */}
@@ -399,6 +443,7 @@ const DetailSheet = ({
   onItemPress,
   onOpenWbSheet,
   onOpenExpSheet,
+  onOpenTdSheet,
 }: {
   item: RawItem | null;
   visible: boolean;
@@ -410,6 +455,7 @@ const DetailSheet = ({
   onItemPress: (item: RawItem) => void;
   onOpenWbSheet?: () => void;
   onOpenExpSheet?: () => void;
+  onOpenTdSheet?: () => void;
 }) => {
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
@@ -429,6 +475,7 @@ const DetailSheet = ({
   const animateTo = useCallback((target: number) => {
     if (target >= WB_TY_HIDDEN) {
       isExpanded.current = false;
+      onCloseRef.current();
       Animated.parallel([
         Animated.spring(translateY, {
           toValue: WB_TY_HIDDEN,
@@ -437,8 +484,8 @@ const DetailSheet = ({
           stiffness: 180,
           mass: 1,
         }),
-        Animated.timing(backdropAnim, {toValue: 0, duration: 250, useNativeDriver: true}),
-      ]).start(({finished}: {finished: boolean}) => { if (finished) onCloseRef.current(); });
+        Animated.timing(backdropAnim, {toValue: 0, duration: 150, useNativeDriver: true}),
+      ]).start();
     } else {
       const goingFull = target <= WB_TY_FULL + 5;
       isExpanded.current = goingFull;
@@ -453,7 +500,7 @@ const DetailSheet = ({
           stiffness: 180,
           mass: 1,
         }),
-        Animated.timing(backdropAnim, {toValue: 1, duration: 200, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
       ]).start();
     }
   }, []);
@@ -530,8 +577,8 @@ const DetailSheet = ({
       translateY.stopAnimation();
       backdropAnim.stopAnimation();
       Animated.parallel([
-        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 200, useNativeDriver: true}),
-        Animated.timing(backdropAnim, {toValue: 0, duration: 200, useNativeDriver: true}),
+        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 150, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 0, duration: 150, useNativeDriver: true}),
       ]).start();
       isExpanded.current = false;
     }
@@ -552,29 +599,61 @@ const DetailSheet = ({
     : [];
   const maxStatVal = stats.length > 0 ? Math.max(...stats.map(([, v]) => v as number), 100) : 100;
 
-  // Find crafting recipes: items that use this item as ingredient
-  const usedInRecipes = allItemsRef.filter(other => {
-    if (!other.flavor_text) return false;
-    return other.flavor_text.toLowerCase().includes(item.name.toLowerCase());
+  // === CRAFTING & RECYCLING (from DB data) ===
+  const craftingData = craftingRecipesData as {crafted_from: Record<string, {name: string; quantity: number}[]>; used_in: Record<string, {name: string; quantity: number}[]>};
+
+  // 1. Recycles From: items that recycle INTO this item (reverse lookup from recycleOutputs)
+  const recyclesFrom: {item: RawItem; quantity: number}[] = [];
+  const recycleMap = recycleOutputsData as Record<string, {name: string; quantity: number}[]>;
+  Object.entries(recycleMap).forEach(([inputName, outputs]) => {
+    outputs.forEach(out => {
+      if (out.name.toLowerCase() === item.name.toLowerCase()) {
+        const found = allItemsRef.find(o => o.name.toLowerCase() === inputName.toLowerCase());
+        if (found) recyclesFrom.push({item: found, quantity: out.quantity});
+      }
+    });
   });
 
-  // Find "crafted with": items referenced in this item's flavor text
-  const craftedWith = item.flavor_text
-    ? allItemsRef.filter(other =>
-        item.flavor_text!.toLowerCase().includes(other.name.toLowerCase()) && other.id !== item.id,
-      ).slice(0, 6)
-    : [];
+  // 2. Recycles Into: use proper data from recycleOutputs.json (with quantities)
+  const recycleOutputs: {item: RawItem; quantity: number}[] = [];
+  const recycleEntries = recycleMap[item.name];
+  if (recycleEntries) {
+    recycleEntries.forEach(entry => {
+      const found = allItemsRef.find(other => other.name.toLowerCase() === entry.name.toLowerCase());
+      if (found) recycleOutputs.push({item: found, quantity: entry.quantity});
+    });
+  }
 
-  // Find recycling: items with similar names for "recycles from/into"
-  const recyclesFrom = allItemsRef.filter(other => {
-    if (other.id === item.id) return false;
-    const otherParsed = other.stat_block ? (() => { try { return JSON.parse(other.stat_block!); } catch { return null; } })() : null;
-    if (!otherParsed) return false;
-    return other.item_type === 'Recyclable' && other.name.includes(item.name.split(' ')[0]);
-  }).slice(0, 8);
+  // 3. Crafted From: what ingredients are needed to craft THIS item
+  const craftedFrom: {item: RawItem; quantity: number}[] = [];
+  const cfEntries = craftingData.crafted_from[item.name];
+  if (cfEntries) {
+    cfEntries.forEach(entry => {
+      const found = allItemsRef.find(other => other.name.toLowerCase() === entry.name.toLowerCase());
+      if (found) craftedFrom.push({item: found, quantity: entry.quantity});
+    });
+  }
+
+  // 4. Used In Recipes: what items is THIS material used to craft
+  const usedInRecipes: {item: RawItem; quantity: number}[] = [];
+  const uiEntries = craftingData.used_in[item.name];
+  if (uiEntries) {
+    uiEntries.forEach(entry => {
+      const found = allItemsRef.find(other => other.name.toLowerCase() === entry.name.toLowerCase());
+      if (found && !usedInRecipes.some(e => e.item.id === found.id)) {
+        usedInRecipes.push({item: found, quantity: entry.quantity});
+      }
+    });
+  }
+
+  // 5. Crafted At: workbench info
+  const craftedAt = item.workbench;
+
+  // === DROPPED BY ===
+  const droppedBy: {name: string; icon: string}[] = (enemyDropsData as Record<string, {name: string; icon: string}[]>)[item.name] || [];
 
   // Saved in lists
-  const savedInLists: {listName: string; quantity: number; icon: string; color: string}[] = [];
+  const savedInLists: {listName: string; detail?: string; quantity?: number; icon: string; color: string}[] = [];
   WORKBENCH_UPGRADES.forEach(station => {
     station.materials.forEach(mat => {
       if (mat.name.toLowerCase() === item.name.toLowerCase()) {
@@ -585,7 +664,39 @@ const DetailSheet = ({
   (expeditionData as any).stages?.forEach((stage: any) => {
     stage.objectives?.forEach((obj: any) => {
       if ((obj.item || '').toLowerCase() === item.name.toLowerCase()) {
-        savedInLists.push({listName: 'Expedition', quantity: obj.quantity, icon: 'compass', color: '#42A5F5'});
+        savedInLists.push({listName: 'Expedition', detail: stage.name, quantity: obj.quantity, icon: 'compass', color: '#42A5F5'});
+      }
+    });
+  });
+  // Sold by traders
+  (tradersData as any[]).forEach((t: any) => {
+    if (t.item_name && t.item_name.toLowerCase() === item.name.toLowerCase()) {
+      savedInLists.push({listName: 'Sold by Trader', detail: t.trader_name, quantity: t.trader_price, icon: 'storefront-outline', color: '#4DB6AC'});
+    }
+  });
+  // Quest rewards
+  const allQuests = (questsData as any).quests || [];
+  allQuests.forEach((q: any) => {
+    (q.rewards || []).forEach((r: any) => {
+      if (r.name && r.name.toLowerCase() === item.name.toLowerCase()) {
+        savedInLists.push({listName: 'Quest Reward', detail: q.name, quantity: r.quantity, icon: 'gift-outline', color: '#FFD54F'});
+      }
+    });
+  });
+  // Trophy Display
+  (trophyDisplayData as any).stages?.forEach((stage: any) => {
+    stage.objectives?.forEach((obj: any) => {
+      if ((obj.item || '').toLowerCase() === item.name.toLowerCase()) {
+        savedInLists.push({listName: 'Trophy Display', detail: stage.name, quantity: obj.quantity, icon: 'trophy', color: '#26C6DA'});
+      }
+    });
+  });
+  // Quest objectives (hand-in items)
+  allQuests.forEach((q: any) => {
+    (q.objectives || []).forEach((obj: any) => {
+      const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
+      if (str.toLowerCase().includes(item.name.toLowerCase())) {
+        savedInLists.push({listName: 'Quest Objective', detail: q.name, icon: 'map-marker-check', color: '#FF8A65'});
       }
     });
   });
@@ -609,6 +720,7 @@ const DetailSheet = ({
         </Animated.View>
       )}
       <Animated.View
+        pointerEvents={visible ? 'auto' : 'none'}
         style={[
           detailStyles.sheet,
           {height: WB_SHEET_H, transform: [{translateY}]},
@@ -706,13 +818,112 @@ const DetailSheet = ({
             </View>
           )}
 
+          {/* Saved in Lists */}
+          {savedInLists.length > 0 && (
+            <View style={detailStyles.section}>
+              <View style={detailStyles.sectionHeader}>
+                <Icon name="bookmark-multiple" size={18} color={colors.cyan} />
+                <Text style={detailStyles.sectionTitle}>SAVED IN LISTS</Text>
+              </View>
+              {savedInLists.map((entry, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  style={detailStyles.savedListRow}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    if (entry.listName === 'Workbench Upgrades' && onOpenWbSheet) {
+                      onOpenWbSheet();
+                    } else if (entry.listName === 'Expedition' && onOpenExpSheet) {
+                      onOpenExpSheet();
+                    } else if (entry.listName === 'Trophy Display' && onOpenTdSheet) {
+                      onOpenTdSheet();
+                    }
+                  }}>
+                  <Icon name={entry.icon} size={20} color={entry.color} />
+                  <View style={{flex: 1}}>
+                    <Text style={detailStyles.savedListName}>{entry.listName}</Text>
+                    {entry.detail ? (
+                      <Text style={detailStyles.savedListDetail}>{entry.detail}</Text>
+                    ) : null}
+                  </View>
+                  {entry.listName === 'Sold by Trader' ? (
+                    <Text style={detailStyles.savedListQty}>{entry.quantity} OC</Text>
+                  ) : entry.quantity != null ? (
+                    <Text style={detailStyles.savedListQty}>Quantity: {entry.quantity}</Text>
+                  ) : null}
+                  {(entry.listName === 'Workbench Upgrades' || entry.listName === 'Expedition' || entry.listName === 'Trophy Display') ? (
+                    <Icon name="chevron-right" size={20} color={colors.textMuted} />
+                  ) : null}
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
+          {/* Dropped By */}
+          {droppedBy.length > 0 && (
+            <View style={detailStyles.section}>
+              <View style={detailStyles.sectionHeader}>
+                <Icon name="skull-crossbones" size={18} color={colors.cyan} />
+                <Text style={detailStyles.sectionTitle}>DROPPED BY</Text>
+              </View>
+              {droppedBy.map((enemy, idx) => (
+                <View key={idx} style={detailStyles.droppedByRow}>
+                  {enemy.icon ? (
+                    <Image source={{uri: enemy.icon}} style={detailStyles.droppedByIcon} resizeMode="contain" />
+                  ) : (
+                    <View style={detailStyles.droppedByIconPlaceholder}>
+                      <Icon name="robot" size={20} color={colors.textMuted} />
+                    </View>
+                  )}
+                  <View style={{flex: 1}}>
+                    <Text style={detailStyles.droppedByName}>{enemy.name}</Text>
+                    <Text style={detailStyles.droppedByType}>Enemy</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
+
           {/* Crafting & Recycling */}
-          {(usedInRecipes.length > 0 || craftedWith.length > 0 || recyclesFrom.length > 0) && (
+          {(usedInRecipes.length > 0 || craftedFrom.length > 0 || recyclesFrom.length > 0 || recycleOutputs.length > 0 || craftedAt) && (
             <View style={detailStyles.section}>
               <View style={detailStyles.sectionHeader}>
                 <Icon name="anvil" size={18} color={colors.cyan} />
                 <Text style={detailStyles.sectionTitle}>CRAFTING & RECYCLING</Text>
               </View>
+
+              {craftedAt && (
+                <View style={detailStyles.craftedAtRow}>
+                  <Icon name="tools" size={16} color={colors.cyan} />
+                  <Text style={detailStyles.craftedAtLabel}>Crafted at</Text>
+                  <Text style={detailStyles.craftedAtValue}>{craftedAt}</Text>
+                </View>
+              )}
+
+              {craftedFrom.length > 0 && (
+                <>
+                  <View style={detailStyles.subHeader}>
+                    <Icon name="clipboard-list" size={14} color={colors.textSecondary} />
+                    <Text style={detailStyles.subHeaderText}>Crafted From</Text>
+                  </View>
+                  <View style={detailStyles.thumbRow}>
+                    {craftedFrom.map(({item: r, quantity}) => (
+                      <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
+                        {r.icon ? (
+                          <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
+                        ) : (
+                          <Icon name="help-circle" size={24} color={colors.textMuted} />
+                        )}
+                        {quantity > 1 && (
+                          <View style={detailStyles.qtyBadge}>
+                            <Text style={detailStyles.qtyBadgeText}>x{quantity}</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </>
+              )}
 
               {usedInRecipes.length > 0 && (
                 <>
@@ -721,27 +932,7 @@ const DetailSheet = ({
                     <Text style={detailStyles.subHeaderText}>Used In Recipes</Text>
                   </View>
                   <View style={detailStyles.thumbRow}>
-                    {usedInRecipes.slice(0, 5).map(r => (
-                      <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
-                        {r.icon ? (
-                          <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
-                        ) : (
-                          <Icon name="help-circle" size={24} color={colors.textMuted} />
-                        )}
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </>
-              )}
-
-              {craftedWith.length > 0 && (
-                <>
-                  <View style={detailStyles.subHeader}>
-                    <Icon name="wrench" size={14} color={colors.textSecondary} />
-                    <Text style={detailStyles.subHeaderText}>Crafted With</Text>
-                  </View>
-                  <View style={detailStyles.thumbRow}>
-                    {craftedWith.map(r => (
+                    {usedInRecipes.map(({item: r}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
                         {r.icon ? (
                           <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
@@ -761,48 +952,48 @@ const DetailSheet = ({
                     <Text style={detailStyles.subHeaderText}>Recycles From</Text>
                   </View>
                   <View style={detailStyles.thumbRow}>
-                    {recyclesFrom.map(r => (
+                    {recyclesFrom.map(({item: r, quantity}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
                         {r.icon ? (
                           <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
                         )}
+                        {quantity > 1 && (
+                          <View style={detailStyles.qtyBadge}>
+                            <Text style={detailStyles.qtyBadgeText}>x{quantity}</Text>
+                          </View>
+                        )}
                       </TouchableOpacity>
                     ))}
                   </View>
                 </>
               )}
-            </View>
-          )}
 
-          {/* Saved in Lists */}
-          {savedInLists.length > 0 && (
-            <View style={detailStyles.section}>
-              <View style={detailStyles.sectionHeader}>
-                <Icon name="bookmark-multiple" size={18} color={colors.cyan} />
-                <Text style={detailStyles.sectionTitle}>SAVED IN LISTS</Text>
-              </View>
-              {savedInLists.map((entry, idx) => (
-                <TouchableOpacity
-                  key={idx}
-                  style={detailStyles.savedListRow}
-                  activeOpacity={0.7}
-                  onPress={() => {
-                    if (entry.listName === 'Workbench Upgrades' && onOpenWbSheet) {
-                      onOpenWbSheet();
-                    } else if (entry.listName === 'Expedition' && onOpenExpSheet) {
-                      onOpenExpSheet();
-                    }
-                  }}>
-                  <Icon name={entry.icon} size={20} color={entry.color} />
-                  <View style={{flex: 1}}>
-                    <Text style={detailStyles.savedListName}>{entry.listName}</Text>
+              {recycleOutputs.length > 0 && (
+                <>
+                  <View style={detailStyles.subHeader}>
+                    <Icon name="arrow-down-bold" size={14} color={colors.textSecondary} />
+                    <Text style={detailStyles.subHeaderText}>Recycles Into</Text>
                   </View>
-                  <Text style={detailStyles.savedListQty}>Quantity: {entry.quantity}</Text>
-                  <Icon name="chevron-right" size={20} color={colors.textMuted} />
-                </TouchableOpacity>
-              ))}
+                  <View style={detailStyles.thumbRow}>
+                    {recycleOutputs.map(({item: ri, quantity}) => (
+                      <TouchableOpacity key={ri.id} onPress={() => onItemPress(ri)} style={detailStyles.thumbCard}>
+                        {ri.icon ? (
+                          <Image source={{uri: ri.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
+                        ) : (
+                          <Icon name="help-circle" size={24} color={colors.textMuted} />
+                        )}
+                        {quantity > 1 && (
+                          <View style={detailStyles.qtyBadge}>
+                            <Text style={detailStyles.qtyBadgeText}>x{quantity}</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </>
+              )}
             </View>
           )}
 
@@ -916,6 +1107,7 @@ const WorkbenchUpgradeSheet = ({
   const animateTo = useCallback((target: number) => {
     if (target >= WB_TY_HIDDEN) {
       isExpanded.current = false;
+      onCloseRef.current();
       Animated.parallel([
         Animated.spring(translateY, {
           toValue: WB_TY_HIDDEN,
@@ -924,8 +1116,8 @@ const WorkbenchUpgradeSheet = ({
           stiffness: 180,
           mass: 1,
         }),
-        Animated.timing(backdropAnim, {toValue: 0, duration: 250, useNativeDriver: true}),
-      ]).start(({finished}: {finished: boolean}) => { if (finished) onCloseRef.current(); });
+        Animated.timing(backdropAnim, {toValue: 0, duration: 150, useNativeDriver: true}),
+      ]).start();
     } else {
       const goingFull = target <= WB_TY_FULL + 5;
       isExpanded.current = goingFull;
@@ -940,7 +1132,7 @@ const WorkbenchUpgradeSheet = ({
           stiffness: 180,
           mass: 1,
         }),
-        Animated.timing(backdropAnim, {toValue: 1, duration: 200, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
       ]).start();
     }
   }, []);
@@ -1030,6 +1222,7 @@ const WorkbenchUpgradeSheet = ({
         </Animated.View>
       )}
       <Animated.View
+        pointerEvents={visible ? 'auto' : 'none'}
         style={[
           wbStyles.sheet,
           {height: WB_SHEET_H, transform: [{translateY}]},
@@ -1152,17 +1345,18 @@ const ExpeditionSheet = ({
   const animateTo = useCallback((target: number) => {
     if (target >= WB_TY_HIDDEN) {
       isExpanded.current = false;
+      onCloseRef.current();
       Animated.parallel([
-        Animated.spring(translateY, {toValue: WB_TY_HIDDEN, useNativeDriver: true, damping: 22, stiffness: 180, mass: 1}),
-        Animated.timing(backdropAnim, {toValue: 0, duration: 250, useNativeDriver: true}),
-      ]).start(({finished}: {finished: boolean}) => { if (finished) onCloseRef.current(); });
+        Animated.spring(translateY, {toValue: WB_TY_HIDDEN, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
+        Animated.timing(backdropAnim, {toValue: 0, duration: 150, useNativeDriver: true}),
+      ]).start();
     } else {
       const goingFull = target <= WB_TY_FULL + 5;
       isExpanded.current = goingFull;
       if (!goingFull) scrollRef.current?.scrollTo?.({y: 0, animated: true});
       Animated.parallel([
-        Animated.spring(translateY, {toValue: target, useNativeDriver: true, damping: 22, stiffness: 180, mass: 1}),
-        Animated.timing(backdropAnim, {toValue: 1, duration: 200, useNativeDriver: true}),
+        Animated.spring(translateY, {toValue: target, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
       ]).start();
     }
   }, []);
@@ -1253,7 +1447,7 @@ const ExpeditionSheet = ({
           <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => animateTo(WB_TY_HIDDEN)} />
         </Animated.View>
       )}
-      <Animated.View style={[wbStyles.sheet, {height: WB_SHEET_H, transform: [{translateY}]}, overDetail && {zIndex: 31}]}>
+      <Animated.View pointerEvents={visible ? 'auto' : 'none'} style={[wbStyles.sheet, {height: WB_SHEET_H, transform: [{translateY}]}, overDetail && {zIndex: 31}]}>
         <View {...expHandlePan.panHandlers} style={wbStyles.handleArea}>
           <View style={wbStyles.handle} />
         </View>
@@ -1337,6 +1531,281 @@ const ExpeditionSheet = ({
   );
 };
 
+/* ═══════════════ TROPHY DISPLAY SHEET ═══════════════ */
+const TD_CHECKED_KEY = '@arcc_td_checked_v1';
+
+const TROPHY_STAGES = (trophyDisplayData as any).stages as {
+  id: number; name: string; description: string;
+  objectives: {item: string; quantity: number}[];
+  rewards: {item: string; quantity: number}[];
+}[];
+
+const TrophyDisplaySheet = ({
+  visible,
+  onClose,
+  onMaterialPress,
+  overDetail,
+}: {
+  visible: boolean;
+  onClose: () => void;
+  onMaterialPress?: (item: RawItem) => void;
+  overDetail?: boolean;
+}) => {
+  const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
+  const backdropAnim = useRef(new Animated.Value(0)).current;
+  const currentTY = useRef(WB_TY_HIDDEN);
+  const gestureStartTY = useRef(WB_TY_HIDDEN);
+  const scrollOffset = useRef(0);
+  const scrollRef = useRef<any>(null);
+  const isExpanded = useRef(false);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; });
+
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    AsyncStorage.getItem(TD_CHECKED_KEY).then(raw => {
+      if (raw) setCheckedItems(JSON.parse(raw));
+    }).catch(() => {});
+  }, []);
+
+  const toggleItem = useCallback((key: string) => {
+    setCheckedItems(prev => {
+      const updated = {...prev, [key]: !prev[key]};
+      AsyncStorage.setItem(TD_CHECKED_KEY, JSON.stringify(updated)).catch(() => {});
+      return updated;
+    });
+  }, []);
+
+  useEffect(() => {
+    const id = translateY.addListener(({value}) => { currentTY.current = value; });
+    return () => translateY.removeListener(id);
+  }, []);
+
+  const animateTo = useCallback((target: number) => {
+    if (target >= WB_TY_HIDDEN) {
+      isExpanded.current = false;
+      onCloseRef.current();
+      Animated.parallel([
+        Animated.spring(translateY, {toValue: WB_TY_HIDDEN, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
+        Animated.timing(backdropAnim, {toValue: 0, duration: 150, useNativeDriver: true}),
+      ]).start();
+    } else {
+      const goingFull = target <= WB_TY_FULL + 5;
+      isExpanded.current = goingFull;
+      if (!goingFull) scrollRef.current?.scrollTo?.({y: 0, animated: true});
+      Animated.parallel([
+        Animated.spring(translateY, {toValue: target, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
+      ]).start();
+    }
+  }, []);
+
+  const snapNearest = useCallback((ty: number, vy: number) => {
+    if (vy > 1.2) { animateTo(WB_TY_HIDDEN); return; }
+    if (vy < -1.2) { animateTo(WB_TY_FULL); return; }
+    const dH = Math.abs(ty - WB_TY_HIDDEN);
+    const dM = Math.abs(ty - WB_TY_HALF);
+    const dF = Math.abs(ty - WB_TY_FULL);
+    const min = Math.min(dH, dM, dF);
+    if (min === dH) animateTo(WB_TY_HIDDEN);
+    else if (min === dM) animateTo(WB_TY_HALF);
+    else animateTo(WB_TY_FULL);
+  }, [animateTo]);
+
+  const tdHandlePan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        translateY.stopAnimation();
+        gestureStartTY.current = currentTY.current;
+      },
+      onPanResponderMove: (_, gs) => {
+        const newTY = gestureStartTY.current + gs.dy;
+        translateY.setValue(Math.max(WB_TY_FULL, Math.min(newTY, WB_TY_HIDDEN)));
+      },
+      onPanResponderRelease: (_, gs) => snapNearest(currentTY.current, gs.vy),
+    }),
+  ).current;
+
+  const tdContentPan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: (_, gs) => {
+        const isVertical = Math.abs(gs.dy) > 8 && Math.abs(gs.dy) > Math.abs(gs.dx);
+        if (!isExpanded.current && isVertical) return true;
+        if (isExpanded.current && scrollOffset.current <= 2 && gs.dy > 8) return true;
+        return false;
+      },
+      onPanResponderGrant: () => {
+        translateY.stopAnimation();
+        gestureStartTY.current = currentTY.current;
+        if (isExpanded.current) scrollRef.current?.scrollTo?.({y: 0, animated: false});
+      },
+      onPanResponderMove: (_, gs) => {
+        const newTY = gestureStartTY.current + gs.dy;
+        translateY.setValue(Math.max(WB_TY_FULL, Math.min(newTY, WB_TY_HIDDEN)));
+      },
+      onPanResponderRelease: (_, gs) => snapNearest(currentTY.current, gs.vy),
+    }),
+  ).current;
+
+  useEffect(() => {
+    if (visible) {
+      scrollOffset.current = 0;
+      scrollRef.current?.scrollTo?.({y: 0, animated: false});
+      animateTo(WB_TY_HALF);
+    } else if (currentTY.current < WB_TY_HIDDEN) {
+      animateTo(WB_TY_HIDDEN);
+    }
+  }, [visible, animateTo]);
+
+  const onScrollEvent = useCallback((e: any) => {
+    scrollOffset.current = e.nativeEvent.contentOffset.y;
+  }, []);
+
+  const isStageChecked = useCallback((stageId: number, objectives: {item: string; quantity: number}[]) => {
+    return objectives.length > 0 && objectives.every((_, i) => checkedItems[`${stageId}-${i}`]);
+  }, [checkedItems]);
+
+  const toggleStage = useCallback((stageId: number, objectives: {item: string; quantity: number}[]) => {
+    const allChecked = isStageChecked(stageId, objectives);
+    setCheckedItems(prev => {
+      const updated = {...prev};
+      objectives.forEach((_, i) => { updated[`${stageId}-${i}`] = !allChecked; });
+      AsyncStorage.setItem(TD_CHECKED_KEY, JSON.stringify(updated)).catch(() => {});
+      return updated;
+    });
+  }, [isStageChecked]);
+
+  return (
+    <>
+      {visible && (
+        <Animated.View style={[wbStyles.backdrop, {opacity: backdropAnim}, overDetail && {zIndex: 30}]} pointerEvents="auto">
+          <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => animateTo(WB_TY_HIDDEN)} />
+        </Animated.View>
+      )}
+      <Animated.View pointerEvents={visible ? 'auto' : 'none'} style={[wbStyles.sheet, {height: WB_SHEET_H, transform: [{translateY}]}, overDetail && {zIndex: 31}]}>
+        <View {...tdHandlePan.panHandlers} style={wbStyles.handleArea}>
+          <View style={wbStyles.handle} />
+        </View>
+
+        {/* Header */}
+        <View style={wbStyles.sheetHeader}>
+          <Icon name="trophy" size={22} color={colors.cyan} />
+          <View>
+            <Text style={wbStyles.sheetTitle}>Trophy Display</Text>
+            <Text style={wbStyles.sheetSubtitle}>Complete stages to earn rewards from your Trophy Display</Text>
+          </View>
+        </View>
+
+        <View style={{flex: 1}} {...tdContentPan.panHandlers}>
+          <ScrollView
+            ref={scrollRef}
+            style={{flex: 1}}
+            contentContainerStyle={{paddingHorizontal: PADDING, paddingBottom: 60}}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            scrollEventThrottle={16}
+            onScroll={onScrollEvent}
+            nestedScrollEnabled>
+            {TROPHY_STAGES.map(stage => {
+              const stageChecked = isStageChecked(stage.id, stage.objectives);
+              const accentColor = stageChecked ? '#4ADE80' : colors.textMuted;
+              return (
+                <View key={stage.id} style={wbStyles.stationBlock}>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => toggleStage(stage.id, stage.objectives)}
+                    style={wbStyles.stationHeader}>
+                    <View style={[wbStyles.stationBar, {backgroundColor: accentColor}]} />
+                    <View style={wbStyles.checkboxWrap}>
+                      {stageChecked ? (
+                        <Icon name="checkbox-marked" size={22} color="#4ADE80" />
+                      ) : (
+                        <Icon name="checkbox-blank-outline" size={22} color={colors.textMuted} />
+                      )}
+                    </View>
+                    <Text style={wbStyles.stationName}>{stage.name}</Text>
+                    <View style={[wbStyles.stationLine, {backgroundColor: accentColor}]} />
+                  </TouchableOpacity>
+                  {stage.objectives.map((obj, idx) => {
+                    const itemData = itemByName.get(obj.item.toLowerCase());
+                    const rarityColor = itemData ? getRarityColor(itemData.rarity) : colors.textMuted;
+                    return (
+                      <TouchableOpacity
+                        key={`${stage.id}-${idx}`}
+                        activeOpacity={0.7}
+                        onPress={() => {
+                          if (itemData && onMaterialPress) onMaterialPress(itemData);
+                        }}
+                        style={[wbStyles.matCard, {borderColor: rarityColor + '60'}]}>
+                        <View style={wbStyles.matIconWrap}>
+                          {itemData?.icon ? (
+                            <Image source={{uri: itemData.icon}} style={wbStyles.matIcon} resizeMode="contain" />
+                          ) : (
+                            <Icon name="help-circle-outline" size={24} color={colors.textMuted} />
+                          )}
+                        </View>
+                        <View style={wbStyles.matInfo}>
+                          <Text style={wbStyles.matName}>{obj.item}</Text>
+                          {itemData?.description ? (
+                            <Text style={wbStyles.matDesc} numberOfLines={1}>{itemData.description}</Text>
+                          ) : null}
+                        </View>
+                        <View style={[wbStyles.qtyBadge, {borderColor: rarityColor}]}>
+                          <Text style={[wbStyles.qtyText, {color: rarityColor}]}>{obj.quantity}x</Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                  {/* Rewards Section */}
+                  {stage.rewards && stage.rewards.length > 0 && (
+                    <View style={{marginTop: spacing.sm, marginBottom: spacing.xs}}>
+                      <Text style={{fontSize: fonts.sizes.xs, fontWeight: '600', color: '#FFD54F', marginBottom: spacing.xs, marginLeft: spacing.xs}}>REWARDS</Text>
+                      {stage.rewards.map((rw, ri) => {
+                        const rwData = itemByName.get(rw.item.toLowerCase());
+                        const rwColor = rwData ? getRarityColor(rwData.rarity) : '#FFD54F';
+                        return (
+                          <TouchableOpacity
+                            key={`r-${stage.id}-${ri}`}
+                            activeOpacity={0.7}
+                            onPress={() => {
+                              if (rwData && onMaterialPress) onMaterialPress(rwData);
+                            }}
+                            style={[wbStyles.matCard, {borderColor: rwColor + '40'}]}>
+                            <View style={wbStyles.matIconWrap}>
+                              {rwData?.icon ? (
+                                <Image source={{uri: rwData.icon}} style={wbStyles.matIcon} resizeMode="contain" />
+                              ) : (
+                                <Icon name="gift-outline" size={24} color="#FFD54F" />
+                              )}
+                            </View>
+                            <View style={wbStyles.matInfo}>
+                              <Text style={wbStyles.matName}>{rw.item}</Text>
+                              {rwData?.description ? (
+                                <Text style={wbStyles.matDesc} numberOfLines={1}>{rwData.description}</Text>
+                              ) : null}
+                            </View>
+                            <View style={[wbStyles.qtyBadge, {borderColor: rwColor}]}>
+                              <Text style={[wbStyles.qtyText, {color: rwColor}]}>{rw.quantity}x</Text>
+                            </View>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  )}
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
+      </Animated.View>
+    </>
+  );
+};
+
 /* ═══════════════ MAIN SCREEN ═══════════════ */
 const MaterialsScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
@@ -1351,25 +1820,24 @@ const MaterialsScreen = ({navigation}: any) => {
   const [sheetVisible, setSheetVisible] = useState(false);
   const [wbSheetVisible, setWbSheetVisible] = useState(false);
   const [expSheetVisible, setExpSheetVisible] = useState(false);
+  const [tdSheetVisible, setTdSheetVisible] = useState(false);
   const [wbFromDetail, setWbFromDetail] = useState(false);
   const [expFromDetail, setExpFromDetail] = useState(false);
+  const [tdFromDetail, setTdFromDetail] = useState(false);
   const [wbChecked, setWbChecked] = useState<string[]>([]);
 
   // Load blueprint + workbench state from AsyncStorage
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      Promise.all([
-        AsyncStorage.getItem(BP_STORAGE_KEY),
-        AsyncStorage.getItem(WB_CHECKED_KEY),
-      ])
-        .then(([bpRaw, wbRaw]) => {
-          if (bpRaw) setBpCollected(JSON.parse(bpRaw));
-          if (wbRaw) setWbChecked(JSON.parse(wbRaw));
-        })
-        .catch(() => {})
-        .finally(() => setReady(true));
-    });
-    return () => task.cancel();
+    Promise.all([
+      AsyncStorage.getItem(BP_STORAGE_KEY),
+      AsyncStorage.getItem(WB_CHECKED_KEY),
+    ])
+      .then(([bpRaw, wbRaw]) => {
+        if (bpRaw) setBpCollected(JSON.parse(bpRaw));
+        if (wbRaw) setWbChecked(JSON.parse(wbRaw));
+      })
+      .catch(() => {})
+      .finally(() => setReady(true));
   }, []);
 
   const wbCheckedSet = useMemo(() => new Set(wbChecked), [wbChecked]);
@@ -1450,6 +1918,16 @@ const MaterialsScreen = ({navigation}: any) => {
     setExpFromDetail(false);
   }, []);
 
+  const handleCloseTdSheet = useCallback(() => {
+    setTdSheetVisible(false);
+    setTdFromDetail(false);
+  }, []);
+
+  const handleTdMaterialPress = useCallback((matItem: RawItem) => {
+    setSelectedItem(matItem);
+    setSheetVisible(true);
+  }, []);
+
   const handleExpMaterialPress = useCallback((matItem: RawItem) => {
     setSelectedItem(matItem);
     setSheetVisible(true);
@@ -1497,20 +1975,22 @@ const MaterialsScreen = ({navigation}: any) => {
       {/* Material Lists */}
       <View style={styles.listsSection}>
         <Text style={styles.listsTitle}>Material Lists</Text>
-        <FlatList
+        <ScrollView
           horizontal
-          data={MATERIAL_LISTS}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={l => l.id}
-          contentContainerStyle={styles.listsRow}
-          renderItem={({item: list}) => (
+          contentContainerStyle={styles.listsRow}>
+          {MATERIAL_LISTS.map(list => (
             <TouchableOpacity
+              key={list.id}
               activeOpacity={0.7}
+              delayPressIn={0}
               onPress={() => {
                 if (list.id === 'expedition') {
                   setExpSheetVisible(true);
                 } else if (list.id === 'workbench') {
                   setWbSheetVisible(true);
+                } else if (list.id === 'trophy') {
+                  setTdSheetVisible(true);
                 }
               }}>
               <GradientBorder style={styles.listCard}>
@@ -1525,8 +2005,8 @@ const MaterialsScreen = ({navigation}: any) => {
                 </View>
               </GradientBorder>
             </TouchableOpacity>
-          )}
-        />
+          ))}
+        </ScrollView>
       </View>
 
       {/* Search + Filter + Sort */}
@@ -1572,10 +2052,11 @@ const MaterialsScreen = ({navigation}: any) => {
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.grid}
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews={false}
-        maxToRenderPerBatch={ready ? 30 : 9}
-        windowSize={ready ? 21 : 5}
-        initialNumToRender={12}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={18}
+        windowSize={11}
+        initialNumToRender={9}
+        updateCellsBatchingPeriod={50}
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
@@ -1602,6 +2083,14 @@ const MaterialsScreen = ({navigation}: any) => {
         overDetail={expFromDetail}
       />
 
+      {/* Trophy Display Sheet */}
+      <TrophyDisplaySheet
+        visible={tdSheetVisible}
+        onClose={handleCloseTdSheet}
+        onMaterialPress={handleTdMaterialPress}
+        overDetail={tdFromDetail}
+      />
+
       {/* Detail Bottom Sheet (rendered after WB so it stacks on top) */}
       <DetailSheet
         item={selectedItem}
@@ -1614,6 +2103,7 @@ const MaterialsScreen = ({navigation}: any) => {
         onItemPress={handleSheetItemPress}
         onOpenWbSheet={() => { setWbFromDetail(true); setWbSheetVisible(true); }}
         onOpenExpSheet={() => { setExpFromDetail(true); setExpSheetVisible(true); }}
+        onOpenTdSheet={() => { setTdFromDetail(true); setTdSheetVisible(true); }}
       />
 
       {/* Filter Modal */}
@@ -2001,6 +2491,29 @@ const detailStyles = StyleSheet.create({
     fontWeight: '600',
     color: colors.textSecondary,
   },
+  craftedAtRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.sm,
+  },
+  craftedAtLabel: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '600',
+    color: colors.textSecondary,
+  },
+  craftedAtValue: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    flex: 1,
+  },
   thumbRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -2008,8 +2521,8 @@ const detailStyles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   thumbCard: {
-    width: 60,
-    height: 60,
+    width: THUMB_W,
+    height: THUMB_W,
     borderRadius: borderRadius.md,
     backgroundColor: colors.bgElevated,
     borderWidth: 1,
@@ -2019,8 +2532,8 @@ const detailStyles = StyleSheet.create({
     overflow: 'hidden',
   },
   thumbImage: {
-    width: 48,
-    height: 48,
+    width: THUMB_W - 12,
+    height: THUMB_W - 12,
   },
   bpToggleBtn: {
     flexDirection: 'row',
@@ -2055,6 +2568,12 @@ const detailStyles = StyleSheet.create({
     fontWeight: '700',
     color: colors.textPrimary,
   },
+  savedListDetail: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '500',
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
   savedListQty: {
     fontSize: fonts.sizes.sm,
     fontWeight: '700',
@@ -2080,6 +2599,55 @@ const detailStyles = StyleSheet.create({
     fontSize: fonts.sizes.xs,
     fontWeight: '600',
     color: colors.textSecondary,
+  },
+  droppedByRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    gap: spacing.md,
+  },
+  droppedByIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+  },
+  droppedByIconPlaceholder: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.bgElevated,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  droppedByName: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  droppedByType: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '500',
+    color: colors.textSecondary,
+    marginTop: 1,
+  },
+  qtyBadge: {
+    position: 'absolute',
+    bottom: 2,
+    right: 2,
+    backgroundColor: 'rgba(0,0,0,0.75)',
+    borderRadius: 6,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+  },
+  qtyBadgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textPrimary,
   },
 });
 

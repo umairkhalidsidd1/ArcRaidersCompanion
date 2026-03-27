@@ -23,6 +23,7 @@
     "react-native-haptic-feedback": "^2.3.4",
     "react-native-image-picker": "^8.2.1",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.24.0",
     "react-native-svg": "^15.15.4",

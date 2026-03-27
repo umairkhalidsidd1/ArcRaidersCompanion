@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawArcs from '../data/arcs.json';
 
@@ -53,6 +54,12 @@ const ArcListScreen = ({navigation}: any) => {
               style={styles.arcCard}
               activeOpacity={0.7}
               onPress={() => navigation.navigate('ArcDetail', {arcId: item.id, arc: item})}>
+              <LinearGradient
+                colors={['#0A0E17', '#141C2E', '#0F1520']}
+                start={{x: 0, y: 0}}
+                end={{x: 0.5, y: 1}}
+                style={StyleSheet.absoluteFill}
+              />
               <View style={styles.iconWrap}>
                 {item.icon ? (
                   <Image
@@ -110,6 +117,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     paddingVertical: spacing.lg,
     alignItems: 'center',
+    overflow: 'hidden',
   },
   iconWrap: {
     width: CARD_W * 0.55,

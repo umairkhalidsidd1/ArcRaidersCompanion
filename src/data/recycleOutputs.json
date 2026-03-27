@@ -1,0 +1,552 @@
+{
+  "Advanced ARC Powercell": [
+    {
+      "name": "ARC Powercell",
+      "quantity": 2
+    }
+  ],
+  "Power Rod": [
+    {
+      "name": "Advanced Electrical Components",
+      "quantity": 1
+    },
+    {
+      "name": "ARC Circuitry",
+      "quantity": 1
+    }
+  ],
+  "Jolt Mine": [
+    {
+      "name": "Battery",
+      "quantity": 1
+    },
+    {
+      "name": "Plastic Parts",
+      "quantity": 2
+    }
+  ],
+  "Fertilizer": [
+    {
+      "name": "Assorted Seeds",
+      "quantity": 2
+    }
+  ],
+  "Apricot": [
+    {
+      "name": "Assorted Seeds",
+      "quantity": 2
+    }
+  ],
+  "Prickly Pear": [
+    {
+      "name": "Assorted Seeds",
+      "quantity": 3
+    }
+  ],
+  "Pop Trigger": [
+    {
+      "name": "Crude Explosives",
+      "quantity": 1
+    },
+    {
+      "name": "ARC Alloy",
+      "quantity": 1
+    }
+  ],
+  "Tattered Clothes": [
+    {
+      "name": "Fabric",
+      "quantity": 11
+    }
+  ],
+  "Tattered ARC Lining": [
+    {
+      "name": "Fabric",
+      "quantity": 12
+    }
+  ],
+  "Spotter Relay": [
+    {
+      "name": "Electrical Components",
+      "quantity": 2
+    },
+    {
+      "name": "ARC Alloy",
+      "quantity": 1
+    }
+  ],
+  "Simple Gun Parts": [
+    {
+      "name": "Metal Parts",
+      "quantity": 2
+    }
+  ],
+  "Rusted Bolts": [
+    {
+      "name": "Metal Parts",
+      "quantity": 8
+    }
+  ],
+  "Oil": [
+    {
+      "name": "Chemicals",
+      "quantity": 3
+    }
+  ],
+  "Magnet": [
+    {
+      "name": "Metal Parts",
+      "quantity": 2
+    }
+  ],
+  "Snitch Scanner": [
+    {
+      "name": "ARC Alloy",
+      "quantity": 1
+    },
+    {
+      "name": "Electrical Components",
+      "quantity": 2
+    }
+  ],
+  "Metal Brackets": [
+    {
+      "name": "Metal Parts",
+      "quantity": 8
+    }
+  ],
+  "Crude Explosives": [
+    {
+      "name": "Chemicals",
+      "quantity": 3
+    }
+  ],
+  "Electrical Components": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 3
+    }
+  ],
+  "Syringe": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 3
+    },
+    {
+      "name": "Chemicals",
+      "quantity": 2
+    }
+  ],
+  "Torn Blanket": [
+    {
+      "name": "Fabric",
+      "quantity": 12
+    }
+  ],
+  "ARC Alloy": [
+    {
+      "name": "Metal Parts",
+      "quantity": 2
+    }
+  ],
+  "Battery": [
+    {
+      "name": "Metal Parts",
+      "quantity": 2
+    }
+  ],
+  "Canister": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 3
+    }
+  ],
+  "Rusted Tools": [
+    {
+      "name": "Metal Parts",
+      "quantity": 8
+    }
+  ],
+  "Light Gun Parts": [
+    {
+      "name": "Simple Gun Parts",
+      "quantity": 2
+    }
+  ],
+  "Mod Components": [
+    {
+      "name": "Mechanical Components",
+      "quantity": 1
+    }
+  ],
+  "Moss": [
+    {
+      "name": "Assorted Seeds",
+      "quantity": 3
+    }
+  ],
+  "Rusted Gear": [
+    {
+      "name": "Metal Parts",
+      "quantity": 4
+    },
+    {
+      "name": "Mechanical Components",
+      "quantity": 2
+    }
+  ],
+  "Projector": [
+    {
+      "name": "Processor",
+      "quantity": 1
+    }
+  ],
+  "Processor": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 1
+    }
+  ],
+  "Medium Gun Parts": [
+    {
+      "name": "Simple Gun Parts",
+      "quantity": 2
+    }
+  ],
+  "Humidifier": [
+    {
+      "name": "Canister",
+      "quantity": 2
+    }
+  ],
+  "Industrial Battery": [
+    {
+      "name": "Chemicals",
+      "quantity": 7
+    },
+    {
+      "name": "Battery",
+      "quantity": 2
+    }
+  ],
+  "Industrial Charger": [
+    {
+      "name": "Metal Parts",
+      "quantity": 5
+    },
+    {
+      "name": "Voltage Converter",
+      "quantity": 1
+    }
+  ],
+  "Laboratory Reagents": [
+    {
+      "name": "Chemicals",
+      "quantity": 16
+    },
+    {
+      "name": "Crude Explosives",
+      "quantity": 3
+    }
+  ],
+  "Hornet Driver": [
+    {
+      "name": "ARC Alloy",
+      "quantity": 2
+    },
+    {
+      "name": "Electrical Components",
+      "quantity": 2
+    }
+  ],
+  "Explosive Compound": [
+    {
+      "name": "Crude Explosives",
+      "quantity": 2
+    }
+  ],
+  "Fried Motherboard": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 6
+    },
+    {
+      "name": "Electrical Components",
+      "quantity": 2
+    }
+  ],
+  "Fireball Burner": [
+    {
+      "name": "ARC Alloy",
+      "quantity": 1
+    },
+    {
+      "name": "Crude Explosives",
+      "quantity": 1
+    }
+  ],
+  "Heavy Gun Parts": [
+    {
+      "name": "Simple Gun Parts",
+      "quantity": 2
+    }
+  ],
+  "Motor": [
+    {
+      "name": "Oil",
+      "quantity": 2
+    },
+    {
+      "name": "Mechanical Components",
+      "quantity": 2
+    }
+  ],
+  "Rope": [
+    {
+      "name": "Fabric",
+      "quantity": 5
+    }
+  ],
+  "Spring Cushion": [
+    {
+      "name": "Fabric",
+      "quantity": 2
+    }
+  ],
+  "Damaged Heat Sink": [
+    {
+      "name": "Metal Parts",
+      "quantity": 6
+    }
+  ],
+  "Cooling Coil": [
+    {
+      "name": "Chemicals",
+      "quantity": 6
+    }
+  ],
+  "Coolant": [
+    {
+      "name": "Chemicals",
+      "quantity": 5
+    },
+    {
+      "name": "Oil",
+      "quantity": 2
+    }
+  ],
+  "ARC Thermo Lining": [
+    {
+      "name": "Fabric",
+      "quantity": 16
+    }
+  ],
+  "ARC Synthetic Resin": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 12
+    }
+  ],
+  "ARC Performance Steel": [
+    {
+      "name": "Metal Parts",
+      "quantity": 12
+    }
+  ],
+  "Advanced Electrical Components": [
+    {
+      "name": "Electrical Components",
+      "quantity": 1
+    }
+  ],
+  "Advanced Mechanical Components": [
+    {
+      "name": "Mechanical Components",
+      "quantity": 1
+    }
+  ],
+  "Antiseptic": [
+    {
+      "name": "Chemicals",
+      "quantity": 10
+    }
+  ],
+  "ARC Circuitry": [
+    {
+      "name": "ARC Alloy",
+      "quantity": 2
+    }
+  ],
+  "ARC Coolant": [
+    {
+      "name": "Chemicals",
+      "quantity": 16
+    }
+  ],
+  "ARC Motion Core": [
+    {
+      "name": "ARC Alloy",
+      "quantity": 2
+    }
+  ],
+  "Complex Gun Parts": [
+    {
+      "name": "Simple Gun Parts",
+      "quantity": 3
+    }
+  ],
+  "Door Blocker": [
+    {
+      "name": "Metal Parts",
+      "quantity": 2
+    }
+  ],
+  "Remote Raider Flare": [
+    {
+      "name": "Chemicals",
+      "quantity": 1
+    }
+  ],
+  "Adrenaline Shot": [
+    {
+      "name": "Chemicals",
+      "quantity": 1
+    },
+    {
+      "name": "Plastic Parts",
+      "quantity": 1
+    }
+  ],
+  "Bandage": [
+    {
+      "name": "Fabric",
+      "quantity": 2
+    }
+  ],
+  "Zipline": [
+    {
+      "name": "Rope",
+      "quantity": 1
+    },
+    {
+      "name": "Metal Parts",
+      "quantity": 1
+    }
+  ],
+  "Barricade Kit": [
+    {
+      "name": "Metal Parts",
+      "quantity": 3
+    }
+  ],
+  "Herbal Bandage": [
+    {
+      "name": "Assorted Seeds",
+      "quantity": 2
+    },
+    {
+      "name": "Fabric",
+      "quantity": 5
+    }
+  ],
+  "Vita Shot": [
+    {
+      "name": "Syringe",
+      "quantity": 1
+    },
+    {
+      "name": "Chemicals",
+      "quantity": 4
+    }
+  ],
+  "Surge Shield Recharger": [
+    {
+      "name": "Electrical Components",
+      "quantity": 1
+    }
+  ],
+  "Defibrillator": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 1
+    },
+    {
+      "name": "Moss",
+      "quantity": 1
+    }
+  ],
+  "Light Impact Grenade": [
+    {
+      "name": "Chemicals",
+      "quantity": 1
+    },
+    {
+      "name": "Plastic Parts",
+      "quantity": 1
+    }
+  ],
+  "Red Light Stick": [
+    {
+      "name": "Chemicals",
+      "quantity": 1
+    }
+  ],
+  "Trigger Nade": [
+    {
+      "name": "Chemicals",
+      "quantity": 1
+    },
+    {
+      "name": "Processor",
+      "quantity": 1
+    }
+  ],
+  "Medium Shield": [
+    {
+      "name": "ARC Circuitry",
+      "quantity": 1
+    }
+  ],
+  "Gas Grenade": [
+    {
+      "name": "Chemicals",
+      "quantity": 1
+    }
+  ],
+  "Bombardier Cell": [
+    {
+      "name": "Advanced Mechanical Components",
+      "quantity": 2
+    },
+    {
+      "name": "ARC Alloy",
+      "quantity": 2
+    }
+  ],
+  "Photoelectric Cloak": [
+    {
+      "name": "Advanced Electrical Components",
+      "quantity": 1
+    },
+    {
+      "name": "Speaker Component",
+      "quantity": 1
+    }
+  ],
+  "Blaze Grenade": [
+    {
+      "name": "Oil",
+      "quantity": 2
+    },
+    {
+      "name": "Metal Parts",
+      "quantity": 4
+    }
+  ],
+  "Extended Medium Mag I": [
+    {
+      "name": "Plastic Parts",
+      "quantity": 6
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import arcLootData from '../data/arcLoot.json';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const IMAGE_HEIGHT = SCREEN_WIDTH * 0.7;
@@ -65,24 +65,14 @@ const getTraits = (desc: string): {label: string; icon: string; color: string}[]
   return traits.slice(0, 6); // max 6 traits
 };
 
-const ARC_DROPS: Record<string, string[]> = {
-  bastion: ['heavy-ammo', 'metal-parts', 'power-rod'],
-  bombardier: ['launcher-ammo', 'metal-parts', 'advanced-mechanical-components'],
-  fireball: ['chemicals', 'plastic-parts', 'energy-ammo'],
-  hornet: ['light-ammo', 'metal-parts', 'advanced-mechanical-components'],
-  bison: ['heavy-ammo', 'power-rod', 'advanced-mechanical-components'],
-  matriarch: ['power-rod', 'advanced-mechanical-components', 'metal-parts'],
-  pop: ['chemicals', 'plastic-parts'],
-  queen: ['power-rod', 'advanced-mechanical-components', 'heavy-ammo'],
-  rocketeer: ['launcher-ammo', 'metal-parts'],
-  sentinel: ['heavy-ammo', 'metal-parts'],
-  shredder: ['shotgun-ammo', 'metal-parts'],
-  snitch: ['light-ammo', 'plastic-parts'],
-  rollbot: ['medium-ammo', 'metal-parts'],
-  tick: ['chemicals', 'plastic-parts'],
-  turret: ['light-ammo', 'metal-parts'],
-  wasp: ['light-ammo', 'plastic-parts'],
+type ArcLootEntry = {
+  name: string;
+  icon?: string;
+  rarity?: string;
+  item_type?: string;
+  id?: string;
 };
+const ARC_LOOT: Record<string, ArcLootEntry[]> = arcLootData as Record<string, ArcLootEntry[]>;
 
 const ArcDetailScreen = ({route, navigation}: any) => {
   const insets = useSafeAreaInsets();
@@ -204,36 +194,45 @@ const ArcDetailScreen = ({route, navigation}: any) => {
           <View style={styles.lootSection}>
             <Text style={styles.sectionLabel}>KNOWN DROPS</Text>
             <View style={styles.lootList}>
-              {(ARC_DROPS[arc.id] || []).map(itemId => {
-                const item = rawItems.find(i => i.id === itemId);
-                if (!item) return null;
+              {(ARC_LOOT[arc.id] || []).map((loot, idx) => {
+                const rarColor = getRarityColor(loot.rarity || 'common');
                 return (
                   <TouchableOpacity
-                    key={itemId}
+                    key={`${loot.id || loot.name}-${idx}`}
                     style={styles.lootCard}
                     activeOpacity={0.7}
-                    onPress={() => navigation.navigate('ItemDetail', {item})}>
-                    <View style={styles.lootIconWrap}>
-                      {item.icon ? (
-                        <Image source={{uri: item.icon}} style={styles.lootIcon} />
+                    onPress={() => {
+                      if (loot.id) {
+                        navigation.navigate('ItemDetail', {itemId: loot.id});
+                      }
+                    }}>
+                    <View style={[styles.lootIconWrap, {borderColor: rarColor + '30'}]}>
+                      {loot.icon ? (
+                        <Image source={{uri: loot.icon}} style={styles.lootIcon} resizeMode="contain" />
                       ) : (
                         <Icon name="package-variant" size={20} color={colors.textMuted} />
                       )}
                     </View>
                     <View style={styles.lootInfo}>
-                      <Text style={styles.lootName}>{item.name}</Text>
+                      <Text style={styles.lootName}>{loot.name}</Text>
                       <View style={styles.lootMeta}>
-                        <Text style={[styles.lootRarity, {color: getRarityColor(item.rarity || 'common')}]}>
-                          {(item.rarity || 'Common').toUpperCase()}
+                        <Text style={[styles.lootRarity, {color: rarColor}]}>
+                          {(loot.rarity || 'Common').toUpperCase()}
                         </Text>
                         <Text style={styles.lootDot}> • </Text>
-                        <Text style={styles.lootType}>{(item.item_type || 'Item').toUpperCase()}</Text>
+                        <Text style={styles.lootType}>{(loot.item_type || 'Item').toUpperCase()}</Text>
                       </View>
                     </View>
                     <Icon name="chevron-right" size={20} color={colors.textMuted} />
                   </TouchableOpacity>
                 );
               })}
+              {(!ARC_LOOT[arc.id] || ARC_LOOT[arc.id].length === 0) && (
+                <View style={styles.emptyLoot}>
+                  <Icon name="package-variant-closed" size={24} color={colors.textMuted} />
+                  <Text style={styles.emptyLootText}>No known drops</Text>
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -458,6 +457,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: colors.bgElevated,
     borderRadius: borderRadius.sm,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.md,
@@ -489,6 +489,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.textMuted,
     letterSpacing: 0.5,
+  },
+  emptyLoot: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.xl,
+  },
+  emptyLootText: {
+    fontSize: fonts.sizes.sm,
+    color: colors.textMuted,
   },
 });
 

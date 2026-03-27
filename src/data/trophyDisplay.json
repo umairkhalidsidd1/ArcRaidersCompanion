@@ -1,0 +1,210 @@
+{
+  "description": "Complete stages to earn rewards from your Trophy Display",
+  "stages": [
+    {
+      "id": 1,
+      "name": "Roaming Threats",
+      "description": "The earthbound machines rolling and trudging across the surface, forcing Raiders to watch their every step.",
+      "objectives": [
+        {
+          "item": "Pop Trigger",
+          "quantity": 15
+        },
+        {
+          "item": "Tick Pod",
+          "quantity": 15
+        },
+        {
+          "item": "Surveyor Vault",
+          "quantity": 5
+        },
+        {
+          "item": "Rusted Bolts",
+          "quantity": 3
+        }
+      ],
+      "rewards": [
+        {
+          "item": "Mod Components",
+          "quantity": 10
+        },
+        {
+          "item": "Power Rod",
+          "quantity": 3
+        },
+        {
+          "item": "Raider Tokens",
+          "quantity": 10
+        },
+        {
+          "item": "Light Gun Parts Blueprint",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Soaring Menaces",
+      "description": "The airborne machines dominating the skies, raining peril down upon unsuspecting Raiders.",
+      "objectives": [
+        {
+          "item": "Wasp Driver",
+          "quantity": 20
+        },
+        {
+          "item": "Hornet Driver",
+          "quantity": 15
+        },
+        {
+          "item": "Spotter Relay",
+          "quantity": 10
+        },
+        {
+          "item": "Expired Respirator",
+          "quantity": 3
+        }
+      ],
+      "rewards": [
+        {
+          "item": "Vita Shot Blueprint",
+          "quantity": 1
+        },
+        {
+          "item": "Vita Spray",
+          "quantity": 3
+        },
+        {
+          "item": "Photoelectric Cloak",
+          "quantity": 3
+        },
+        {
+          "item": "Raider Tokens",
+          "quantity": 20
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Ferocious Foes",
+      "description": "A clear escalation of Topside dangers, these machines have doled out severe punishments to overconfident Raiders.",
+      "objectives": [
+        {
+          "item": "ARC Performance Steel",
+          "quantity": 10
+        },
+        {
+          "item": "Shredder Gyro",
+          "quantity": 5
+        },
+        {
+          "item": "Leaper Pulse Unit",
+          "quantity": 10
+        },
+        {
+          "item": "Bastion Cell",
+          "quantity": 5
+        }
+      ],
+      "rewards": [
+        {
+          "item": "Kinetic Converter",
+          "quantity": 1
+        },
+        {
+          "item": "Anvil Splitter",
+          "quantity": 3
+        },
+        {
+          "item": "Raider Tokens",
+          "quantity": 30
+        },
+        {
+          "item": "Shotgun Silencer Blueprint",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Dominant Dangers",
+      "description": "The vicious threats leaving behind a trail of downed Raiders; dominating their surroundings with tenacity and grit.",
+      "objectives": [
+        {
+          "item": "ARC Synthetic Resin",
+          "quantity": 10
+        },
+        {
+          "item": "Magnetic Accelerator",
+          "quantity": 10
+        },
+        {
+          "item": "Rocketeer Driver",
+          "quantity": 8
+        },
+        {
+          "item": "Queen Reactor",
+          "quantity": 3
+        }
+      ],
+      "rewards": [
+        {
+          "item": "Bobcat IV",
+          "quantity": 1
+        },
+        {
+          "item": "Wolfpack",
+          "quantity": 5
+        },
+        {
+          "item": "Raider Tokens",
+          "quantity": 40
+        },
+        {
+          "item": "Bobcat Blueprint",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Imposing Behemoths",
+      "description": "The colossal creatures whose trophies are the pride of any Raider collection.",
+      "objectives": [
+        {
+          "item": "Exodus Modules",
+          "quantity": 5
+        },
+        {
+          "item": "Geiger Counter",
+          "quantity": 3
+        },
+        {
+          "item": "Bombardier Cell",
+          "quantity": 8
+        },
+        {
+          "item": "Matriarch Reactor",
+          "quantity": 3
+        }
+      ],
+      "rewards": [
+        {
+          "item": "Snap Hook",
+          "quantity": 2
+        },
+        {
+          "item": "Aphelion Rifle",
+          "quantity": 1
+        },
+        {
+          "item": "Raider Tokens",
+          "quantity": 50
+        },
+        {
+          "item": "Snap Hook Blueprint",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}
