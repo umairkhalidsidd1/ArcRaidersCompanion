@@ -4,7 +4,6 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  Linking,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -218,22 +217,6 @@ const RAIDER_TOOLS = [
     desc: 'Track collectible items and locations.',
     screen: 'CollectibleTracker',
   },
-  {
-    key: 'submit',
-    icon: 'send-outline',
-    color: colors.cyan,
-    title: 'Submit Info',
-    desc: 'Contribute data to the community.',
-    screen: 'Submit',
-  },
-  {
-    key: 'support',
-    icon: 'chat-outline',
-    color: colors.cyan,
-    title: 'Support',
-    desc: 'Join our community Discord for help.',
-    url: 'https://discord.gg/arcraiders',
-  },
 ];
 
 const HomeScreen = ({ navigation }: any) => {
@@ -395,12 +378,10 @@ const HomeScreen = ({ navigation }: any) => {
         <View style={styles.toolsList}>
           {RAIDER_TOOLS.map((tool, i) => (
             <TouchableOpacity
-              key={tool.screen || tool.url || String(i)}
+              key={tool.screen || String(i)}
               style={styles.toolCard}
               onPress={() => {
-                if (tool.url) {
-                  Linking.openURL(tool.url).catch(() => {});
-                } else if (tool.screen) {
+                if (tool.screen) {
                   navigation.navigate(tool.screen);
                 }
               }}>

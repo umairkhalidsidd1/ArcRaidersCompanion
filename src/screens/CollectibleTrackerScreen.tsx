@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
@@ -74,8 +75,9 @@ const RARITY_COLORS: Record<string, string> = {
   Epic: '#AB47BC', Legendary: '#FF9800',
 };
 
-const NUM_COLS = 3;
-const CARD_WIDTH = (SCREEN_WIDTH - spacing.lg * 2 - spacing.sm * 2) / NUM_COLS;
+const NUM_COLS = 2;
+const CARD_GAP = spacing.md;
+const CARD_WIDTH = (SCREEN_WIDTH - spacing.lg * 2 - CARD_GAP) / NUM_COLS;
 
 const TABS = ['ALL', 'MISSING', 'FOUND'] as const;
 type Tab = typeof TABS[number];
@@ -115,6 +117,9 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
 
   const renderItem = useCallback(
     ({item, index}: {item: CollectibleItem; index: number}) => {
+      if (item.id === '__spacer__') {
+        return <View style={{width: CARD_WIDTH}} />;
+      }
       const isFound = collected.includes(item.id);
       const rc = RARITY_COLORS[item.rarity] || '#9E9E9E';
       const catCfg = CATEGORY_ICONS[item.category] || CATEGORY_ICONS.Other;
@@ -124,24 +129,30 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
           style={[styles.card, isFound && styles.cardFound]}
           activeOpacity={0.7}
           onPress={() => handleToggle(item.id)}>
-          <View style={styles.cardIconWrap}>
+          <LinearGradient
+            colors={[rc + '10', 'transparent']}
+            start={{x: 0.5, y: 0}} end={{x: 0.5, y: 1}}
+            style={styles.cardIconWrap}>
             {item.icon ? (
               <Image source={{uri: item.icon}} style={styles.cardIcon} resizeMode="contain" />
             ) : (
-              <Icon name={catCfg.icon} size={28} color={catCfg.color} />
+              <Icon name={catCfg.icon} size={40} color={catCfg.color} />
             )}
             {isFound && (
               <View style={styles.checkBadge}>
-                <Icon name="check-bold" size={10} color={colors.bg} />
+                <Icon name="check-bold" size={12} color={colors.bg} />
               </View>
             )}
-          </View>
+          </LinearGradient>
           <View style={[styles.cardRarityBar, {backgroundColor: rc}]} />
           <View style={styles.cardInfo}>
             <Text style={[styles.cardName, isFound && styles.cardNameFound]} numberOfLines={2}>
               {item.name}
             </Text>
-            <Text style={[styles.cardRarity, {color: rc}]}>{item.rarity.toUpperCase()}</Text>
+            <View style={styles.cardMetaRow}>
+              <View style={[styles.rarityDot, {backgroundColor: rc}]} />
+              <Text style={[styles.cardRarity, {color: rc}]}>{item.rarity}</Text>
+            </View>
           </View>
         </TouchableOpacity>
       );
@@ -172,16 +183,13 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
       {/* Progress bar */}
       <View style={styles.progressContainer}>
         <View style={styles.progressBar}>
-          <View style={[styles.progressFill, {width: `${progress}%`}]} />
+          <View style={[styles.progressFill, {width: `${Math.max(progress, 2)}%`}]} />
         </View>
         <Text style={styles.progressText}>{progress}%</Text>
       </View>
 
-      {/* Status Tabs */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tabBar}>
+      {/* Segmented Status Tabs */}
+      <View style={styles.segBar}>
         {TABS.map(tab => {
           const isActive = activeTab === tab;
           let count = collectibles.length;
@@ -190,22 +198,22 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
           return (
             <TouchableOpacity
               key={tab}
-              style={styles.tab}
+              style={[styles.segBtn, isActive && styles.segBtnActive]}
               onPress={() => setActiveTab(tab)}>
-              <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
+              <Text style={[styles.segText, isActive && styles.segTextActive]}>
                 {tab} ({count})
               </Text>
-              {isActive && <View style={styles.tabIndicator} />}
             </TouchableOpacity>
           );
         })}
-      </ScrollView>
+      </View>
 
-      {/* Category Tabs */}
+      {/* Category Chips */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.catTabBar}>
+        style={{flexGrow: 0}}
+        contentContainerStyle={styles.chipBar}>
         {ALL_CATEGORIES.map(cat => {
           const cfg = CATEGORY_ICONS[cat] || CATEGORY_ICONS.Other;
           const isActive = activeCategory === cat;
@@ -216,12 +224,12 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
           return (
             <TouchableOpacity
               key={cat}
-              style={styles.catTab}
+              style={[styles.chip, isActive && {backgroundColor: cfg.color + '20', borderColor: cfg.color + '50'}]}
               onPress={() => setActiveCategory(cat)}>
-              <Text style={[styles.catTabText, isActive && styles.catTabTextActive]}>
-                {cat.toUpperCase()}
+              <Icon name={cfg.icon} size={14} color={isActive ? cfg.color : colors.textMuted} />
+              <Text style={[styles.chipText, isActive && {color: cfg.color}]}>
+                {cat}
               </Text>
-              {isActive && <View style={styles.catTabIndicator} />}
             </TouchableOpacity>
           );
         })}
@@ -229,12 +237,13 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
 
       {/* Grid */}
       <FlatList
-        data={filtered}
+        data={filtered.length % NUM_COLS !== 0 ? [...filtered, {id: '__spacer__', name: '', description: null, icon: null, rarity: 'Common', category: ''}] : filtered}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={NUM_COLS}
         columnWrapperStyle={styles.gridRow}
         contentContainerStyle={styles.gridContent}
+        ItemSeparatorComponent={() => <View style={{height: CARD_GAP}} />}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <View style={styles.emptyState}>
@@ -253,22 +262,23 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg, paddingBottom: spacing.sm,
+    paddingTop: spacing.lg, paddingBottom: spacing.md,
     gap: spacing.md,
   },
   backBtn: {
-    width: 36, height: 36, borderRadius: 18,
-    backgroundColor: colors.bgCard,
+    width: 38, height: 38, borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center', justifyContent: 'center',
   },
   headerIconWrap: {
-    width: 32, height: 32, borderRadius: 16,
+    width: 34, height: 34, borderRadius: 12,
     backgroundColor: 'rgba(0, 229, 255, 0.12)',
     alignItems: 'center', justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: fonts.sizes.xl, fontWeight: '700',
-    color: colors.textPrimary,
+    fontSize: fonts.sizes.xl, fontWeight: '800',
+    color: colors.textPrimary, letterSpacing: 0.5,
   },
   headerSubtitle: {
     fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 2,
@@ -281,77 +291,78 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   progressBar: {
-    flex: 1, height: 6, borderRadius: 3,
-    backgroundColor: colors.bgElevated, overflow: 'hidden',
+    flex: 1, height: 10, borderRadius: 5,
+    backgroundColor: 'rgba(255,255,255,0.06)', overflow: 'hidden',
   },
   progressFill: {
-    height: '100%', borderRadius: 3,
+    height: '100%', borderRadius: 5,
     backgroundColor: colors.green,
   },
   progressText: {
-    fontSize: 11, fontWeight: '800', color: colors.green, letterSpacing: 0.5,
+    fontSize: 13, fontWeight: '900', color: colors.green, letterSpacing: 0.5,
   },
 
-  // Status tabs
-  tabBar: {
-    paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.border, marginBottom: spacing.sm,
+  // Segmented status tabs
+  segBar: {
+    flexDirection: 'row', marginHorizontal: spacing.lg, marginBottom: spacing.md,
+    backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: borderRadius.md, padding: 3,
   },
-  tab: {
-    paddingVertical: spacing.sm, paddingHorizontal: spacing.lg, position: 'relative' as const,
+  segBtn: {
+    flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: borderRadius.sm,
   },
-  tabText: {
-    fontSize: 12, fontWeight: '700', color: colors.textMuted, letterSpacing: 2,
-  },
-  tabTextActive: {color: colors.cyan},
-  tabIndicator: {
-    position: 'absolute' as const, bottom: 0, left: spacing.lg, right: spacing.lg, height: 2, backgroundColor: colors.cyan, borderRadius: 1,
-  },
+  segBtnActive: {backgroundColor: colors.cyan + '15'},
+  segText: {fontSize: 11, fontWeight: '700', color: colors.textMuted, letterSpacing: 1},
+  segTextActive: {color: colors.cyan},
 
-  // Category tabs
-  catTabBar: {
-    paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.border, marginBottom: spacing.sm,
+  // Category chips
+  chipBar: {
+    paddingHorizontal: spacing.lg, paddingBottom: spacing.md, gap: spacing.sm,
+    flexGrow: 0,
   },
-  catTab: {
-    paddingVertical: spacing.sm, paddingHorizontal: spacing.md, position: 'relative' as const,
+  chip: {
+    flexDirection: 'row', alignItems: 'center', gap: 6,
+    paddingHorizontal: 14, paddingVertical: 8, height: 36,
+    borderRadius: 18, borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(255,255,255,0.03)',
   },
-  catTabText: {fontSize: 10, fontWeight: '700', color: colors.textMuted, letterSpacing: 1},
-  catTabTextActive: {color: colors.cyan},
-  catTabIndicator: {
-    position: 'absolute' as const, bottom: 0, left: spacing.md, right: spacing.md, height: 2, backgroundColor: colors.cyan, borderRadius: 1,
-  },
+  chipText: {fontSize: 11, fontWeight: '700', color: colors.textMuted},
 
   // Grid
-  gridRow: {gap: spacing.sm},
-  gridContent: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.sm},
+  gridRow: {gap: CARD_GAP},
+  gridContent: {paddingHorizontal: spacing.lg, paddingTop: spacing.xs, paddingBottom: 100},
   card: {
     width: CARD_WIDTH,
-    borderRadius: borderRadius.md, overflow: 'hidden',
-    backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border,
+    borderRadius: borderRadius.lg, overflow: 'hidden',
+    backgroundColor: 'rgba(255,255,255,0.05)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
   },
   cardFound: {
-    borderColor: colors.green + '60',
-    backgroundColor: colors.green + '08',
+    borderColor: colors.green + '50',
+    backgroundColor: colors.green + '0A',
   },
   cardIconWrap: {
-    width: '100%', height: 75,
+    width: '100%', height: 120,
     alignItems: 'center', justifyContent: 'center',
     position: 'relative',
   },
-  cardIcon: {width: 44, height: 44},
+  cardIcon: {width: 72, height: 72},
   checkBadge: {
-    position: 'absolute', top: 4, right: 4,
-    width: 18, height: 18, borderRadius: 9,
+    position: 'absolute', top: 8, right: 8,
+    width: 24, height: 24, borderRadius: 12,
     backgroundColor: colors.green,
     alignItems: 'center', justifyContent: 'center',
+    borderWidth: 2, borderColor: colors.bg,
   },
-  cardRarityBar: {height: 2, width: '100%'},
-  cardInfo: {padding: spacing.xs},
+  cardRarityBar: {height: 3, width: '100%'},
+  cardInfo: {padding: spacing.md},
   cardName: {
-    fontSize: 10, fontWeight: '700',
-    color: colors.textPrimary, minHeight: 26, marginBottom: 2,
+    fontSize: 14, fontWeight: '700',
+    color: colors.textPrimary, minHeight: 34, marginBottom: 4,
   },
   cardNameFound: {color: colors.green},
-  cardRarity: {fontSize: 8, fontWeight: '700'},
+  cardMetaRow: {flexDirection: 'row', alignItems: 'center', gap: 5},
+  rarityDot: {width: 7, height: 7, borderRadius: 4},
+  cardRarity: {fontSize: 11, fontWeight: '700'},
 
   // Empty
   emptyState: {alignItems: 'center', paddingTop: 60, gap: spacing.md},
