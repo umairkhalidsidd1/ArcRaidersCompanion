@@ -1,5 +1,4 @@
 import React, {useMemo} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   ScrollView,
   StatusBar,
@@ -13,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
+import {resolveImage} from '../data/imageRegistry';
 
 /* ═══════════════ TYPES ═══════════════ */
 type RawItem = {
@@ -198,7 +198,6 @@ const ItemDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -240,7 +239,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         <View style={[styles.hero, isWeapon && {borderColor: rarityColor + '30'}]}>
           {item.icon ? (
             <Image
-              source={{uri: item.icon}}
+              source={resolveImage(item.icon)}
               style={isWeapon ? styles.heroImageWeapon : styles.heroImage}
               resizeMode="contain"
             />
@@ -433,7 +432,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: 'row',

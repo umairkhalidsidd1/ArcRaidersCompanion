@@ -1,5 +1,4 @@
 import React, {useCallback, useRef, useState} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
@@ -19,6 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const CAROUSEL_CARD_W = SCREEN_W * 0.58;
@@ -171,7 +171,6 @@ const CosmeticsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -255,7 +254,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                       />
                       {item.icon ? (
                         <Image
-                          source={{uri: item.icon}}
+                          source={resolveImage(item.icon)}
                           style={styles.carouselImage}
                           resizeMode="contain"
                         />
@@ -464,7 +463,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                           />
                           {item.icon ? (
                             <Image
-                              source={{uri: item.icon}}
+                              source={resolveImage(item.icon)}
                               style={styles.relatedImage}
                               resizeMode="contain"
                             />
@@ -495,7 +494,7 @@ const CosmeticsScreen = ({navigation}: any) => {
 
 /* ═══════ STYLES ═══════ */
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
 
   /* Header */
   header: {

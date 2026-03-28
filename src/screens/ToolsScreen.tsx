@@ -1,5 +1,4 @@
 import React from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   ScrollView,
   StatusBar,
@@ -18,7 +17,6 @@ const ToolsScreen = ({ navigation }: any) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <View style={styles.header}>
@@ -295,7 +293,7 @@ const ToolsScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
   header: {
     paddingHorizontal: spacing.xl,

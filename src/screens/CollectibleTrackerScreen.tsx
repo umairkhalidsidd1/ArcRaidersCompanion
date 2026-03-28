@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   FlatList,
@@ -17,6 +16,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import {getCollectibles, toggleCollectible} from '../utils/storage';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -135,7 +135,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
             start={{x: 0.5, y: 0}} end={{x: 0.5, y: 1}}
             style={styles.cardIconWrap}>
             {item.icon ? (
-              <Image source={{uri: item.icon}} style={styles.cardIcon} resizeMode="contain" />
+              <Image source={resolveImage(item.icon)} style={styles.cardIcon} resizeMode="contain" />
             ) : (
               <Icon name={catCfg.icon} size={40} color={catCfg.color} />
             )}
@@ -163,7 +163,6 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -260,7 +259,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
 
 /* ═══════ STYLES ═══════ */
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: spacing.lg,

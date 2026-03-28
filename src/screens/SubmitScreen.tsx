@@ -1,5 +1,4 @@
 import React, {useState, useCallback} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -282,7 +281,6 @@ const SubmitScreen = ({navigation}: any) => {
     <KeyboardAvoidingView
       style={[styles.container, {paddingTop: insets.top}]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <View style={styles.header}>
@@ -317,7 +315,7 @@ const SubmitScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: spacing.lg,

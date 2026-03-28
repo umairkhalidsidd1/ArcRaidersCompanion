@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useState, useRef} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   FlatList,
@@ -18,6 +17,7 @@ import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, {Defs, Pattern, Rect, Line} from 'react-native-svg';
+import {resolveImage} from '../data/imageRegistry';
 
 const BP_STORAGE_KEY = '@arcc_blueprints_v2';
 
@@ -101,7 +101,7 @@ const BlueprintCard = React.memo(
         )}
         <View style={cardStyles.imageWrap}>
           {item.icon ? (
-            <Image source={{uri: item.icon}} style={cardStyles.itemImage} resizeMode="contain" />
+            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" />
           ) : (
             <Icon name="file-document-outline" size={28} color={colors.textMuted} />
           )}
@@ -251,7 +251,6 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -317,7 +316,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

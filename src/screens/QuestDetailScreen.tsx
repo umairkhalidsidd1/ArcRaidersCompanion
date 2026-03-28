@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useCallback, useEffect} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   ScrollView,
   StatusBar,
@@ -15,8 +14,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import questData from '../data/quests.json';
 import {getCompletedQuests, toggleCompletedQuest} from '../utils/storage';
+import {resolveImage} from '../data/imageRegistry';
 
-const CDN = 'https://cdn.metaforge.app/arc-raiders/icons/';
 
 const TRADER_PORTRAITS: Record<string, any> = {
   'Tian Wen': require('../assets/traders/tian-wen.png'),
@@ -208,7 +207,6 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -342,7 +340,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
             {quest.rewards.map((reward, idx) => (
               <View key={idx} style={s.rewardCard}>
                 <Image
-                  source={{uri: `${CDN}${reward.item_id}.webp`}}
+                  source={resolveImage(`icons/${reward.item_id}.webp`)}
                   style={s.rewardIcon}
                   resizeMode="contain"
                 />
@@ -438,7 +436,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 };
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: colors.bg},
+  root: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

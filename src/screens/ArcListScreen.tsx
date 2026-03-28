@@ -1,5 +1,4 @@
 import React from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   FlatList,
@@ -15,6 +14,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawArcs from '../data/arcs.json';
+import {resolveImage} from '../data/imageRegistry';
 
 type Arc = {
   id: string;
@@ -36,7 +36,6 @@ const ArcListScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -65,7 +64,7 @@ const ArcListScreen = ({navigation}: any) => {
               <View style={styles.iconWrap}>
                 {item.icon ? (
                   <Image
-                    source={{uri: item.icon}}
+                    source={resolveImage(item.icon)}
                     style={styles.arcIcon}
                     resizeMode="contain"
                   />
@@ -87,7 +86,7 @@ const ArcListScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

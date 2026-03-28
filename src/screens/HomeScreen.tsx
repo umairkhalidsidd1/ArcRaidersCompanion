@@ -15,7 +15,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
-import SmokeBackground from '../components/SmokeBackground';
 import { getMapFullImage } from '../data/mapImages';
 import maps from '../data/maps.json';
 import events from '../data/events.json';
@@ -232,7 +231,6 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -403,7 +401,7 @@ const HomeScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
   scrollContent: {
     paddingBottom: 100,

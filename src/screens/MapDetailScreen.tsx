@@ -1,5 +1,4 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Alert,
@@ -689,7 +688,6 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
   /* ═════════════════════ RENDER ═════════════════════ */
   return (
     <View style={styles.container}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       {/* ── WebView Map (Edge to Edge) ── */}
@@ -1054,7 +1052,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
 
 /* ═══════════════════════════ STYLES ═══════════════════════════ */
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.bg },
+  container: { flex: 1, backgroundColor: 'transparent' },
 
   /* Floating Header */
   floatingHeader: {

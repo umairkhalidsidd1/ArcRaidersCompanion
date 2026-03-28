@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useCallback} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   FlatList,
   Image,
@@ -135,7 +134,6 @@ const TraderListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor="#000" />
 
       {/* Header */}
@@ -215,7 +213,7 @@ const TraderListScreen = ({navigation}: any) => {
 };
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: colors.bg},
+  root: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

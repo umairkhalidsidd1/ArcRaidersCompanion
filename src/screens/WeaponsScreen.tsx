@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useRef, useCallback} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
@@ -19,6 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius, getRarityColor} from '../theme/theme';
 import items from '../data/items.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const CAROUSEL_CARD_W = SCREEN_W * 0.58;
@@ -181,7 +181,6 @@ const WeaponsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -261,7 +260,7 @@ const WeaponsScreen = ({navigation}: any) => {
                     style={StyleSheet.absoluteFill}
                   />
                   <Image
-                    source={{uri: item.variants[0].icon}}
+                    source={resolveImage(item.variants[0].icon)}
                     style={styles.carouselImage}
                     resizeMode="contain"
                   />
@@ -387,7 +386,7 @@ const WeaponsScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
 
   /* Header */

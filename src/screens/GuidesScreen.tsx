@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useCallback} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   FlatList,
@@ -15,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawGuides from '../data/guides.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const THUMB_W = SCREEN_W * 0.32;
@@ -65,11 +65,17 @@ const GuidesScreen = ({navigation}: any) => {
             navigation.navigate('GuideDetail', {guideId: item.id})
           }>
           {/* Thumbnail */}
-          <Image
-            source={{uri: item.thumbnail_url || undefined}}
-            style={styles.cardThumb}
-            resizeMode="cover"
-          />
+          {item.thumbnail_url ? (
+            <Image
+              source={resolveImage(item.thumbnail_url)}
+              style={styles.cardThumb}
+              resizeMode="contain"
+            />
+          ) : (
+            <View style={[styles.cardThumb, styles.cardThumbPlaceholder]}>
+              <Icon name="book-open-page-variant" size={28} color={colors.textMuted} />
+            </View>
+          )}
 
           {/* Info */}
           <View style={styles.cardInfo}>
@@ -114,7 +120,6 @@ const GuidesScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -184,7 +189,7 @@ const GuidesScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
 
   /* header */
   header: {
@@ -277,7 +282,10 @@ const styles = StyleSheet.create({
   cardThumb: {
     width: THUMB_W,
     alignSelf: 'stretch',
-    backgroundColor: colors.bgElevated,
+  },
+  cardThumbPlaceholder: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardInfo: {
     flex: 1,

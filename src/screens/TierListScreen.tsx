@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Alert,
   Animated,
@@ -26,6 +25,7 @@ import {captureScreen} from 'react-native-view-shot';
 import {CameraRoll, iosRequestAddOnlyGalleryPermission} from '@react-native-camera-roll/camera-roll';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const STORAGE_KEY = '@arc_raiders_tier_lists_v2';
 const {width: SW} = Dimensions.get('window');
@@ -86,7 +86,7 @@ const EMPTY_IDS: string[] = [];
 
 const PoolItemCard = memo(({item, isSelected, onSelect}: {item: Item; isSelected: boolean; onSelect: (id: string) => void}) => (
   <TouchableOpacity style={[s.itemCard, isSelected && s.itemCardSelected]} onPress={() => onSelect(item.id)} activeOpacity={0.7}>
-    {item.icon ? <Image source={{uri: item.icon}} style={s.itemImg} /> : <View style={[s.itemImg, s.itemImgPlaceholder]}><Icon name="cube-outline" size={28} color={colors.textMuted} /></View>}
+    {item.icon ? <Image source={resolveImage(item.icon)} style={s.itemImg} /> : <View style={[s.itemImg, s.itemImgPlaceholder]}><Icon name="cube-outline" size={28} color={colors.textMuted} /></View>}
     <Text style={s.itemName} numberOfLines={2}>{item.name}</Text>
     {isSelected && <View style={s.itemSelectedBadge}><Icon name="check-circle" size={22} color={colors.cyan} /></View>}
   </TouchableOpacity>
@@ -136,7 +136,7 @@ const TierRow = memo(({tier, itemIds, isDropTarget, onEdit, onTap, onRemove}: {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tierItemsScroll}>
               {tierItems.map(item => (
                 <TouchableOpacity key={item.id} onPress={() => onRemove(item.id, tier.id)} style={s.tierItemCard}>
-                  {item.icon ? <Image source={{uri: item.icon}} style={s.tierItemImg} /> : <View style={[s.tierItemImg, s.tierItemPlaceholder]}><Icon name="cube-outline" size={18} color={colors.textMuted} /></View>}
+                  {item.icon ? <Image source={resolveImage(item.icon)} style={s.tierItemImg} /> : <View style={[s.tierItemImg, s.tierItemPlaceholder]}><Icon name="cube-outline" size={18} color={colors.textMuted} /></View>}
                   <View style={s.tierItemRemove}><Icon name="close" size={8} color="#fff" /></View>
                 </TouchableOpacity>
               ))}
@@ -333,7 +333,6 @@ const TierListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
@@ -459,7 +458,7 @@ const TierListScreen = ({navigation}: any) => {
 };
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: colors.bg},
+  root: {flex: 1, backgroundColor: 'transparent'},
   header: {flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, gap: spacing.md},
   backBtn: {width: 36, height: 36, borderRadius: 18, backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center'},
   headerTitle: {flex: 1, fontSize: fonts.sizes.xl, fontWeight: '700', color: colors.textPrimary, textAlign: 'center', marginRight: -36},

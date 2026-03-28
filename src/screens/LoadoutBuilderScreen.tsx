@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Alert,
   Dimensions,
@@ -19,6 +18,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import {getLoadouts, saveLoadouts, Loadout} from '../utils/storage';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -189,7 +189,6 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
   /* ═══════ RENDER ═══════ */
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -262,7 +261,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
               }}>
               <View style={[styles.slotIconWrap, {backgroundColor: slot.color + '18'}]}>
                 {item?.icon ? (
-                  <Image source={{uri: item.icon}} style={styles.slotItemIcon} resizeMode="contain" />
+                  <Image source={resolveImage(item.icon)} style={styles.slotItemIcon} resizeMode="contain" />
                 ) : (
                   <Icon name={slot.icon} size={28} color={slot.color} />
                 )}
@@ -371,7 +370,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
                     onPress={() => handleSelectItem(item)}>
                     <View style={styles.pickerIconWrap}>
                       {item.icon ? (
-                        <Image source={{uri: item.icon}} style={styles.pickerIcon} />
+                        <Image source={resolveImage(item.icon)} style={styles.pickerIcon} />
                       ) : (
                         <Icon name="package-variant" size={24} color={colors.textMuted} />
                       )}
@@ -402,7 +401,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
 
 /* ═══════ STYLES ═══════ */
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

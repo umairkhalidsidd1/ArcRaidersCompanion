@@ -1,5 +1,4 @@
 import React from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   ScrollView,
@@ -15,6 +14,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import arcLootData from '../data/arcLoot.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const IMAGE_HEIGHT = SCREEN_WIDTH * 0.7;
@@ -86,7 +86,6 @@ const ArcDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -94,14 +93,14 @@ const ArcDetailScreen = ({route, navigation}: any) => {
         <View style={styles.heroSection}>
           {arc.image ? (
             <Image
-              source={{uri: arc.image}}
+              source={resolveImage(arc.image)}
               style={styles.heroImage}
               resizeMode="cover"
             />
           ) : arc.icon ? (
             <View style={styles.heroPlaceholder}>
               <Image
-                source={{uri: arc.icon}}
+                source={resolveImage(arc.icon)}
                 style={styles.heroIconFallback}
                 resizeMode="contain"
               />
@@ -130,7 +129,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
           {/* Name + Icon Row */}
           <View style={styles.nameRow}>
             {arc.icon ? (
-              <Image source={{uri: arc.icon}} style={styles.nameIcon} resizeMode="contain" />
+              <Image source={resolveImage(arc.icon)} style={styles.nameIcon} resizeMode="contain" />
             ) : null}
             <Text style={styles.arcName}>{arc.name.toUpperCase()}</Text>
           </View>
@@ -210,7 +209,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
                     }}>
                     <View style={[styles.lootIconWrap, {borderColor: rarColor + '30'}]}>
                       {loot.icon ? (
-                        <Image source={{uri: loot.icon}} style={styles.lootIcon} resizeMode="contain" />
+                        <Image source={resolveImage(loot.icon)} style={styles.lootIcon} resizeMode="contain" />
                       ) : (
                         <Icon name="package-variant" size={20} color={colors.textMuted} />
                       )}
@@ -255,7 +254,7 @@ const getRarityColor = (rarity: string) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
 
   // Hero
   heroSection: {

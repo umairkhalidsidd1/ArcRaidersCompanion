@@ -1,5 +1,4 @@
 import React, {useMemo, useCallback, memo} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   FlatList,
@@ -17,6 +16,7 @@ import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawTraders from '../data/traders.json';
 import questData from '../data/quests.json';
 import {TRADER_INFO} from './TraderListScreen';
+import {resolveImage} from '../data/imageRegistry';
 
 type TraderRow = {
   trader_name: string;
@@ -87,7 +87,7 @@ const ShopItem = memo(
         <View style={s.shopImgWrap}>
           {item.item_icon ? (
             <Image
-              source={{uri: item.item_icon}}
+              source={resolveImage(item.item_icon)}
               style={s.shopImg}
               resizeMode="contain"
             />
@@ -228,7 +228,6 @@ const TraderDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={s.root}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       {/* Floating back button */}
@@ -265,7 +264,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
 const HERO_H = 340;
 
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: colors.bg},
+  root: {flex: 1, backgroundColor: 'transparent'},
   backBtn: {
     position: 'absolute',
     left: 14,

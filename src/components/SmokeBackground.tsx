@@ -6,13 +6,13 @@ import {
   Shader,
   Skia,
 } from '@shopify/react-native-skia';
-import { useSharedValue, useFrameCallback, useDerivedValue } from 'react-native-reanimated';
-import { useIsFocused } from '@react-navigation/native';
+import { useFrameCallback, useDerivedValue, makeMutable } from 'react-native-reanimated';
 
 const { width: W, height: H } = Dimensions.get('window');
 
-// Module-level start time — keeps smoke continuous across screen navigations
+// Global clock — single instance at app root.
 const APP_START = Date.now();
+const globalTime = makeMutable(0);
 
 /*
  * Port of the Raiders Map neuron_background.frag shader.
@@ -82,29 +82,33 @@ half4 main(float2 pos) {
 }
 `)!;
 
-const SmokeBackground = React.memo(() => {
-  const isFocused = useIsFocused();
-  const time = useSharedValue(Date.now() - APP_START);
-
+/*
+ * Single Canvas instance rendered at the app root.
+ * Only ONE Skia shader pipeline runs — no per-screen mount/unmount overhead.
+ */
+const SmokeCanvas = React.memo(() => {
   useFrameCallback(() => {
-    time.value = Date.now() - APP_START;
-  }, isFocused); // autostart: only run when focused
+    globalTime.value = Date.now() - APP_START;
+  });
 
   const uniforms = useDerivedValue(() => ({
     uResolution: [W, H],
-    uTime: time.value,
+    uTime: globalTime.value,
   }));
 
   return (
+    <Canvas style={styles.canvas}>
+      <Fill>
+        <Shader source={shaderSource} uniforms={uniforms} />
+      </Fill>
+    </Canvas>
+  );
+});
+
+const SmokeBackground = React.memo(() => {
+  return (
     <View style={styles.container} pointerEvents="none">
-      <Canvas style={styles.canvas}>
-        <Fill>
-          <Shader
-            source={shaderSource}
-            uniforms={uniforms}
-          />
-        </Fill>
-      </Canvas>
+      <SmokeCanvas />
     </View>
   );
 });

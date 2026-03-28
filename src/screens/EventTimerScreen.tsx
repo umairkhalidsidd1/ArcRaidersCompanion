@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   ActivityIndicator,
   RefreshControl,
@@ -16,6 +15,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors} from '../theme/theme';
 import localEvents from '../data/events.json';
+import {resolveImage} from '../data/imageRegistry';
 
 /* ── Types ────────────────────────────────────────────────── */
 type TimeSlot = {start: string; end: string};
@@ -315,7 +315,7 @@ const EventTimerScreen = ({navigation}: any) => {
         style={[st.card, isActive ? st.cardActive : st.cardSoon]}>
         <View style={st.cardLeft}>
           {ev.icon ? (
-            <Image source={{uri: ev.icon}} style={st.cardIcon} resizeMode="cover" />
+            <Image source={resolveImage(ev.icon)} style={st.cardIcon} resizeMode="cover" />
           ) : (
             <View style={st.cardIconFb}>
               <Icon name="weather-lightning" size={20} color="#999" />
@@ -392,7 +392,6 @@ const EventTimerScreen = ({navigation}: any) => {
 
   return (
     <View style={[st.root, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor="#050A14" />
 
       {/* ── Header ─────────────────────────────────────── */}
@@ -468,7 +467,7 @@ const EventTimerScreen = ({navigation}: any) => {
 
 /* ══════════════════════════════════════════════════════════ */
 const st = StyleSheet.create({
-  root: {flex: 1, backgroundColor: '#050A14'},
+  root: {flex: 1, backgroundColor: 'transparent'},
 
   header: {
     flexDirection: 'row',

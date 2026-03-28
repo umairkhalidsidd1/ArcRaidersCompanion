@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
@@ -17,6 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawTrials from '../data/trials.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 
@@ -91,7 +91,7 @@ const TrialsScreen = ({navigation}: any) => {
         {/* Image section */}
         <View style={styles.cardImageWrap}>
           <Image
-            source={{uri: item.image}}
+            source={resolveImage(item.image)}
             style={styles.cardImage}
             resizeMode="cover"
           />
@@ -168,7 +168,6 @@ const TrialsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <Animated.View style={{flex: 1, opacity: fadeAnim}}>
@@ -231,7 +230,7 @@ const TrialsScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
 
   /* Header */
   header: {
@@ -330,9 +329,9 @@ const styles = StyleSheet.create({
   /* Card */
   trialCard: {
     borderRadius: borderRadius.lg,
-    backgroundColor: 'rgba(255,255,255,0.04)',
+    backgroundColor: colors.bgCard,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
+    borderColor: colors.border,
     overflow: 'hidden',
   },
   cardImageWrap: {

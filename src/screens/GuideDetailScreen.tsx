@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useCallback} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   ScrollView,
@@ -13,15 +12,16 @@ import {
 } from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import RenderHtml from 'react-native-render-html';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawGuides from '../data/guides.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const CONTENT_W = SCREEN_W - spacing.lg * 2;
-const HERO_H = 340;
+const HERO_H = 220;
+const ICON_SIZE = 120;
 
 /* ── Custom <img> renderer using FastImage for disk caching ── */
 const FastImageRenderer = ({tnode}: any) => {
@@ -81,7 +81,6 @@ const GuideDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       {/* Floating back button */}
@@ -94,19 +93,20 @@ const GuideDetailScreen = ({route, navigation}: any) => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        bounces={false}>
+        bounces={false}
+        style={{backgroundColor: 'transparent'}}>
         {/* Hero Image */}
         {guide.thumbnail_url ? (
           <View style={styles.heroWrap}>
-            <Image
-              source={{uri: guide.thumbnail_url}}
-              style={styles.heroImage}
-              resizeMode="cover"
-            />
-            <LinearGradient
-              colors={['transparent', 'rgba(10,14,23,0.85)', colors.bg]}
-              style={styles.heroGradient}
-            />
+            <View style={styles.heroIconCenter}>
+              <View style={styles.heroIconGlow}>
+                <Image
+                  source={resolveImage(guide.thumbnail_url)}
+                  style={styles.heroIcon}
+                  resizeMode="contain"
+                />
+              </View>
+            </View>
           </View>
         ) : (
           <View style={{height: insets.top + 50}} />
@@ -116,7 +116,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         <Text style={styles.title}>{guide.title}</Text>
         <View style={styles.metaRow}>
           <Icon name="account" size={14} color={colors.cyan} />
-          <Text style={styles.author}>{guide.author || 'Unknown'}</Text>
+          <Text style={styles.author}>{guide.author || 'Arc Companion Team'}</Text>
           {guide.type === 'quest' && (
             <View style={styles.typeBadge}>
               <Text style={styles.typeBadgeText}>QUEST</Text>
@@ -169,7 +169,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
                 <View key={i} style={styles.rewardCard}>
                   {r.item?.icon && (
                     <Image
-                      source={{uri: r.item.icon}}
+                      source={resolveImage(r.item.icon)}
                       style={styles.rewardIcon}
                       resizeMode="contain"
                     />
@@ -255,7 +255,7 @@ const htmlStyles: Record<string, any> = {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: 'transparent'},
 
   backBtn: {
     position: 'absolute',
@@ -277,18 +277,22 @@ const styles = StyleSheet.create({
     height: HERO_H,
     marginBottom: 4,
   },
-  heroImage: {
-    width: '100%',
-    height: '100%',
+  heroIconCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 40,
   },
-  heroGradient: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: HERO_H * 0.5,
+  heroIconGlow: {
+    width: ICON_SIZE + 24,
+    height: ICON_SIZE + 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
+  heroIcon: {
+    width: ICON_SIZE,
+    height: ICON_SIZE,
+  },
   /* title */
   title: {
     fontSize: fonts.sizes.xl,

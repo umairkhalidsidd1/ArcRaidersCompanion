@@ -1,5 +1,4 @@
 import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
@@ -264,7 +263,6 @@ const ExpeditionScreen = ({navigation}: any) => {
      ═══════════════════════════════════════════════════ */
   return (
     <View style={[s.root, {paddingTop: ins.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* HEADER */}
@@ -709,7 +707,7 @@ const ExpeditionScreen = ({navigation}: any) => {
    STYLES
    ═════════════════════════════════════════════════════ */
 const s = StyleSheet.create({
-  root: {flex: 1, backgroundColor: colors.bg},
+  root: {flex: 1, backgroundColor: 'transparent'},
 
   /* header */
   header: {

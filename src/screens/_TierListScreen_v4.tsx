@@ -20,6 +20,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
+import {resolveImage} from '../data/imageRegistry';
 
 const STORAGE_KEY = '@arc_raiders_tier_lists_v2';
 const {width: SW, height: SH} = Dimensions.get('window');
@@ -142,7 +143,7 @@ const DraggablePoolItem = React.memo(
         {...panResponder.panHandlers}
         style={[s.itemCard, isDragging && s.itemCardDragging]}>
         {item.icon ? (
-          <Image source={{uri: item.icon}} style={s.itemImg} />
+          <Image source={resolveImage(item.icon)} style={s.itemImg} />
         ) : (
           <View style={[s.itemImg, s.itemImgPlaceholder]}>
             <Icon name="cube-outline" size={28} color={colors.textMuted} />
@@ -473,7 +474,7 @@ const TierListScreen = ({navigation}: any) => {
                               style={s.tierItemCard}>
                               {it.icon ? (
                                 <Image
-                                  source={{uri: it.icon}}
+                                  source={resolveImage(it.icon)}
                                   style={s.tierItemImg}
                                 />
                               ) : (
@@ -620,7 +621,7 @@ const TierListScreen = ({navigation}: any) => {
           {(() => {
             const di = getItem(dragItemId);
             return di?.icon ? (
-              <Image source={{uri: di.icon}} style={s.ghostImg} />
+              <Image source={resolveImage(di.icon)} style={s.ghostImg} />
             ) : (
               <View style={[s.ghostImg, s.ghostImgPlaceholder]}>
                 <Icon name="cube-outline" size={24} color={colors.textMuted} />

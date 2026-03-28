@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
@@ -29,6 +28,7 @@ import enemyDropsData from '../data/enemyDrops.json';
 import recycleOutputsData from '../data/recycleOutputs.json';
 import craftingRecipesData from '../data/craftingRecipes.json';
 import FilterModal from '../components/FilterModal';
+import {resolveImage} from '../data/imageRegistry';
 
 /* ═══════════════ CONSTANTS ═══════════════ */
 const {width: SCREEN_W, height: SCREEN_H} = Dimensions.get('window');
@@ -542,7 +542,7 @@ const ItemCard = React.memo(
         {/* Image */}
         <View style={cardStyles.imageWrap}>
           {item.icon ? (
-            <Image source={{uri: item.icon}} style={cardStyles.itemImage} resizeMode="contain" />
+            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" />
           ) : (
             <Icon name="help-circle-outline" size={28} color={colors.textMuted} />
           )}
@@ -788,7 +788,7 @@ const DetailSheet = ({
           {/* Header row */}
           <View style={detailStyles.headerRow}>
             {item.icon ? (
-              <Image source={{uri: item.icon}} style={detailStyles.heroImage} resizeMode="contain" />
+              <Image source={resolveImage(item.icon)} style={detailStyles.heroImage} resizeMode="contain" />
             ) : (
               <View style={detailStyles.heroPlaceholder}>
                 <Icon name="help-circle-outline" size={40} color={colors.textMuted} />
@@ -914,7 +914,7 @@ const DetailSheet = ({
               {droppedBy.map((enemy, idx) => (
                 <View key={idx} style={detailStyles.droppedByRow}>
                   {enemy.icon ? (
-                    <Image source={{uri: enemy.icon}} style={detailStyles.droppedByIcon} resizeMode="contain" />
+                    <Image source={resolveImage(enemy.icon)} style={detailStyles.droppedByIcon} resizeMode="contain" />
                   ) : (
                     <View style={detailStyles.droppedByIconPlaceholder}>
                       <Icon name="robot" size={20} color={colors.textMuted} />
@@ -955,7 +955,7 @@ const DetailSheet = ({
                     {craftedFrom.map(({item: r, quantity}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
                         {r.icon ? (
-                          <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
+                          <Image source={resolveImage(r.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
                         )}
@@ -980,7 +980,7 @@ const DetailSheet = ({
                     {usedInRecipes.map(({item: r}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
                         {r.icon ? (
-                          <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
+                          <Image source={resolveImage(r.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
                         )}
@@ -1000,7 +1000,7 @@ const DetailSheet = ({
                     {recyclesFrom.map(({item: r, quantity}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
                         {r.icon ? (
-                          <Image source={{uri: r.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
+                          <Image source={resolveImage(r.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
                         )}
@@ -1025,7 +1025,7 @@ const DetailSheet = ({
                     {recycleOutputs.map(({item: ri, quantity}) => (
                       <TouchableOpacity key={ri.id} onPress={() => onItemPress(ri)} style={detailStyles.thumbCard}>
                         {ri.icon ? (
-                          <Image source={{uri: ri.icon}} style={detailStyles.thumbImage} resizeMode="contain" />
+                          <Image source={resolveImage(ri.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
                         )}
@@ -1096,7 +1096,7 @@ const WBMaterialRow = React.memo(({mat, onPress}: {mat: WBMaterial; onPress?: ()
     <TouchableOpacity activeOpacity={0.7} onPress={onPress} style={[wbStyles.matCard, {borderColor: rarityColor + '60'}]}>
       <View style={wbStyles.matIconWrap}>
         {itemData?.icon ? (
-          <Image source={{uri: itemData.icon}} style={wbStyles.matIcon} resizeMode="contain" />
+          <Image source={resolveImage(itemData.icon)} style={wbStyles.matIcon} resizeMode="contain" />
         ) : (
           <Icon name="help-circle-outline" size={24} color={colors.textMuted} />
         )}
@@ -1551,7 +1551,7 @@ const ExpeditionSheet = ({
                         style={[wbStyles.matCard, {borderColor: rarityColor + '60'}]}>
                         <View style={wbStyles.matIconWrap}>
                           {itemData?.icon ? (
-                            <Image source={{uri: itemData.icon}} style={wbStyles.matIcon} resizeMode="contain" />
+                            <Image source={resolveImage(itemData.icon)} style={wbStyles.matIcon} resizeMode="contain" />
                           ) : (
                             <Icon name="help-circle-outline" size={24} color={colors.textMuted} />
                           )}
@@ -1792,7 +1792,7 @@ const TrophyDisplaySheet = ({
                         style={[wbStyles.matCard, {borderColor: rarityColor + '60'}]}>
                         <View style={wbStyles.matIconWrap}>
                           {itemData?.icon ? (
-                            <Image source={{uri: itemData.icon}} style={wbStyles.matIcon} resizeMode="contain" />
+                            <Image source={resolveImage(itemData.icon)} style={wbStyles.matIcon} resizeMode="contain" />
                           ) : (
                             <Icon name="help-circle-outline" size={24} color={colors.textMuted} />
                           )}
@@ -1826,7 +1826,7 @@ const TrophyDisplaySheet = ({
                             style={[wbStyles.matCard, {borderColor: rwColor + '40'}]}>
                             <View style={wbStyles.matIconWrap}>
                               {rwData?.icon ? (
-                                <Image source={{uri: rwData.icon}} style={wbStyles.matIcon} resizeMode="contain" />
+                                <Image source={resolveImage(rwData.icon)} style={wbStyles.matIcon} resizeMode="contain" />
                               ) : (
                                 <Icon name="gift-outline" size={24} color="#FFD54F" />
                               )}
@@ -2013,7 +2013,6 @@ const MaterialsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -2172,7 +2171,7 @@ const MaterialsScreen = ({navigation}: any) => {
 
 /* ═══════════════ STYLES ═══════════════ */
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg, overflow: 'hidden'},
+  container: {flex: 1, backgroundColor: 'transparent', overflow: 'hidden'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',
