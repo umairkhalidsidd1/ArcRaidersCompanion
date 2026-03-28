@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useCallback, useEffect} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
-  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -207,6 +208,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}

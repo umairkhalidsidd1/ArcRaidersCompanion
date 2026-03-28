@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   ScrollView,
@@ -221,6 +222,7 @@ const SkillTreeScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor="#060A11" />
 
       {/* Gradient background overlay */}

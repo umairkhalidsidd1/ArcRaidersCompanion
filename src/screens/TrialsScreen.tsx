@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
   FlatList,
-  Image,
   Linking,
   StatusBar,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -167,6 +168,7 @@ const TrialsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <Animated.View style={{flex: 1, opacity: fadeAnim}}>

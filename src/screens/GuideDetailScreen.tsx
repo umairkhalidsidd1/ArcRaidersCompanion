@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState, useCallback} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
-  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   View,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -20,6 +22,42 @@ import rawGuides from '../data/guides.json';
 const {width: SCREEN_W} = Dimensions.get('window');
 const CONTENT_W = SCREEN_W - spacing.lg * 2;
 const HERO_H = 340;
+
+/* ── Custom <img> renderer using FastImage for disk caching ── */
+const FastImageRenderer = ({tnode}: any) => {
+  const src = tnode?.attributes?.src;
+  const [ratio, setRatio] = useState(16 / 9);
+  const [loading, setLoading] = useState(true);
+  const imgW = CONTENT_W;
+  const imgH = imgW / ratio;
+
+  const onLoad = useCallback((e: any) => {
+    const {width: w, height: h} = e.nativeEvent;
+    if (w && h) setRatio(w / h);
+    setLoading(false);
+  }, []);
+
+  if (!src) return null;
+  return (
+    <View style={{width: imgW, height: imgH, borderRadius: 10, overflow: 'hidden', marginVertical: 8, backgroundColor: colors.card}}>
+      <Image
+        source={{uri: src, priority: Image.priority.high}}
+        style={{width: imgW, height: imgH}}
+        resizeMode={Image.resizeMode.cover}
+        onLoad={onLoad}
+      />
+      {loading && (
+        <View style={{...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="small" color={colors.cyan} />
+        </View>
+      )}
+    </View>
+  );
+};
+
+const htmlRenderers = {
+  img: FastImageRenderer,
+};
 
 type Guide = (typeof rawGuides)[number];
 type Reward = NonNullable<Guide['rewards']>[number];
@@ -43,6 +81,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={styles.container}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       {/* Floating back button */}
@@ -169,6 +208,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
               tagsStyles={htmlStyles}
               enableExperimentalMarginCollapsing
               defaultTextProps={{selectable: true}}
+              renderers={htmlRenderers}
             />
           </View>
         )}

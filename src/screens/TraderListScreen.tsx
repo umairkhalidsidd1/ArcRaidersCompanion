@@ -1,4 +1,5 @@
 import React, {useMemo, useState, useCallback} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   FlatList,
   Image,
@@ -134,6 +135,7 @@ const TraderListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor="#000" />
 
       {/* Header */}

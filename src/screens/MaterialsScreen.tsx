@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
   FlatList,
-  Image,
   PanResponder,
   ScrollView,
   StatusBar,
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -227,25 +228,36 @@ const WORKBENCH_UPGRADES: WBStation[] = [
   ]},
 ];
 
-/* Item lookup by name for icons/rarity */
-const itemByName = new Map<string, RawItem>();
-(rawItems as RawItem[]).forEach(item => {
-  itemByName.set(item.name.toLowerCase(), item);
-});
+/* Item lookup by name for icons/rarity (lazy-initialized) */
+let _itemByNameReady = false;
+let itemByName: Map<string, RawItem>;
+function ensureItemByName() {
+  if (_itemByNameReady) return;
+  _itemByNameReady = true;
+  itemByName = new Map<string, RawItem>();
+  (rawItems as RawItem[]).forEach(item => {
+    itemByName.set(item.name.toLowerCase(), item);
+  });
+}
 
 /* ═══════════════ ANIMATED GRADIENT BORDER ═══════════════ */
 const GRADIENT_COLORS: [string, string, ...string[]] = ['#00E5FF', '#00FF88', '#FFD600', '#FF6B2C', '#FF2D87', '#A855F7', '#2196F3', '#00E5FF'];
 
 /* Single shared spin animation for all GradientBorder instances */
 const _sharedSpin = new Animated.Value(0);
-Animated.loop(
-  Animated.timing(_sharedSpin, {
-    toValue: 1,
-    duration: 3000,
-    easing: (t: number) => t,
-    useNativeDriver: true,
-  }),
-).start();
+let _spinStarted = false;
+function ensureSpinAnimation() {
+  if (_spinStarted) return;
+  _spinStarted = true;
+  Animated.loop(
+    Animated.timing(_sharedSpin, {
+      toValue: 1,
+      duration: 3000,
+      easing: (t: number) => t,
+      useNativeDriver: true,
+    }),
+  ).start();
+}
 const _sharedRotate = _sharedSpin.interpolate({
   inputRange: [0, 1],
   outputRange: ['0deg', '360deg'],
@@ -256,7 +268,9 @@ const GradientBorder = ({children, style, radius = borderRadius.lg, borderW = 1.
   style?: any;
   radius?: number;
   borderW?: number;
-}) => (
+}) => {
+  ensureSpinAnimation();
+  return (
   <View style={[{borderRadius: radius, overflow: 'hidden'}, style]}>
     <View style={[StyleSheet.absoluteFill, {alignItems: 'center', justifyContent: 'center'}]} pointerEvents="none">
       <Animated.View style={{
@@ -281,12 +295,130 @@ const GradientBorder = ({children, style, radius = borderRadius.lg, borderW = 1.
       {children}
     </View>
   </View>
-);
+  );
+};
 
 /* ═══════════════ ALL ITEMS SORTED ═══════════════ */
 const allItems: RawItem[] = (rawItems as RawItem[]).sort((a, b) =>
   a.name.localeCompare(b.name),
 );
+
+/* ═══════════════ PRE-BUILT LOOKUP INDEXES (lazy-initialized) ═══════════════ */
+type ItemRef = {item: RawItem; quantity: number};
+type SavedEntry = {listName: string; detail?: string; quantity?: number; icon: string; color: string};
+
+let _indexesReady = false;
+let _allByNameLower: Map<string, RawItem>;
+let _recyclesFromIdx: Map<string, ItemRef[]>;
+let _recycleOutputsIdx: Map<string, ItemRef[]>;
+let _craftedFromIdx: Map<string, ItemRef[]>;
+let _usedInIdx: Map<string, ItemRef[]>;
+let _savedIdx: Map<string, SavedEntry[]>;
+
+function ensureIndexes() {
+  if (_indexesReady) return;
+  _indexesReady = true;
+
+  _allByNameLower = new Map<string, RawItem>();
+  allItems.forEach(i => _allByNameLower.set(i.name.toLowerCase(), i));
+
+  const recycleMap = recycleOutputsData as Record<string, {name: string; quantity: number}[]>;
+
+  // Reverse index: what items recycle INTO a given item
+  _recyclesFromIdx = new Map<string, ItemRef[]>();
+  Object.entries(recycleMap).forEach(([inputName, outputs]) => {
+    const inputItem = _allByNameLower.get(inputName.toLowerCase());
+    if (!inputItem) return;
+    outputs.forEach(out => {
+      const k = out.name.toLowerCase();
+      if (!_recyclesFromIdx.has(k)) _recyclesFromIdx.set(k, []);
+      _recyclesFromIdx.get(k)!.push({item: inputItem, quantity: out.quantity});
+    });
+  });
+
+  // Direct index: what a given item recycles into
+  _recycleOutputsIdx = new Map<string, ItemRef[]>();
+  Object.entries(recycleMap).forEach(([inputName, outputs]) => {
+    const results: ItemRef[] = [];
+    outputs.forEach(out => {
+      const found = _allByNameLower.get(out.name.toLowerCase());
+      if (found) results.push({item: found, quantity: out.quantity});
+    });
+    if (results.length > 0) _recycleOutputsIdx.set(inputName, results);
+  });
+
+  // Crafting indexes
+  const craftData = craftingRecipesData as {crafted_from: Record<string, {name: string; quantity: number}[]>; used_in: Record<string, {name: string; quantity: number}[]>};
+
+  _craftedFromIdx = new Map<string, ItemRef[]>();
+  Object.entries(craftData.crafted_from).forEach(([itemName, entries]) => {
+    const results: ItemRef[] = [];
+    entries.forEach(e => {
+      const found = _allByNameLower.get(e.name.toLowerCase());
+      if (found) results.push({item: found, quantity: e.quantity});
+    });
+    if (results.length > 0) _craftedFromIdx.set(itemName, results);
+  });
+
+  _usedInIdx = new Map<string, ItemRef[]>();
+  Object.entries(craftData.used_in).forEach(([itemName, entries]) => {
+    const results: ItemRef[] = [];
+    const seen = new Set<string>();
+    entries.forEach(e => {
+      const found = _allByNameLower.get(e.name.toLowerCase());
+      if (found && !seen.has(found.id)) {
+        seen.add(found.id);
+        results.push({item: found, quantity: e.quantity});
+      }
+    });
+    if (results.length > 0) _usedInIdx.set(itemName, results);
+  });
+
+  // Saved-in-lists index
+  _savedIdx = new Map<string, SavedEntry[]>();
+  const pushSaved = (key: string, entry: SavedEntry) => {
+    if (!_savedIdx.has(key)) _savedIdx.set(key, []);
+    _savedIdx.get(key)!.push(entry);
+  };
+  WORKBENCH_UPGRADES.forEach(station => {
+    station.materials.forEach(mat => {
+      pushSaved(mat.name.toLowerCase(), {listName: 'Workbench Upgrades', quantity: mat.quantity, icon: 'hammer-wrench', color: '#AB47BC'});
+    });
+  });
+  (expeditionData as any).stages?.forEach((stage: any) => {
+    stage.objectives?.forEach((obj: any) => {
+      const k = (obj.item || '').toLowerCase();
+      if (k) pushSaved(k, {listName: 'Expedition', detail: stage.name, quantity: obj.quantity, icon: 'compass', color: '#42A5F5'});
+    });
+  });
+  (tradersData as any[]).forEach((t: any) => {
+    if (t.item_name) pushSaved(t.item_name.toLowerCase(), {listName: 'Sold by Trader', detail: t.trader_name, quantity: t.trader_price, icon: 'storefront-outline', color: '#4DB6AC'});
+  });
+  const allQuestsData = (questsData as any).quests || [];
+  allQuestsData.forEach((q: any) => {
+    (q.rewards || []).forEach((r: any) => {
+      if (r.name) pushSaved(r.name.toLowerCase(), {listName: 'Quest Reward', detail: q.name, quantity: r.quantity, icon: 'gift-outline', color: '#FFD54F'});
+    });
+  });
+  (trophyDisplayData as any).stages?.forEach((stage: any) => {
+    stage.objectives?.forEach((obj: any) => {
+      const k = (obj.item || '').toLowerCase();
+      if (k) pushSaved(k, {listName: 'Trophy Display', detail: stage.name, quantity: obj.quantity, icon: 'trophy', color: '#26C6DA'});
+    });
+  });
+  // Quest objectives — substring match
+  allItems.forEach(ai => {
+    const nameLower = ai.name.toLowerCase();
+    allQuestsData.forEach((q: any) => {
+      (q.objectives || []).forEach((obj: any) => {
+        const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
+        if (str.toLowerCase().includes(nameLower)) {
+          pushSaved(nameLower, {listName: 'Quest Objective', detail: q.name, icon: 'map-marker-check', color: '#FF8A65'});
+        }
+      });
+    });
+  });
+}
 
 /* ═══════════════ GRID BG (for blueprints) ═══════════════ */
 const GridBg = React.memo(() => (
@@ -439,7 +571,6 @@ const DetailSheet = ({
   isBlueprint,
   bpCollected,
   onToggleBp,
-  allItems: allItemsRef,
   onItemPress,
   onOpenWbSheet,
   onOpenExpSheet,
@@ -451,7 +582,6 @@ const DetailSheet = ({
   isBlueprint: boolean;
   bpCollected: boolean;
   onToggleBp: (id: string) => void;
-  allItems: RawItem[];
   onItemPress: (item: RawItem) => void;
   onOpenWbSheet?: () => void;
   onOpenExpSheet?: () => void;
@@ -599,52 +729,13 @@ const DetailSheet = ({
     : [];
   const maxStatVal = stats.length > 0 ? Math.max(...stats.map(([, v]) => v as number), 100) : 100;
 
-  // === CRAFTING & RECYCLING (from DB data) ===
-  const craftingData = craftingRecipesData as {crafted_from: Record<string, {name: string; quantity: number}[]>; used_in: Record<string, {name: string; quantity: number}[]>};
-
-  // 1. Recycles From: items that recycle INTO this item (reverse lookup from recycleOutputs)
-  const recyclesFrom: {item: RawItem; quantity: number}[] = [];
-  const recycleMap = recycleOutputsData as Record<string, {name: string; quantity: number}[]>;
-  Object.entries(recycleMap).forEach(([inputName, outputs]) => {
-    outputs.forEach(out => {
-      if (out.name.toLowerCase() === item.name.toLowerCase()) {
-        const found = allItemsRef.find(o => o.name.toLowerCase() === inputName.toLowerCase());
-        if (found) recyclesFrom.push({item: found, quantity: out.quantity});
-      }
-    });
-  });
-
-  // 2. Recycles Into: use proper data from recycleOutputs.json (with quantities)
-  const recycleOutputs: {item: RawItem; quantity: number}[] = [];
-  const recycleEntries = recycleMap[item.name];
-  if (recycleEntries) {
-    recycleEntries.forEach(entry => {
-      const found = allItemsRef.find(other => other.name.toLowerCase() === entry.name.toLowerCase());
-      if (found) recycleOutputs.push({item: found, quantity: entry.quantity});
-    });
-  }
-
-  // 3. Crafted From: what ingredients are needed to craft THIS item
-  const craftedFrom: {item: RawItem; quantity: number}[] = [];
-  const cfEntries = craftingData.crafted_from[item.name];
-  if (cfEntries) {
-    cfEntries.forEach(entry => {
-      const found = allItemsRef.find(other => other.name.toLowerCase() === entry.name.toLowerCase());
-      if (found) craftedFrom.push({item: found, quantity: entry.quantity});
-    });
-  }
-
-  // 4. Used In Recipes: what items is THIS material used to craft
-  const usedInRecipes: {item: RawItem; quantity: number}[] = [];
-  const uiEntries = craftingData.used_in[item.name];
-  if (uiEntries) {
-    uiEntries.forEach(entry => {
-      const found = allItemsRef.find(other => other.name.toLowerCase() === entry.name.toLowerCase());
-      if (found && !usedInRecipes.some(e => e.item.id === found.id)) {
-        usedInRecipes.push({item: found, quantity: entry.quantity});
-      }
-    });
-  }
+  // === CRAFTING & RECYCLING (lazy-init O(1) lookups) ===
+  ensureItemByName();
+  ensureIndexes();
+  const recyclesFrom = _recyclesFromIdx.get(item.name.toLowerCase()) || [];
+  const recycleOutputs = _recycleOutputsIdx.get(item.name) || [];
+  const craftedFrom = _craftedFromIdx.get(item.name) || [];
+  const usedInRecipes = _usedInIdx.get(item.name) || [];
 
   // 5. Crafted At: workbench info
   const craftedAt = item.workbench;
@@ -652,54 +743,8 @@ const DetailSheet = ({
   // === DROPPED BY ===
   const droppedBy: {name: string; icon: string}[] = (enemyDropsData as Record<string, {name: string; icon: string}[]>)[item.name] || [];
 
-  // Saved in lists
-  const savedInLists: {listName: string; detail?: string; quantity?: number; icon: string; color: string}[] = [];
-  WORKBENCH_UPGRADES.forEach(station => {
-    station.materials.forEach(mat => {
-      if (mat.name.toLowerCase() === item.name.toLowerCase()) {
-        savedInLists.push({listName: 'Workbench Upgrades', quantity: mat.quantity, icon: 'hammer-wrench', color: '#AB47BC'});
-      }
-    });
-  });
-  (expeditionData as any).stages?.forEach((stage: any) => {
-    stage.objectives?.forEach((obj: any) => {
-      if ((obj.item || '').toLowerCase() === item.name.toLowerCase()) {
-        savedInLists.push({listName: 'Expedition', detail: stage.name, quantity: obj.quantity, icon: 'compass', color: '#42A5F5'});
-      }
-    });
-  });
-  // Sold by traders
-  (tradersData as any[]).forEach((t: any) => {
-    if (t.item_name && t.item_name.toLowerCase() === item.name.toLowerCase()) {
-      savedInLists.push({listName: 'Sold by Trader', detail: t.trader_name, quantity: t.trader_price, icon: 'storefront-outline', color: '#4DB6AC'});
-    }
-  });
-  // Quest rewards
-  const allQuests = (questsData as any).quests || [];
-  allQuests.forEach((q: any) => {
-    (q.rewards || []).forEach((r: any) => {
-      if (r.name && r.name.toLowerCase() === item.name.toLowerCase()) {
-        savedInLists.push({listName: 'Quest Reward', detail: q.name, quantity: r.quantity, icon: 'gift-outline', color: '#FFD54F'});
-      }
-    });
-  });
-  // Trophy Display
-  (trophyDisplayData as any).stages?.forEach((stage: any) => {
-    stage.objectives?.forEach((obj: any) => {
-      if ((obj.item || '').toLowerCase() === item.name.toLowerCase()) {
-        savedInLists.push({listName: 'Trophy Display', detail: stage.name, quantity: obj.quantity, icon: 'trophy', color: '#26C6DA'});
-      }
-    });
-  });
-  // Quest objectives (hand-in items)
-  allQuests.forEach((q: any) => {
-    (q.objectives || []).forEach((obj: any) => {
-      const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
-      if (str.toLowerCase().includes(item.name.toLowerCase())) {
-        savedInLists.push({listName: 'Quest Objective', detail: q.name, icon: 'map-marker-check', color: '#FF8A65'});
-      }
-    });
-  });
+  // Saved in lists (lazy-init)
+  const savedInLists = _savedIdx.get(item.name.toLowerCase()) || [];
 
   // Found in areas
   const foundInAreas = item.loot_area
@@ -1044,6 +1089,7 @@ const DetailSheet = ({
 
 /* ═══════════════ WORKBENCH UPGRADE SHEET ═══════════════ */
 const WBMaterialRow = React.memo(({mat, onPress}: {mat: WBMaterial; onPress?: () => void}) => {
+  ensureItemByName();
   const itemData = itemByName.get(mat.name.toLowerCase());
   const rarityColor = itemData ? getRarityColor(itemData.rarity) : colors.textMuted;
   return (
@@ -1070,7 +1116,7 @@ const WBMaterialRow = React.memo(({mat, onPress}: {mat: WBMaterial; onPress?: ()
 
 /* Snap points for workbench sheet (translateY — lower = more visible) */
 const WB_SHEET_H = SCREEN_H * 0.70;
-const WB_TY_HIDDEN = SCREEN_H;
+const WB_TY_HIDDEN = SCREEN_H + WB_SHEET_H;
 const WB_TY_HALF = WB_SHEET_H - SCREEN_H * 0.5;
 const WB_TY_FULL = 0;
 
@@ -1310,6 +1356,7 @@ const ExpeditionSheet = ({
   onMaterialPress?: (item: RawItem) => void;
   overDetail?: boolean;
 }) => {
+  ensureItemByName();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
   const currentTY = useRef(WB_TY_HIDDEN);
@@ -1679,6 +1726,8 @@ const TrophyDisplaySheet = ({
     });
   }, [isStageChecked]);
 
+  ensureItemByName();
+
   return (
     <>
       {visible && (
@@ -1964,6 +2013,7 @@ const MaterialsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -2099,7 +2149,6 @@ const MaterialsScreen = ({navigation}: any) => {
         isBlueprint={isSelectedItem}
         bpCollected={selectedItem ? bpSet.has(selectedItem.id) : false}
         onToggleBp={toggleBlueprint}
-        allItems={allItems}
         onItemPress={handleSheetItemPress}
         onOpenWbSheet={() => { setWbFromDetail(true); setWbSheetVisible(true); }}
         onOpenExpSheet={() => { setExpFromDetail(true); setExpSheetVisible(true); }}
@@ -2123,7 +2172,7 @@ const MaterialsScreen = ({navigation}: any) => {
 
 /* ═══════════════ STYLES ═══════════════ */
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+  container: {flex: 1, backgroundColor: colors.bg, overflow: 'hidden'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

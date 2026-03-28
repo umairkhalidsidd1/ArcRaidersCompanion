@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Alert,
   Animated,
   Dimensions,
   Easing,
   FlatList,
-  Image,
   InteractionManager,
   KeyboardAvoidingView,
   Modal,
@@ -18,6 +18,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -332,6 +333,7 @@ const TierListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>

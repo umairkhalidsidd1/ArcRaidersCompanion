@@ -1,10 +1,10 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Alert,
   Easing,
   FlatList,
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -16,6 +16,7 @@ import {
   View,
   Modal,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import {WebView} from 'react-native-webview';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -688,6 +689,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
   /* ═════════════════════ RENDER ═════════════════════ */
   return (
     <View style={styles.container}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       {/* ── WebView Map (Edge to Edge) ── */}

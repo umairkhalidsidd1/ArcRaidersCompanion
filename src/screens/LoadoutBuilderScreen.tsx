@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Alert,
   Dimensions,
   FlatList,
-  Image,
   Modal,
   ScrollView,
   StatusBar,
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
@@ -188,6 +189,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
   /* ═══════ RENDER ═══════ */
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}

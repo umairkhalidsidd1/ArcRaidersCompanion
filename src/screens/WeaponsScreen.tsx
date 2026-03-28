@@ -1,9 +1,9 @@
 import React, {useMemo, useState, useRef, useCallback} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Animated,
   Dimensions,
   FlatList,
-  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -13,6 +13,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -180,6 +181,7 @@ const WeaponsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}

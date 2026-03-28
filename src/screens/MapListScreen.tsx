@@ -1,4 +1,5 @@
 import React from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   FlatList,
   Image,
@@ -113,6 +114,7 @@ const MapListScreen = ({ navigation }: any) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}

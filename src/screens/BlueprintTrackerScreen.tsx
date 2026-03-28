@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useMemo, useState, useRef} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
   FlatList,
-  Image,
   InteractionManager,
   StatusBar,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
@@ -250,6 +251,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}

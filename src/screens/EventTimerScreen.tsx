@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   ActivityIndicator,
-  Image,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -391,6 +392,7 @@ const EventTimerScreen = ({navigation}: any) => {
 
   return (
     <View style={[st.root, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor="#050A14" />
 
       {/* ── Header ─────────────────────────────────────── */}

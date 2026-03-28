@@ -1,4 +1,5 @@
 import React, {useMemo, useState, useCallback, useEffect} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   FlatList,
   Image,
@@ -300,6 +301,7 @@ const QuestTreeScreen = ({navigation}: any) => {
 
   return (
     <View style={[st.root, {paddingTop: insets.top}]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       {/* Header */}

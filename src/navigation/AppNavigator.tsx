@@ -1,13 +1,21 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts, spacing } from '../theme/theme';
 
-// Screens
+// Tab screens — eagerly imported for instant tab switching
 import HomeScreen from '../screens/HomeScreen';
+import TrialsScreen from '../screens/TrialsScreen';
+import MaterialsScreen from '../screens/MaterialsScreen';
+import ArcListScreen from '../screens/ArcListScreen';
+import GuidesScreen from '../screens/GuidesScreen';
+
+// RootStack screens
 import MapListScreen from '../screens/MapListScreen';
 import MapDetailScreen from '../screens/MapDetailScreen';
 import ItemDetailScreen from '../screens/ItemDetailScreen';
@@ -17,13 +25,10 @@ import TraderListScreen from '../screens/TraderListScreen';
 import TraderDetailScreen from '../screens/TraderDetailScreen';
 import BlueprintTrackerScreen from '../screens/BlueprintTrackerScreen';
 import QuestListScreen from '../screens/QuestListScreen';
-import ArcListScreen from '../screens/ArcListScreen';
 import EventTimerScreen from '../screens/EventTimerScreen';
 import SkillTreeScreen from '../screens/SkillTreeScreen';
 import ArcDetailScreen from '../screens/ArcDetailScreen';
 import ExpeditionScreen from '../screens/ExpeditionScreen';
-import TrialsScreen from '../screens/TrialsScreen';
-import GuidesScreen from '../screens/GuidesScreen';
 import GuideDetailScreen from '../screens/GuideDetailScreen';
 import TierListScreen from '../screens/TierListScreen';
 import LoadoutBuilderScreen from '../screens/LoadoutBuilderScreen';
@@ -32,7 +37,6 @@ import QuestTreeScreen from '../screens/QuestTreeScreen';
 import CosmeticsScreen from '../screens/CosmeticsScreen';
 import CollectibleTrackerScreen from '../screens/CollectibleTrackerScreen';
 import QuestDetailScreen from '../screens/QuestDetailScreen';
-import MaterialsScreen from '../screens/MaterialsScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
@@ -61,7 +65,7 @@ function TrialsStackScreen() {
 
 function MaterialsStackScreen() {
   return (
-    <MaterialsStack.Navigator screenOptions={{ headerShown: false, freezeOnBlur: false }}>
+    <MaterialsStack.Navigator screenOptions={{ headerShown: false }}>
       <MaterialsStack.Screen name="MaterialsMain" component={MaterialsScreen} />
     </MaterialsStack.Navigator>
   );
@@ -91,29 +95,79 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
   Guides: { active: 'text-box', inactive: 'text-box-outline' },
 };
 
-/* ── Tab Navigator (with bottom bar) ── */
+/* ── Custom floating glass tab bar ── */
+function GlassTabBar({ state, descriptors, navigation }: any) {
+  const insets = useSafeAreaInsets();
+  const bottomPad = insets.bottom > 0 ? insets.bottom - 8 : 4;
+
+  return (
+    <View style={[styles.tabBarOuter, { bottom: bottomPad }]}>
+      <BlurView
+        blurType="ultraThinMaterialDark"
+        blurAmount={24}
+        reducedTransparencyFallbackColor="rgba(17,24,39,0.85)"
+        style={styles.blurWrap}>
+        <View style={styles.tabBarInner}>
+          {state.routes.map((route: any, index: number) => {
+            const { options } = descriptors[route.key];
+            const label = route.name;
+            const isFocused = state.index === index;
+            const icons = TAB_ICONS[route.name];
+            const iconName = isFocused ? icons.active : icons.inactive;
+            const iconColor = isFocused ? colors.cyan : colors.textMuted;
+
+            const onPress = () => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+              });
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
+            };
+
+            return (
+              <TouchableOpacity
+                key={route.key}
+                accessibilityRole="button"
+                accessibilityState={isFocused ? { selected: true } : {}}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                onPress={onPress}
+                activeOpacity={0.7}
+                style={styles.tabItem}>
+                <View style={[styles.iconWrap, isFocused && styles.iconWrapActive]}>
+                  <Icon name={iconName} size={28} color={iconColor} />
+                </View>
+                <Text
+                  style={[
+                    styles.tabLabel,
+                    { color: isFocused ? colors.cyan : colors.textMuted },
+                  ]}
+                  numberOfLines={1}>
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </BlurView>
+    </View>
+  );
+}
+
+/* ── Tab Navigator ── */
 function TabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      tabBar={props => <GlassTabBar {...props} />}
+      screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: colors.cyan,
-        tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: styles.tabLabel,
-        tabBarIcon: ({ focused, color }) => {
-          const icons = TAB_ICONS[route.name];
-          const iconName = focused ? icons.active : icons.inactive;
-          return (
-            <View style={focused ? styles.activeIconWrap : undefined}>
-              <Icon name={iconName} size={22} color={color} />
-            </View>
-          );
-        },
-      })}>
+        lazy: false,
+      }}>
       <Tab.Screen name="Bunker" component={BunkerStackScreen} />
       <Tab.Screen name="Trials" component={TrialsStackScreen} />
-      <Tab.Screen name="Materials" component={MaterialsStackScreen} options={{ lazy: false }} />
+      <Tab.Screen name="Materials" component={MaterialsStackScreen} />
       <Tab.Screen name="Enemies" component={EnemiesStackScreen} />
       <Tab.Screen name="Guides" component={GuidesStackScreen} />
     </Tab.Navigator>
@@ -152,30 +206,58 @@ const AppNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: colors.bgSecondary,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    height: 80,
-    paddingTop: spacing.xs,
-    paddingBottom: spacing.lg + 2,
+  /* floating glass bar */
+  tabBarOuter: {
+    position: 'absolute',
+    left: 14,
+    right: 14,
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: 'rgba(0,229,255,0.22)',
+    borderTopColor: 'rgba(0,229,255,0.40)',
+    backgroundColor: 'rgba(6,10,18,0.94)',
+    shadowColor: '#00E5FF',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.30,
+    shadowRadius: 14,
     elevation: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
+  },
+  blurWrap: {
+    borderRadius: 29,
+    overflow: 'hidden',
+  },
+  tabBarInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    backgroundColor: 'rgba(8,12,22,0.88)',
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 3,
+  },
+  iconWrap: {
+    width: 40,
+    height: 32,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconWrapActive: {
+    backgroundColor: 'rgba(0,229,255,0.14)',
+    shadowColor: '#00E5FF',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.35,
+    shadowRadius: 5,
   },
   tabLabel: {
-    fontSize: 10,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: '700',
     letterSpacing: 0.3,
-    marginTop: 2,
-  },
-  activeIconWrap: {
-    backgroundColor: 'rgba(0, 229, 255, 0.12)',
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
   },
 });
 

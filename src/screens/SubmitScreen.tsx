@@ -1,4 +1,5 @@
 import React, {useState, useCallback} from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -281,6 +282,7 @@ const SubmitScreen = ({navigation}: any) => {
     <KeyboardAvoidingView
       style={[styles.container, {paddingTop: insets.top}]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <View style={styles.header}>

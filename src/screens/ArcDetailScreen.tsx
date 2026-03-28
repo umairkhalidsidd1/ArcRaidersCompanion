@@ -1,7 +1,7 @@
 import React from 'react';
+import SmokeBackground from '../components/SmokeBackground';
 import {
   Dimensions,
-  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -85,6 +86,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={styles.container}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>

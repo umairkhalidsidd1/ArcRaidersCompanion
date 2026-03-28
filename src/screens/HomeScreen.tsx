@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
+import SmokeBackground from '../components/SmokeBackground';
 import { getMapFullImage } from '../data/mapImages';
 import maps from '../data/maps.json';
 import events from '../data/events.json';
@@ -231,6 +232,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
+      <SmokeBackground />
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -244,9 +246,6 @@ const HomeScreen = ({ navigation }: any) => {
             </View>
             <Text style={styles.sectionTitle}>Maps</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('MapList')}>
-            <Text style={styles.seeAllText}>See All Events</Text>
-          </TouchableOpacity>
         </View>
 
         {/* Map Carousel */}
@@ -437,11 +436,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.textPrimary,
   },
-  seeAllText: {
-    fontSize: fonts.sizes.sm,
-    color: colors.textSecondary,
-    fontWeight: '500',
-  },
 
   // Map Carousel
   mapCarousel: {
@@ -553,18 +547,24 @@ const styles = StyleSheet.create({
   toolCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.bgCard,
+    backgroundColor: 'rgba(10, 16, 28, 0.72)',
     borderRadius: borderRadius.lg,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'rgba(0, 229, 255, 0.12)',
     padding: spacing.lg,
     gap: spacing.lg,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
   },
   toolIconWrap: {
     width: 44,
     height: 44,
     borderRadius: borderRadius.md,
-    backgroundColor: 'rgba(0, 229, 255, 0.08)',
+    backgroundColor: 'rgba(0, 229, 255, 0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 229, 255, 0.18)',
     alignItems: 'center',
     justifyContent: 'center',
   },
