@@ -18,10 +18,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
 import { getMapFullImage } from '../data/mapImages';
 import {resolveImage} from '../data/imageRegistry';
-import maps from '../data/maps.json';
-import events from '../data/events.json';
+import rawEvents from '../data/events.json';
 import rawItems from '../data/items.json';
 import tradersData from '../data/traders.json';
+import {getItems, getEvents, getMaps} from '../data/localizedData';
+import { useTranslation } from 'react-i18next';
 
 /* ── Animated gradient border (shared spin) ── */
 const _GRAD_COLORS: [string, string, ...string[]] = ['#E0F7FF', '#80DFFF', '#00E5FF', '#40C8FF', '#87CEFA', '#B0E8FF', '#00BFFF', '#E0F7FF'];
@@ -114,13 +115,13 @@ const formatLocalTime = (utcTime: string): string => {
   return `${lh}:${String(d.getMinutes()).padStart(2, '0')} ${ampm}`;
 };
 
-type MapEventInfo = { isActive: boolean; name: string; endsIn: string; startsAt: string; startsIn: string } | null;
+type MapEventInfo = { id: number; isActive: boolean; name: string; endsIn: string; startsAt: string; startsIn: string } | null;
 
 const getMapEventInfo = (mapId: string): MapEventInfo => {
   const nowSec = getNowSeconds();
   const DAY = 24 * 3600;
 
-  const mapEvents = (events as GameEvent[]).filter(e => MAP_NAME_TO_ID[e.map] === mapId);
+  const mapEvents = (rawEvents as GameEvent[]).filter(e => MAP_NAME_TO_ID[e.map] === mapId);
   // Check for active event first
   for (const ev of mapEvents) {
     const slots = parseTimeSlots(ev.times);
@@ -138,7 +139,7 @@ const getMapEventInfo = (mapId: string): MapEventInfo => {
       if (active) {
         const m = Math.floor(rem / 60);
         const s = rem % 60;
-        return { isActive: true, name: ev.name, endsIn: `${m}m ${s}s`, startsAt: '', startsIn: '' };
+        return { id: ev.id, isActive: true, name: ev.name, endsIn: `${m}m ${s}s`, startsAt: '', startsIn: '' };
       }
     }
   }
@@ -162,7 +163,7 @@ const getMapEventInfo = (mapId: string): MapEventInfo => {
     const h = Math.floor(m / 60);
     const mm = m % 60;
     const countdown = h > 0 ? `${h}h ${mm}m ${s}s` : `${mm}m ${s}s`;
-    return { isActive: false, name: bestEvent.name, endsIn: '', startsAt: formatLocalTime(bestSlot.start), startsIn: countdown };
+    return { id: bestEvent.id, isActive: false, name: bestEvent.name, endsIn: '', startsAt: formatLocalTime(bestSlot.start), startsIn: countdown };
   }
   return null;
 };
@@ -213,86 +214,22 @@ const TOTAL_COSMETICS = (rawItems as any[]).filter(i => i.item_type === 'Cosmeti
 const TOTAL_COLLECTIBLES = (rawItems as any[]).filter(i => i.item_type === 'Collectible' || i.item_type === 'Trinket').length;
 
 const RAIDER_TOOLS = [
-  {
-    key: 'skilltree',
-    icon: 'file-tree-outline',
-    color: colors.cyan,
-    title: 'Skill Tree',
-    desc: 'Plan your character build and progression.',
-    screen: 'SkillTree',
-  },
-  {
-    key: 'weapons',
-    icon: 'shield-sword',
-    color: colors.cyan,
-    title: 'Weapons',
-    desc: 'Detailed weapon stat analysis.',
-    screen: 'Weapons',
-  },
-  {
-    key: 'blueprints',
-    icon: 'floor-plan',
-    color: colors.cyan,
-    title: 'Blueprints Checklist',
-    desc: 'Track your blueprint collection progress.',
-    screen: 'BlueprintTracker',
-  },
-  {
-    key: 'tierlist',
-    icon: 'trophy-outline',
-    color: colors.cyan,
-    title: 'Tier List',
-    desc: 'Weapon and item tier rankings.',
-    screen: 'TierList',
-  },
-  {
-    key: 'quests',
-    icon: 'clipboard-list-outline',
-    color: colors.cyan,
-    title: 'Quests',
-    desc: 'Track your quest progress and chains.',
-    screen: 'QuestList',
-  },
-  {
-    key: 'questtree',
-    icon: 'sitemap-outline',
-    color: colors.cyan,
-    title: 'Quest Tree',
-    desc: 'View quest prerequisites and branching paths.',
-    screen: 'QuestTree',
-  },
-  {
-    key: 'expedition',
-    icon: 'compass-outline',
-    color: colors.cyan,
-    title: 'Expeditions',
-    desc: 'Plan and track your expeditions.',
-    screen: 'Expedition',
-  },
-  {
-    key: 'cosmetics',
-    icon: 'tshirt-crew-outline',
-    color: colors.cyan,
-    title: 'Cosmetics',
-    desc: 'Browse available cosmetic items.',
-    screen: 'Cosmetics',
-  },
-  {
-    key: 'collectibles',
-    icon: 'star-circle-outline',
-    color: colors.cyan,
-    title: 'Collectibles',
-    desc: 'Track collectible items and locations.',
-    screen: 'CollectibleTracker',
-  },
+  { key: 'skilltree', icon: 'file-tree-outline', color: colors.cyan, titleKey: 'home.skillTree', descKey: 'home.skillTreeDesc', screen: 'SkillTree' },
+  { key: 'weapons', icon: 'shield-sword', color: colors.cyan, titleKey: 'home.weaponsTitle', descKey: 'home.weaponsDesc', screen: 'Weapons' },
+  { key: 'blueprints', icon: 'floor-plan', color: colors.cyan, titleKey: 'home.blueprintsChecklist', descKey: 'home.blueprintsChecklistDesc', screen: 'BlueprintTracker' },
+  { key: 'tierlist', icon: 'trophy-outline', color: colors.cyan, titleKey: 'home.tierList', descKey: 'home.tierListDesc', screen: 'TierList' },
+  { key: 'quests', icon: 'clipboard-list-outline', color: colors.cyan, titleKey: 'home.quests', descKey: 'home.questsDesc', screen: 'QuestList' },
+  { key: 'questtree', icon: 'sitemap-outline', color: colors.cyan, titleKey: 'home.questTree', descKey: 'home.questTreeDesc', screen: 'QuestTree' },
+  { key: 'expedition', icon: 'compass-outline', color: colors.cyan, titleKey: 'home.expeditions', descKey: 'home.expeditionsDesc', screen: 'Expedition' },
+  { key: 'cosmetics', icon: 'tshirt-crew-outline', color: colors.cyan, titleKey: 'home.cosmetics', descKey: 'home.cosmeticsDesc', screen: 'Cosmetics' },
+  { key: 'collectibles', icon: 'star-circle-outline', color: colors.cyan, titleKey: 'home.collectibles', descKey: 'home.collectiblesDesc', screen: 'CollectibleTracker' },
 ];
 
 /* ── Live Event Card helpers ── */
-const ALL_EVENTS = events as GameEvent[];
+const ALL_EVENTS = rawEvents as GameEvent[];
 const TOTAL_EVENTS = ALL_EVENTS.length;
-const MAP_SHORT: Record<string, string> = {Dam: 'Dam', 'Buried City': 'Buried City', Spaceport: 'Spaceport', 'Blue Gate': 'Blue Gate', 'Stella Montis': 'Stella M.'};
 
-type LiveSlot = {name: string; map: string; icon: string; isActive: boolean; countdown: string; localTime: string};
+type LiveSlot = {id: number; name: string; map: string; icon: string; isActive: boolean; countdown: string; localTime: string};
 
 const getLiveEvents = (): LiveSlot[] => {
   const nowSec = getNowSeconds();
@@ -317,7 +254,7 @@ const getLiveEvents = (): LiveSlot[] => {
       if (active) {
         const m = Math.floor(rem / 60);
         const sec = rem % 60;
-        results.push({name: ev.name, map: ev.map, icon: ev.icon, isActive: true, countdown: `${m}m ${sec}s`, localTime: ''});
+        results.push({id: ev.id, name: ev.name, map: ev.map, icon: ev.icon, isActive: true, countdown: `${m}m ${sec}s`, localTime: ''});
       } else {
         let dist = startSec - nowSec;
         if (dist <= 0) dist += DAY;
@@ -326,7 +263,7 @@ const getLiveEvents = (): LiveSlot[] => {
           const h = Math.floor(totalSec / 3600);
           const m = Math.floor((totalSec % 3600) / 60);
           const cd = h > 0 ? `${h}h ${m}m` : `${m}m`;
-          results.push({name: ev.name, map: ev.map, icon: ev.icon, isActive: false, countdown: cd, localTime: formatLocalTime(s.start)});
+          results.push({id: ev.id, name: ev.name, map: ev.map, icon: ev.icon, isActive: false, countdown: cd, localTime: formatLocalTime(s.start)});
         }
       }
     }
@@ -350,6 +287,7 @@ const getLiveEvents = (): LiveSlot[] => {
 
 /* ── Isolated live event card – ticks every second ── */
 const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
+  const { t } = useTranslation();
   const [, setTick] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setTick(t => t + 1), 1000);
@@ -360,6 +298,14 @@ const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
   const activeCount = liveEvents.filter(e => e.isActive).length;
   const shown = liveEvents.slice(0, 3);
 
+  // Build localized event lookup by id
+  const localEvents = getEvents();
+  const localEvMap = useMemo(() => {
+    const m = new Map<number, {name: string; map: string}>();
+    for (const e of localEvents) m.set(e.id, e);
+    return m;
+  }, [localEvents]);
+
   return (
       <TouchableOpacity style={styles.eventCard} activeOpacity={0.7} onPress={onPress}>
         {/* Header row */}
@@ -368,9 +314,9 @@ const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
             <Icon name="timer-sand" size={20} color={colors.cyan} />
           </View>
           <View style={{flex: 1}}>
-            <Text style={styles.eventCardTitle}>EVENT TIMERS</Text>
+            <Text style={styles.eventCardTitle}>{t('home.eventTimers')}</Text>
             <Text style={styles.eventCardSub}>
-              {activeCount > 0 ? `${activeCount} ACTIVE` : 'NONE ACTIVE'} • {TOTAL_EVENTS} EVENTS
+              {`${activeCount > 0 ? t('home.activeCount', {count: activeCount}) : t('home.noneActive')} • ${TOTAL_EVENTS} ${t('home.events')}`}
             </Text>
           </View>
           <Icon name="chevron-right" size={24} color={colors.textMuted} />
@@ -379,23 +325,26 @@ const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
         {/* Live event rows */}
         {shown.length > 0 && (
           <View style={styles.eventCardList}>
-            {shown.map((ev, i) => (
+            {shown.map((ev, i) => {
+              const le = localEvMap.get(ev.id);
+              return (
               <View key={`${ev.name}-${ev.map}-${i}`} style={styles.eventRow}>
                 <View style={[styles.eventDot, ev.isActive && styles.eventDotActive]} />
                 <View style={{flex: 1}}>
-                  <Text style={styles.eventRowName} numberOfLines={1}>{ev.name}</Text>
-                  <Text style={styles.eventRowMap}>{MAP_SHORT[ev.map] || ev.map}</Text>
+                  <Text style={styles.eventRowName} numberOfLines={1}>{le?.name ?? ev.name}</Text>
+                  <Text style={styles.eventRowMap}>{le?.map ?? ev.map}</Text>
                 </View>
                 <View style={styles.eventCountdownWrap}>
                   <Text style={[styles.eventCountdown, ev.isActive && {color: '#4ADE80'}]}>
                     {ev.countdown}
                   </Text>
                   <Text style={styles.eventCountdownLabel}>
-                    {ev.isActive ? 'ENDS IN' : 'STARTS IN'}
+                    {ev.isActive ? t('home.endsIn') : t('home.startsIn')}
                   </Text>
                 </View>
               </View>
-            ))}
+              );
+            })}
           </View>
         )}
       </TouchableOpacity>
@@ -404,6 +353,7 @@ const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
 
 /* ── Isolated event badge – only this component re-renders every second ── */
 const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
+  const { t } = useTranslation();
   const [, setTick] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setTick(t => t + 1), 1000);
@@ -413,6 +363,11 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
   const eventInfo = getMapEventInfo(mapId);
   if (!eventInfo) return null;
 
+  // Look up localized event name
+  const localEvents = getEvents();
+  const localEv = localEvents.find(e => e.id === eventInfo.id);
+  const displayName = localEv?.name ?? eventInfo.name;
+
   return (
     <View style={[styles.eventBadge, eventInfo.isActive && styles.eventBadgeActive]}>
       {eventInfo.isActive ? (
@@ -420,10 +375,10 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
           <View style={styles.activeDot} />
           <View>
             <Text style={[styles.eventBadgeTitle, { color: '#4ADE80' }]}>
-              ACTIVE: {eventInfo.name}
+              {t('home.activeLabel')} {displayName}
             </Text>
             <Text style={styles.eventBadgeSub}>
-              Ends in {eventInfo.endsIn}
+              {t('home.endsIn')} {eventInfo.endsIn}
             </Text>
           </View>
         </>
@@ -432,10 +387,10 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
           <Icon name="clock-outline" size={14} color={colors.textSecondary} />
           <View>
             <Text style={styles.eventBadgeTitle}>
-              NEXT: {eventInfo.name}
+              {t('home.nextLabel')} {displayName}
             </Text>
             <Text style={styles.eventBadgeSub}>
-              Starts {eventInfo.startsAt} ({eventInfo.startsIn})
+              {t('home.starts')} {eventInfo.startsAt} ({eventInfo.startsIn})
             </Text>
           </View>
         </>
@@ -446,6 +401,32 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
 
 const HomeScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
+
+  // Localized data for display
+  const localMaps = getMaps();
+  const localItems = getItems();
+
+  // Localized weapon showcase names
+  const showcaseWeaponsLocal = useMemo(() => {
+    const itemMap = new Map<string, string>();
+    for (const item of localItems) {
+      itemMap.set((item as any).id, (item as any).name);
+    }
+    return SHOWCASE_WEAPONS.map((w: any) => ({
+      ...w,
+      name: itemMap.get(w.id) ?? w.name,
+    }));
+  }, [localItems]);
+
+  // Localized map name for map carousel
+  const localMapName = useMemo(() => {
+    const nameMap = new Map<string, string>();
+    for (const m of localMaps as any[]) {
+      nameMap.set(m.id, m.name);
+    }
+    return nameMap;
+  }, [localMaps]);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -459,11 +440,11 @@ const HomeScreen = ({ navigation }: any) => {
         <View style={styles.topBar}>
           <AnimGradBorder radius={borderRadius.full} borderW={1.5} style={styles.titlePill}>
             <View style={styles.titlePillInner}>
-              <Text style={styles.titleArc}>ARC</Text>
-              <Text style={styles.titleRaiders}>RAIDERS</Text>
+              <Text style={styles.titleArc}>{t('home.arc')}</Text>
+              <Text style={styles.titleRaiders}>{t('home.raiders')}</Text>
               <View style={styles.companionBadge}>
                 <Icon name="shield-check" size={12} color="#000" />
-                <Text style={styles.companionBadgeText}>COMPANION</Text>
+                <Text style={styles.companionBadgeText}>{t('home.companion')}</Text>
               </View>
             </View>
           </AnimGradBorder>
@@ -478,7 +459,7 @@ const HomeScreen = ({ navigation }: any) => {
         {/* Map Carousel */}
         <FlatList
           horizontal
-          data={maps}
+          data={localMaps as any[]}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.mapCarousel}
           snapToInterval={MAP_CARD_WIDTH + spacing.md}
@@ -525,7 +506,7 @@ const HomeScreen = ({ navigation }: any) => {
                     {/* Keys Row */}
                     {keys.length > 0 && (
                       <View style={styles.keysRow}>
-                        <Text style={styles.keysLabel}>KEYS</Text>
+                        <Text style={styles.keysLabel}>{t('home.keys')}</Text>
                         <View style={styles.keysIcons}>
                           {keys.slice(0, 5).map(k => (
                             <View key={k.id} style={styles.keyIconWrap}>
@@ -541,7 +522,7 @@ const HomeScreen = ({ navigation }: any) => {
                     )}
 
                     {/* Map Name */}
-                    <Text style={styles.mapCardName}>{item.name}</Text>
+                    <Text style={styles.mapCardName}>{localMapName.get(item.id) ?? item.name}</Text>
                   </View>
                 </ImageBackground>
               </TouchableOpacity>
@@ -551,7 +532,7 @@ const HomeScreen = ({ navigation }: any) => {
 
         {/* Raider Tools */}
         <View style={styles.toolsSectionHeader}>
-          <Text style={styles.toolsSectionTitle}>RAIDER TOOLS</Text>
+          <Text style={styles.toolsSectionTitle}>{t('home.raiderTools')}</Text>
         </View>
 
         <View style={styles.toolsList}>
@@ -569,9 +550,9 @@ const HomeScreen = ({ navigation }: any) => {
             </View>
             <View style={styles.traderBottom}>
               <View style={{flex: 1}}>
-                <Text style={styles.traderTitle}>TRADERS</Text>
+                <Text style={styles.traderTitle}>{t('home.traders')}</Text>
                 <Text style={styles.traderSub}>
-                  {TRADER_COUNT} TRADERS • {TRADER_ITEM_COUNT} ITEMS
+                  {t('home.tradersCount', {traders: TRADER_COUNT, items: TRADER_ITEM_COUNT})}
                 </Text>
               </View>
               <Icon name="chevron-right" size={28} color={colors.textMuted} />
@@ -588,13 +569,13 @@ const HomeScreen = ({ navigation }: any) => {
             onPress={() => navigation.navigate('Weapons')}>
             <View style={styles.showcaseHeader}>
               <View style={{flex: 1}}>
-                <Text style={styles.showcaseTitle}>WEAPONS</Text>
-                <Text style={styles.showcaseSub}>{TOTAL_WEAPONS} WEAPONS • TOP PICKS</Text>
+                <Text style={styles.showcaseTitle}>{t('home.weapons')}</Text>
+                <Text style={styles.showcaseSub}>{t('home.weaponsCount', {count: TOTAL_WEAPONS})}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
             <View style={styles.showcaseRow}>
-              {SHOWCASE_WEAPONS.map((w: any) => (
+              {showcaseWeaponsLocal.map((w: any) => (
                 <View key={w.id} style={styles.showcaseItemWrap}>
                   <Image source={resolveImage(w.icon)} style={styles.showcaseItemIcon} resizeMode="contain" />
                   <Text style={styles.showcaseItemName} numberOfLines={1}>{w.name}</Text>
@@ -614,8 +595,8 @@ const HomeScreen = ({ navigation }: any) => {
                 <Icon name={tool.icon} size={22} color={tool.color} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolTitle}>{tool.title}</Text>
-                <Text style={styles.toolDesc}>{tool.desc}</Text>
+                <Text style={styles.toolTitle}>{t(tool.titleKey)}</Text>
+                <Text style={styles.toolDesc}>{t(tool.descKey)}</Text>
               </View>
               <Icon name="chevron-right" size={22} color={colors.textMuted} />
             </TouchableOpacity>

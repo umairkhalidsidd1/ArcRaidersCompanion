@@ -11,17 +11,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
 import { colors, fonts, spacing, borderRadius } from '../theme/theme';
+import { useTranslation } from 'react-i18next';
 
 const ToolsScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>TOOLS</Text>
-        <Text style={styles.headerSubtitle}>Traders, skill builds & more</Text>
+        <Text style={styles.headerTitle}>{t('tools.title')}</Text>
+        <Text style={styles.headerSubtitle}>{t('tools.subtitle')}</Text>
       </View>
 
       <ScrollView
@@ -35,8 +37,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="account-cash-outline" size={26} color={colors.yellow} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>TRADERS</Text>
-                <Text style={styles.toolDesc}>5 TRADERS · 91 ITEMS</Text>
+                <Text style={styles.toolName}>{t('tools.traders')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.tradersDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -51,8 +53,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="clipboard-text-outline" size={26} color="#FF9800" />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>QUEST TRACKER</Text>
-                <Text style={styles.toolDesc}>72 QUESTS WITH CHAINS</Text>
+                <Text style={styles.toolName}>{t('tools.questTracker')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.questTrackerDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -67,8 +69,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="robot-angry" size={26} color="#F44336" />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>ARC ENCYCLOPEDIA</Text>
-                <Text style={styles.toolDesc}>16 ENEMIES DOCUMENTED</Text>
+                <Text style={styles.toolName}>{t('tools.arcEncyclopedia')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.arcEncyclopediaDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -83,8 +85,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="clock-outline" size={26} color="#26C6DA" />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>EVENT TIMERS</Text>
-                <Text style={styles.toolDesc}>36 SCHEDULED EVENTS</Text>
+                <Text style={styles.toolName}>{t('tools.eventTimers')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.eventTimersDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -99,8 +101,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="floor-plan" size={26} color={colors.green} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>BLUEPRINT TRACKER</Text>
-                <Text style={styles.toolDesc}>79 BLUEPRINTS · TRACK YOUR FINDS</Text>
+                <Text style={styles.toolName}>{t('tools.blueprintTracker')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.blueprintTrackerDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -115,8 +117,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="file-tree-outline" size={26} color={colors.cyan} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>SKILL TREE BUILDER</Text>
-                <Text style={styles.toolDesc}>Interactive Rive animation</Text>
+                <Text style={styles.toolName}>{t('tools.skillTreeBuilder')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.skillTreeBuilderDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -132,12 +134,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>EXPEDITIONS</Text>
+                  <Text style={styles.toolName}>{t('tools.expeditions')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>6-STAGE PRESTIGE TRACKER</Text>
+                <Text style={styles.toolDesc}>{t('tools.expeditionsDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -153,12 +155,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>TRIALS</Text>
+                  <Text style={styles.toolName}>{t('tools.trials')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>WEEKLY CHALLENGES · RANK POINTS</Text>
+                <Text style={styles.toolDesc}>{t('tools.trialsDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -174,12 +176,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>GUIDES</Text>
+                  <Text style={styles.toolName}>{t('tools.guides')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>GENERAL & QUEST WALKTHROUGHS</Text>
+                <Text style={styles.toolDesc}>{t('tools.guidesDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -194,8 +196,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="format-list-numbered" size={26} color={colors.purple} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>TIER LIST MAKER</Text>
-                <Text style={styles.toolDesc}>Create & share tier rankings</Text>
+                <Text style={styles.toolName}>{t('tools.tierListMaker')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.tierListMakerDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -211,12 +213,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>LOADOUT BUILDER</Text>
+                  <Text style={styles.toolName}>{t('tools.loadoutBuilder')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>BUILD & COMPARE LOADOUTS</Text>
+                <Text style={styles.toolDesc}>{t('tools.loadoutBuilderDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -232,12 +234,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>QUEST TREE</Text>
+                  <Text style={styles.toolName}>{t('tools.questTree')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>VISUAL QUEST CHAINS & DEPS</Text>
+                <Text style={styles.toolDesc}>{t('tools.questTreeDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -253,12 +255,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>COSMETICS</Text>
+                  <Text style={styles.toolName}>{t('tools.cosmetics')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>OUTFITS, COLORS & ATTACHMENTS</Text>
+                <Text style={styles.toolDesc}>{t('tools.cosmeticsDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -274,12 +276,12 @@ const ToolsScreen = ({ navigation }: any) => {
               </View>
               <View style={styles.toolInfo}>
                 <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>COLLECTIBLES</Text>
+                  <Text style={styles.toolName}>{t('tools.collectibles')}</Text>
                   <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
                   </View>
                 </View>
-                <Text style={styles.toolDesc}>DUCKS, REELS & SNOW GLOBES</Text>
+                <Text style={styles.toolDesc}>{t('tools.collectiblesDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>

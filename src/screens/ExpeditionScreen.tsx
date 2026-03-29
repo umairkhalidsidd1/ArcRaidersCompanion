@@ -25,8 +25,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import expeditionData from '../data/expeditions.json';
+import {getExpeditions} from '../data/localizedData';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -168,6 +170,7 @@ const SectionHeader = ({icon, title, color, right}: {icon: string; title: string
    MAIN
    ═════════════════════════════════════════════════════ */
 const ExpeditionScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const ins = useSafeAreaInsets();
   const [checked, setChecked] = useState<ItemChecked>({});
   const [coins, setCoins] = useState<CoinValues>({});
@@ -217,25 +220,26 @@ const ExpeditionScreen = ({navigation}: any) => {
   }, []);
 
   // ── computed ──
+  const localExpData = getExpeditions();
   const checkedCount = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
 
   const stageProg = useMemo(
     () =>
-      expeditionData.stages.map(stage => {
+      localExpData.stages.map(stage => {
         const t = stage.objectives.length;
         if (!t) return {done: 0, total: 0, pct: 1};
         const d = stage.objectives.filter((_, i) => checked[`${stage.id}-${i}`]).length;
         return {done: d, total: t, pct: d / t};
       }),
-    [checked],
+    [checked, localExpData],
   );
 
   const activeIdx = useMemo(() => stageProg.findIndex(sp => sp.pct < 1), [stageProg]);
   const doneCount = useMemo(() => stageProg.filter(sp => sp.pct >= 1).length, [stageProg]);
 
   // build stages = first 4, load stage = 5th
-  const buildStages = expeditionData.stages.slice(0, 4);
-  const loadStage = expeditionData.stages[4];
+  const buildStages = localExpData.stages.slice(0, 4);
+  const loadStage = localExpData.stages[4];
 
   const coinTotals = useMemo(() => {
     let val = 0, req = 0;
@@ -271,9 +275,9 @@ const ExpeditionScreen = ({navigation}: any) => {
           <Icon name="chevron-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
         <View style={s.headerCenter}>
-          <Text style={s.headerTitle}>EXPEDITION</Text>
+          <Text style={s.headerTitle}>{t('expedition.title')}</Text>
           <View style={s.headerBadge}>
-            <Text style={s.headerBadgeTxt}>LVL {expeditionData.unlock_level}+</Text>
+            <Text style={s.headerBadgeTxt}>{t('expedition.lvl', {level: localExpData.unlock_level})}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={reset} style={s.headerBtn} activeOpacity={0.7}>
@@ -295,16 +299,16 @@ const ExpeditionScreen = ({navigation}: any) => {
             <View style={s.heroInner}>
               <ArcMeter
                 progress={progress}
-                label={`${checkedCount + loadMetCount} / ${totalMats} Materials`}
-                sub={`${doneCount} of 6 stages complete`}
+                label={`${checkedCount + loadMetCount} / ${totalMats}` + ' ' + t('expedition.materials')}
+                sub={`${doneCount} ` + t('expedition.stagesComplete')}
               />
 
               {/* Quick stats strip */}
               <View style={s.statsStrip}>
               {[
-                {label: 'Stages', val: `${doneCount}/6`, color: CYAN, icon: 'flag-variant'},
-                {label: 'Skill Pts', val: `+${skillPts}`, color: GREEN, icon: 'star-four-points'},
-                {label: 'Load', val: `${Math.round(coinTotals.pct * 100)}%`, color: AMBER, icon: 'package-variant'},
+                {label: t('expedition.stages'), val: `${doneCount}/6`, color: CYAN, icon: 'flag-variant'},
+                {label: t('expedition.skillPts'), val: `+${skillPts}`, color: GREEN, icon: 'star-four-points'},
+                {label: t('expedition.load'), val: `${Math.round(coinTotals.pct * 100)}%`, color: AMBER, icon: 'package-variant'},
               ].map((item, i) => (
                 <View key={i} style={s.statChip}>
                   <Icon name={item.icon} size={12} color={item.color} />
@@ -321,7 +325,7 @@ const ExpeditionScreen = ({navigation}: any) => {
             STAGE MILESTONE TRACK
             ═══════════════════════════════════════════ */}
         <View style={s.milestoneBar}>
-          {expeditionData.stages.map((st, i) => {
+          {localExpData.stages.map((st, i) => {
             const done = stageProg[i].pct >= 1;
             const active = i === activeIdx;
             const sc = STAGE_COLORS[i];
@@ -352,9 +356,9 @@ const ExpeditionScreen = ({navigation}: any) => {
             ═══════════════════════════════════════════ */}
         <View style={s.switcher}>
           {([
-            {key: 'build' as const, icon: 'hammer-wrench', label: 'Build'},
-            {key: 'load' as const, icon: 'package-variant', label: 'Load'},
-            {key: 'info' as const, icon: 'information-outline', label: 'Info'},
+            {key: 'build' as const, icon: 'hammer-wrench', label: t('expedition.build')},
+            {key: 'load' as const, icon: 'package-variant', label: t('expedition.load')},
+            {key: 'info' as const, icon: 'information-outline', label: t('expedition.info')},
           ]).map(tab => {
             const sel = section === tab.key;
             return (
@@ -417,13 +421,13 @@ const ExpeditionScreen = ({navigation}: any) => {
                             {isDone && (
                               <View style={[s.tagDone]}>
                                 <Icon name="check-circle" size={9} color={GREEN} />
-                                <Text style={s.tagDoneTxt}>DONE</Text>
+                                <Text style={s.tagDoneTxt}>{t('expedition.stageDone')}</Text>
                               </View>
                             )}
                             {isActive && (
                               <View style={[s.tagActive, {borderColor: sc + '40'}]}>
                                 <View style={[s.tagActiveDot, {backgroundColor: sc}]} />
-                                <Text style={[s.tagActiveTxt, {color: sc}]}>ACTIVE</Text>
+                                <Text style={[s.tagActiveTxt, {color: sc}]}>{t('expedition.stageActive')}</Text>
                               </View>
                             )}
                           </View>
@@ -499,14 +503,14 @@ const ExpeditionScreen = ({navigation}: any) => {
                   <Icon name="rocket-launch" size={24} color={GREEN} />
                 </View>
                 <View style={{flex: 1}}>
-                  <Text style={s.departureName}>Departure</Text>
+                  <Text style={s.departureName}>{t('expedition.departure')}</Text>
                   <Text style={s.departureDesc}>
-                    Register during the departure window to earn all rewards
+                    {t('expedition.departureDesc')}
                   </Text>
                 </View>
                 <View style={[s.tagDone, {backgroundColor: doneCount >= 5 ? GREEN + '12' : 'rgba(255,255,255,0.04)'}]}>
                   <Text style={[s.tagDoneTxt, {color: doneCount >= 5 ? GREEN : colors.textMuted}]}>
-                    {doneCount >= 5 ? 'READY' : `${doneCount}/5`}
+                    {doneCount >= 5 ? t('expedition.stageReady') : `${doneCount}/5`}
                   </Text>
                 </View>
               </View>
@@ -532,7 +536,7 @@ const ExpeditionScreen = ({navigation}: any) => {
                   <MiniRing pct={coinTotals.pct} color={AMBER} />
                   <View>
                     <Text style={s.loadValBig}>{fmt(coinTotals.val)}</Text>
-                    <Text style={s.loadValSub}>of {fmt(coinTotals.req)} target</Text>
+                    <Text style={s.loadValSub}>{t('expedition.ofTarget', {target: fmt(coinTotals.req)})}</Text>
                   </View>
                 </View>
                 <View style={s.loadRight}>
@@ -542,7 +546,7 @@ const ExpeditionScreen = ({navigation}: any) => {
             </View>
 
             {/* Skill points */}
-            <SectionHeader icon="star-four-points" title="BONUS SKILL POINTS" color={GREEN} />
+            <SectionHeader icon="star-four-points" title={t('expedition.bonusSkillPoints')} color={GREEN} />
             <View style={s.spRow}>
               {[1, 2, 3, 4, 5].map(n => {
                 const earned = n <= skillPts;
@@ -563,7 +567,7 @@ const ExpeditionScreen = ({navigation}: any) => {
             </View>
 
             {/* Input cards */}
-            <SectionHeader icon="package-variant" title="LOAD STAGE VALUES" color={AMBER} />
+            <SectionHeader icon="package-variant" title={t('expedition.loadStageValues')} color={AMBER} />
             {loadStage.objectives.map((obj, oi) => {
               const k = `${loadStage.id}-${oi}`;
               const v = parseInt(coins[k] || '0', 10) || 0;
@@ -583,7 +587,7 @@ const ExpeditionScreen = ({navigation}: any) => {
                       </View>
                       <View style={{flex: 1}}>
                         <Text style={s.loadCatName}>{obj.item}</Text>
-                        <Text style={s.loadCatTarget}>Target: {fmt(obj.quantity)}</Text>
+                        <Text style={s.loadCatTarget}>{t('expedition.target', {value: fmt(obj.quantity)})}</Text>
                       </View>
                       <Text style={[s.loadCatPct, {color: met ? GREEN : AMBER}]}>
                         {Math.round(ratio * 100)}%
@@ -625,8 +629,8 @@ const ExpeditionScreen = ({navigation}: any) => {
         {section === 'info' && (
           <View style={s.content}>
             {/* PERMANENT REWARDS */}
-            <SectionHeader icon="infinity" title="PERMANENT REWARDS" color={GREEN} />
-            {expeditionData.rewards.permanent.map((r, i) => (
+            <SectionHeader icon="infinity" title={t('expedition.permanentRewards')} color={GREEN} />
+            {localExpData.rewards.permanent.map((r, i) => (
               <View key={i} style={s.infoRow}>
                 <View style={[s.infoIcon, {backgroundColor: GREEN + '10'}]}>
                   <Icon name={r.icon} size={16} color={GREEN} />
@@ -640,8 +644,8 @@ const ExpeditionScreen = ({navigation}: any) => {
 
             {/* TEMPORARY REWARDS */}
             <View style={{marginTop: spacing.xl}} />
-            <SectionHeader icon="clock-fast" title="TEMPORARY · STACKS ×3" color={CYAN} />
-            {expeditionData.rewards.temporary.map((r, i) => (
+            <SectionHeader icon="clock-fast" title={t('expedition.temporaryStacks')} color={CYAN} />
+            {localExpData.rewards.temporary.map((r, i) => (
               <View key={i} style={s.infoRow}>
                 <View style={[s.infoIcon, {backgroundColor: CYAN + '10'}]}>
                   <Icon name={r.icon} size={16} color={CYAN} />
@@ -655,15 +659,15 @@ const ExpeditionScreen = ({navigation}: any) => {
 
             {/* TRANSFER */}
             <View style={{marginTop: spacing.xl}} />
-            <SectionHeader icon="swap-horizontal" title="WHAT TRANSFERS" color={PURPLE} />
+            <SectionHeader icon="swap-horizontal" title={t('expedition.whatTransfers')} color={PURPLE} />
 
             <View style={s.xferCard}>
               <View style={s.xferHalf}>
                 <View style={s.xferHeadRow}>
                   <Icon name="shield-check" size={14} color={GREEN} />
-                  <Text style={[s.xferHeadTxt, {color: GREEN}]}>KEEPS</Text>
+                  <Text style={[s.xferHeadTxt, {color: GREEN}]}>{t('expedition.keeps')}</Text>
                 </View>
-                {expeditionData.keeps.map((item, i) => (
+                {localExpData.keeps.map((item, i) => (
                   <View key={i} style={s.xferItem}>
                     <View style={[s.xferDot, {backgroundColor: GREEN}]} />
                     <Text style={s.xferTxt} numberOfLines={1}>{item}</Text>
@@ -676,9 +680,9 @@ const ExpeditionScreen = ({navigation}: any) => {
               <View style={s.xferHalf}>
                 <View style={s.xferHeadRow}>
                   <Icon name="alert-circle-outline" size={14} color={ROSE} />
-                  <Text style={[s.xferHeadTxt, {color: ROSE}]}>RESETS</Text>
+                  <Text style={[s.xferHeadTxt, {color: ROSE}]}>{t('expedition.resets')}</Text>
                 </View>
-                {expeditionData.loses.map((item, i) => (
+                {localExpData.loses.map((item, i) => (
                   <View key={i} style={s.xferItem}>
                     <View style={[s.xferDot, {backgroundColor: ROSE}]} />
                     <Text style={s.xferTxt} numberOfLines={1}>{item}</Text>
@@ -691,7 +695,7 @@ const ExpeditionScreen = ({navigation}: any) => {
             <View style={s.tipCard}>
               <Icon name="lightbulb-on-outline" size={14} color={AMBER} />
               <Text style={s.tipTxt}>
-                Complete all build stages, load your caravan, then register during the departure window to earn permanent rewards.
+                {t('expedition.tip')}
               </Text>
             </View>
           </View>

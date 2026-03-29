@@ -9,6 +9,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import './src/i18n/i18n';
 import AppNavigator from './src/navigation/AppNavigator';
 import SmokeBackground from './src/components/SmokeBackground';
 import OnboardingScreen, {ONBOARDING_KEY} from './src/screens/OnboardingScreen';

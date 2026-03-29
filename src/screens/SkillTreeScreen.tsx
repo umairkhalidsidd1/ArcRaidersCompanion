@@ -14,6 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 const SKILL_STORAGE_KEY = '@arcc_skilltree_v6';
 const {width: SW} = Dimensions.get('window');
@@ -48,7 +49,7 @@ const HELIX = [
 ];
 
 const BC: Record<string, string> = {s: '#00D87A', m: '#FDE600', c: '#FF3A59'};
-const BN: Record<string, string> = {s: 'SURVIVAL', m: 'MOBILITY', c: 'CONDITIONING'};
+const BN: Record<string, string> = {s: 'skillTree.survival', m: 'skillTree.mobility', c: 'skillTree.conditioning'};
 
 type N = {
   id: string; branch: 's'|'m'|'c'; pos: number;
@@ -133,6 +134,7 @@ const SkillTreeScreen = ({navigation}: any) => {
   const [selected, setSelected] = useState<N | null>(null);
   const [totalPoints, setTotalPoints] = useState(80);
   const lastTap = React.useRef<{id: string, time: number} | null>(null);
+  const {t} = useTranslation();
 
   useEffect(() => { load(); }, []);
 
@@ -238,7 +240,7 @@ const SkillTreeScreen = ({navigation}: any) => {
         
         <View style={styles.pointsContainer}>
           <View style={styles.pointsBox}>
-            <Text style={styles.pointsLabel}>SKILL POINTS</Text>
+            <Text style={styles.pointsLabel}>{t('skillTree.skillPoints')}</Text>
             <View style={styles.pointsBoxRow}>
               <Text style={styles.pointsBig}>{remaining}</Text>
               <Text style={styles.pointsSmall}> / {totalPoints}</Text>
@@ -253,7 +255,7 @@ const SkillTreeScreen = ({navigation}: any) => {
             </View>
             <TouchableOpacity onPress={reset} style={styles.resetBtn}>
               <Icon name="refresh" size={13} color="#FF3A59" />
-              <Text style={styles.resetText}>RESET</Text>
+              <Text style={styles.resetText}>{t('skillTree.reset')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -372,7 +374,7 @@ const SkillTreeScreen = ({navigation}: any) => {
               {/* Root labels under the bottom nodes */}
               {node.pos === 0 && (
                 <View style={[styles.rootLabelBox, {left: x - 50, top: y + ROOT_R + 10}]}>
-                  <Text style={[styles.rootLabel, {color: bc}]}>{BN[node.branch]}</Text>
+                  <Text style={[styles.rootLabel, {color: bc}]}>{t(BN[node.branch])}</Text>
                   <Text style={[styles.rootScore, {color: bc}]}>{branchPts(node.branch)}</Text>
                 </View>
               )}
@@ -396,7 +398,7 @@ const SkillTreeScreen = ({navigation}: any) => {
               {selected.reqPts && branchPts(selected.branch) < selected.reqPts ? (
                 <View style={styles.tooltipReq}>
                   <Icon name="lock-outline" size={12} color="#9EA8B3" />
-                  <Text style={styles.tooltipReqText}>{selected.reqPts} PTS REQ.</Text>
+                  <Text style={styles.tooltipReqText}>{selected.reqPts} {t('skillTree.ptsReq')}</Text>
                 </View>
               ) : <View/>}
 

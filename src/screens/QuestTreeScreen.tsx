@@ -12,8 +12,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
-import questData from '../data/quests.json';
+import {getQuests} from '../data/localizedData';
 import {getCompletedQuests} from '../utils/storage';
 
 /* ── Portraits & colors ──────────────────────────────────── */
@@ -44,8 +45,6 @@ type Quest = {
   unlock_requirement: string | null;
   tree_position: string;
 };
-
-const allQuests: Quest[] = ((questData as any).quests || []) as Quest[];
 
 /* ── Build tree & flatten ────────────────────────────────── */
 type TreeNode = Quest & {children: TreeNode[]};
@@ -82,8 +81,10 @@ const flattenTree = (forest: TreeNode[]): FlatRow[] => {
 
 /* ══════════════════════════════════════════════════════════ */
 const QuestTreeScreen = ({navigation}: any) => {
+  const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
+  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
   const [activeGiver, setActiveGiver] = useState('All');
   const [completedIds, setCompletedIds] = useState<number[]>([]);
 
@@ -97,16 +98,16 @@ const QuestTreeScreen = ({navigation}: any) => {
       if (completedIds.includes(q.id)) set.add(q.name);
     });
     return set;
-  }, [completedIds]);
+  }, [completedIds, i18n.language]);
 
   const givers = useMemo(() => {
     const set = new Set(allQuests.map(q => q.quest_giver));
     return ['All', ...Array.from(set)];
-  }, []);
+  }, [i18n.language]);
 
   const filtered = useMemo(
     () => (activeGiver === 'All' ? allQuests : allQuests.filter(q => q.quest_giver === activeGiver)),
-    [activeGiver],
+    [activeGiver, i18n.language],
   );
 
   const forest = useMemo(() => buildForest(filtered), [filtered]);
@@ -229,7 +230,7 @@ const QuestTreeScreen = ({navigation}: any) => {
         {/* Progress */}
         <View style={st.progressWrap}>
           <View style={st.progressLabelRow}>
-            <Text style={st.progressLabel}>CHAIN PROGRESS</Text>
+            <Text style={st.progressLabel}>{t('questTree.chainProgress')}</Text>
             <Text style={st.progressCount}>
               <Text style={st.progressHi}>{completedCount}</Text>
               {' / '}
@@ -242,7 +243,7 @@ const QuestTreeScreen = ({navigation}: any) => {
             />
           </View>
           <Text style={st.chainsText}>
-            {chainCount} quest chain{chainCount !== 1 ? 's' : ''}
+            {chainCount} {chainCount !== 1 ? t('questTree.questChains') : t('questTree.questChain')}
           </Text>
         </View>
 
@@ -291,8 +292,8 @@ const QuestTreeScreen = ({navigation}: any) => {
     () => (
       <View style={st.emptyWrap}>
         <Icon name="file-tree-outline" size={56} color={colors.textMuted} />
-        <Text style={st.emptyTitle}>NO QUEST CHAINS</Text>
-        <Text style={st.emptySub}>Select a different trader to view chains</Text>
+        <Text style={st.emptyTitle}>{t('questTree.noQuestChains')}</Text>
+        <Text style={st.emptySub}>{t('questTree.selectDifferentTrader')}</Text>
       </View>
     ),
     [],
@@ -307,7 +308,7 @@ const QuestTreeScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={st.headerTitleAbs}>Quest Tree</Text>
+        <Text style={st.headerTitleAbs}>{t('questTree.title')}</Text>
         <View style={{width: 36}} />
       </View>
 

@@ -12,14 +12,15 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawGuides from '../data/guides.json';
+import {getGuides} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const THUMB_W = SCREEN_W * 0.32;
 
-type Guide = (typeof rawGuides)[number];
+type Guide = ReturnType<typeof getGuides>[number];
 
 /* count steps from HTML h2 tags */
 function countSteps(html: string): number {
@@ -29,12 +30,13 @@ function countSteps(html: string): number {
 }
 
 const GuidesScreen = ({navigation}: any) => {
+  const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<'general' | 'quest'>('general');
   const [search, setSearch] = useState('');
 
   const filtered = useMemo(() => {
-    return (rawGuides as Guide[]).filter(g => {
+    return (getGuides() as Guide[]).filter(g => {
       const gType = g.type || 'general';
       if (gType !== activeTab) return false;
       if (search) {
@@ -48,7 +50,7 @@ const GuidesScreen = ({navigation}: any) => {
       }
       return true;
     });
-  }, [activeTab, search]);
+  }, [activeTab, search, i18n.language]);
 
   const renderGuide = useCallback(
     ({item}: {item: Guide}) => {
@@ -83,7 +85,7 @@ const GuidesScreen = ({navigation}: any) => {
               {item.title}
             </Text>
             <Text style={styles.cardAuthor} numberOfLines={1}>
-              {item.author || 'Unknown'}
+              {item.author || t('common.unknown')}
             </Text>
             {trimmedSummary ? (
               <Text style={styles.cardSummary} numberOfLines={2}>
@@ -99,7 +101,7 @@ const GuidesScreen = ({navigation}: any) => {
                     size={12}
                     color={colors.cyan}
                   />
-                  <Text style={styles.stepBadgeText}>{steps} steps</Text>
+                  <Text style={styles.stepBadgeText}>{steps} {t('guides.steps')}</Text>
                 </View>
               )}
               {(item.rewards?.length ?? 0) > 0 && (
@@ -127,7 +129,7 @@ const GuidesScreen = ({navigation}: any) => {
         <View style={styles.headerIconWrap}>
           <Icon name="book-open-page-variant" size={18} color={colors.cyan} />
         </View>
-        <Text style={styles.headerTitle}>Guides</Text>
+        <Text style={styles.headerTitle}>{t('guides.title')}</Text>
       </View>
 
       {/* Search bar */}
@@ -135,7 +137,7 @@ const GuidesScreen = ({navigation}: any) => {
         <Icon name="magnify" size={18} color={colors.textMuted} />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search guides..."
+          placeholder={t('guides.searchPlaceholder')}
           placeholderTextColor={colors.textMuted}
           value={search}
           onChangeText={setSearch}
@@ -158,7 +160,7 @@ const GuidesScreen = ({navigation}: any) => {
               onPress={() => setActiveTab(tab)}>
               <Text
                 style={[styles.tabText, isActive && styles.tabTextActive]}>
-                {tab.toUpperCase()}
+                {tab === 'general' ? t('guides.general') : t('guides.quest')}
               </Text>
               {isActive && <View style={styles.tabIndicator} />}
             </TouchableOpacity>
@@ -180,7 +182,7 @@ const GuidesScreen = ({navigation}: any) => {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="book-open-variant" size={48} color={colors.textMuted} />
-            <Text style={styles.emptyText}>No guides found</Text>
+            <Text style={styles.emptyText}>{t('guides.noGuides')}</Text>
           </View>
         }
       />

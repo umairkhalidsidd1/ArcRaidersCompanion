@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useTranslation} from 'react-i18next';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawTraders from '../data/traders.json';
-import questData from '../data/quests.json';
+import {getTraders, getQuests} from '../data/localizedData';
 import {TRADER_INFO} from './TraderListScreen';
 import {resolveImage} from '../data/imageRegistry';
 
@@ -54,8 +54,6 @@ const {width: SCREEN_W} = Dimensions.get('window');
 const GRID_GAP = 10;
 const GRID_PAD = 16;
 const CARD_W = (SCREEN_W - GRID_PAD * 2 - GRID_GAP) / 2;
-
-const quests: Quest[] = ((questData as any).quests || []) as Quest[];
 
 /* ─── Shop item card (2-col grid) ─── */
 const ShopItem = memo(
@@ -118,8 +116,10 @@ const ShopItem = memo(
 
 const TraderDetailScreen = ({route, navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const {t, i18n} = useTranslation();
   const {traderName} = route.params;
-  const info = TRADER_INFO[traderName] || {
+  const quests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
+  const baseInfo = TRADER_INFO[traderName] || {
     displayName: traderName,
     title: 'Trader',
     specialty: '',
@@ -130,15 +130,23 @@ const TraderDetailScreen = ({route, navigation}: any) => {
     questGiverName: traderName,
     about: '',
   };
+  const traderKey = traderName.charAt(0).toLowerCase() + traderName.slice(1);
+  const info = {
+    ...baseInfo,
+    displayName: t(`traders.${traderKey}`, baseInfo.displayName),
+    title: t(`traders.${traderKey}Title`, baseInfo.title),
+    specialty: t(`traders.${traderKey}Specialty`, baseInfo.specialty),
+    about: t(`traders.${traderKey}About`, baseInfo.about),
+  };
 
   const inventory = useMemo(
-    () => (rawTraders as TraderRow[]).filter(r => r.trader_name === traderName),
-    [traderName],
+    () => (getTraders() as TraderRow[]).filter(r => r.trader_name === traderName),
+    [traderName, i18n.language],
   );
 
   const questCount = useMemo(
     () => quests.filter(q => q.quest_giver === info.questGiverName).length,
-    [info.questGiverName],
+    [info.questGiverName, i18n.language],
   );
 
   const currencyIcon = CURRENCY_ICONS[info.currency] || 'circle-multiple';
@@ -191,7 +199,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
         <View style={s.specialtyCard}>
           <Icon name="star-four-points" size={16} color={colors.cyan} />
           <View style={s.specialtyInfo}>
-            <Text style={s.specialtyLabel}>SPECIALTY</Text>
+            <Text style={s.specialtyLabel}>{t('traders.specialtySection')}</Text>
             <Text style={s.specialtyValue}>{info.specialty}</Text>
           </View>
         </View>
@@ -199,7 +207,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
         {/* About */}
         {info.about ? (
           <View style={s.aboutCard}>
-            <Text style={s.aboutLabel}>ABOUT</Text>
+            <Text style={s.aboutLabel}>{t('traders.about')}</Text>
             <Text style={s.aboutText}>{info.about}</Text>
           </View>
         ) : null}
@@ -212,7 +220,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
             style={[s.questBtn, {borderColor: info.color + '50'}]}>
             <Icon name="clipboard-text-outline" size={18} color={info.color} />
             <Text style={[s.questBtnText, {color: info.color}]}>
-              VIEW {info.displayName.toUpperCase()}'S QUESTS
+              {t('traders.viewQuests', {name: info.displayName.toUpperCase()})}
             </Text>
             <View style={s.questCountBadge}>
               <Text style={s.questCountText}>{questCount}</Text>
@@ -223,12 +231,12 @@ const TraderDetailScreen = ({route, navigation}: any) => {
 
         {/* Shop header */}
         <View style={s.shopHeader}>
-          <Text style={s.shopHeaderText}>SHOP</Text>
-          <Text style={s.shopHeaderCount}>{inventory.length} items</Text>
+          <Text style={s.shopHeaderText}>{t('traders.shop')}</Text>
+          <Text style={s.shopHeaderCount}>{inventory.length} {t('traders.items')}</Text>
         </View>
       </View>
     ),
-    [info, questCount, inventory.length, navigateToQuests],
+    [info, questCount, inventory.length, navigateToQuests, t],
   );
 
   return (

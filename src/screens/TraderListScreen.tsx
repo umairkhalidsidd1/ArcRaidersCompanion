@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawTraders from '../data/traders.json';
+import {getTraders} from '../data/localizedData';
 
 const TRADER_PORTRAITS: Record<string, ImageSourcePropType> = {
   TianWen: require('../assets/traders/tian-wen.webp'),
@@ -114,18 +115,29 @@ const TRADER_ORDER = ['TianWen', 'Shani', 'Lance', 'Celeste', 'Apollo'];
 
 const TraderListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const {t, i18n} = useTranslation();
 
   const traderData = useMemo(() => {
     const grouped: Record<string, number> = {};
-    (rawTraders as TraderRow[]).forEach(r => {
+    (getTraders() as TraderRow[]).forEach(r => {
       grouped[r.trader_name] = (grouped[r.trader_name] || 0) + 1;
     });
-    return TRADER_ORDER.map(name => ({
-      name,
-      info: TRADER_INFO[name],
-      itemCount: grouped[name] || 0,
-    }));
-  }, []);
+    return TRADER_ORDER.map(name => {
+      const base = TRADER_INFO[name];
+      const key = name.charAt(0).toLowerCase() + name.slice(1);
+      return {
+        name,
+        info: {
+          ...base,
+          displayName: t(`traders.${key}`),
+          title: t(`traders.${key}Title`),
+          specialty: t(`traders.${key}Specialty`),
+          about: t(`traders.${key}About`),
+        },
+        itemCount: grouped[name] || 0,
+      };
+    });
+  }, [i18n.language, t]);
 
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const onImageError = useCallback((name: string) => {
@@ -141,7 +153,7 @@ const TraderListScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
           <Icon name="chevron-left" size={28} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitle}>TRADERS</Text>
+        <Text style={s.headerTitle}>{t('traders.title')}</Text>
         <View style={{width: 40}} />
       </View>
 
@@ -184,7 +196,7 @@ const TraderListScreen = ({navigation}: any) => {
                       size={13}
                       color={colors.textMuted}
                     />
-                    <Text style={s.metaText}>{itemCount} items</Text>
+                    <Text style={s.metaText}>{itemCount} {t('traders.items')}</Text>
                     <View
                       style={[
                         s.currencyBadge,

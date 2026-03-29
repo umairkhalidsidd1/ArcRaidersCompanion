@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
-import questData from '../data/quests.json';
+import {getQuests} from '../data/localizedData';
 import {
   getCompletedQuests,
   toggleCompletedQuest,
@@ -53,8 +54,6 @@ const GIVER_COLORS: Record<string, string> = {
 const TABS = ['AVAILABLE', 'LOCKED', 'COMPLETED'] as const;
 type Tab = typeof TABS[number];
 
-const allQuests: Quest[] = ((questData as any).quests || []) as Quest[];
-
 /* ─── Quest card component ─── */
 const QuestCard = memo(
   ({
@@ -66,6 +65,7 @@ const QuestCard = memo(
     tab: Tab;
     onPress: (id: number) => void;
   }) => {
+    const {t} = useTranslation();
     const giverColor = GIVER_COLORS[quest.quest_giver] || colors.orange;
     const portrait = TRADER_PORTRAITS[quest.quest_giver];
     const isLocked = tab === 'LOCKED';
@@ -103,7 +103,7 @@ const QuestCard = memo(
           ) : null}
           {isLocked && quest.prerequisites.length > 0 && (
             <Text style={s.requiresText} numberOfLines={1}>
-              Requires: {quest.prerequisites.join(', ')}
+              {t('quests.requires')}: {quest.prerequisites.join(', ')}
             </Text>
           )}
         </View>
@@ -122,9 +122,11 @@ const QuestCard = memo(
 );
 
 const QuestListScreen = ({navigation, route}: any) => {
+  const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const initialGiver = route?.params?.filterGiver || null;
+  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
 
   const [activeTab, setActiveTab] = useState<Tab>('AVAILABLE');
   const [completedIds, setCompletedIds] = useState<number[]>([]);
@@ -142,7 +144,7 @@ const QuestListScreen = ({navigation, route}: any) => {
       if (completedIds.includes(q.id)) set.add(q.name);
     }
     return set;
-  }, [completedIds]);
+  }, [completedIds, i18n.language]);
 
   /* Filter quests by giver if coming from trader detail */
   const giverQuests = useMemo(
@@ -150,7 +152,7 @@ const QuestListScreen = ({navigation, route}: any) => {
       initialGiver
         ? allQuests.filter(q => q.quest_giver === initialGiver)
         : allQuests,
-    [initialGiver],
+    [initialGiver, i18n.language],
   );
 
   /* Split into available / locked / completed */
@@ -203,12 +205,12 @@ const QuestListScreen = ({navigation, route}: any) => {
 
   const handleReset = useCallback(() => {
     Alert.alert(
-      'Reset Progress',
-      'Are you sure you want to reset all quest progress?',
+      t('quests.resetProgress'),
+      t('quests.resetConfirm'),
       [
-        {text: 'Cancel', style: 'cancel'},
+        {text: t('common.cancel'), style: 'cancel'},
         {
-          text: 'Reset',
+          text: t('quests.reset'),
           style: 'destructive',
           onPress: async () => {
             await resetCompletedQuests();
@@ -233,9 +235,9 @@ const QuestListScreen = ({navigation, route}: any) => {
       return (
         <View style={s.emptyWrap}>
           <Icon name="trophy-outline" size={64} color={colors.textMuted} />
-          <Text style={s.emptyTitle}>NO COMPLETED QUESTS</Text>
+          <Text style={s.emptyTitle}>{t('quests.noCompletedQuests')}</Text>
           <Text style={s.emptySubtitle}>
-            Start completing quests to track progress
+            {t('quests.startCompleting')}
           </Text>
         </View>
       );
@@ -244,9 +246,9 @@ const QuestListScreen = ({navigation, route}: any) => {
       return (
         <View style={s.emptyWrap}>
           <Icon name="lock-open-outline" size={64} color={colors.textMuted} />
-          <Text style={s.emptyTitle}>NO LOCKED QUESTS</Text>
+          <Text style={s.emptyTitle}>{t('quests.noLockedQuests')}</Text>
           <Text style={s.emptySubtitle}>
-            All prerequisites have been met
+            {t('quests.allPrereqsMet')}
           </Text>
         </View>
       );
@@ -254,9 +256,9 @@ const QuestListScreen = ({navigation, route}: any) => {
     return (
       <View style={s.emptyWrap}>
         <Icon name="check-all" size={64} color={colors.textMuted} />
-        <Text style={s.emptyTitle}>ALL QUESTS COMPLETED</Text>
+        <Text style={s.emptyTitle}>{t('quests.allQuestsCompleted')}</Text>
         <Text style={s.emptySubtitle}>
-          You've completed all available quests!
+          {t('quests.allQuestsCompletedSub')}
         </Text>
       </View>
     );
@@ -271,9 +273,9 @@ const QuestListScreen = ({navigation, route}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitleAbs}>Quests</Text>
+        <Text style={s.headerTitleAbs}>{t('quests.title')}</Text>
         <TouchableOpacity onPress={handleReset} style={s.resetBtn}>
-          <Text style={s.resetText}>RESET</Text>
+          <Text style={s.resetText}>{t('quests.reset')}</Text>
         </TouchableOpacity>
       </View>
 
@@ -287,7 +289,7 @@ const QuestListScreen = ({navigation, route}: any) => {
               style={s.tab}
               onPress={() => setActiveTab(tab)}>
               <Text style={[s.tabText, isActive && s.tabTextActive]}>
-                {tab}
+                {t(`quests.${tab.toLowerCase()}`)}
               </Text>
               {isActive && <View style={s.tabIndicator} />}
             </TouchableOpacity>
@@ -298,7 +300,7 @@ const QuestListScreen = ({navigation, route}: any) => {
       {/* Progress bar */}
       <View style={s.progressWrap}>
         <View style={s.progressLabelRow}>
-          <Text style={s.progressLabel}>QUEST PROGRESS</Text>
+          <Text style={s.progressLabel}>{t('quests.questProgress')}</Text>
           <Text style={s.progressCount}>
             <Text style={s.progressCountHighlight}>{completedCount}</Text>
             {' / '}

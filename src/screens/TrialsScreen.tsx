@@ -15,8 +15,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawTrials from '../data/trials.json';
+import {getTrials} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
+import {useTranslation} from 'react-i18next';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 
@@ -56,8 +57,9 @@ const getResetTime = () => {
 };
 
 const TrialsScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const insets = useSafeAreaInsets();
-  const trials = rawTrials as Trial[];
+  const trials = getTrials() as Trial[];
   const [resetTime, setResetTime] = useState(getResetTime());
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -137,7 +139,7 @@ const TrialsScreen = ({navigation}: any) => {
                 />
                 <View style={styles.tipHeader}>
                   <Icon name="lightbulb-on" size={14} color={colors.cyan} />
-                  <Text style={styles.tipLabel}>PRO TIP</Text>
+                  <Text style={styles.tipLabel}>{t('trials.proTip')}</Text>
                 </View>
                 <Text style={styles.tipText}>{item.tip}</Text>
               </View>
@@ -148,7 +150,7 @@ const TrialsScreen = ({navigation}: any) => {
                 activeOpacity={0.8}
                 onPress={() => openMetaforge(item.metaforgeUrl)}>
                 <Icon name="book-open-variant" size={18} color={colors.cyan} />
-                <Text style={styles.guideBtnText}>VIEW GUIDE</Text>
+                <Text style={styles.guideBtnText}>{t('trials.viewGuide')}</Text>
                 <Icon name="chevron-right" size={18} color={colors.cyan} />
               </TouchableOpacity>
             </View>
@@ -157,7 +159,7 @@ const TrialsScreen = ({navigation}: any) => {
           {/* Expand indicator */}
           {!isExpanded && (
             <View style={styles.expandHint}>
-              <Text style={styles.expandHintText}>Tap for details</Text>
+              <Text style={styles.expandHintText}>{t('trials.tapForDetails')}</Text>
               <Icon name="chevron-down" size={14} color={colors.textMuted} />
             </View>
           )}
@@ -180,8 +182,8 @@ const TrialsScreen = ({navigation}: any) => {
               <Icon name="chevron-left" size={22} color={colors.textPrimary} />
             </TouchableOpacity>
             <View>
-              <Text style={styles.headerTitle}>WEEKLY TRIALS</Text>
-              <Text style={styles.headerSub}>{trials.length} challenges</Text>
+              <Text style={styles.headerTitle}>{t('trials.title')}</Text>
+              <Text style={styles.headerSub}>{t('trials.challengeCount', {count: trials.length})}</Text>
             </View>
           </View>
         </View>
@@ -196,7 +198,7 @@ const TrialsScreen = ({navigation}: any) => {
           />
           <View style={styles.timerLeft}>
             <Icon name="timer-outline" size={16} color={colors.cyan} />
-            <Text style={styles.timerLabel}>RESETS IN</Text>
+            <Text style={styles.timerLabel}>{t('trials.resetsIn')}</Text>
           </View>
           <View style={styles.timerValues}>
             <View style={styles.timerUnit}>

@@ -1,4 +1,5 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Animated,
   Alert,
@@ -21,7 +22,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import FilterModal from '../components/FilterModal';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import maps from '../data/maps.json';
+import {getMaps} from '../data/localizedData';
 import localMarkers from '../data/markers.json';
 import {getWaypoints, saveWaypoint, deleteWaypoint, Waypoint} from '../utils/storage';
 import {MarkerIcons} from '../assets/icons/markers';
@@ -182,6 +183,8 @@ const keyToLabel = (key: string) =>
 const MapDetailScreen = ({route, navigation}: any) => {
   const insets = useSafeAreaInsets();
   const {mapId} = route.params;
+  const { t } = useTranslation();
+  const maps = getMaps();
 
   const [currentMapId, setCurrentMapId] = useState(mapId);
   const map = maps.find(m => m.id === currentMapId);
@@ -276,7 +279,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
     const mapSlug = DB_MAP_NAME[currentMapId] || 'Dam';
     const coords = (blueprintHeatmapData as Record<string, number[][]>)[mapSlug];
     if (!coords || coords.length === 0) {
-      showSnackbar('No blueprint data for this map');
+      showSnackbar(t('maps.noBlueprintData'));
       return;
     }
     const features = coords.map((c: number[]) => ({
@@ -316,7 +319,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
       })();
     `, 'HEATMAP_ON');
     setHeatmapActive(true);
-    showSnackbar(`Blueprint heatmap: ${coords.length} locations`);
+    showSnackbar(t('maps.blueprintHeatmapCount', {count: coords.length}));
   }, [currentMapId, runJS, showSnackbar]);
 
   const removeHeatmap = useCallback(() => {
@@ -628,7 +631,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
       })();
     `, 'WP_ADD');
 
-    showSnackbar('Custom marker added!');
+    showSnackbar(t('maps.markerAdded'));
   }, [pendingCoords, selectedMarkerType, customMarkerName, markerNote, isPublished, currentMapId, runJS, showSnackbar, editingMarkerId]);
 
   /* ─── DELETE MARKER ─── */
@@ -644,7 +647,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
         window.__customWaypoints = window.__customWaypoints.filter(function(w) { return w.id !== '${id}'; });
       }
     `, 'WP_DEL');
-    showSnackbar('Marker deleted');
+    showSnackbar(t('maps.markerDeleted'));
   }, [runJS, showSnackbar]);
 
   /* ─── TOGGLE MARKER MODE ─── */
@@ -712,7 +715,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
             <Animated.View style={{opacity: pulseAnim, alignItems: 'center'}}>
               <Icon name="map-search-outline" size={48} color={colors.cyan} />
               <Text style={styles.loadingTitle}>{map?.name.toUpperCase()}</Text>
-              <Text style={styles.loadingText}>Preparing map…</Text>
+              <Text style={styles.loadingText}>{t('maps.preparingMap')}</Text>
             </Animated.View>
           </Animated.View>
         )}
@@ -745,7 +748,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
       {markerMode && (
         <View style={[styles.markerBanner, {top: Math.max(insets.top, 20) + 56}]}>
           <Icon name="map-marker-plus" size={16} color={colors.cyan} />
-          <Text style={styles.markerBannerText}>TAP MAP TO PLACE MARKER</Text>
+          <Text style={styles.markerBannerText}>{t('maps.tapToPlace')}</Text>
           <TouchableOpacity onPress={toggleMarkerMode}>
             <Icon name="close" size={18} color={colors.textMuted} />
           </TouchableOpacity>
@@ -760,7 +763,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
             activeOpacity={0.8}
             onPress={() => setFilterVisible(true)}>
             <Icon name="filter-variant" size={18} color={colors.textPrimary} />
-            <Text style={styles.filterBtnText}>FILTER</Text>
+            <Text style={styles.filterBtnText}>{t('maps.filter')}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -784,7 +787,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
             
             <ScrollView showsVerticalScrollIndicator={false} bounces={false} keyboardShouldPersistTaps="handled">
               {/* Title & Coords */}
-              <Text style={styles.formTitle}>ADD CUSTOM MARKER</Text>
+              <Text style={styles.formTitle}>{t('maps.addCustomMarker')}</Text>
               {pendingCoords && (
                 <Text style={styles.formCoords}>
                   {pendingCoords.lat.toFixed(3)}, {pendingCoords.lng.toFixed(3)}
@@ -792,7 +795,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
               )}
 
               {/* Marker Type */}
-              <Text style={styles.formSectionLabel}>MARKER TYPE</Text>
+              <Text style={styles.formSectionLabel}>{t('maps.markerType')}</Text>
               {selectedMarkerType ? (
                 <TouchableOpacity
                   style={styles.formTypeSelectedActive}
@@ -800,7 +803,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                   <View style={styles.formTypeIconActive}>{renderMarkerSvg(selectedMarkerType.key, 22)}</View>
                   <View style={{flex: 1}}>
                     <Text style={styles.formTypeText}>{selectedMarkerType.label}</Text>
-                    <Text style={styles.formTypeSub}>{selectedMarkerType.category}</Text>
+                    <Text style={styles.formTypeSub}>{t('filterCategories.' + selectedMarkerType.category.toLowerCase())}</Text>
                   </View>
                   <Icon name="chevron-down" size={18} color={colors.textSecondary} />
                 </TouchableOpacity>
@@ -810,12 +813,12 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                     style={styles.formTypeSelected}
                     onPress={() => setMarkerTypeSheetVisible(true)}>
                     <Icon name="map-marker-outline" size={18} color={colors.textMuted} />
-                    <Text style={[styles.formTypeText, {color: colors.textMuted}]}>Search marker type...</Text>
+                    <Text style={[styles.formTypeText, {color: colors.textMuted}]}>{t('maps.searchMarkerType')}</Text>
                     <Icon name="chevron-down" size={18} color={colors.textMuted} />
                   </TouchableOpacity>
                   <TextInput
                     style={styles.formInput}
-                    placeholder="Custom marker name"
+                    placeholder={t('maps.customMarkerName')}
                     placeholderTextColor={colors.textMuted}
                     value={customMarkerName}
                     onChangeText={setCustomMarkerName}
@@ -827,7 +830,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
               {/* Note */}
               <TextInput
                 style={[styles.formInput, styles.formNoteInput]}
-                placeholder="Note (optional)"
+                placeholder={t('maps.noteOptional')}
                 placeholderTextColor={colors.textMuted}
                 value={markerNote}
                 onChangeText={t => setMarkerNote(t.slice(0, 200))}
@@ -837,7 +840,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
               <Text style={styles.formCharCount}>{markerNote.length}/200</Text>
 
               {/* Add Photo */}
-              <Text style={styles.formSectionLabel}>Add photo</Text>
+              <Text style={styles.formSectionLabel}>{t('maps.addPhoto')}</Text>
               {markerPhoto ? (
                 <View style={styles.photoPreviewWrap}>
                   <Image source={{uri: markerPhoto}} style={styles.photoPreview} resizeMode="cover" />
@@ -854,18 +857,18 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                     if (!response.didCancel && response.assets?.[0]?.uri) setMarkerPhoto(response.assets[0].uri);
                   }}>
                     <Icon name="camera-outline" size={18} color={colors.cyan} />
-                    <Text style={styles.photoBtnText}>CAMERA</Text>
+                    <Text style={styles.photoBtnText}>{t('maps.camera')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.photoBtn} onPress={async () => {
                     const response = await launchImageLibrary({mediaType: 'photo', quality: 0.8});
                     if (!response.didCancel && response.assets?.[0]?.uri) setMarkerPhoto(response.assets[0].uri);
                   }}>
                     <Icon name="image-outline" size={18} color={colors.cyan} />
-                    <Text style={styles.photoBtnText}>GALLERY</Text>
+                    <Text style={styles.photoBtnText}>{t('maps.gallery')}</Text>
                   </TouchableOpacity>
                 </View>
               )}
-              <Text style={styles.formPhotoLabel}>PHOTO (OPTIONAL)</Text>
+              <Text style={styles.formPhotoLabel}>{t('maps.photoOptional')}</Text>
             </ScrollView>
 
             {/* Buttons - outside ScrollView so always visible */}
@@ -873,13 +876,13 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
               <TouchableOpacity
                 style={styles.formCancelBtn}
                 onPress={() => {setAddMarkerFormVisible(false); setPendingCoords(null); setEditingMarkerId(null);}}>
-                <Text style={styles.formCancelText}>CANCEL</Text>
+                <Text style={styles.formCancelText}>{t('common.cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.formAddBtn, !(selectedMarkerType || customMarkerName.trim()) && styles.formAddBtnDisabled]}
                 onPress={handleAddMarker}
                 disabled={!(selectedMarkerType || customMarkerName.trim())}>
-                <Text style={[styles.formAddText, !(selectedMarkerType || customMarkerName.trim()) && {color: colors.textMuted}]}>ADD MARKER</Text>
+                <Text style={[styles.formAddText, !(selectedMarkerType || customMarkerName.trim()) && {color: colors.textMuted}]}>{t('maps.addMarkerBtn')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -893,7 +896,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
               <View style={[styles.bottomSheet, {paddingBottom: Math.max(insets.bottom, 20), flex: 0, maxHeight: '80%'}]}>
                 <View style={styles.sheetHandle} />
                 <View style={styles.sheetHeader}>
-                  <Text style={styles.sheetTitle}>MARKER TYPE</Text>
+                  <Text style={styles.sheetTitle}>{t('maps.markerType')}</Text>
                   <TouchableOpacity
                     style={styles.sheetCloseBtn}
                     onPress={() => setMarkerTypeSheetVisible(false)}>
@@ -906,7 +909,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                   <Icon name="magnify" size={18} color={colors.textMuted} />
                   <TextInput
                     style={styles.sheetSearchInput}
-                    placeholder="Search marker type..."
+                    placeholder={t('maps.searchMarkerType')}
                     placeholderTextColor={colors.textMuted}
                     value={markerTypeSearch}
                     onChangeText={setMarkerTypeSearch}
@@ -926,8 +929,8 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                     {renderMarkerSvg('player-marker', 40)}
                   </View>
                   <View style={{flex: 1}}>
-                    <Text style={[styles.createMarkerLabel, {color: colors.cyan}]}>CREATE MARKER</Text>
-                    <Text style={styles.createMarkerSub}>Name your own custom marker</Text>
+                    <Text style={[styles.createMarkerLabel, {color: colors.cyan}]}>{t('maps.createMarker')}</Text>
+                    <Text style={styles.createMarkerSub}>{t('maps.nameCustomMarker')}</Text>
                   </View>
                   <Icon name="chevron-right" size={18} color={colors.textMuted} />
                 </TouchableOpacity>
@@ -952,7 +955,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                         </View>
                         <View style={{flex: 1}}>
                           <Text style={[styles.markerTypeLabel, isSelected && {color: colors.cyan}]}>{item.label}</Text>
-                          <Text style={styles.markerTypeSub}>{item.category}</Text>
+                          <Text style={styles.markerTypeSub}>{t('filterCategories.' + item.category.toLowerCase())}</Text>
                         </View>
                         {isSelected && (
                           <View style={styles.checkCircle}>
@@ -987,7 +990,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                     <Text style={styles.markerInfoName}>{selectedMarkerInfo.label}</Text>
                   </View>
                   <View style={styles.markerInfoBadge}>
-                    <Text style={styles.markerInfoBadgeText}>{selectedMarkerInfo.isPublished ? 'PUBLIC' : 'PRIVATE'}</Text>
+                    <Text style={styles.markerInfoBadgeText}>{selectedMarkerInfo.isPublished ? t('common.public') : t('common.private')}</Text>
                   </View>
                 </View>
 
@@ -1019,19 +1022,19 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                     <View style={styles.actionIconWrap}>
                       <Icon name="pencil-outline" size={18} color={colors.cyan} />
                     </View>
-                    <Text style={styles.markerInfoActionText}>EDIT</Text>
+                    <Text style={styles.markerInfoActionText}>{t('common.edit')}</Text>
                   </TouchableOpacity>
                   
                   <TouchableOpacity style={styles.markerInfoActionBtn} onPress={() => {
-                    Alert.alert('Delete Marker', `Remove "${selectedMarkerInfo.label}"?`, [
-                      {text: 'Cancel', style: 'cancel'},
-                      {text: 'Delete', style: 'destructive', onPress: () => handleDeleteMarker(selectedMarkerInfo.id)},
+                    Alert.alert(t('maps.deleteMarker'), t('maps.removeMarkerConfirm', {label: selectedMarkerInfo.label}), [
+                      {text: t('common.cancel'), style: 'cancel'},
+                      {text: t('common.delete'), style: 'destructive', onPress: () => handleDeleteMarker(selectedMarkerInfo.id)},
                     ]);
                   }}>
                     <View style={[styles.actionIconWrap, {backgroundColor: 'rgba(244, 67, 54, 0.1)'}]}>
                       <Icon name="delete-outline" size={18} color="#F44336" />
                     </View>
-                    <Text style={[styles.markerInfoActionText, {color: '#F44336'}]}>DELETE</Text>
+                    <Text style={[styles.markerInfoActionText, {color: '#F44336'}]}>{t('common.delete')}</Text>
                   </TouchableOpacity>
                 </View>
               </>

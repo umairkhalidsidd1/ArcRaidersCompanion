@@ -14,9 +14,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import {getItems} from '../data/localizedData';
 import {getCollectibles, toggleCollectible} from '../utils/storage';
 import {resolveImage} from '../data/imageRegistry';
+import {useTranslation} from 'react-i18next';
+import i18n from '../i18n/i18n';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -44,19 +46,27 @@ const inferCategory = (name: string, desc: string): string => {
   return 'Other';
 };
 
-const collectibles: CollectibleItem[] = (rawItems as any[])
-  .filter(i => i.item_type === 'Trinket')
-  .map(i => ({
-    id: i.id,
-    name: i.name,
-    description: i.description,
-    icon: i.icon,
-    rarity: i.rarity || 'Common',
-    category: inferCategory(i.name, i.description || ''),
-  }))
-  .sort((a, b) => a.name.localeCompare(b.name));
-
-const ALL_CATEGORIES = ['All', ...Array.from(new Set(collectibles.map(c => c.category)))];
+let _collectLang = '';
+let collectibles: CollectibleItem[] = [];
+let ALL_CATEGORIES: string[] = [];
+function refreshCollectibles() {
+  const lang = i18n.language;
+  if (_collectLang === lang && collectibles.length > 0) return;
+  _collectLang = lang;
+  collectibles = (getItems() as any[])
+    .filter(i => i.item_type === 'Trinket')
+    .map(i => ({
+      id: i.id,
+      name: i.name,
+      description: i.description,
+      icon: i.icon,
+      rarity: i.rarity || 'Common',
+      category: inferCategory(i.name, i.description || ''),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  ALL_CATEGORIES = ['All', ...Array.from(new Set(collectibles.map(c => c.category)))];
+}
+refreshCollectibles();
 
 const CATEGORY_ICONS: Record<string, {icon: string; color: string}> = {
   All: {icon: 'diamond-stone', color: colors.cyan},
@@ -86,6 +96,8 @@ type Tab = typeof TABS[number];
 /* ═══════ COMPONENT ═══════ */
 const CollectibleTrackerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const {t, i18n: i18nHook} = useTranslation();
+  refreshCollectibles();
   const [collected, setCollected] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [activeTab, setActiveTab] = useState<Tab>('ALL');
@@ -110,7 +122,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
       result = result.filter(c => !collected.includes(c.id));
     }
     return result;
-  }, [activeCategory, activeTab, collected]);
+  }, [activeCategory, activeTab, collected, i18nHook.language]);
 
   const totalCount = collectibles.length;
   const foundCount = collected.filter(c => collectibles.some(co => co.id === c)).length;
@@ -174,9 +186,9 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
           <Icon name="diamond-stone" size={18} color={colors.cyan} />
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.headerTitle}>Collectibles</Text>
+          <Text style={styles.headerTitle}>{t('collectibleTracker.title')}</Text>
           <Text style={styles.headerSubtitle}>
-            {foundCount} / {totalCount} found
+            {t('collectibleTracker.progressSubtitle', {found: foundCount, total: totalCount})}
           </Text>
         </View>
       </View>
@@ -202,7 +214,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
               style={[styles.segBtn, isActive && styles.segBtnActive]}
               onPress={() => setActiveTab(tab)}>
               <Text style={[styles.segText, isActive && styles.segTextActive]}>
-                {tab} ({count})
+                {tab === 'ALL' ? t('common.all') : tab === 'FOUND' ? t('collectibleTracker.found') : t('collectibleTracker.missing')} ({count})
               </Text>
             </TouchableOpacity>
           );
@@ -229,7 +241,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
               onPress={() => setActiveCategory(cat)}>
               <Icon name={cfg.icon} size={14} color={isActive ? cfg.color : colors.textMuted} />
               <Text style={[styles.chipText, isActive && {color: cfg.color}]}>
-                {cat}
+                {cat === 'All' ? t('common.all') : cat}
               </Text>
             </TouchableOpacity>
           );
@@ -249,7 +261,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="diamond-stone" size={48} color={colors.textMuted} />
-            <Text style={styles.emptyText}>No collectibles found</Text>
+            <Text style={styles.emptyText}>{t('collectibleTracker.noResults')}</Text>
           </View>
         }
       />

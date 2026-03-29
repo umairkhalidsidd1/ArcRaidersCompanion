@@ -13,9 +13,10 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import RenderHtml from 'react-native-render-html';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawGuides from '../data/guides.json';
+import {getGuides} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
@@ -59,17 +60,18 @@ const htmlRenderers = {
   img: FastImageRenderer,
 };
 
-type Guide = (typeof rawGuides)[number];
+type Guide = ReturnType<typeof getGuides>[number];
 type Reward = NonNullable<Guide['rewards']>[number];
 
 const GuideDetailScreen = ({route, navigation}: any) => {
+  const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const {guideId} = route.params;
-  const guide = (rawGuides as Guide[]).find(g => g.id === guideId);
+  const guide = (getGuides() as Guide[]).find(g => g.id === guideId);
 
   const htmlSource = useMemo(
     () => (guide?.content ? {html: guide.content} : null),
-    [guide?.content],
+    [guide?.content, i18n.language],
   );
 
   if (!guide) return null;
@@ -116,10 +118,10 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         <Text style={styles.title}>{guide.title}</Text>
         <View style={styles.metaRow}>
           <Icon name="account" size={14} color={colors.cyan} />
-          <Text style={styles.author}>{guide.author || 'Arc Companion Team'}</Text>
+          <Text style={styles.author}>{guide.author || t('guides.author')}</Text>
           {guide.type === 'quest' && (
             <View style={styles.typeBadge}>
-              <Text style={styles.typeBadgeText}>QUEST</Text>
+              <Text style={styles.typeBadgeText}>{t('guides.questBadge')}</Text>
             </View>
           )}
         </View>
@@ -136,7 +138,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
             activeOpacity={0.7}
             onPress={() => Linking.openURL(guide.video_url!)}>
             <Icon name="youtube" size={20} color="#FF0000" />
-            <Text style={styles.videoBtnText}>Watch Video Guide</Text>
+            <Text style={styles.videoBtnText}>{t('guides.watchVideo')}</Text>
             <Icon name="open-in-new" size={14} color={colors.textMuted} />
           </TouchableOpacity>
         )}
@@ -146,7 +148,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Icon name="target" size={16} color={colors.cyan} />
-              <Text style={styles.sectionTitle}>Objectives</Text>
+              <Text style={styles.sectionTitle}>{t('guides.objectives')}</Text>
             </View>
             {(guide.objectives as string[]).map((obj, i) => (
               <View key={i} style={styles.objectiveRow}>
@@ -162,7 +164,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Icon name="gift-outline" size={16} color={colors.orange} />
-              <Text style={styles.sectionTitle}>Rewards</Text>
+              <Text style={styles.sectionTitle}>{t('guides.rewards')}</Text>
             </View>
             <View style={styles.rewardsGrid}>
               {(guide.rewards as Reward[]).map((r, i) => (
@@ -200,7 +202,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
                 size={16}
                 color={colors.textSecondary}
               />
-              <Text style={styles.sectionTitle}>Walkthrough</Text>
+              <Text style={styles.sectionTitle}>{t('guides.walkthrough')}</Text>
             </View>
             <RenderHtml
               contentWidth={CONTENT_W}

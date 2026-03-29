@@ -24,7 +24,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {captureScreen} from 'react-native-view-shot';
 import {CameraRoll, iosRequestAddOnlyGalleryPermission} from '@react-native-camera-roll/camera-roll';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import {useTranslation} from 'react-i18next';
+import i18n from '../i18n/i18n';
+import {getItems} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
 
 const STORAGE_KEY = '@arc_raiders_tier_lists_v2';
@@ -73,15 +75,23 @@ const normaliseType = (t: string | null): string => {
   return t;
 };
 
-const allItems: Item[] = (rawItems as any[]).map(i => ({
-  id: String(i.id),
-  name: i.name,
-  item_type: normaliseType(i.item_type),
-  rarity: i.rarity || 'Common',
-  icon: i.icon || null,
-})).sort((a, b) => a.name.localeCompare(b.name));
-
-const itemMap = new Map(allItems.map(i => [i.id, i]));
+let _tierLang = '';
+let allItems: Item[] = [];
+let itemMap = new Map<string, Item>();
+function refreshItemData() {
+  const lang = i18n.language;
+  if (_tierLang === lang && allItems.length > 0) return;
+  _tierLang = lang;
+  allItems = (getItems() as any[]).map(i => ({
+    id: String(i.id),
+    name: i.name,
+    item_type: normaliseType(i.item_type),
+    rarity: i.rarity || 'Common',
+    icon: i.icon || null,
+  })).sort((a, b) => a.name.localeCompare(b.name));
+  itemMap = new Map(allItems.map(i => [i.id, i]));
+}
+refreshItemData();
 const EMPTY_IDS: string[] = [];
 
 const PoolItemCard = memo(({item, isSelected, onSelect}: {item: Item; isSelected: boolean; onSelect: (id: string) => void}) => (
@@ -103,6 +113,7 @@ const TierRow = memo(({tier, itemIds, isDropTarget, onEdit, onTap, onRemove}: {
   const tierItems = itemIds.map(id => itemMap.get(id)).filter(Boolean) as Item[];
   const isEmpty = tierItems.length === 0;
   const pulseAnim = useRef(new Animated.Value(0)).current;
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (isDropTarget) {
@@ -131,7 +142,7 @@ const TierRow = memo(({tier, itemIds, isDropTarget, onEdit, onTap, onRemove}: {
       </TouchableOpacity>
       <TouchableOpacity activeOpacity={isDropTarget ? 0.7 : 1.0} onPress={() => onTap(tier.id)} style={{flex: 1}}>
         <Animated.View style={[s.tierContent, isDropTarget && {borderColor: animatedBorderColor}]}>
-          {isEmpty && <Text style={s.tierPlaceholder}>{isDropTarget ? '— Tap to place selected item here —' : 'Tap an item below to rank it'}</Text>}
+          {isEmpty && <Text style={s.tierPlaceholder}>{isDropTarget ? t('tierList.tapToPlace') : t('tierList.tapToRank')}</Text>}
           {tierItems.length > 0 && (
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tierItemsScroll}>
               {tierItems.map(item => (
@@ -152,6 +163,8 @@ const NUM_COLUMNS = 4;
 
 const TierListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const {t, i18n: i18nHook} = useTranslation();
+  refreshItemData();
   const [ready, setReady] = useState(false);
   const [tiers, setTiers] = useState<TierDef[]>(DEFAULT_TIERS);
   const [assignments, setAssignments] = useState<Record<string, string[]>>({});
@@ -202,7 +215,7 @@ const TierListScreen = ({navigation}: any) => {
       items = items.filter(i => i.name.toLowerCase().includes(q));
     }
     return items;
-  }, [assignedIds, filter, searchQuery]);
+  }, [assignedIds, filter, searchQuery, i18nHook.language]);
 
   const totalAssigned = assignedIds.size;
 
@@ -233,9 +246,9 @@ const TierListScreen = ({navigation}: any) => {
   }, []);
 
   const resetAll = useCallback(() => {
-    Alert.alert('Reset Tier List', 'Remove all items from all tiers?', [
-      {text: 'Cancel', style: 'cancel'},
-      {text: 'Reset', style: 'destructive', onPress: () => save(DEFAULT_TIERS, {})},
+    Alert.alert(t('tierList.resetTitle'), t('tierList.resetMessage'), [
+      {text: t('common.cancel'), style: 'cancel'},
+      {text: t('tierList.reset'), style: 'destructive', onPress: () => save(DEFAULT_TIERS, {})},
     ]);
   }, [save]);
 
@@ -243,14 +256,14 @@ const TierListScreen = ({navigation}: any) => {
     try {
       const status = await iosRequestAddOnlyGalleryPermission();
       if (status === 'denied' || status === 'blocked') {
-        Alert.alert('Permission Denied', 'Please allow photo library access in Settings.');
+        Alert.alert(t('tierList.permissionDenied'), t('tierList.permissionDeniedMessage'));
         return;
       }
       const uri = await captureScreen({format: 'png', quality: 1});
       await CameraRoll.saveAsset(uri, {type: 'photo'});
-      Alert.alert('Saved!', 'Tier list saved to your Photos.');
+      Alert.alert(t('tierList.saved'), t('tierList.savedMessage'));
     } catch (e: any) {
-      Alert.alert('Error', e?.message || 'Could not save tier list image.');
+      Alert.alert(t('common.error'), e?.message || t('tierList.saveError'));
     }
   }, []);
 
@@ -276,9 +289,9 @@ const TierListScreen = ({navigation}: any) => {
 
   const handleDeleteTier = useCallback(() => {
     if (!editingTier) return;
-    Alert.alert('Delete Tier', 'Remove "' + editingTier.label + '" tier and unrank all its items?', [
-      {text: 'Cancel', style: 'cancel'},
-      {text: 'Delete', style: 'destructive', onPress: () => {
+    Alert.alert(t('tierList.deleteTier'), t('tierList.deleteTierMessage', {label: editingTier.label}), [
+      {text: t('common.cancel'), style: 'cancel'},
+      {text: t('common.delete'), style: 'destructive', onPress: () => {
         const updated = tiers.filter(t => t.id !== editingTier.id);
         const ua = {...assignments};
         delete ua[editingTier.id];
@@ -324,7 +337,7 @@ const TierListScreen = ({navigation}: any) => {
           <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
             <Icon name="arrow-left" size={22} color={colors.textPrimary} />
           </TouchableOpacity>
-          <Text style={s.headerTitle}>Tier List</Text>
+          <Text style={s.headerTitle}>{t('tierList.title')}</Text>
           <View style={s.headerActions} />
         </View>
       </View>
@@ -338,7 +351,7 @@ const TierListScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitle}>Tier List</Text>
+        <Text style={s.headerTitle}>{t('tierList.title')}</Text>
         <View style={s.headerActions}>
           <TouchableOpacity onPress={resetAll} style={s.headerIcon}>
             <Icon name="refresh" size={20} color={colors.cyan} />
@@ -349,8 +362,8 @@ const TierListScreen = ({navigation}: any) => {
         </View>
       </View>
       <View style={s.subtitleBar}>
-        <Text style={s.subtitleText}>MY TIER LIST</Text>
-        <Text style={s.subtitleCount}>{totalAssigned} items ranked</Text>
+        <Text style={s.subtitleText}>{t('tierList.myTierList')}</Text>
+        <Text style={s.subtitleCount}>{t('tierList.itemsRanked', {count: totalAssigned})}</Text>
       </View>
       <FlatList
         data={filteredItems}
@@ -382,13 +395,13 @@ const TierListScreen = ({navigation}: any) => {
               ))}
               <TouchableOpacity style={s.addTierBtn} onPress={handleAddTier} activeOpacity={0.7}>
                 <Icon name="plus" size={20} color={colors.orange} />
-                <Text style={s.addTierText}>Add new tier</Text>
+                <Text style={s.addTierText}>{t('tierList.addNewTier')}</Text>
               </TouchableOpacity>
             </View>
             <View style={s.poolSection}>
               <View style={s.searchRow}>
                 <Icon name="magnify" size={20} color={colors.textMuted} />
-                <TextInput style={s.searchInput} placeholder="Search items by name..." placeholderTextColor={colors.textMuted} value={searchQuery} onChangeText={setSearchQuery} autoCorrect={false} />
+                <TextInput style={s.searchInput} placeholder={t('tierList.searchPlaceholder')} placeholderTextColor={colors.textMuted} value={searchQuery} onChangeText={setSearchQuery} autoCorrect={false} />
                 {searchQuery.length > 0 && <TouchableOpacity onPress={() => setSearchQuery('')}><Icon name="close-circle" size={18} color={colors.textMuted} /></TouchableOpacity>}
               </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.filterRow}>
@@ -396,7 +409,7 @@ const TierListScreen = ({navigation}: any) => {
                   const active = filter === cat.key;
                   return (
                     <TouchableOpacity key={cat.key} style={[s.filterChip, active && s.filterChipActive]} onPress={() => setFilter(cat.key)} activeOpacity={0.7}>
-                      <Text style={[s.filterChipText, active && s.filterChipTextActive]}>{cat.label}</Text>
+                      <Text style={[s.filterChipText, active && s.filterChipTextActive]}>{t('tierList.categories.' + cat.key)}</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -404,7 +417,7 @@ const TierListScreen = ({navigation}: any) => {
               {selectedItem && (
                 <View style={s.hintBar}>
                   <Icon name="gesture-tap" size={16} color={colors.cyan} />
-                  <Text style={s.hintText} numberOfLines={1}>Tap a tier row above to place "{itemMap.get(selectedItem)?.name}"</Text>
+                  <Text style={s.hintText} numberOfLines={1}>{t('tierList.tapTierToPlace', {name: itemMap.get(selectedItem)?.name})}</Text>
                   <TouchableOpacity onPress={() => setSelectedItem(null)}><Icon name="close" size={16} color={colors.textMuted} /></TouchableOpacity>
                 </View>
               )}
@@ -415,13 +428,13 @@ const TierListScreen = ({navigation}: any) => {
           !searchQuery ? (
             <View style={s.emptyState}>
               <Icon name="check-circle-outline" size={40} color={colors.green + '60'} />
-              <Text style={s.emptyTitle}>All Ranked!</Text>
-              <Text style={s.emptySub}>Every item has been placed in a tier</Text>
+              <Text style={s.emptyTitle}>{t('tierList.allRanked')}</Text>
+              <Text style={s.emptySub}>{t('tierList.allRankedMessage')}</Text>
             </View>
           ) : (
             <View style={s.emptyState}>
               <Icon name="magnify-close" size={36} color={colors.textMuted} />
-              <Text style={s.emptyTitle}>No Matches</Text>
+              <Text style={s.emptyTitle}>{t('tierList.noMatches')}</Text>
             </View>
           )
         }
@@ -432,14 +445,14 @@ const TierListScreen = ({navigation}: any) => {
           <View style={s.modalSheet} onStartShouldSetResponder={() => true}>
             <View style={s.modalHandle} />
             <View style={s.modalHeader}>
-              <Text style={s.modalTitle}>{addingTier ? 'ADD TIER' : 'EDIT TIER'}</Text>
+              <Text style={s.modalTitle}>{addingTier ? t('tierList.addTier') : t('tierList.editTier')}</Text>
               {editingTier && !addingTier && <TouchableOpacity onPress={handleDeleteTier} style={s.modalDeleteBtn}><Icon name="delete-outline" size={22} color="#FF4D6A" /></TouchableOpacity>}
             </View>
-            <Text style={s.modalFieldLabel}>TIER LABEL</Text>
+            <Text style={s.modalFieldLabel}>{t('tierList.tierLabel')}</Text>
             <View style={s.labelInputWrap}>
               <TextInput style={[s.labelInput, {color: editColor || colors.textPrimary}]} value={editLabel} onChangeText={t => setEditLabel(t.substring(0, 3))} maxLength={3} autoCapitalize="characters" textAlign="center" placeholderTextColor={colors.textMuted} placeholder="?" />
             </View>
-            <Text style={s.modalFieldLabel}>TIER COLOR</Text>
+            <Text style={s.modalFieldLabel}>{t('tierList.tierColor')}</Text>
             <View style={s.colorGrid}>
               {COLOR_PALETTE.map(c => {
                 const active = editColor === c;
@@ -447,7 +460,7 @@ const TierListScreen = ({navigation}: any) => {
               })}
             </View>
             <TouchableOpacity style={s.saveBtn} onPress={handleSaveTier} activeOpacity={0.8}>
-              <Text style={s.saveBtnText}>SAVE</Text>
+              <Text style={s.saveBtnText}>{t('common.save')}</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>

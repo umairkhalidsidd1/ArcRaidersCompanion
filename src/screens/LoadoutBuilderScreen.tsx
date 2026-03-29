@@ -16,9 +16,10 @@ import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import {getItems} from '../data/localizedData';
 import {getLoadouts, saveLoadouts, Loadout} from '../utils/storage';
 import {resolveImage} from '../data/imageRegistry';
+import {useTranslation} from 'react-i18next';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -54,12 +55,6 @@ const normaliseType = (t: string | null): string => {
   return t;
 };
 
-const allItems: Item[] = (rawItems as any[]).map(i => ({
-  ...i,
-  item_type: normaliseType(i.item_type),
-  rarity: i.rarity || 'Common',
-}));
-
 const RARITY_ORDER: Record<string, number> = {
   Legendary: 0, Epic: 1, Rare: 2, Uncommon: 3, Common: 4,
 };
@@ -71,6 +66,12 @@ const RARITY_COLORS: Record<string, string> = {
 /* ═══════ COMPONENT ═══════ */
 const LoadoutBuilderScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const {t, i18n} = useTranslation();
+  const allItems: Item[] = (getItems() as any[]).map(i => ({
+    ...i,
+    item_type: normaliseType(i.item_type),
+    rarity: i.rarity || 'Common',
+  }));
   const [loadouts, setLoadouts] = useState<Loadout[]>([]);
   const [activeIdx, setActiveIdx] = useState(0);
   const [pickerSlot, setPickerSlot] = useState<SlotKey | null>(null);
@@ -81,7 +82,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
       if (saved.length === 0) {
         const dflt: Loadout = {
           id: Date.now().toString(),
-          name: 'Loadout 1',
+          name: `${t('loadout.defaultName')} 1`,
           slots: Object.fromEntries(SLOTS.map(s => [s.key, null])),
         };
         setLoadouts([dflt]);
@@ -105,7 +106,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
   const handleAddLoadout = () => {
     const nl: Loadout = {
       id: Date.now().toString(),
-      name: `Loadout ${loadouts.length + 1}`,
+      name: `${t('loadout.defaultName')} ${loadouts.length + 1}`,
       slots: Object.fromEntries(SLOTS.map(s => [s.key, null])),
     };
     const updated = [...loadouts, nl];
@@ -115,10 +116,10 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
 
   const handleDeleteLoadout = () => {
     if (loadouts.length <= 1) return;
-    Alert.alert('Delete Loadout', `Remove "${active?.name}"?`, [
-      {text: 'Cancel', style: 'cancel'},
+    Alert.alert(t('loadout.deleteTitle'), t('loadout.deleteMessage', {name: active?.name}), [
+      {text: t('loadout.cancel'), style: 'cancel'},
       {
-        text: 'Delete',
+        text: t('loadout.delete'),
         style: 'destructive',
         onPress: () => {
           const updated = loadouts.filter((_, i) => i !== activeIdx);
@@ -131,7 +132,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
 
   const handleRename = () => {
     if (!active) return;
-    Alert.prompt('Rename Loadout', '', (text: string) => {
+    Alert.prompt(t('loadout.renameTitle'), '', (text: string) => {
       if (!text?.trim()) return;
       const updated = [...loadouts];
       updated[activeIdx] = {...active, name: text.trim()};
@@ -184,7 +185,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
       const ro = (RARITY_ORDER[a.rarity] ?? 5) - (RARITY_ORDER[b.rarity] ?? 5);
       return ro !== 0 ? ro : a.name.localeCompare(b.name);
     });
-  }, [pickerSlot, pickerSearch]);
+  }, [pickerSlot, pickerSearch, i18n.language]);
 
   /* ═══════ RENDER ═══════ */
   return (
@@ -200,9 +201,9 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
           <Icon name="sword-cross" size={18} color={colors.cyan} />
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.headerTitle}>Loadout Builder</Text>
+          <Text style={styles.headerTitle}>{t('loadout.title')}</Text>
           <Text style={styles.headerSubtitle}>
-            {loadouts.length} loadout{loadouts.length !== 1 ? 's' : ''}
+            {t('loadout.count', {count: loadouts.length})}
           </Text>
         </View>
         <TouchableOpacity onPress={handleAddLoadout} style={styles.addBtn}>
@@ -233,12 +234,12 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
         <View style={styles.actionsRow}>
           <TouchableOpacity style={styles.actionBtn} onPress={handleRename}>
             <Icon name="pencil" size={14} color={colors.cyan} />
-            <Text style={[styles.actionText, {color: colors.cyan}]}>RENAME</Text>
+            <Text style={[styles.actionText, {color: colors.cyan}]}>{t('loadout.rename')}</Text>
           </TouchableOpacity>
           {loadouts.length > 1 && (
             <TouchableOpacity style={styles.actionBtn} onPress={handleDeleteLoadout}>
               <Icon name="delete-outline" size={14} color={colors.red} />
-              <Text style={[styles.actionText, {color: colors.red}]}>DELETE</Text>
+              <Text style={[styles.actionText, {color: colors.red}]}>{t('loadout.delete')}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -267,7 +268,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
                 )}
               </View>
               <View style={styles.slotInfo}>
-                <Text style={styles.slotLabel}>{slot.label}</Text>
+                <Text style={styles.slotLabel}>{t(`loadout.slots.${slot.key}`)}</Text>
                 {item ? (
                   <>
                     <Text style={styles.slotItemName}>{item.name}</Text>
@@ -280,7 +281,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
                     </Text>
                   </>
                 ) : (
-                  <Text style={styles.slotEmpty}>Tap to equip</Text>
+                  <Text style={styles.slotEmpty}>{t('loadout.tapToEquip')}</Text>
                 )}
               </View>
               {item ? (
@@ -300,25 +301,25 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
         {/* Stats Summary */}
         {active && (
           <View style={styles.statsCard}>
-            <Text style={styles.statsTitle}>LOADOUT SUMMARY</Text>
+            <Text style={styles.statsTitle}>{t('loadout.summary')}</Text>
             <View style={styles.statsRow}>
               <View style={styles.statItem}>
                 <Text style={styles.statValue}>
                   {SLOTS.filter(s => getItemForSlot(s.key)).length}
                 </Text>
-                <Text style={styles.statLabel}>EQUIPPED</Text>
+                <Text style={styles.statLabel}>{t('loadout.equipped')}</Text>
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statValue}>
                   {SLOTS.filter(s => !getItemForSlot(s.key)).length}
                 </Text>
-                <Text style={styles.statLabel}>EMPTY</Text>
+                <Text style={styles.statLabel}>{t('loadout.empty')}</Text>
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statValue}>
                   {SLOTS.reduce((sum, s) => sum + (getItemForSlot(s.key)?.value || 0), 0)}
                 </Text>
-                <Text style={styles.statLabel}>TOTAL VALUE</Text>
+                <Text style={styles.statLabel}>{t('loadout.totalValue')}</Text>
               </View>
             </View>
           </View>
@@ -339,7 +340,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
                 <Icon name="close" size={24} color={colors.textPrimary} />
               </TouchableOpacity>
               <Text style={styles.modalTitle}>
-                SELECT {SLOTS.find(s => s.key === pickerSlot)?.label}
+                {t('loadout.selectSlot', {slot: pickerSlot ? t(`loadout.slots.${pickerSlot}`) : ''})}
               </Text>
               <View style={{width: 24}} />
             </View>
@@ -351,7 +352,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
                 style={styles.modalSearchInput}
                 value={pickerSearch}
                 onChangeText={setPickerSearch}
-                placeholder="Search..."
+                placeholder={t('loadout.search')}
                 placeholderTextColor={colors.textMuted}
               />
             </View>
@@ -388,7 +389,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
               ListEmptyComponent={
                 <View style={styles.emptyState}>
                   <Icon name="package-variant" size={40} color={colors.textMuted} />
-                  <Text style={styles.emptyText}>No items available</Text>
+                  <Text style={styles.emptyText}>{t('loadout.noItems')}</Text>
                 </View>
               }
             />

@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTranslation } from 'react-i18next';
 import { colors, fonts, spacing } from '../theme/theme';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -96,7 +97,16 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
 /* ── Custom floating glass tab bar ── */
 function GlassTabBar({ state, descriptors, navigation }: any) {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const bottomPad = insets.bottom > 0 ? insets.bottom - 8 : 4;
+
+  const TAB_LABELS: Record<string, string> = {
+    Bunker: t('tabs.bunker'),
+    Trials: t('tabs.trials'),
+    Materials: t('tabs.materials'),
+    Enemies: t('tabs.enemies'),
+    Guides: t('tabs.guides'),
+  };
 
   return (
     <View style={[styles.tabBarOuter, { bottom: bottomPad }]}>
@@ -108,7 +118,7 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
         <View style={styles.tabBarInner}>
           {state.routes.map((route: any, index: number) => {
             const { options } = descriptors[route.key];
-            const label = route.name;
+            const label = TAB_LABELS[route.name] || route.name;
             const isFocused = state.index === index;
             const icons = TAB_ICONS[route.name];
             const iconName = isFocused ? icons.active : icons.inactive;

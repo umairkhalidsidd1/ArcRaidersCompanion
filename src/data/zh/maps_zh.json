@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "水坝战场",
+    "description": "一座被ARC部队占领的巨型水力发电大坝。溢洪道和发电机房周围是密集的战斗区域。",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "中等"
+  },
+  {
+    "id": "buried-city",
+    "name": "掩埋之城",
+    "description": "曾经繁荣的大都市遗迹，如今半埋在沙土和瓦砾之下。战利品丰富但危险重重。",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "困难"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "太空港",
+    "description": "一座废弃的发射设施，有机库、控制塔和散落的ARC科技。开阔的射界。",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "简单"
+  },
+  {
+    "id": "blue-gate",
+    "name": "蓝门",
+    "description": "区域之间的加固检查站。狭窄的走廊和垂直空间带来激烈的战斗。",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "中等"
+  },
+  {
+    "id": "stella-montis",
+    "name": "星辰之山",
+    "description": "拥有高山森林和隐藏地堡的山区。高价值资源散布在各个山峰上。",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "困难"
+  }
+]

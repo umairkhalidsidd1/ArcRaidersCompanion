@@ -1,10 +1,12 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated, Dimensions, Easing, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useTranslation} from 'react-i18next';
 
 const {width: W, height: H} = Dimensions.get('window');
 
 const SplashScreen = ({onFinish}: {onFinish: () => void}) => {
+  const {t} = useTranslation();
   const contentOpacity = useRef(new Animated.Value(0)).current;
   const fadeOut = useRef(new Animated.Value(1)).current;
 
@@ -20,11 +22,11 @@ const SplashScreen = ({onFinish}: {onFinish: () => void}) => {
     <Animated.View style={[styles.container, {opacity: fadeOut}]}>
       <Animated.View style={[styles.center, {opacity: contentOpacity}]}>
         <View style={styles.titleRow}>
-          <Text style={styles.titleArc}>ARC</Text>
-          <Text style={styles.titleRaiders}>RAIDERS</Text>
+          <Text style={styles.titleArc}>{t('splash.titleArc')}</Text>
+          <Text style={styles.titleRaiders}>{t('splash.titleRaiders')}</Text>
         </View>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>COMPANION</Text>
+          <Text style={styles.badgeText}>{t('splash.companion')}</Text>
         </View>
       </Animated.View>
     </Animated.View>

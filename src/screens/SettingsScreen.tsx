@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useOnboarding} from '../../App';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import { useTranslation } from 'react-i18next';
 
 const APP_NAME = 'Arc Raiders Companion';
 const APP_VERSION = '1.0.0';
@@ -51,6 +52,7 @@ const SectionHeader = ({label}: {label: string}) => (
 const SettingsScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const triggerOnboarding = useOnboarding();
+  const { t, i18n } = useTranslation();
 
   const handleRate = () => {
     const iosId = '6761329723';
@@ -64,26 +66,23 @@ const SettingsScreen = ({navigation}: any) => {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: Platform.select({
-          ios: `Check out ${APP_NAME}!\nhttps://apps.apple.com/app/id6761329723`,
-          android: `Check out ${APP_NAME}!\nhttps://play.google.com/store/apps/details?id=com.arcraiders.companion`,
-        }) || '',
+        message: t('settings.shareMessage', {appName: APP_NAME}),
       });
     } catch {}
   };
 
   const handleContact = () => {
-    Linking.openURL('mailto:support@arcraiders-companion.app').catch(() =>
-      Alert.alert('Error', 'Could not open email client.'),
+    Linking.openURL('mailto:umairkhalidsidd@gmail.com').catch(() =>
+      Alert.alert(t('common.error'), t('settings.emailError')),
     );
   };
 
   const handlePrivacy = () => {
-    Linking.openURL('https://arcraiders-companion.app/privacy').catch(() => {});
+    Linking.openURL('https://umairkhalidsidd1.github.io/ArcRaidersCompanion-Legal/privacy.html').catch(() => {});
   };
 
   const handleTerms = () => {
-    Linking.openURL('https://arcraiders-companion.app/terms').catch(() => {});
+    Linking.openURL('https://umairkhalidsidd1.github.io/ArcRaidersCompanion-Legal/terms.html').catch(() => {});
   };
 
   const handleViewTutorial = () => {
@@ -102,7 +101,7 @@ const SettingsScreen = ({navigation}: any) => {
           hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
           <Icon name="arrow-left" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitle}>Settings</Text>
+        <Text style={s.headerTitle}>{t('settings.title')}</Text>
         <View style={s.backBtn} />
       </View>
 
@@ -113,57 +112,60 @@ const SettingsScreen = ({navigation}: any) => {
         showsVerticalScrollIndicator={false}>
 
         {/* ── GENERAL ── */}
-        <SectionHeader label="GENERAL" />
+        <SectionHeader label={t('settings.general')} />
         <View style={s.section}>
           <RowItem
             icon="translate"
-            title="Language"
-            subtitle="English"
-            onPress={() => {}}
+            title={t('settings.language')}
+            subtitle={i18n.language === 'zh' ? '简体中文' : 'English'}
+            onPress={() => {
+              const newLang = i18n.language === 'zh' ? 'en' : 'zh';
+              i18n.changeLanguage(newLang);
+            }}
           />
           <View style={s.rowDivider} />
           <RowItem
             icon="star-outline"
-            title="View Tutorial"
-            subtitle="Restart the onboarding guide"
+            title={t('settings.viewTutorial')}
+            subtitle={t('settings.viewTutorialSub')}
             onPress={handleViewTutorial}
           />
           <View style={s.rowDivider} />
           <RowItem
             icon="star-outline"
-            title="Rate App"
-            subtitle={`Love ${APP_NAME}? Leave a review!`}
+            title={t('settings.rateApp')}
+            subtitle={t('settings.rateAppSub', {appName: APP_NAME})}
             onPress={handleRate}
           />
           <View style={s.rowDivider} />
           <RowItem
             icon="share-variant-outline"
-            title="Share App"
-            subtitle={`Tell your friends about ${APP_NAME}`}
+            title={t('settings.shareApp')}
+            subtitle={t('settings.shareAppSub', {appName: APP_NAME})}
             onPress={handleShare}
           />
         </View>
 
         {/* ── SUPPORT & LEGAL ── */}
-        <SectionHeader label="SUPPORT & LEGAL" />
+        <SectionHeader label={t('settings.supportLegal')} />
         <View style={s.section}>
           <RowItem
             icon="email-outline"
-            title="Contact Support"
+            title={t('settings.contactSupport')}
             onPress={handleContact}
           />
           <View style={s.rowDivider} />
           <RowItem
             icon="shield-outline"
-            title="Privacy Policy"
-            subtitle="How we handle your data"
+            title={t('settings.privacyPolicy')}
+            subtitle={t('settings.privacyPolicySub')}
             onPress={handlePrivacy}
           />
           <View style={s.rowDivider} />
           <RowItem
             icon="file-document-outline"
-            title="Terms of Service"
-            subtitle="Our terms and conditions"
+            title={t('settings.termsOfService')}
+            subtitle={t('settings.termsOfServiceSub')}
             onPress={handleTerms}
           />
         </View>
@@ -171,18 +173,16 @@ const SettingsScreen = ({navigation}: any) => {
         {/* ── Footer ── */}
         <View style={s.footer}>
           <Text style={s.footerName}>{APP_NAME}</Text>
-          <Text style={s.footerVersion}>Version {APP_VERSION}</Text>
+          <Text style={s.footerVersion}>{t('settings.version', {version: APP_VERSION})}</Text>
           <Text style={s.footerCopy}>
-            &copy; {APP_YEAR} {APP_NAME}. All rights reserved.
+            &copy; {APP_YEAR} {APP_NAME}. {t('settings.allRightsReserved')}
           </Text>
         </View>
 
         {/* ── Disclaimer ── */}
         <View style={s.disclaimer}>
           <Text style={s.disclaimerText}>
-            ⚠️ This app is a fan-made companion tool and is not affiliated with,
-            endorsed by, or connected to Embark Studios or the Arc Raiders game.
-            All game assets belong to their respective owners.
+            {t('settings.disclaimer')}
           </Text>
         </View>
       </ScrollView>

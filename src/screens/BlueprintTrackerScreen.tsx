@@ -14,10 +14,11 @@ import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import {getItems} from '../data/localizedData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, {Defs, Pattern, Rect, Line} from 'react-native-svg';
 import {resolveImage} from '../data/imageRegistry';
+import {useTranslation} from 'react-i18next';
 
 const BP_STORAGE_KEY = '@arcc_blueprints_v2';
 
@@ -28,17 +29,6 @@ type Blueprint = {
   rarity: string;
   value: number;
 };
-
-const blueprints: Blueprint[] = (rawItems as any[])
-  .filter(i => i.item_type === 'Blueprint')
-  .map(i => ({
-    id: i.id,
-    name: i.name.replace(' Blueprint', ''),
-    icon: i.icon,
-    rarity: i.rarity || 'Common',
-    value: i.value || 0,
-  }))
-  .sort((a, b) => a.name.localeCompare(b.name));
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const NUM_COLUMNS = 3;
@@ -179,6 +169,17 @@ const cardStyles = StyleSheet.create({
 
 const BlueprintTrackerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
+  const {t} = useTranslation();
+  const blueprints: Blueprint[] = (getItems() as any[])
+    .filter(i => i.item_type === 'Blueprint')
+    .map(i => ({
+      id: i.id,
+      name: i.name.replace(' Blueprint', ''),
+      icon: i.icon,
+      rarity: i.rarity || 'Common',
+      value: i.value || 0,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
   const [collected, setCollected] = useState<string[]>([]);
   const [initialOrder, setInitialOrder] = useState<string[]>(() => blueprints.map(bp => bp.id));
   const [search, setSearch] = useState('');
@@ -258,14 +259,14 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Blueprints</Text>
+        <Text style={styles.headerTitle}>{t('blueprints.title')}</Text>
         <View style={styles.headerSpacer} />
       </View>
 
       {/* Progress */}
       <View style={styles.progressRow}>
         <Text style={styles.progressText}>
-          {collectedCount}/{totalCount} collected ({progress}%)
+          {t('blueprints.progressText', {collected: collectedCount, total: totalCount, progress})}
         </Text>
         <View style={styles.progressBarBg}>
           <View style={[styles.progressBarFill, {width: `${progress}%`}]} />
@@ -277,7 +278,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         <Icon name="magnify" size={18} color={colors.textMuted} />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search blueprints..."
+          placeholder={t('blueprints.searchPlaceholder')}
           placeholderTextColor={colors.textMuted}
           value={search}
           onChangeText={setSearch}
@@ -287,7 +288,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
       {/* Hint */}
       {collectedCount > 0 && (
         <Text style={styles.hintText}>
-          Tap to select — obtained items move to the bottom
+          {t('blueprints.hint')}
         </Text>
       )}
 
@@ -308,7 +309,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
-            <Text style={styles.emptyText}>No blueprints found</Text>
+            <Text style={styles.emptyText}>{t('blueprints.noResults')}</Text>
           </View>
         }
       />

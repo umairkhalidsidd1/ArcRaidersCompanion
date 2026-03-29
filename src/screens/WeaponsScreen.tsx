@@ -16,8 +16,9 @@ import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius, getRarityColor} from '../theme/theme';
-import items from '../data/items.json';
+import {getItems} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
 
 const {width: SCREEN_W} = Dimensions.get('window');
@@ -100,22 +101,22 @@ const STAT_PAIRS: [string, string][] = [
   ['agility', 'stealth'],
 ];
 const STAT_META: Record<string, {label: string; max: number}> = {
-  damage: {label: 'DAMAGE', max: 100},
-  fireRate: {label: 'FIRERATE', max: 100},
-  range: {label: 'RANGE', max: 100},
-  stability: {label: 'STABILITY', max: 100},
-  agility: {label: 'AGILITY', max: 100},
-  stealth: {label: 'STEALTH', max: 100},
+  damage: {label: 'weapons.damage', max: 100},
+  fireRate: {label: 'weapons.fireRate', max: 100},
+  range: {label: 'weapons.range', max: 100},
+  stability: {label: 'weapons.stability', max: 100},
+  agility: {label: 'weapons.agility', max: 100},
+  stealth: {label: 'weapons.stealth', max: 100},
 };
 
 /* upgrade perk keys — shown as "↑ Key  value" */
 const UPGRADE_KEYS: {key: string; label: string}[] = [
-  {key: 'increasedFireRate', label: 'Fire Rate'},
-  {key: 'reducedReloadTime', label: 'Reload Time'},
-  {key: 'reducedVerticalRecoil', label: 'Vertical Recoil'},
-  {key: 'reducedDispersionRecoveryTime', label: 'Dispersion Recovery'},
-  {key: 'increasedBulletVelocity', label: 'Bullet Velocity'},
-  {key: 'reducedDurabilityBurnRate', label: 'Durability Burn'},
+  {key: 'increasedFireRate', label: 'weapons.upgrades.fireRate'},
+  {key: 'reducedReloadTime', label: 'weapons.upgrades.reloadTime'},
+  {key: 'reducedVerticalRecoil', label: 'weapons.upgrades.verticalRecoil'},
+  {key: 'reducedDispersionRecoveryTime', label: 'weapons.upgrades.dispersionRecovery'},
+  {key: 'increasedBulletVelocity', label: 'weapons.upgrades.bulletVelocity'},
+  {key: 'reducedDurabilityBurnRate', label: 'weapons.upgrades.durabilityBurn'},
 ];
 
 /* ── component ── */
@@ -126,10 +127,11 @@ const WeaponsScreen = ({navigation}: any) => {
   const [familyIndex, setFamilyIndex] = useState(1);
   const [levelIndex, setLevelIndex] = useState(0);
   const lastFiredIndex = useRef(-1);
+  const {t, i18n} = useTranslation();
 
   /* build weapon families */
   const families = useMemo(() => {
-    const weapons = (items as WeaponItem[]).filter(i => i.item_type === 'Weapon');
+    const weapons = (getItems() as WeaponItem[]).filter(i => i.item_type === 'Weapon');
     const map = new Map<string, WeaponItem[]>();
     weapons.forEach(w => {
       const base = stripLevel(w.name);
@@ -153,7 +155,7 @@ const WeaponsScreen = ({navigation}: any) => {
       result.unshift(last);
     }
     return result;
-  }, []);
+  }, [i18n.language]);
 
   const family = families[familyIndex];
   const weapon = family?.variants[levelIndex];
@@ -195,7 +197,7 @@ const WeaponsScreen = ({navigation}: any) => {
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Icon name="chevron-left" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>WEAPON INSPECT</Text>
+        <Text style={styles.headerTitle}>{t('weapons.title')}</Text>
         <View style={HEADER_SPACER} />
       </View>
 
@@ -296,7 +298,7 @@ const WeaponsScreen = ({navigation}: any) => {
             </TouchableOpacity>
 
             <View style={styles.levelCenter}>
-              <Text style={styles.levelLabel}>LEVEL</Text>
+              <Text style={styles.levelLabel}>{t('weapons.level')}</Text>
               <Text style={styles.levelNumber}>{level}</Text>
             </View>
 
@@ -323,7 +325,7 @@ const WeaponsScreen = ({navigation}: any) => {
             {/* Rarity badge */}
             <View style={[styles.rarityBadge, {backgroundColor: `${rarityColor}25`}]}>
               <Text style={[styles.rarityText, {color: rarityColor}]}>
-                {weapon.rarity.toUpperCase()}
+                {t('rarity.' + weapon.rarity.toLowerCase()).toUpperCase()}
               </Text>
             </View>
 
@@ -339,7 +341,7 @@ const WeaponsScreen = ({navigation}: any) => {
                 {upgrades.map(u => (
                   <View key={u.key} style={styles.upgradeRow}>
                     <Icon name="arrow-top-right" size={14} color={colors.cyan} />
-                    <Text style={styles.upgradeLabel}>{u.label}</Text>
+                    <Text style={styles.upgradeLabel}>{t(u.label)}</Text>
                     <Text style={styles.upgradeValue}>+{stats[u.key]}%</Text>
                   </View>
                 ))}
@@ -357,7 +359,7 @@ const WeaponsScreen = ({navigation}: any) => {
                     return (
                       <View key={k} style={styles.statCell}>
                         <View style={styles.statHeader}>
-                          <Text style={styles.statLabel}>{meta.label}</Text>
+                          <Text style={styles.statLabel}>{t(meta.label)}</Text>
                           <Text style={styles.statValue}>{val}</Text>
                         </View>
                         <View style={styles.statBarBg}>

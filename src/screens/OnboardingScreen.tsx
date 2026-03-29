@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 'react-native-svg';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import {useTranslation} from 'react-i18next';
 
 const {width: W, height: H} = Dimensions.get('window');
 const ONBOARDING_KEY = '@arcc_onboarding_done';
@@ -77,7 +78,9 @@ const MAP_MARKERS = [
 /* ═══════════════ PREVIEW COMPONENTS ═══════════════ */
 
 /* 1. MAP — satellite image with pins + legend */
-const MapPreview = () => (
+const MapPreview = () => {
+  const {t} = useTranslation();
+  return (
   <View style={mockStyles.mapWrap}>
     <Image
       source={require('../assets/maps/blue_gate_bg.webp')}
@@ -99,25 +102,27 @@ const MapPreview = () => (
     <View style={mockStyles.mapLegend}>
       <View style={mockStyles.mapLegendRow}>
         <View style={[mockStyles.mapLegendDot, {backgroundColor: '#00E5FF'}]} />
-        <Text style={mockStyles.mapLegendText}>Loot</Text>
+        <Text style={mockStyles.mapLegendText}>{t('onboarding.preview.loot')}</Text>
       </View>
       <View style={mockStyles.mapLegendRow}>
         <View style={[mockStyles.mapLegendDot, {backgroundColor: '#4ADE80'}]} />
-        <Text style={mockStyles.mapLegendText}>Extract</Text>
+        <Text style={mockStyles.mapLegendText}>{t('onboarding.preview.extract')}</Text>
       </View>
       <View style={mockStyles.mapLegendRow}>
         <View style={[mockStyles.mapLegendDot, {backgroundColor: '#FF4444'}]} />
-        <Text style={mockStyles.mapLegendText}>Threat</Text>
+        <Text style={mockStyles.mapLegendText}>{t('onboarding.preview.threat')}</Text>
       </View>
     </View>
     <View style={mockStyles.mapNameBadge}>
-      <Text style={mockStyles.mapNameText}>BLUE GATE</Text>
+      <Text style={mockStyles.mapNameText}>{t('onboarding.preview.blueGate')}</Text>
     </View>
   </View>
-);
+  );
+};
 
 /* 2. MATERIALS — 3x2 item card grid (MaterialsScreen style) */
 const MaterialsPreview = () => {
+  const {t} = useTranslation();
   const cardW = (PREVIEW_W - 24 - 8) / 3;
   const availH = PREVIEW_H - 20 - 28;
   const cardH = Math.min(cardW * 1.15, (availH - 4) / 2);
@@ -129,7 +134,7 @@ const MaterialsPreview = () => {
         <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(0,229,255,0.12)'}]}>
           <Icon name="flask-outline" size={10} color="#00E5FF" />
         </View>
-        <Text style={mockStyles.miniHeaderTitle}>Items</Text>
+        <Text style={mockStyles.miniHeaderTitle}>{t('onboarding.preview.items')}</Text>
       </View>
       <View style={mockStyles.gridContainer}>
         {MATERIAL_ITEMS.map((item, i) => (
@@ -149,6 +154,7 @@ const MaterialsPreview = () => {
 
 /* 3. THREATS — featured enemy + side list (unique layout) */
 const ThreatsPreview = () => {
+  const {t} = useTranslation();
   const featured = THREAT_ARCS[0];
   const others = THREAT_ARCS.slice(1);
   const featW = PREVIEW_W * 0.42;
@@ -159,7 +165,7 @@ const ThreatsPreview = () => {
         <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(255,214,0,0.12)'}]}>
           <Icon name="lightning-bolt" size={10} color="#FFD600" />
         </View>
-        <Text style={mockStyles.miniHeaderTitle}>Enemies</Text>
+        <Text style={mockStyles.miniHeaderTitle}>{t('onboarding.preview.enemies')}</Text>
       </View>
       <View style={{flexDirection: 'row', flex: 1, gap: 8}}>
         {/* Featured large card */}
@@ -171,7 +177,7 @@ const ThreatsPreview = () => {
           <Text style={mockStyles.featuredName}>{featured.name.toUpperCase()}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 3, marginTop: 4}}>
             <View style={{width: 5, height: 5, borderRadius: 3, backgroundColor: '#FF4444'}} />
-            <Text style={{fontSize: 7, color: '#FF4444', fontWeight: '700'}}>ELITE</Text>
+            <Text style={{fontSize: 7, color: '#FF4444', fontWeight: '700'}}>{t('onboarding.preview.elite')}</Text>
           </View>
         </View>
         {/* Side list */}
@@ -194,6 +200,7 @@ const ThreatsPreview = () => {
 
 /* 4. TRADERS — portrait row cards (TraderListScreen style) */
 const TradersPreview = () => {
+  const {t} = useTranslation();
   const cardW = (PREVIEW_W - 20 - 16) / 5;
   return (
     <View style={mockStyles.gridWrap}>
@@ -201,7 +208,7 @@ const TradersPreview = () => {
         <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(255,107,44,0.12)'}]}>
           <Icon name="store" size={10} color="#FF6B2C" />
         </View>
-        <Text style={mockStyles.miniHeaderTitle}>Traders</Text>
+        <Text style={mockStyles.miniHeaderTitle}>{t('onboarding.preview.traders')}</Text>
       </View>
       <View style={{flexDirection: 'row', gap: 4, justifyContent: 'center', marginBottom: 8}}>
         {TRADERS.map((t, i) => (
@@ -218,16 +225,16 @@ const TradersPreview = () => {
       <View style={mockStyles.shopPreview}>
         <View style={mockStyles.shopRow}>
           <Icon name="tag-outline" size={10} color="#FDD835" />
-          <Text style={mockStyles.shopLabel}>Shop Inventory</Text>
+          <Text style={mockStyles.shopLabel}>{t('onboarding.preview.shopInventory')}</Text>
           <View style={mockStyles.shopBadge}>
-            <Text style={mockStyles.shopBadgeText}>150+ ITEMS</Text>
+            <Text style={mockStyles.shopBadgeText}>{t('onboarding.preview.itemCount')}</Text>
           </View>
         </View>
         <View style={mockStyles.shopRow}>
           <Icon name="clipboard-list-outline" size={10} color="#66BB6A" />
-          <Text style={mockStyles.shopLabel}>Trader Quests</Text>
+          <Text style={mockStyles.shopLabel}>{t('onboarding.preview.traderQuests')}</Text>
           <View style={[mockStyles.shopBadge, {backgroundColor: 'rgba(102,187,106,0.15)'}]}>
-            <Text style={[mockStyles.shopBadgeText, {color: '#66BB6A'}]}>TRACK</Text>
+            <Text style={[mockStyles.shopBadgeText, {color: '#66BB6A'}]}>{t('onboarding.preview.track')}</Text>
           </View>
         </View>
       </View>
@@ -236,13 +243,15 @@ const TradersPreview = () => {
 };
 
 /* 5. EVENTS — live timer cards (EventTimerScreen style) */
-const EventsPreview = () => (
+const EventsPreview = () => {
+  const {t} = useTranslation();
+  return (
   <View style={mockStyles.gridWrap}>
     <View style={mockStyles.miniHeader}>
       <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(168,85,247,0.12)'}]}>
         <Icon name="clock-outline" size={10} color="#A855F7" />
       </View>
-      <Text style={mockStyles.miniHeaderTitle}>Live Events</Text>
+      <Text style={mockStyles.miniHeaderTitle}>{t('onboarding.preview.liveEvents')}</Text>
     </View>
     <View style={{gap: 5, flex: 1}}>
       {EVENT_TIMERS.map((evt, i) => (
@@ -270,7 +279,8 @@ const EventsPreview = () => (
       ))}
     </View>
   </View>
-);
+  );
+};
 
 /* 6. SKILL TREE — mini tree with nodes + connections (SkillTreeScreen style) */
 const TREE_NODES = [
@@ -301,6 +311,7 @@ const TREE_NODES = [
 const TREE_BC: Record<string, string> = {s: '#00D87A', m: '#FDE600', c: '#FF3A59'};
 
 const SkillTreePreview = () => {
+  const {t} = useTranslation();
   const treeW = PREVIEW_W;
   const treeH = PREVIEW_H;
   const branchSpacing = treeW / 3;
@@ -430,7 +441,7 @@ const SkillTreePreview = () => {
       {(['s', 'm', 'c'] as const).map(b => {
         const cx = getBranchCx(b);
         const bc = TREE_BC[b];
-        const names: Record<string, string> = {s: 'SURVIVAL', m: 'MOBILITY', c: 'CONDITIONING'};
+        const names: Record<string, string> = {s: t('onboarding.preview.survival'), m: t('onboarding.preview.mobility'), c: t('onboarding.preview.conditioning')};
         return (
           <View key={`lbl-${b}`} style={{position: 'absolute', left: cx - 30, bottom: 4, width: 60, alignItems: 'center'}}>
             <Text style={{fontSize: 5.5, fontWeight: '900', color: bc, letterSpacing: 1, textAlign: 'center'}}>{names[b]}</Text>
@@ -445,7 +456,7 @@ const SkillTreePreview = () => {
         paddingHorizontal: 8, paddingVertical: 4,
         borderWidth: 1, borderColor: '#1A2A3D',
       }}>
-        <Text style={{fontSize: 5.5, fontWeight: '800', color: '#7A8A98', letterSpacing: 1}}>SKILL PTS</Text>
+        <Text style={{fontSize: 5.5, fontWeight: '800', color: '#7A8A98', letterSpacing: 1}}>{t('onboarding.preview.skillPts')}</Text>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
           <Text style={{fontSize: 12, fontWeight: '900', color: '#44D5E8'}}>52</Text>
           <Text style={{fontSize: 7, fontWeight: '600', color: '#5A6A7A'}}> / 80</Text>
@@ -457,6 +468,7 @@ const SkillTreePreview = () => {
 
 /* 7. GEAR — loadout-style horizontal rows (unique layout) */
 const GearPreview = () => {
+  const {t} = useTranslation();
   const availH = PREVIEW_H - 20 - 28;
   const cardH = (availH - 20) / 6;
   const iconSz = Math.min(cardH * 0.7, 28);
@@ -466,7 +478,7 @@ const GearPreview = () => {
         <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(74,222,128,0.12)'}]}>
           <Icon name="sword-cross" size={10} color="#4ADE80" />
         </View>
-        <Text style={mockStyles.miniHeaderTitle}>Loadout</Text>
+        <Text style={mockStyles.miniHeaderTitle}>{t('onboarding.preview.loadout')}</Text>
       </View>
       <View style={{gap: 4, flex: 1}}>
         {GEAR_ITEMS.map((item, i) => (
@@ -680,6 +692,7 @@ const GRAD_COLORS = ['#00E5FF', '#A855F7', '#FF6B2C', '#FFD600', '#4ADE80', '#00
 
 const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
   const insets = useSafeAreaInsets();
+  const {t} = useTranslation();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<any>(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -774,7 +787,7 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
 
       {/* Skip button */}
       <TouchableOpacity style={[styles.skipBtn, {top: insets.top + 12}]} onPress={skipOnboarding} activeOpacity={0.6}>
-        <Text style={styles.skipText}>SKIP</Text>
+        <Text style={styles.skipText}>{t('onboarding.skip')}</Text>
       </TouchableOpacity>
 
       {/* Pages */}
@@ -818,11 +831,11 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
               <Animated.View style={[styles.textContent, {transform: [{translateY}], opacity}]}>
                 <View style={[styles.badge, {borderColor: slide.badgeColor + '44'}]}>
                   <View style={[styles.badgeDot, {backgroundColor: slide.badgeColor}]} />
-                  <Text style={[styles.badgeText, {color: slide.badgeColor}]}>{slide.badge}</Text>
+                  <Text style={[styles.badgeText, {color: slide.badgeColor}]}>{t(`onboarding.${slide.key}.badge`)}</Text>
                 </View>
-                <Text style={styles.title}>{slide.title}</Text>
+                <Text style={styles.title}>{t(`onboarding.${slide.key}.title`)}</Text>
                 <LinearGradient colors={['transparent', slide.iconColor, 'transparent']} start={{x: 0, y: 0}} end={{x: 1, y: 0}} style={styles.divider} />
-                <Text style={styles.description}>{slide.description}</Text>
+                <Text style={styles.description}>{t(`onboarding.${slide.key}.description`)}</Text>
               </Animated.View>
             </View>
           );
@@ -859,7 +872,7 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
             </Animated.View>
           </View>
           <View style={styles.ctaInner}>
-            <Text style={styles.ctaText}>{isLast ? 'DEPLOY TO FIELD' : 'MOVE OUT'}</Text>
+            <Text style={styles.ctaText}>{isLast ? t('onboarding.deployToField') : t('onboarding.moveOut')}</Text>
             <Icon name={isLast ? 'rocket-launch' : 'chevron-right'} size={20} color={colors.cyan} />
           </View>
         </TouchableOpacity>

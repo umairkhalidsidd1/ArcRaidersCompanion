@@ -15,7 +15,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import maps from '../data/maps.json';
+import {useTranslation} from 'react-i18next';
+import {getMaps} from '../data/localizedData';
 
 const STORAGE_KEY = '@arcc_submissions_v1';
 
@@ -42,7 +43,9 @@ const REPORT_TYPES = [
 type SubmitMode = null | 'add-location' | 'report-issue' | 'suggest-item';
 
 const SubmitScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const insets = useSafeAreaInsets();
+  const maps = getMaps();
   const [mode, setMode] = useState<SubmitMode>(null);
 
   // Add Location form
@@ -77,19 +80,19 @@ const SubmitScreen = ({navigation}: any) => {
 
     if (mode === 'add-location') {
       if (!selectedMap || !selectedCategory || !locationName.trim()) {
-        Alert.alert('Missing Info', 'Please select a map, category, and enter a name.');
+        Alert.alert(t('submit.missingInfo'), t('submit.missingLocationInfo'));
         return;
       }
       submission = {...submission, map: selectedMap, category: selectedCategory, name: locationName, description: locationDesc};
     } else if (mode === 'report-issue') {
       if (!reportType || !reportDetails.trim()) {
-        Alert.alert('Missing Info', 'Please select an issue type and describe the problem.');
+        Alert.alert(t('submit.missingInfo'), t('submit.missingReportInfo'));
         return;
       }
       submission = {...submission, reportType, details: reportDetails};
     } else if (mode === 'suggest-item') {
       if (!itemName.trim()) {
-        Alert.alert('Missing Info', 'Please enter the item name.');
+        Alert.alert(t('submit.missingInfo'), t('submit.missingItemInfo'));
         return;
       }
       submission = {...submission, itemName, itemType, details: itemDetails};
@@ -102,9 +105,9 @@ const SubmitScreen = ({navigation}: any) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
 
     Alert.alert(
-      'Submitted!',
-      'Your contribution has been saved locally. Thank you for helping the community!',
-      [{text: 'OK', onPress: () => { setMode(null); resetForms(); }}],
+      t('submit.submitted'),
+      t('submit.submittedMessage'),
+      [{text: t('common.ok'), onPress: () => { setMode(null); resetForms(); }}],
     );
   }, [mode, selectedMap, selectedCategory, locationName, locationDesc, reportType, reportDetails, itemName, itemType, itemDetails]);
 
@@ -116,8 +119,8 @@ const SubmitScreen = ({navigation}: any) => {
           <Icon name="map-marker-plus-outline" size={32} color={colors.cyan} />
         </View>
         <View style={styles.optionInfo}>
-          <Text style={styles.optionTitle}>Add Location</Text>
-          <Text style={styles.optionDesc}>Place a marker on any map to share an item location</Text>
+          <Text style={styles.optionTitle}>{t('submit.addLocation')}</Text>
+          <Text style={styles.optionDesc}>{t('submit.addLocationDesc')}</Text>
         </View>
         <Icon name="chevron-right" size={20} color={colors.textMuted} />
       </TouchableOpacity>
@@ -128,8 +131,8 @@ const SubmitScreen = ({navigation}: any) => {
           <Icon name="flag-outline" size={32} color={colors.red} />
         </View>
         <View style={styles.optionInfo}>
-          <Text style={styles.optionTitle}>Report Issue</Text>
-          <Text style={styles.optionDesc}>Report incorrect or outdated marker information</Text>
+          <Text style={styles.optionTitle}>{t('submit.reportIssue')}</Text>
+          <Text style={styles.optionDesc}>{t('submit.reportIssueDesc')}</Text>
         </View>
         <Icon name="chevron-right" size={20} color={colors.textMuted} />
       </TouchableOpacity>
@@ -140,8 +143,8 @@ const SubmitScreen = ({navigation}: any) => {
           <Icon name="plus-box-outline" size={32} color={colors.cyan} />
         </View>
         <View style={styles.optionInfo}>
-          <Text style={styles.optionTitle}>Suggest Item</Text>
-          <Text style={styles.optionDesc}>Submit a missing item to the database catalog</Text>
+          <Text style={styles.optionTitle}>{t('submit.suggestItem')}</Text>
+          <Text style={styles.optionDesc}>{t('submit.suggestItemDesc')}</Text>
         </View>
         <Icon name="chevron-right" size={20} color={colors.textMuted} />
       </TouchableOpacity>
@@ -151,7 +154,7 @@ const SubmitScreen = ({navigation}: any) => {
   const renderAddLocation = () => (
     <ScrollView contentContainerStyle={styles.formContent} showsVerticalScrollIndicator={false}>
       {/* Map Select */}
-      <Text style={styles.formLabel}>SELECT MAP</Text>
+      <Text style={styles.formLabel}>{t('submit.selectMap')}</Text>
       <View style={styles.mapGrid}>
         {maps.map(m => (
           <TouchableOpacity
@@ -167,7 +170,7 @@ const SubmitScreen = ({navigation}: any) => {
       </View>
 
       {/* Category Select */}
-      <Text style={styles.formLabel}>MARKER CATEGORY</Text>
+      <Text style={styles.formLabel}>{t('submit.markerCategory')}</Text>
       <View style={styles.categoryGrid}>
         {MARKER_CATEGORIES.map(cat => (
           <TouchableOpacity
@@ -175,26 +178,26 @@ const SubmitScreen = ({navigation}: any) => {
             style={[styles.catChip, selectedCategory === cat.key && {backgroundColor: cat.color + '20', borderColor: cat.color}]}
             onPress={() => setSelectedCategory(cat.key)}>
             <Icon name={cat.icon} size={16} color={selectedCategory === cat.key ? cat.color : colors.textMuted} />
-            <Text style={[styles.catText, selectedCategory === cat.key && {color: cat.color}]}>{cat.label}</Text>
+            <Text style={[styles.catText, selectedCategory === cat.key && {color: cat.color}]}>{t('submit.categories.' + cat.key)}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
       {/* Name */}
-      <Text style={styles.formLabel}>LOCATION NAME</Text>
+      <Text style={styles.formLabel}>{t('submit.locationName')}</Text>
       <TextInput
         style={styles.textInput}
-        placeholder="e.g. Hidden Ammo Crate near Dam Tower"
+        placeholder={t('submit.locationNamePlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={locationName}
         onChangeText={setLocationName}
       />
 
       {/* Description */}
-      <Text style={styles.formLabel}>DESCRIPTION (optional)</Text>
+      <Text style={styles.formLabel}>{t('submit.descriptionOptional')}</Text>
       <TextInput
         style={[styles.textInput, {height: 80, textAlignVertical: 'top'}]}
-        placeholder="Describe how to find this location..."
+        placeholder={t('submit.descriptionPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={locationDesc}
         onChangeText={setLocationDesc}
@@ -203,14 +206,14 @@ const SubmitScreen = ({navigation}: any) => {
 
       <TouchableOpacity style={styles.submitBtn} onPress={submitForm}>
         <Icon name="send" size={18} color={colors.textInverse} />
-        <Text style={styles.submitBtnText}>SUBMIT LOCATION</Text>
+        <Text style={styles.submitBtnText}>{t('submit.submitLocation')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 
   const renderReportIssue = () => (
     <ScrollView contentContainerStyle={styles.formContent} showsVerticalScrollIndicator={false}>
-      <Text style={styles.formLabel}>ISSUE TYPE</Text>
+      <Text style={styles.formLabel}>{t('submit.issueType')}</Text>
       <View style={styles.categoryGrid}>
         {REPORT_TYPES.map(r => (
           <TouchableOpacity
@@ -218,15 +221,15 @@ const SubmitScreen = ({navigation}: any) => {
             style={[styles.catChip, reportType === r.key && {backgroundColor: colors.red + '20', borderColor: colors.red}]}
             onPress={() => setReportType(r.key)}>
             <Icon name={r.icon} size={16} color={reportType === r.key ? colors.red : colors.textMuted} />
-            <Text style={[styles.catText, reportType === r.key && {color: colors.red}]}>{r.label}</Text>
+            <Text style={[styles.catText, reportType === r.key && {color: colors.red}]}>{t('submit.reportTypes.' + r.key)}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <Text style={styles.formLabel}>DETAILS</Text>
+      <Text style={styles.formLabel}>{t('submit.details')}</Text>
       <TextInput
         style={[styles.textInput, {height: 100, textAlignVertical: 'top'}]}
-        placeholder="Describe the issue in detail..."
+        placeholder={t('submit.detailsPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={reportDetails}
         onChangeText={setReportDetails}
@@ -235,35 +238,35 @@ const SubmitScreen = ({navigation}: any) => {
 
       <TouchableOpacity style={[styles.submitBtn, {backgroundColor: colors.red}]} onPress={submitForm}>
         <Icon name="flag" size={18} color={colors.textInverse} />
-        <Text style={styles.submitBtnText}>SUBMIT REPORT</Text>
+        <Text style={styles.submitBtnText}>{t('submit.submitReport')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 
   const renderSuggestItem = () => (
     <ScrollView contentContainerStyle={styles.formContent} showsVerticalScrollIndicator={false}>
-      <Text style={styles.formLabel}>ITEM NAME</Text>
+      <Text style={styles.formLabel}>{t('submit.itemName')}</Text>
       <TextInput
         style={styles.textInput}
-        placeholder="e.g. Plasma Cutter MK4"
+        placeholder={t('submit.itemNamePlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={itemName}
         onChangeText={setItemName}
       />
 
-      <Text style={styles.formLabel}>ITEM TYPE</Text>
+      <Text style={styles.formLabel}>{t('submit.itemType')}</Text>
       <TextInput
         style={styles.textInput}
-        placeholder="e.g. Weapon, Blueprint, Material..."
+        placeholder={t('submit.itemTypePlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={itemType}
         onChangeText={setItemType}
       />
 
-      <Text style={styles.formLabel}>ADDITIONAL DETAILS</Text>
+      <Text style={styles.formLabel}>{t('submit.additionalDetails')}</Text>
       <TextInput
         style={[styles.textInput, {height: 100, textAlignVertical: 'top'}]}
-        placeholder="Stats, rarity, where you found it..."
+        placeholder={t('submit.additionalDetailsPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={itemDetails}
         onChangeText={setItemDetails}
@@ -272,7 +275,7 @@ const SubmitScreen = ({navigation}: any) => {
 
       <TouchableOpacity style={[styles.submitBtn, {backgroundColor: colors.cyan}]} onPress={submitForm}>
         <Icon name="plus-circle" size={18} color={colors.textInverse} />
-        <Text style={styles.submitBtnText}>SUBMIT ITEM</Text>
+        <Text style={styles.submitBtnText}>{t('submit.submitItem')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -296,12 +299,12 @@ const SubmitScreen = ({navigation}: any) => {
         </View>
         <View>
           <Text style={styles.headerTitle}>
-            {mode === 'add-location' ? 'Add Location' :
-             mode === 'report-issue' ? 'Report Issue' :
-             mode === 'suggest-item' ? 'Suggest Item' : 'Submit'}
+            {mode === 'add-location' ? t('submit.addLocation') :
+             mode === 'report-issue' ? t('submit.reportIssue') :
+             mode === 'suggest-item' ? t('submit.suggestItem') : t('submit.title')}
           </Text>
           <Text style={styles.headerSubtitle}>
-            {mode ? 'Fill in the details below' : 'Contribute locations & data'}
+            {mode ? t('submit.fillDetails') : t('submit.contributeData')}
           </Text>
         </View>
       </View>

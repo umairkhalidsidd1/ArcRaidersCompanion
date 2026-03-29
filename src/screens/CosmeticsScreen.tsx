@@ -19,6 +19,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import {resolveImage} from '../data/imageRegistry';
+import {useTranslation} from 'react-i18next';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const CAROUSEL_CARD_W = SCREEN_W * 0.58;
@@ -139,6 +140,7 @@ const getSetItems = (item: CosmeticItem): CosmeticItem[] => {
 
 /* ═══════ COMPONENT ═══════ */
 const CosmeticsScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const insets = useSafeAreaInsets();
   const carouselRef = useRef<FlatList>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -178,7 +180,7 @@ const CosmeticsScreen = ({navigation}: any) => {
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Icon name="chevron-left" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>COSMETIC INSPECT</Text>
+        <Text style={styles.headerTitle}>{t('cosmeticsScreen.title')}</Text>
         <View style={{width: 44}} />
       </View>
 
@@ -301,7 +303,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                 {/* Category detail section */}
                 <View style={styles.detailSection}>
                   <View style={styles.detailInfoRow}>
-                    <Text style={styles.detailInfoLabel}>CATEGORY</Text>
+                    <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.category')}</Text>
                     <View style={styles.detailInfoValueRow}>
                       <Icon name={catCfg.icon} size={14} color={catCfg.color} />
                       <Text style={[styles.detailInfoValue, {color: catCfg.color}]}>
@@ -310,11 +312,11 @@ const CosmeticsScreen = ({navigation}: any) => {
                     </View>
                   </View>
                   <View style={styles.detailInfoRow}>
-                    <Text style={styles.detailInfoLabel}>TYPE</Text>
-                    <Text style={styles.detailInfoValue}>Cosmetic</Text>
+                    <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.type')}</Text>
+                    <Text style={styles.detailInfoValue}>{t('cosmeticsScreen.cosmetic')}</Text>
                   </View>
                   <View style={styles.detailInfoRow}>
-                    <Text style={styles.detailInfoLabel}>RARITY</Text>
+                    <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.rarity')}</Text>
                     <Text style={[styles.detailInfoValue, {color: rarityColor}]}>
                       {activeItem.rarity}
                     </Text>
@@ -325,7 +327,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                 <View style={styles.infoRow}>
                   <View style={styles.infoItem}>
                     <Icon name="tag" size={14} color={colors.textSecondary} />
-                    <Text style={styles.infoValue}>Cosmetic</Text>
+                    <Text style={styles.infoValue}>{t('cosmeticsScreen.cosmetic')}</Text>
                   </View>
                   <View style={styles.infoDivider} />
                   <View style={styles.infoItem}>
@@ -351,7 +353,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                   />
                   <View style={styles.unlockHeader}>
                     <Icon name="lock-open-variant" size={14} color={colors.textMuted} />
-                    <Text style={styles.unlockHeaderText}>HOW TO UNLOCK</Text>
+                    <Text style={styles.unlockHeaderText}>{t('cosmeticsScreen.howToUnlock')}</Text>
                   </View>
                   <View style={styles.unlockContent}>
                     <View
@@ -392,7 +394,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                         i.id !== activeItem.id,
                     );
               if (related.length === 0) return null;
-              let sectionTitle = `MORE ${activeItem.subcategory.toUpperCase()}`;
+              let sectionTitle = t('cosmeticsScreen.moreCategory', {category: activeItem.subcategory.toUpperCase()});
               if (setItems.length > 0) {
                 const pm = activeItem.name.match(/\((.+?)\)/);
                 const tw = [
@@ -405,8 +407,8 @@ const CosmeticsScreen = ({navigation}: any) => {
                   const sn = sw.join(' ').trim();
                   const bm = activeItem.name.match(/^(.+?)\s*\(/);
                   const bn = bm ? bm[1].trim() : '';
-                  const t = sn || bn;
-                  if (t) sectionTitle = `${t.toUpperCase()} SET`;
+                  const setLabel = sn || bn;
+                  if (setLabel) sectionTitle = t('cosmeticsScreen.setTitle', {name: setLabel.toUpperCase()});
                 }
               }
               return (
@@ -415,7 +417,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                     <Text style={styles.relatedTitle}>{sectionTitle}</Text>
                     {setItems.length > 0 && (
                       <Text style={styles.relatedCount}>
-                        {setItems.length + 1} PIECES
+                        {t('cosmeticsScreen.pieces', {count: setItems.length + 1})}
                       </Text>
                     )}
                   </View>
@@ -484,7 +486,7 @@ const CosmeticsScreen = ({navigation}: any) => {
         ) : (
           <View style={styles.emptyState}>
             <Icon name="palette-outline" size={48} color={colors.textMuted} />
-            <Text style={styles.emptyText}>No cosmetics found</Text>
+            <Text style={styles.emptyText}>{t('cosmeticsScreen.noResults')}</Text>
           </View>
         )}
       </ScrollView>

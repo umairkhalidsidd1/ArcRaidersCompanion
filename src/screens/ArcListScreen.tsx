@@ -13,8 +13,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawArcs from '../data/arcs.json';
+import {getArcs} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
+import { useTranslation } from 'react-i18next';
 
 type Arc = {
   id: string;
@@ -32,7 +33,8 @@ const CARD_W = (SCREEN_W - PADDING * 2 - CARD_GAP * (NUM_COLS - 1)) / NUM_COLS;
 
 const ArcListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
-  const arcs = rawArcs as Arc[];
+  const arcs = getArcs() as Arc[];
+  const { t } = useTranslation();
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
@@ -43,7 +45,7 @@ const ArcListScreen = ({navigation}: any) => {
         <View style={styles.headerIconWrap}>
           <Icon name="lightning-bolt" size={18} color={colors.cyan} />
         </View>
-        <Text style={styles.headerTitle}>Enemies</Text>
+        <Text style={styles.headerTitle}>{t('enemies.title')}</Text>
       </View>
 
       <FlatList

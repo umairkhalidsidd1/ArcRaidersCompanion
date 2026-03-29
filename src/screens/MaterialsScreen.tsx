@@ -20,16 +20,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, {Defs, Pattern, Rect, Line} from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import {getItems, getTraders, getQuests} from '../data/localizedData';
+import i18n from '../i18n/i18n';
 import expeditionData from '../data/expeditions.json';
-import tradersData from '../data/traders.json';
-import questsData from '../data/quests.json';
 import trophyDisplayData from '../data/trophyDisplay.json';
 import enemyDropsData from '../data/enemyDrops.json';
 import recycleOutputsData from '../data/recycleOutputs.json';
 import craftingRecipesData from '../data/craftingRecipes.json';
 import FilterModal from '../components/FilterModal';
 import {resolveImage} from '../data/imageRegistry';
+import {useTranslation} from 'react-i18next';
 
 /* ═══════════════ CONSTANTS ═══════════════ */
 const {width: SCREEN_W, height: SCREEN_H} = Dimensions.get('window');
@@ -97,24 +97,24 @@ const CRAFTABLE_TYPES = new Set([
 ]);
 
 const CATEGORY_FILTERS = [
-  {key: 'all',       label: 'All',             icon: 'view-grid',         color: colors.cyan},
-  {key: 'Weapon',    label: 'Weapons',         icon: 'sword-cross',       color: '#FF6B2C'},
-  {key: 'Blueprint', label: 'Blueprints',      icon: 'file-document',     color: '#2196F3'},
-  {key: 'Topside Material', label: 'Topside Mat.', icon: 'diamond-stone', color: '#66BB6A'},
-  {key: 'Refined Material', label: 'Refined Mat.', icon: 'flask',         color: '#42A5F5'},
-  {key: 'Basic Material',   label: 'Basic Mat.',   icon: 'cube-outline',  color: '#78909C'},
-  {key: 'Advanced Material', label: 'Advanced Mat.', icon: 'star-four-points', color: '#AB47BC'},
-  {key: 'Quick Use', label: 'Quick Use',       icon: 'lightning-bolt',    color: '#FFA000'},
-  {key: 'Gadget',    label: 'Gadgets',         icon: 'cog',              color: '#26C6DA'},
-  {key: 'Shield',    label: 'Shields',         icon: 'shield-half-full', color: '#42A5F5'},
-  {key: 'Consumable',label: 'Consumables',     icon: 'food-apple',       color: '#66BB6A'},
-  {key: 'Medical',   label: 'Medical',         icon: 'medical-bag',      color: '#F44336'},
-  {key: 'Throwable', label: 'Throwables',      icon: 'bomb',             color: '#FF7043'},
-  {key: 'Augment',   label: 'Augments',        icon: 'chip',             color: '#7E57C2'},
-  {key: 'Trinket',   label: 'Trinkets',        icon: 'star',             color: '#FFD600'},
-  {key: 'Cosmetic',  label: 'Cosmetics',       icon: 'tshirt-crew',      color: '#E91E63'},
-  {key: 'Recyclable',label: 'Recyclables',     icon: 'recycle',          color: '#00E676'},
-  {key: 'Misc',      label: 'Misc',            icon: 'dots-horizontal',  color: '#9E9E9E'},
+  {key: 'all',       label: 'common.all',             icon: 'view-grid',         color: colors.cyan},
+  {key: 'Weapon',    label: 'materials.weapons',      icon: 'sword-cross',       color: '#FF6B2C'},
+  {key: 'Blueprint', label: 'materials.blueprints',   icon: 'file-document',     color: '#2196F3'},
+  {key: 'Topside Material', label: 'materials.topsideMat', icon: 'diamond-stone', color: '#66BB6A'},
+  {key: 'Refined Material', label: 'materials.refinedMat', icon: 'flask',         color: '#42A5F5'},
+  {key: 'Basic Material',   label: 'materials.basicMat',   icon: 'cube-outline',  color: '#78909C'},
+  {key: 'Advanced Material', label: 'materials.advancedMat', icon: 'star-four-points', color: '#AB47BC'},
+  {key: 'Quick Use', label: 'materials.quickUse',     icon: 'lightning-bolt',    color: '#FFA000'},
+  {key: 'Gadget',    label: 'materials.gadgets',      icon: 'cog',              color: '#26C6DA'},
+  {key: 'Shield',    label: 'materials.shields',      icon: 'shield-half-full', color: '#42A5F5'},
+  {key: 'Consumable',label: 'materials.consumables',  icon: 'food-apple',       color: '#66BB6A'},
+  {key: 'Medical',   label: 'materials.medical',      icon: 'medical-bag',      color: '#F44336'},
+  {key: 'Throwable', label: 'materials.throwables',   icon: 'bomb',             color: '#FF7043'},
+  {key: 'Augment',   label: 'materials.augments',     icon: 'chip',             color: '#7E57C2'},
+  {key: 'Trinket',   label: 'materials.trinkets',     icon: 'star',             color: '#FFD600'},
+  {key: 'Cosmetic',  label: 'materials.cosmetics',    icon: 'tshirt-crew',      color: '#E91E63'},
+  {key: 'Recyclable',label: 'materials.recyclables',  icon: 'recycle',          color: '#00E676'},
+  {key: 'Misc',      label: 'materials.misc',         icon: 'dots-horizontal',  color: '#9E9E9E'},
 ];
 
 const RARITY_FILTERS = [
@@ -128,26 +128,35 @@ const RARITY_FILTERS = [
 const MATERIAL_LISTS = [
   {
     id: 'workbench',
-    name: 'Workbench Upgrades',
-    description: 'Materials needed to upgrade workbenches',
+    name: 'materials.workbenchUpgrades',
+    description: 'materials.workbenchUpgradeDesc',
     icon: 'hammer-wrench',
     color: '#AB47BC',
   },
   {
     id: 'expedition',
-    name: 'Expedition',
-    description: 'Materials required to send expedition(prestige)',
+    name: 'materials.expedition',
+    description: 'materials.expeditionDesc',
     icon: 'compass',
     color: '#42A5F5',
   },
   {
     id: 'trophy',
-    name: 'Trophy Display',
-    description: 'Complete stages to earn rewards from your Trophy Display',
+    name: 'materials.trophyDisplay',
+    description: 'materials.trophyDisplayDesc',
     icon: 'format-list-bulleted',
     color: '#26C6DA',
   },
 ];
+
+const SAVED_LIST_I18N: Record<string, string> = {
+  'Workbench Upgrades': 'materials.workbenchUpgrades',
+  'Expedition': 'materials.expedition',
+  'Sold by Trader': 'materials.soldByTrader',
+  'Quest Reward': 'materials.questReward',
+  'Trophy Display': 'materials.trophyDisplay',
+  'Quest Objective': 'materials.questObjective',
+};
 
 /* ═══════════════ WORKBENCH UPGRADE DATA ═══════════════ */
 const WB_CHECKED_KEY = '@arcc_wb_checked_v1';
@@ -231,13 +240,14 @@ const WORKBENCH_UPGRADES: WBStation[] = [
 ];
 
 /* Item lookup by name for icons/rarity (lazy-initialized) */
-let _itemByNameReady = false;
+let _itemByNameLang = '';
 let itemByName: Map<string, RawItem>;
 function ensureItemByName() {
-  if (_itemByNameReady) return;
-  _itemByNameReady = true;
+  const lang = i18n.language;
+  if (_itemByNameLang === lang) return;
+  _itemByNameLang = lang;
   itemByName = new Map<string, RawItem>();
-  (rawItems as RawItem[]).forEach(item => {
+  (getItems() as RawItem[]).forEach(item => {
     itemByName.set(item.name.toLowerCase(), item);
   });
 }
@@ -301,15 +311,23 @@ const GradientBorder = ({children, style, radius = borderRadius.lg, borderW = 1.
 };
 
 /* ═══════════════ ALL ITEMS SORTED ═══════════════ */
-const allItems: RawItem[] = (rawItems as RawItem[]).sort((a, b) =>
-  a.name.localeCompare(b.name),
-);
+let _matLang = '';
+let allItems: RawItem[] = [];
+function refreshMaterialItems() {
+  const lang = i18n.language;
+  if (_matLang === lang && allItems.length > 0) return;
+  _matLang = lang;
+  allItems = (getItems() as RawItem[]).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+}
+refreshMaterialItems();
 
 /* ═══════════════ PRE-BUILT LOOKUP INDEXES (lazy-initialized) ═══════════════ */
 type ItemRef = {item: RawItem; quantity: number};
 type SavedEntry = {listName: string; detail?: string; quantity?: number; icon: string; color: string};
 
-let _indexesReady = false;
+let _indexesLang = '';
 let _allByNameLower: Map<string, RawItem>;
 let _recyclesFromIdx: Map<string, ItemRef[]>;
 let _recycleOutputsIdx: Map<string, ItemRef[]>;
@@ -318,8 +336,9 @@ let _usedInIdx: Map<string, ItemRef[]>;
 let _savedIdx: Map<string, SavedEntry[]>;
 
 function ensureIndexes() {
-  if (_indexesReady) return;
-  _indexesReady = true;
+  const lang = i18n.language;
+  if (_indexesLang === lang) return;
+  _indexesLang = lang;
 
   _allByNameLower = new Map<string, RawItem>();
   allItems.forEach(i => _allByNameLower.set(i.name.toLowerCase(), i));
@@ -393,10 +412,10 @@ function ensureIndexes() {
       if (k) pushSaved(k, {listName: 'Expedition', detail: stage.name, quantity: obj.quantity, icon: 'compass', color: '#42A5F5'});
     });
   });
-  (tradersData as any[]).forEach((t: any) => {
+  (getTraders() as any[]).forEach((t: any) => {
     if (t.item_name) pushSaved(t.item_name.toLowerCase(), {listName: 'Sold by Trader', detail: t.trader_name, quantity: t.trader_price, icon: 'storefront-outline', color: '#4DB6AC'});
   });
-  const allQuestsData = (questsData as any).quests || [];
+  const allQuestsData = (getQuests() as any).quests || [];
   allQuestsData.forEach((q: any) => {
     (q.rewards || []).forEach((r: any) => {
       if (r.name) pushSaved(r.name.toLowerCase(), {listName: 'Quest Reward', detail: q.name, quantity: r.quantity, icon: 'gift-outline', color: '#FFD54F'});
@@ -593,6 +612,7 @@ const DetailSheet = ({
   onOpenExpSheet?: () => void;
   onOpenTdSheet?: () => void;
 }) => {
+  const { t } = useTranslation();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
   const currentTY = useRef(WB_TY_HIDDEN);
@@ -807,12 +827,12 @@ const DetailSheet = ({
               <View style={detailStyles.badgeRow}>
                 <View style={[detailStyles.rarityBadge, {backgroundColor: rarityColor}]}>
                   <Text style={detailStyles.rarityText}>
-                    {(item.rarity || 'COMMON').toUpperCase()}
+                    {t('rarity.' + (item.rarity || 'Common').toLowerCase()).toUpperCase()}
                   </Text>
                 </View>
                 <View style={detailStyles.typeBadge}>
                   <Text style={detailStyles.typeText}>
-                    {item.item_type.toUpperCase()}
+                    {t('itemType.' + item.item_type, item.item_type).toUpperCase()}
                   </Text>
                 </View>
               </View>
@@ -832,7 +852,7 @@ const DetailSheet = ({
             <View style={detailStyles.infoCard}>
               <View style={detailStyles.infoCardHeader}>
                 <Icon name="bitcoin" size={14} color={colors.textMuted} />
-                <Text style={detailStyles.infoCardLabel}>RESELL VALUE</Text>
+                <Text style={detailStyles.infoCardLabel}>{t('items.resellValue')}</Text>
               </View>
               <Text style={[detailStyles.infoCardValue, {color: colors.cyan}]}>
                 {(item.value || 0).toLocaleString()}
@@ -841,7 +861,7 @@ const DetailSheet = ({
             <View style={detailStyles.infoCard}>
               <View style={detailStyles.infoCardHeader}>
                 <Icon name="layers-triple" size={14} color={colors.textMuted} />
-                <Text style={detailStyles.infoCardLabel}>MAX STACK SIZE</Text>
+                <Text style={detailStyles.infoCardLabel}>{t('items.maxStackSize')}</Text>
               </View>
               <Text style={[detailStyles.infoCardValue, {color: colors.cyan}]}>
                 {parsed?.stackSize || 1}
@@ -854,13 +874,13 @@ const DetailSheet = ({
             <View style={detailStyles.section}>
               <View style={detailStyles.sectionHeader}>
                 <Icon name="chart-bar" size={18} color={colors.cyan} />
-                <Text style={detailStyles.sectionTitle}>STATS</Text>
+                <Text style={detailStyles.sectionTitle}>{t('items.stats')}</Text>
               </View>
               <View style={detailStyles.statsCard}>
                 {stats.map(([key, value]) => (
                   <StatBarRow
                     key={key}
-                    label={key}
+                    label={t('items.' + key, key)}
                     value={value as number}
                     maxVal={maxStatVal}
                   />
@@ -874,7 +894,7 @@ const DetailSheet = ({
             <View style={detailStyles.section}>
               <View style={detailStyles.sectionHeader}>
                 <Icon name="bookmark-multiple" size={18} color={colors.cyan} />
-                <Text style={detailStyles.sectionTitle}>SAVED IN LISTS</Text>
+                <Text style={detailStyles.sectionTitle}>{t('materials.savedInLists')}</Text>
               </View>
               {savedInLists.map((entry, idx) => (
                 <TouchableOpacity
@@ -892,15 +912,15 @@ const DetailSheet = ({
                   }}>
                   <Icon name={entry.icon} size={20} color={entry.color} />
                   <View style={{flex: 1}}>
-                    <Text style={detailStyles.savedListName}>{entry.listName}</Text>
+                    <Text style={detailStyles.savedListName}>{t(SAVED_LIST_I18N[entry.listName] ?? entry.listName)}</Text>
                     {entry.detail ? (
                       <Text style={detailStyles.savedListDetail}>{entry.detail}</Text>
                     ) : null}
                   </View>
                   {entry.listName === 'Sold by Trader' ? (
-                    <Text style={detailStyles.savedListQty}>{entry.quantity} OC</Text>
+                    <Text style={detailStyles.savedListQty}>{entry.quantity} {t('common.oc')}</Text>
                   ) : entry.quantity != null ? (
-                    <Text style={detailStyles.savedListQty}>Quantity: {entry.quantity}</Text>
+                    <Text style={detailStyles.savedListQty}>{t('materials.quantity', {n: entry.quantity})}</Text>
                   ) : null}
                   {(entry.listName === 'Workbench Upgrades' || entry.listName === 'Expedition' || entry.listName === 'Trophy Display') ? (
                     <Icon name="chevron-right" size={20} color={colors.textMuted} />
@@ -915,7 +935,7 @@ const DetailSheet = ({
             <View style={detailStyles.section}>
               <View style={detailStyles.sectionHeader}>
                 <Icon name="skull-crossbones" size={18} color={colors.cyan} />
-                <Text style={detailStyles.sectionTitle}>DROPPED BY</Text>
+                <Text style={detailStyles.sectionTitle}>{t('materials.droppedBy')}</Text>
               </View>
               {droppedBy.map((enemy, idx) => (
                 <View key={idx} style={detailStyles.droppedByRow}>
@@ -928,7 +948,7 @@ const DetailSheet = ({
                   )}
                   <View style={{flex: 1}}>
                     <Text style={detailStyles.droppedByName}>{enemy.name}</Text>
-                    <Text style={detailStyles.droppedByType}>Enemy</Text>
+                    <Text style={detailStyles.droppedByType}>{t('common.enemy')}</Text>
                   </View>
                 </View>
               ))}
@@ -940,13 +960,13 @@ const DetailSheet = ({
             <View style={detailStyles.section}>
               <View style={detailStyles.sectionHeader}>
                 <Icon name="anvil" size={18} color={colors.cyan} />
-                <Text style={detailStyles.sectionTitle}>CRAFTING & RECYCLING</Text>
+                <Text style={detailStyles.sectionTitle}>{t('materials.craftingRecycling')}</Text>
               </View>
 
               {craftedAt && (
                 <View style={detailStyles.craftedAtRow}>
                   <Icon name="tools" size={16} color={colors.cyan} />
-                  <Text style={detailStyles.craftedAtLabel}>Crafted at</Text>
+                  <Text style={detailStyles.craftedAtLabel}>{t('materials.craftedAt')}</Text>
                   <Text style={detailStyles.craftedAtValue}>{craftedAt}</Text>
                 </View>
               )}
@@ -955,7 +975,7 @@ const DetailSheet = ({
                 <>
                   <View style={detailStyles.subHeader}>
                     <Icon name="clipboard-list" size={14} color={colors.textSecondary} />
-                    <Text style={detailStyles.subHeaderText}>Crafted From</Text>
+                    <Text style={detailStyles.subHeaderText}>{t('materials.craftedFrom')}</Text>
                   </View>
                   <View style={detailStyles.thumbRow}>
                     {craftedFrom.map(({item: r, quantity}) => (
@@ -980,7 +1000,7 @@ const DetailSheet = ({
                 <>
                   <View style={detailStyles.subHeader}>
                     <Icon name="tools" size={14} color={colors.textSecondary} />
-                    <Text style={detailStyles.subHeaderText}>Used In Recipes</Text>
+                    <Text style={detailStyles.subHeaderText}>{t('materials.usedInRecipes')}</Text>
                   </View>
                   <View style={detailStyles.thumbRow}>
                     {usedInRecipes.map(({item: r}) => (
@@ -1000,7 +1020,7 @@ const DetailSheet = ({
                 <>
                   <View style={detailStyles.subHeader}>
                     <Icon name="recycle" size={14} color={colors.textSecondary} />
-                    <Text style={detailStyles.subHeaderText}>Recycles From</Text>
+                    <Text style={detailStyles.subHeaderText}>{t('materials.recyclesFrom')}</Text>
                   </View>
                   <View style={detailStyles.thumbRow}>
                     {recyclesFrom.map(({item: r, quantity}) => (
@@ -1025,7 +1045,7 @@ const DetailSheet = ({
                 <>
                   <View style={detailStyles.subHeader}>
                     <Icon name="arrow-down-bold" size={14} color={colors.textSecondary} />
-                    <Text style={detailStyles.subHeaderText}>Recycles Into</Text>
+                    <Text style={detailStyles.subHeaderText}>{t('materials.recyclesInto')}</Text>
                   </View>
                   <View style={detailStyles.thumbRow}>
                     {recycleOutputs.map(({item: ri, quantity}) => (
@@ -1053,7 +1073,7 @@ const DetailSheet = ({
             <View style={detailStyles.section}>
               <View style={detailStyles.sectionHeader}>
                 <Icon name="map-marker" size={18} color={colors.cyan} />
-                <Text style={detailStyles.sectionTitle}>FOUND IN</Text>
+                <Text style={detailStyles.sectionTitle}>{t('materials.foundIn')}</Text>
               </View>
               <View style={detailStyles.foundInRow}>
                 {foundInAreas.map((area: string, idx: number) => (
@@ -1080,7 +1100,7 @@ const DetailSheet = ({
                 color={bpCollected ? '#4ADE80' : colors.textMuted}
               />
               <Text style={[detailStyles.bpToggleText, bpCollected && {color: '#4ADE80'}]}>
-                {bpCollected ? 'Collected' : 'Mark as Collected'}
+                {bpCollected ? t('materials.collected') : t('materials.markCollected')}
               </Text>
             </TouchableOpacity>
           )}
@@ -1141,6 +1161,7 @@ const WorkbenchUpgradeSheet = ({
   onMaterialPress?: (item: RawItem) => void;
   overDetail?: boolean;
 }) => {
+  const { t } = useTranslation();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
   const currentTY = useRef(WB_TY_HIDDEN);
@@ -1288,8 +1309,8 @@ const WorkbenchUpgradeSheet = ({
         <View style={wbStyles.sheetHeader}>
           <Icon name="format-list-bulleted" size={22} color={colors.textPrimary} />
           <View>
-            <Text style={wbStyles.sheetTitle}>Workbench Upgrades</Text>
-            <Text style={wbStyles.sheetSubtitle}>Materials needed to upgrade workbenches</Text>
+            <Text style={wbStyles.sheetTitle}>{t('materials.workbenchUpgrades')}</Text>
+            <Text style={wbStyles.sheetSubtitle}>{t('materials.workbenchUpgradeDesc')}</Text>
           </View>
         </View>
 
@@ -1362,6 +1383,7 @@ const ExpeditionSheet = ({
   onMaterialPress?: (item: RawItem) => void;
   overDetail?: boolean;
 }) => {
+  const { t } = useTranslation();
   ensureItemByName();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
@@ -1509,8 +1531,8 @@ const ExpeditionSheet = ({
         <View style={wbStyles.sheetHeader}>
           <Icon name="compass" size={22} color={colors.textPrimary} />
           <View>
-            <Text style={wbStyles.sheetTitle}>Expedition</Text>
-            <Text style={wbStyles.sheetSubtitle}>Materials required to send raider on expedition(prestige)</Text>
+            <Text style={wbStyles.sheetTitle}>{t('materials.expedition')}</Text>
+            <Text style={wbStyles.sheetSubtitle}>{t('materials.expeditionDesc')}</Text>
           </View>
         </View>
 
@@ -1604,6 +1626,7 @@ const TrophyDisplaySheet = ({
   onMaterialPress?: (item: RawItem) => void;
   overDetail?: boolean;
 }) => {
+  const { t } = useTranslation();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
   const currentTY = useRef(WB_TY_HIDDEN);
@@ -1750,8 +1773,8 @@ const TrophyDisplaySheet = ({
         <View style={wbStyles.sheetHeader}>
           <Icon name="trophy" size={22} color={colors.cyan} />
           <View>
-            <Text style={wbStyles.sheetTitle}>Trophy Display</Text>
-            <Text style={wbStyles.sheetSubtitle}>Complete stages to earn rewards from your Trophy Display</Text>
+            <Text style={wbStyles.sheetTitle}>{t('materials.trophyDisplay')}</Text>
+            <Text style={wbStyles.sheetSubtitle}>{t('materials.trophyDisplayDesc')}</Text>
           </View>
         </View>
 
@@ -1818,7 +1841,7 @@ const TrophyDisplaySheet = ({
                   {/* Rewards Section */}
                   {stage.rewards && stage.rewards.length > 0 && (
                     <View style={{marginTop: spacing.sm, marginBottom: spacing.xs}}>
-                      <Text style={{fontSize: fonts.sizes.xs, fontWeight: '600', color: '#FFD54F', marginBottom: spacing.xs, marginLeft: spacing.xs}}>REWARDS</Text>
+                      <Text style={{fontSize: fonts.sizes.xs, fontWeight: '600', color: '#FFD54F', marginBottom: spacing.xs, marginLeft: spacing.xs}}>{t('materials.rewards')}</Text>
                       {stage.rewards.map((rw, ri) => {
                         const rwData = itemByName.get(rw.item.toLowerCase());
                         const rwColor = rwData ? getRarityColor(rwData.rarity) : '#FFD54F';
@@ -1863,6 +1886,8 @@ const TrophyDisplaySheet = ({
 
 /* ═══════════════ MAIN SCREEN ═══════════════ */
 const MaterialsScreen = ({navigation}: any) => {
+  const { t, i18n: i18nHook } = useTranslation();
+  refreshMaterialItems();
   const insets = useSafeAreaInsets();
   const [search, setSearch] = useState('');
   const [selectedType, setSelectedType] = useState('all');
@@ -1961,7 +1986,7 @@ const MaterialsScreen = ({navigation}: any) => {
     }
 
     return list;
-  }, [selectedType, selectedFilters, search, sortAZ]);
+  }, [selectedType, selectedFilters, search, sortAZ, i18nHook.language]);
 
   const handleItemPress = useCallback((item: RawItem) => {
     setSelectedItem(item);
@@ -2033,12 +2058,12 @@ const MaterialsScreen = ({navigation}: any) => {
       {/* Header */}
       <View style={styles.header}>
         <Icon name="flask" size={28} color={colors.cyan} />
-        <Text style={styles.headerTitle}>Materials</Text>
+        <Text style={styles.headerTitle}>{t('materials.title')}</Text>
       </View>
 
       {/* Material Lists */}
       <View style={styles.listsSection}>
-          <Text style={styles.listsTitle}>Material Lists</Text>
+          <Text style={styles.listsTitle}>{t('materials.materialLists')}</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -2061,9 +2086,9 @@ const MaterialsScreen = ({navigation}: any) => {
                 <View style={styles.listCardInner}>
                   <Icon name="format-list-bulleted" size={18} color={list.color} />
                   <View style={{flex: 1}}>
-                    <Text style={styles.listCardName}>{list.name}</Text>
+                    <Text style={styles.listCardName}>{t(list.name)}</Text>
                     <Text style={styles.listCardDesc} numberOfLines={2}>
-                      {list.description}
+                      {t(list.description)}
                     </Text>
                   </View>
                 </View>
@@ -2080,7 +2105,7 @@ const MaterialsScreen = ({navigation}: any) => {
             <Icon name="magnify" size={20} color={colors.textMuted} />
             <TextInput
               style={styles.searchInput}
-              placeholder="Search materials..."
+              placeholder={t('materials.searchPlaceholder')}
               placeholderTextColor={colors.textMuted}
               value={search}
               onChangeText={setSearch}
@@ -2120,7 +2145,7 @@ const MaterialsScreen = ({navigation}: any) => {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
-            <Text style={styles.emptyText}>No items found</Text>
+            <Text style={styles.emptyText}>{t('materials.noItems')}</Text>
           </View>
         }
       />

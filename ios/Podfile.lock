@@ -2056,6 +2056,28 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - RNLocalize (3.7.0):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - RNReactNativeHapticFeedback (2.3.4):
     - hermes-engine
     - RCTRequired
@@ -2432,6 +2454,7 @@ DEPENDENCIES:
   - rive-react-native (from `../node_modules/rive-react-native`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -2619,6 +2642,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fast-image"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNLocalize:
+    :path: "../node_modules/react-native-localize"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
@@ -2722,6 +2747,7 @@ SPEC CHECKSUMS:
   RiveRuntime: b2c29a7e1fbf2aabd1fffcb7b9cf43c4d515a841
   RNFastImage: 462a183c4b0b6b26fdfd639e1ed6ba37536c3b87
   RNGestureHandler: 07de6f059e0ee5744ae9a56feb07ee345338cc31
+  RNLocalize: 1e6eb4290e89502c3d2193d82dfb7de14a9e672b
   RNReactNativeHapticFeedback: d6666654afe70a15d04ecb6257809a4081fab84c
   RNReanimated: 923eb30d50cea473eed734767d4c33c374fae5fc
   RNScreens: 6cb648bdad8fe9bee9259fe144df95b6d1d5b707

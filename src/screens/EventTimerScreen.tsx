@@ -14,6 +14,7 @@ import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 import {colors} from '../theme/theme';
 import localEvents from '../data/events.json';
 import {resolveImage} from '../data/imageRegistry';
@@ -66,13 +67,7 @@ const GREEN = '#4ADE80';
 const CYAN = '#22D3EE';
 const STARTING_SOON_THRESHOLD = 3600;
 
-const MAP_DISPLAY: Record<string, string> = {
-  Dam: 'Dam Battlegrounds',
-  'Buried City': 'Buried City',
-  Spaceport: 'Spaceport',
-  'Blue Gate': 'Blue Gate',
-  'Stella Montis': 'Stella Montis',
-};
+/* MAP_DISPLAY is now handled via t() inside the component */
 
 /* ── Helpers ──────────────────────────────────────────────── */
 const parseTimeSlots = (raw: string): TimeSlot[] => {
@@ -103,7 +98,7 @@ const isSlotActive = (slot: TimeSlot): boolean => {
 
 const getEventStatus = (slots: TimeSlot[]): EventStatus => {
   if (slots.length === 0)
-    return {isActive: false, secondsRemaining: -1, label: 'No schedule'};
+    return {isActive: false, secondsRemaining: -1, label: 'noSchedule'};
 
   const nowSec = getNowSeconds();
   const DAY = 24 * 3600;
@@ -113,11 +108,11 @@ const getEventStatus = (slots: TimeSlot[]): EventStatus => {
     const endSec = parseToSeconds(s.end);
     if (endSec > startSec) {
       if (nowSec >= startSec && nowSec < endSec)
-        return {isActive: true, secondsRemaining: endSec - nowSec, label: 'ACTIVE', activeSlot: s};
+        return {isActive: true, secondsRemaining: endSec - nowSec, label: 'active', activeSlot: s};
     } else {
       if (nowSec >= startSec || nowSec < endSec) {
         const rem = nowSec >= startSec ? DAY - nowSec + endSec : endSec - nowSec;
-        return {isActive: true, secondsRemaining: rem, label: 'ACTIVE', activeSlot: s};
+        return {isActive: true, secondsRemaining: rem, label: 'active', activeSlot: s};
       }
     }
   }
@@ -127,8 +122,8 @@ const getEventStatus = (slots: TimeSlot[]): EventStatus => {
   );
   const next = sorted.find(s => parseToSeconds(s.start) > nowSec);
   if (next)
-    return {isActive: false, secondsRemaining: parseToSeconds(next.start) - nowSec, label: 'STARTS IN', nextSlot: next};
-  return {isActive: false, secondsRemaining: DAY - nowSec + parseToSeconds(sorted[0].start), label: 'STARTS IN', nextSlot: sorted[0]};
+    return {isActive: false, secondsRemaining: parseToSeconds(next.start) - nowSec, label: 'startsIn', nextSlot: next};
+  return {isActive: false, secondsRemaining: DAY - nowSec + parseToSeconds(sorted[0].start), label: 'startsIn', nextSlot: sorted[0]};
 };
 
 /** Format "HH:MM" UTC → local Date object */
@@ -143,11 +138,11 @@ const utcToLocalDate = (utcTime: string): Date => {
 /** Format "HH:MM" UTC → "Day H:MM AM/PM" */
 const utcSlotToLocal = (utcTime: string): string => {
   const d = utcToLocalDate(utcTime);
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   let lh = d.getHours();
   const ampm = lh >= 12 ? 'PM' : 'AM';
   lh = lh % 12 || 12;
-  return `${days[d.getDay()]} ${lh}:${String(d.getMinutes()).padStart(2, '0')} ${ampm}`;
+  return `${dayKeys[d.getDay()]} ${lh}:${String(d.getMinutes()).padStart(2, '0')} ${ampm}`;
 };
 
 const formatSlotLocal = (slot: TimeSlot): string => {
@@ -160,8 +155,8 @@ const formatSlotLocal = (slot: TimeSlot): string => {
   const endTime = `${lh}:${String(endD.getMinutes()).padStart(2, '0')} ${ampm}`;
   // If end is on a different day, show the day name
   if (endD.getDay() !== startD.getDay()) {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    return `${startStr} - ${days[endD.getDay()]} ${endTime}`;
+    const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    return `${startStr} - ${dayKeys[endD.getDay()]} ${endTime}`;
   }
   return `${startStr} - ${endTime}`;
 };
@@ -177,7 +172,28 @@ const formatBadge = (sec: number): string => {
 
 /* ══════════════════════════════════════════════════════════ */
 const EventTimerScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const insets = useSafeAreaInsets();
+
+  const MAP_DISPLAY: Record<string, string> = {
+    Dam: t('events.damBattlegrounds'),
+    'Buried City': t('events.buriedCity'),
+    Spaceport: t('events.spaceport'),
+    'Blue Gate': t('events.blueGate'),
+    'Stella Montis': t('events.stellaMontis'),
+  };
+
+  const translateSlotTime = (slotStr: string): string => {
+    const dayMap: Record<string, string> = {
+      sun: t('events.sun'), mon: t('events.mon'), tue: t('events.tue'),
+      wed: t('events.wed'), thu: t('events.thu'), fri: t('events.fri'), sat: t('events.sat'),
+    };
+    let result = slotStr;
+    for (const [key, val] of Object.entries(dayMap)) {
+      result = result.replace(new RegExp(`\\b${key}\\b`, 'gi'), val);
+    }
+    return result;
+  };
   const [events, setEvents] = useState<GameEvent[]>(localEvents as GameEvent[]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -320,7 +336,7 @@ const EventTimerScreen = ({navigation}: any) => {
   const renderCard = (ev: EventWithStatus, type: 'active' | 'soon') => {
     const isActive = type === 'active';
     const displaySlot = isActive ? ev.status.activeSlot : ev.status.nextSlot;
-    const timeStr = displaySlot ? formatSlotLocal(displaySlot) : '';
+    const timeStr = displaySlot ? translateSlotTime(formatSlotLocal(displaySlot)) : '';
 
     return (
       <View
@@ -351,8 +367,8 @@ const EventTimerScreen = ({navigation}: any) => {
                 isActive ? st.badgeTextActive : st.badgeTextSoon,
               ]}>
               {isActive
-                ? `Ends in ${formatBadge(ev.status.secondsRemaining)}`
-                : `Starts in ${formatBadge(ev.status.secondsRemaining)}`}
+                ? t('events.endsIn') + ' ' + formatBadge(ev.status.secondsRemaining)
+                : t('events.startsInTime') + ' ' + formatBadge(ev.status.secondsRemaining)}
             </Text>
           </View>
           {timeStr !== '' && (
@@ -389,12 +405,12 @@ const EventTimerScreen = ({navigation}: any) => {
               </Text>
               {row.isLive && (
                 <View style={st.liveBadge}>
-                  <Text style={st.liveText}>LIVE</Text>
+                  <Text style={st.liveText}>{t('common.live')}</Text>
                 </View>
               )}
             </View>
             <Text style={[st.slotTime, row.isLive && st.slotTimeLive]}>
-              {formatSlotLocal(row.slot)}
+              {translateSlotTime(formatSlotLocal(row.slot))}
             </Text>
           </View>
           {idx < group.rows.length - 1 && <View style={st.slotDivider} />}
@@ -412,7 +428,7 @@ const EventTimerScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
           <Icon name="arrow-left" size={20} color="#fff" />
         </TouchableOpacity>
-        <Text style={st.headerTitle}>EVENTS SCHEDULE</Text>
+        <Text style={st.headerTitle}>{t('events.title')}</Text>
         <TouchableOpacity onPress={handleRefresh} style={st.refreshBtn}>
           {loading ? (
             <ActivityIndicator size="small" color={CYAN} />
@@ -443,7 +459,7 @@ const EventTimerScreen = ({navigation}: any) => {
             <>
               <View style={st.sectionRow}>
                 <View style={[st.sectionDot, {backgroundColor: GREEN}]} />
-                <Text style={[st.sectionTitle, {color: GREEN}]}>ACTIVE NOW</Text>
+                <Text style={[st.sectionTitle, {color: GREEN}]}>{t('events.activeNow')}</Text>
               </View>
               {activeEvents.map(ev => renderCard(ev, 'active'))}
             </>
@@ -454,9 +470,9 @@ const EventTimerScreen = ({navigation}: any) => {
             <>
               <View style={[st.sectionRow, {marginTop: activeEvents.length > 0 ? 24 : 0}]}>
                 <View style={[st.sectionDot, {backgroundColor: CYAN}]} />
-                <Text style={[st.sectionTitle, {color: CYAN}]}>STARTING SOON</Text>
+                <Text style={[st.sectionTitle, {color: CYAN}]}>{t('events.startingSoon')}</Text>
               </View>
-              <Text style={st.sectionSub}>Events starting in the next hour</Text>
+              <Text style={st.sectionSub}>{t('events.soonSubtitle')}</Text>
               {startingSoon.map(ev => renderCard(ev, 'soon'))}
             </>
           )}
@@ -468,14 +484,14 @@ const EventTimerScreen = ({navigation}: any) => {
               {marginTop: activeEvents.length > 0 || startingSoon.length > 0 ? 24 : 0},
             ]}>
             <View style={st.sectionBar} />
-            <Text style={[st.sectionTitle, {color: ORANGE}]}>ALL EVENTS</Text>
+            <Text style={[st.sectionTitle, {color: ORANGE}]}>{t('events.allEvents')}</Text>
           </View>
           {groupedEvents.map(g => renderGroupedCard(g))}
 
           {eventsWithStatus.length === 0 && (
             <View style={st.emptyWrap}>
               <Icon name="calendar-remove" size={48} color="#555" />
-              <Text style={st.emptyTitle}>No Events</Text>
+              <Text style={st.emptyTitle}>{t('events.noEvents')}</Text>
             </View>
           )}
         </ScrollView>

@@ -11,8 +11,9 @@ import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
-import questData from '../data/quests.json';
+import {getQuests} from '../data/localizedData';
 import {getCompletedQuests, toggleCompletedQuest} from '../utils/storage';
 import {resolveImage} from '../data/imageRegistry';
 
@@ -45,106 +46,97 @@ type Quest = {
   tree_position: string;
 };
 
-const allQuests: Quest[] = ((questData as any).quests || []) as Quest[];
-
 /* ── Guide generation ────────────────────────────────────── */
 type GuideStep = {objective: string; tip: string};
 type GuideData = {preparation: string[]; steps: GuideStep[]; proTips: string[]};
 
-const getObjTip = (obj: string): string => {
+const getObjTip = (obj: string, t: (key: string) => string): string => {
   const l = obj.toLowerCase();
   if (l.includes('destroy') || l.includes('kill')) {
     if (l.includes('hornet'))
-      return 'Hornets are flying ARC drones. Use shotguns at close range or explosives for a quick kill.';
+      return t('questDetail.hornetsGuide');
     if (l.includes('fireball'))
-      return 'Fireballs hover and shoot projectiles. Keep moving, use cover, and hit them with assault rifles.';
+      return t('questDetail.fireballsGuide');
     if (l.includes('turret'))
-      return 'Turrets are stationary — flank from the side or toss grenades to avoid their line of fire.';
+      return t('questDetail.turretsGuide');
     if (/grenade|explosive|nade/i.test(obj))
-      return 'Make sure to craft or purchase the required grenades before starting this objective.';
+      return t('questDetail.grenadesPrep');
     if (l.includes('burner'))
-      return 'The Fireball Burner is a special weapon. Make sure you have one equipped before this quest.';
-    return 'Bring weapons and healing items. Use cover during combat and prioritize weaker enemies first.';
+      return t('questDetail.fireBurnerPrep');
+    return t('questDetail.combatPrep');
   }
   if (l.includes('loot') && l.includes('container'))
-    return 'Containers glow when interactable. Check buildings, sheds, and open areas.';
+    return t('questDetail.containersTip');
   if (l.includes('supply drop') || l.includes('call station'))
-    return 'Call Stations are marked on the map. Interact to request a Supply Drop, then wait for it to land.';
+    return t('questDetail.callStationTip');
   if (l.includes('field depot'))
-    return 'Field Depots are marked on the map. Plan your route to reach one within the round.';
+    return t('questDetail.fieldDepotTip');
   if (l.includes('field crate') || l.includes('deliver'))
-    return 'Pick up the crate and carry it to the station. You cannot use weapons while carrying.';
+    return t('questDetail.crateTip');
   if (l.includes('repair'))
-    return 'Look for the repair prompt near the damaged object. Hold to interact and complete the repair.';
+    return t('questDetail.repairTip');
   if (l.includes('search') || l.includes('find'))
-    return 'Search the area thoroughly. Interactable objects show a prompt when you get close.';
+    return t('questDetail.searchTip');
   if (l.includes('scope') || l.includes('visit'))
-    return 'Navigate to the marked location. The objective completes automatically when you arrive.';
+    return t('questDetail.navigateTip');
   if (l.includes('obtain') || l.includes('get ') || l.includes('collect'))
-    return 'Items drop from containers, enemies, or specific locations. Check the map for loot spots.';
+    return t('questDetail.itemDropTip');
   if (l.includes('craft'))
-    return 'Gather all required materials first, then use a workbench to craft the item.';
-  return 'Follow the objective marker on your HUD to complete this step.';
+    return t('questDetail.craftTip');
+  return t('questDetail.followMarkerTip');
 };
 
-const generateGuide = (quest: Quest): GuideData => {
+const generateGuide = (quest: Quest, t: (key: string) => string): GuideData => {
   const preparation: string[] = [];
   if (quest.prerequisites.length > 0)
     preparation.push(
-      `Complete ${quest.prerequisites.length === 1 ? 'prerequisite' : 'prerequisites'}: ${quest.prerequisites.join(', ')}`,
+      `${quest.prerequisites.length === 1 ? t('questDetail.prereqSingle') : t('questDetail.prereqMultiple')}${quest.prerequisites.join(', ')}`,
     );
-  if (quest.location !== 'Any') preparation.push(`Head to ${quest.location}`);
-  else preparation.push('Can be completed on any map');
+  if (quest.location !== 'Any') preparation.push(t('questDetail.headTo') + quest.location);
+  else preparation.push(t('questDetail.anyMap'));
   if (quest.objectives.some(o => /destroy|kill/i.test(o)))
-    preparation.push('Bring weapons and healing items for combat');
+    preparation.push(t('questDetail.bringWeapons'));
   if (quest.objectives.some(o => /grenade|explosive|nade/i.test(o)))
-    preparation.push('Craft or purchase required grenades before starting');
+    preparation.push(t('questDetail.craftGrenades'));
   if (quest.objectives.some(o => /in one round/i.test(o)))
-    preparation.push('All objectives must be completed in a single round');
+    preparation.push(t('questDetail.singleRound'));
 
   const steps: GuideStep[] = quest.objectives.map(obj => ({
     objective: obj,
-    tip: getObjTip(obj),
+    tip: getObjTip(obj, t),
   }));
 
   const proTips: string[] = [];
-  const giverTips: Record<string, string> = {
-    Apollo:
-      'Apollo specializes in explosives — check his shop for grenades and tactical gear.',
-    Shani:
-      'Shani focuses on survival gear. Visit her shop for shields, medical supplies, and tools.',
-    Celeste:
-      'Celeste deals in intel and recon. Her quests often involve exploration and discovery.',
-    'Tian Wen':
-      'Tian Wen is a weapon specialist. His quests unlock weapon mods and attachments.',
-    Lance:
-      'Lance focuses on advanced combat. His quests test your fighting skills and reward unique gear.',
+  const giverTipKeys: Record<string, string> = {
+    Apollo: 'questDetail.apolloTip',
+    Shani: 'questDetail.shaniTip',
+    Celeste: 'questDetail.celesteTip',
+    'Tian Wen': 'questDetail.tianWenTip',
+    Lance: 'questDetail.lanceTip',
   };
-  if (giverTips[quest.quest_giver]) proTips.push(giverTips[quest.quest_giver]);
+  if (giverTipKeys[quest.quest_giver]) proTips.push(t(giverTipKeys[quest.quest_giver]));
   if (quest.rewards.some(r => r.name.toLowerCase().includes('blueprint')))
-    proTips.push(
-      'This quest rewards a blueprint — unlocking a new craftable item permanently!',
-    );
+    proTips.push(t('questDetail.blueprintReward'));
   if (
     quest.rewards.some(r =>
       /emote|colour|color|backpack attachment/i.test(r.name),
     )
   )
-    proTips.push('Completing this quest unlocks a cosmetic reward for your character.');
-  proTips.push(
-    'Mark the quest as completed in the app once you finish it in-game.',
-  );
+    proTips.push(t('questDetail.cosmeticReward'));
+  proTips.push(t('questDetail.markComplete'));
 
   return {preparation, steps, proTips};
 };
 
 const QuestDetailScreen = ({route, navigation}: any) => {
+  const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const {questId} = route.params;
+  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
 
   const quest = useMemo(
     () => allQuests.find(q => q.id === questId)!,
-    [questId],
+    [questId, i18n.language],
   );
 
   const [completedIds, setCompletedIds] = useState<number[]>([]);
@@ -159,7 +151,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
       if (completedIds.includes(q.id)) set.add(q.name);
     }
     return set;
-  }, [completedIds]);
+  }, [completedIds, i18n.language]);
 
   const isCompleted = completedIds.includes(questId);
   const isLocked =
@@ -170,7 +162,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 
   const giverColor = GIVER_COLORS[quest.quest_giver] || colors.orange;
 
-  const guide = useMemo(() => generateGuide(quest), [quest]);
+  const guide = useMemo(() => generateGuide(quest, t), [quest, t]);
 
   const handleMarkCompleted = useCallback(async () => {
     await toggleCompletedQuest(questId);
@@ -214,7 +206,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitleAbs}>Quest Details</Text>
+        <Text style={s.headerTitleAbs}>{t('questDetail.title')}</Text>
       </View>
 
       <ScrollView
@@ -296,7 +288,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         {/* Prerequisites */}
         {quest.prerequisites.length > 0 && (
           <>
-            <Text style={s.sectionLabel}>PREREQUISITES</Text>
+            <Text style={s.sectionLabel}>{t('questDetail.prerequisites')}</Text>
             {quest.prerequisites.map(prereq => {
               const isDone = completedNames.has(prereq);
               return (
@@ -312,7 +304,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
                     {prereq}
                   </Text>
                   <TouchableOpacity onPress={() => navigateToPrereq(prereq)}>
-                    <Text style={s.prereqView}>VIEW</Text>
+                    <Text style={s.prereqView}>{t('questDetail.view')}</Text>
                   </TouchableOpacity>
                 </View>
               );
@@ -323,7 +315,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         {/* Objectives */}
         {quest.objectives.length > 0 && (
           <>
-            <Text style={s.sectionLabel}>OBJECTIVES</Text>
+            <Text style={s.sectionLabel}>{t('questDetail.objectives')}</Text>
             {quest.objectives.map((obj, idx) => (
               <View key={idx} style={s.objectiveCard}>
                 <Icon name="checkbox-blank-circle-outline" size={20} color={colors.borderLight} />
@@ -336,7 +328,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         {/* Rewards */}
         {quest.rewards.length > 0 && (
           <>
-            <Text style={s.sectionLabel}>REWARDS</Text>
+            <Text style={s.sectionLabel}>{t('questDetail.rewards')}</Text>
             {quest.rewards.map((reward, idx) => (
               <View key={idx} style={s.rewardCard}>
                 <Image
@@ -356,13 +348,13 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         )}
 
         {/* Walkthrough */}
-        <Text style={s.sectionLabel}>WALKTHROUGH</Text>
+        <Text style={s.sectionLabel}>{t('questDetail.walkthrough')}</Text>
 
         {/* Preparation */}
         <View style={s.prepCard}>
           <View style={s.prepHeader}>
             <Icon name="clipboard-check-outline" size={16} color={colors.cyan} />
-            <Text style={s.prepTitle}>PREPARATION</Text>
+            <Text style={s.prepTitle}>{t('questDetail.preparation')}</Text>
           </View>
           {guide.preparation.map((item, idx) => (
             <View key={idx} style={s.prepItem}>
@@ -392,7 +384,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
         <View style={s.tipsCard}>
           <View style={s.tipsHeader}>
             <Icon name="lightning-bolt" size={16} color={colors.cyan} />
-            <Text style={s.tipsTitle}>PRO TIPS</Text>
+            <Text style={s.tipsTitle}>{t('questDetail.proTips')}</Text>
           </View>
           {guide.proTips.map((tip, idx) => (
             <View key={idx} style={s.tipItem}>
@@ -414,7 +406,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
                 size={18}
                 color={colors.cyan}
               />
-              <Text style={s.btnOutlineText}>MARK PREREQUISITES COMPLETED</Text>
+              <Text style={s.btnOutlineText}>{t('questDetail.markPrereqsCompleted')}</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
@@ -425,7 +417,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
               activeOpacity={0.7}
               onPress={handleMarkCompleted}>
               <Text style={[s.btnFilledText, isCompleted && {color: colors.textInverse}]}>
-                {isCompleted ? 'MARK AS INCOMPLETE' : 'MARK AS COMPLETED'}
+                {isCompleted ? t('questDetail.markIncomplete') : t('questDetail.markCompleted')}
               </Text>
             </TouchableOpacity>
           )}

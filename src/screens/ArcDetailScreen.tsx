@@ -13,8 +13,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import arcLootData from '../data/arcLoot.json';
+import {getArcLoot} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
+import { useTranslation } from 'react-i18next';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const IMAGE_HEIGHT = SCREEN_WIDTH * 0.7;
@@ -23,14 +24,14 @@ const IMAGE_HEIGHT = SCREEN_WIDTH * 0.7;
 const getThreatLevel = (desc: string): {level: string; color: string; bars: number} => {
   const d = desc.toLowerCase();
   if (d.includes('goliath') || d.includes('death sentence') || d.includes('obliterate'))
-    return {level: 'EXTREME', color: '#FF1744', bars: 5};
+    return {level: 'extreme', color: '#FF1744', bars: 5};
   if (d.includes('devastating') || d.includes('formidable') || d.includes('siege'))
-    return {level: 'HIGH', color: '#FF5722', bars: 4};
+    return {level: 'high', color: '#FF5722', bars: 4};
   if (d.includes('armored') || d.includes('threat') || d.includes('dangerous'))
-    return {level: 'MEDIUM', color: '#FF9800', bars: 3};
+    return {level: 'medium', color: '#FF9800', bars: 3};
   if (d.includes('small') || d.includes('fragile') || d.includes('unarmored'))
-    return {level: 'LOW', color: '#66BB6A', bars: 2};
-  return {level: 'MODERATE', color: '#FFC107', bars: 3};
+    return {level: 'low', color: '#66BB6A', bars: 2};
+  return {level: 'moderate', color: '#FFC107', bars: 3};
 };
 
 // Extract key traits from description
@@ -39,29 +40,29 @@ const getTraits = (desc: string): {label: string; icon: string; color: string}[]
   const d = desc.toLowerCase();
 
   if (d.includes('armored') || d.includes('armor'))
-    traits.push({label: 'Armored', icon: 'shield', color: '#42A5F5'});
+    traits.push({label: 'armored', icon: 'shield', color: '#42A5F5'});
   if (d.includes('unarmored'))
-    traits.push({label: 'Unarmored', icon: 'shield-off', color: '#66BB6A'});
+    traits.push({label: 'unarmored', icon: 'shield-off', color: '#66BB6A'});
   if (d.includes('fly') || d.includes('flyer') || d.includes('drone') || d.includes('aerial'))
-    traits.push({label: 'Airborne', icon: 'airplane', color: '#AB47BC'});
+    traits.push({label: 'airborne', icon: 'airplane', color: '#AB47BC'});
   if (d.includes('roll') || d.includes('rolling'))
-    traits.push({label: 'Rolling', icon: 'circle-double', color: '#FF9800'});
+    traits.push({label: 'rolling', icon: 'circle-double', color: '#FF9800'});
   if (d.includes('turret'))
-    traits.push({label: 'Stationary', icon: 'target', color: '#607D8B'});
+    traits.push({label: 'stationary', icon: 'target', color: '#607D8B'});
   if (d.includes('explosive') || d.includes('rocket') || d.includes('mortar'))
-    traits.push({label: 'Explosive', icon: 'bomb', color: '#FF5722'});
+    traits.push({label: 'explosive', icon: 'bomb', color: '#FF5722'});
   if (d.includes('flame') || d.includes('fire') || d.includes('burn'))
-    traits.push({label: 'Incendiary', icon: 'fire', color: '#FF3D00'});
+    traits.push({label: 'incendiary', icon: 'fire', color: '#FF3D00'});
   if (d.includes('laser'))
-    traits.push({label: 'Laser', icon: 'flash', color: '#FF1744'});
+    traits.push({label: 'laser', icon: 'flash', color: '#FF1744'});
   if (d.includes('swarm') || d.includes('numbers'))
-    traits.push({label: 'Swarm', icon: 'bee', color: '#FFC107'});
+    traits.push({label: 'swarm', icon: 'bee', color: '#FFC107'});
   if (d.includes('stealth') || d.includes('ambush') || d.includes('stillness'))
-    traits.push({label: 'Ambusher', icon: 'eye-off', color: '#9C27B0'});
+    traits.push({label: 'ambusher', icon: 'eye-off', color: '#9C27B0'});
   if (d.includes('spawn'))
-    traits.push({label: 'Spawner', icon: 'source-branch', color: '#E91E63'});
+    traits.push({label: 'spawner', icon: 'source-branch', color: '#E91E63'});
   if (d.includes('stun') || d.includes('emp'))
-    traits.push({label: 'EMP', icon: 'lightning-bolt', color: '#26C6DA'});
+    traits.push({label: 'emp', icon: 'lightning-bolt', color: '#26C6DA'});
 
   return traits.slice(0, 6); // max 6 traits
 };
@@ -73,11 +74,11 @@ type ArcLootEntry = {
   item_type?: string;
   id?: string;
 };
-const ARC_LOOT: Record<string, ArcLootEntry[]> = arcLootData as Record<string, ArcLootEntry[]>;
-
 const ArcDetailScreen = ({route, navigation}: any) => {
   const insets = useSafeAreaInsets();
   const arc = route.params.arc;
+  const { t } = useTranslation();
+  const ARC_LOOT: Record<string, ArcLootEntry[]> = getArcLoot() as Record<string, ArcLootEntry[]>;
   const threat = getThreatLevel(arc.description);
   const traits = getTraits(arc.description);
 
@@ -136,7 +137,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
 
           {/* Threat Level */}
           <View style={styles.threatRow}>
-            <Text style={styles.threatLabel}>THREAT LEVEL</Text>
+            <Text style={styles.threatLabel}>{t('enemies.threatLevel')}</Text>
             <View style={styles.threatBars}>
               {[1, 2, 3, 4, 5].map(i => (
                 <View
@@ -151,18 +152,18 @@ const ArcDetailScreen = ({route, navigation}: any) => {
                 />
               ))}
             </View>
-            <Text style={[styles.threatText, {color: threat.color}]}>{threat.level}</Text>
+            <Text style={[styles.threatText, {color: threat.color}]}>{t(`enemies.${threat.level}`)}</Text>
           </View>
 
           {/* Traits */}
           {traits.length > 0 && (
             <View style={styles.traitsSection}>
-              <Text style={styles.sectionLabel}>TRAITS</Text>
+              <Text style={styles.sectionLabel}>{t('enemies.traits')}</Text>
               <View style={styles.traitsGrid}>
                 {traits.map((trait, idx) => (
                   <View key={idx} style={styles.traitChip}>
                     <Icon name={trait.icon} size={14} color={trait.color} />
-                    <Text style={[styles.traitText, {color: trait.color}]}>{trait.label}</Text>
+                    <Text style={[styles.traitText, {color: trait.color}]}>{t(`enemies.${trait.label}`)}</Text>
                   </View>
                 ))}
               </View>
@@ -171,7 +172,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
 
           {/* Description */}
           <View style={styles.descSection}>
-            <Text style={styles.sectionLabel}>FIELD REPORT</Text>
+            <Text style={styles.sectionLabel}>{t('enemies.fieldReport')}</Text>
             <View style={styles.descCard}>
               <View style={styles.descAccent} />
               {paragraphs.map((para: string, idx: number) => (
@@ -186,14 +187,14 @@ const ArcDetailScreen = ({route, navigation}: any) => {
           <View style={styles.classificationRow}>
             <View style={styles.classBadge}>
               <Icon name="robot-angry" size={14} color="#F44336" />
-              <Text style={styles.classBadgeText}>ARC ENEMY</Text>
+              <Text style={styles.classBadgeText}>{t('enemies.arcEnemy')}</Text>
             </View>
-            <Text style={styles.classId}>ID: {arc.id.toUpperCase()}</Text>
+            <Text style={styles.classId}>{t('enemies.id')} {arc.id.toUpperCase()}</Text>
           </View>
 
           {/* Loot Drops */}
           <View style={styles.lootSection}>
-            <Text style={styles.sectionLabel}>KNOWN DROPS</Text>
+            <Text style={styles.sectionLabel}>{t('enemies.knownDrops')}</Text>
             <View style={styles.lootList}>
               {(ARC_LOOT[arc.id] || []).map((loot, idx) => {
                 const rarColor = getRarityColor(loot.rarity || 'common');
@@ -231,7 +232,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
               {(!ARC_LOOT[arc.id] || ARC_LOOT[arc.id].length === 0) && (
                 <View style={styles.emptyLoot}>
                   <Icon name="package-variant-closed" size={24} color={colors.textMuted} />
-                  <Text style={styles.emptyLootText}>No known drops</Text>
+                  <Text style={styles.emptyLootText}>{t('enemies.noDrops')}</Text>
                 </View>
               )}
             </View>

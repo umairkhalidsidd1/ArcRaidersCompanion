@@ -10,8 +10,9 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import rawItems from '../data/items.json';
+import {getItems} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
 
 /* ═══════════════ TYPES ═══════════════ */
@@ -139,9 +140,10 @@ const barStyles = StyleSheet.create({
 
 /* ═══════════════ COMPONENT ═══════════════ */
 const ItemDetailScreen = ({route, navigation}: any) => {
+  const {t} = useTranslation();
   const insets = useSafeAreaInsets();
   const {itemId} = route.params;
-  const item = (rawItems as RawItem[]).find(i => i.id === itemId);
+  const item = (getItems() as RawItem[]).find(i => i.id === itemId);
 
   const parsed = useMemo(() => {
     if (!item?.stat_block) return null;
@@ -182,7 +184,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
     try {
       const p = JSON.parse(item.loadout_slots);
       if (!Array.isArray(p)) return [];
-      return p.map((s: string) => SLOT_LABELS[s]).filter(Boolean);
+      return p.map((s: string) => ({...SLOT_LABELS[s], key: s})).filter(Boolean);
     } catch {
       return [];
     }
@@ -206,7 +208,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerLabel}>
-          {isWeapon ? 'WEAPON INSPECT' : 'CATALOG'}
+          {isWeapon ? t('items.weaponInspect') : t('items.catalog')}
         </Text>
         {isWeapon && (
           <View style={[styles.rarityDot, {backgroundColor: rarityColor}]} />
@@ -230,7 +232,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
           </View>
           <View style={[styles.rarityBadge, {backgroundColor: rarityColor}]}>
             <Text style={styles.rarityText}>
-              {(item.rarity || 'Common').toUpperCase()}
+              {t('rarity.' + (item.rarity || 'Common').toLowerCase()).toUpperCase()}
             </Text>
           </View>
         </View>
@@ -284,12 +286,12 @@ const ItemDetailScreen = ({route, navigation}: any) => {
             {/* Stat Bars */}
             {weaponStats.length > 0 && (
               <View style={styles.section}>
-                <Text style={styles.sectionLabel}>COMBAT STATS</Text>
+                <Text style={styles.sectionLabel}>{t('items.combatStats')}</Text>
                 <View style={styles.statBarsContainer}>
                   {weaponStats.map(stat => (
                     <StatBar
                       key={stat.key}
-                      label={stat.label}
+                      label={t('items.' + stat.key)}
                       value={stat.value}
                       max={stat.max}
                       color={stat.color}
@@ -306,7 +308,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         {!isWeapon && (
           <View style={styles.metaRow}>
             <View style={styles.metaItem}>
-              <Text style={styles.metaLabel}>VALUE</Text>
+              <Text style={styles.metaLabel}>{t('items.value')}</Text>
               <View style={styles.metaValueRow}>
                 <Icon name="currency-usd" size={16} color={colors.yellow} />
                 <Text style={styles.metaValue}>{(item.value || 0).toLocaleString()}</Text>
@@ -314,16 +316,16 @@ const ItemDetailScreen = ({route, navigation}: any) => {
             </View>
             <View style={styles.metaDivider} />
             <View style={styles.metaItem}>
-              <Text style={styles.metaLabel}>TYPE</Text>
+              <Text style={styles.metaLabel}>{t('items.type')}</Text>
               <Text style={[styles.metaValue, {color: colors.orange}]}>
-                {item.item_type}
+                {t('itemType.' + item.item_type, item.item_type)}
               </Text>
             </View>
             {item.workbench && (
               <>
                 <View style={styles.metaDivider} />
                 <View style={styles.metaItem}>
-                  <Text style={styles.metaLabel}>WORKBENCH</Text>
+                  <Text style={styles.metaLabel}>{t('items.workbench')}</Text>
                   <Text style={[styles.metaValue, {color: '#42A5F5'}]}>
                     {item.workbench}
                   </Text>
@@ -336,7 +338,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         {/* Description */}
         {item.description && (
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>DESCRIPTION</Text>
+            <Text style={styles.sectionLabel}>{t('items.description')}</Text>
             <Text style={styles.descText}>{item.description}</Text>
           </View>
         )}
@@ -353,7 +355,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         {/* Workbench (for weapons) */}
         {isWeapon && item.workbench && (
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>CRAFTED AT</Text>
+            <Text style={styles.sectionLabel}>{t('items.craftedAt')}</Text>
             <View style={styles.infoCard}>
               <Icon name="hammer-wrench" size={16} color="#42A5F5" />
               <Text style={styles.infoValue}>{item.workbench}</Text>
@@ -364,12 +366,12 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         {/* Loadout Slots */}
         {slots.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>LOADOUT SLOTS</Text>
+            <Text style={styles.sectionLabel}>{t('items.loadoutSlots')}</Text>
             <View style={styles.slotsRow}>
               {slots.map((slot: any, idx: number) => (
                 <View key={idx} style={[styles.slotChip, {borderColor: slot.color + '40'}]}>
                   <Icon name={slot.icon} size={14} color={slot.color} />
-                  <Text style={[styles.slotText, {color: slot.color}]}>{slot.label}</Text>
+                  <Text style={[styles.slotText, {color: slot.color}]}>{t('items.' + slot.key)}</Text>
                 </View>
               ))}
             </View>
@@ -379,7 +381,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         {/* Generic Stats (non-weapon items) */}
         {genericStats.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>STATS</Text>
+            <Text style={styles.sectionLabel}>{t('items.stats')}</Text>
             <View style={styles.statsGrid}>
               {genericStats.map(stat => (
                 <View key={stat.key} style={styles.statCard}>
@@ -387,7 +389,7 @@ const ItemDetailScreen = ({route, navigation}: any) => {
                   <Text style={styles.statValue}>
                     {stat.value}{stat.unit || ''}
                   </Text>
-                  <Text style={styles.statLabel}>{stat.label}</Text>
+                  <Text style={styles.statLabel}>{t('items.' + stat.key)}</Text>
                 </View>
               ))}
             </View>
@@ -397,26 +399,26 @@ const ItemDetailScreen = ({route, navigation}: any) => {
         {/* Additional Info */}
         {(item.ammo_type || item.loot_area || item.shield_type) && (
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>ADDITIONAL INFO</Text>
+            <Text style={styles.sectionLabel}>{t('items.additionalInfo')}</Text>
             <View style={styles.infoCards}>
               {item.ammo_type && !isWeapon && (
                 <View style={styles.infoCard}>
                   <Icon name="ammunition" size={16} color="#BDBDBD" />
-                  <Text style={styles.infoLabel}>Ammo Type</Text>
+                  <Text style={styles.infoLabel}>{t('items.ammoType')}</Text>
                   <Text style={styles.infoValue}>{item.ammo_type}</Text>
                 </View>
               )}
               {item.loot_area && (
                 <View style={styles.infoCard}>
                   <Icon name="map-marker" size={16} color="#66BB6A" />
-                  <Text style={styles.infoLabel}>Loot Area</Text>
+                  <Text style={styles.infoLabel}>{t('items.lootArea')}</Text>
                   <Text style={styles.infoValue}>{item.loot_area}</Text>
                 </View>
               )}
               {item.shield_type && (
                 <View style={styles.infoCard}>
                   <Icon name="shield" size={16} color="#26C6DA" />
-                  <Text style={styles.infoLabel}>Shield Type</Text>
+                  <Text style={styles.infoLabel}>{t('items.shieldType')}</Text>
                   <Text style={styles.infoValue}>{item.shield_type}</Text>
                 </View>
               )}
