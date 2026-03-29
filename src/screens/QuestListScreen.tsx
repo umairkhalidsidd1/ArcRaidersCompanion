@@ -22,11 +22,11 @@ import {
 
 /* ─── Trader portraits (reuse from TraderListScreen) ─── */
 const TRADER_PORTRAITS: Record<string, any> = {
-  'Tian Wen': require('../assets/traders/tian-wen.png'),
-  Shani: require('../assets/traders/shani.png'),
-  Lance: require('../assets/traders/lance.png'),
-  Celeste: require('../assets/traders/celeste.png'),
-  Apollo: require('../assets/traders/apollo.png'),
+  'Tian Wen': require('../assets/traders/tian-wen.webp'),
+  Shani: require('../assets/traders/shani.webp'),
+  Lance: require('../assets/traders/lance.webp'),
+  Celeste: require('../assets/traders/celeste.webp'),
+  Apollo: require('../assets/traders/apollo.webp'),
 };
 
 type Quest = {
@@ -365,6 +365,7 @@ const s = StyleSheet.create({
     fontWeight: '700',
     color: colors.textPrimary,
     textAlign: 'center',
+    pointerEvents: 'none',
   },
   resetBtn: {
     paddingHorizontal: spacing.md,

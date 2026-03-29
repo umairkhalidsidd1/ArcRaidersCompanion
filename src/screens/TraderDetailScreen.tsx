@@ -164,6 +164,11 @@ const TraderDetailScreen = ({route, navigation}: any) => {
           <View style={s.heroBannerWrap}>
             <Image source={info.portrait} style={s.heroBanner} resizeMode="cover" />
             <LinearGradient
+              colors={[colors.bg, 'rgba(10,14,23,0.6)', 'transparent']}
+              locations={[0, 0.25, 0.5]}
+              style={s.heroGradientTop}
+            />
+            <LinearGradient
               colors={['transparent', 'rgba(10,14,23,0.85)', colors.bg]}
               style={s.heroGradient}
             />
@@ -261,7 +266,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
   );
 };
 
-const HERO_H = 340;
+const HERO_H = 420;
 
 const s = StyleSheet.create({
   root: {flex: 1, backgroundColor: 'transparent'},
@@ -290,7 +295,14 @@ const s = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: HERO_H * 0.5,
+    height: HERO_H * 0.55,
+  },
+  heroGradientTop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: HERO_H * 0.45,
   },
   heroNameOverlay: {
     position: 'absolute',

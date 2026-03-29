@@ -5,7 +5,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/angled-grip-ii-recipe.webp"
+    "imageUrl": "icons/angled-grip-ii-recipe.webp"
   },
   {
     "id": "bp-angled-grip-iii-recipe",
@@ -13,7 +13,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/angled-grip-iii-recipe.webp"
+    "imageUrl": "icons/angled-grip-iii-recipe.webp"
   },
   {
     "id": "bp-anvil-recipe",
@@ -21,7 +21,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/anvil-recipe.webp"
+    "imageUrl": "icons/anvil-recipe.webp"
   },
   {
     "id": "bp-anvil-splitter-recipe",
@@ -29,7 +29,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/anvil-splitter-recipe.webp"
+    "imageUrl": "icons/anvil-splitter-recipe.webp"
   },
   {
     "id": "bp-aphelion-rifle-blueprint",
@@ -37,7 +37,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/aphelion-rifle-blueprint.webp"
+    "imageUrl": "icons/aphelion-rifle-blueprint.webp"
   },
   {
     "id": "bp-arc-circuitry-recipe",
@@ -45,7 +45,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry-recipe.webp"
+    "imageUrl": "icons/arc-circuitry-recipe.webp"
   },
   {
     "id": "bp-barricade-kit-recipe",
@@ -53,7 +53,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/barricade-kit-recipe.webp"
+    "imageUrl": "icons/barricade-kit-recipe.webp"
   },
   {
     "id": "bp-bettina-blueprint",
@@ -61,7 +61,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/bettina-blueprint.webp"
+    "imageUrl": "icons/bettina-blueprint.webp"
   },
   {
     "id": "bp-blaze-grenade-blueprint",
@@ -69,7 +69,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/blaze-grenade-blueprint.webp"
+    "imageUrl": "icons/blaze-grenade-blueprint.webp"
   },
   {
     "id": "bp-blue-light-stick-blueprint",
@@ -77,7 +77,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/blue-light-stick-blueprint.webp"
+    "imageUrl": "icons/blue-light-stick-blueprint.webp"
   },
   {
     "id": "bp-bobcat-i-recipe",
@@ -85,7 +85,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/bobcat-i-recipe.webp"
+    "imageUrl": "icons/bobcat-i-recipe.webp"
   },
   {
     "id": "bp-burltetta-recipe",
@@ -93,7 +93,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/burltetta-recipe.webp"
+    "imageUrl": "icons/burltetta-recipe.webp"
   },
   {
     "id": "bp-combat-mk-3-flanking",
@@ -101,7 +101,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/combat-mk-3-flanking.webp"
+    "imageUrl": "icons/combat-mk-3-flanking.webp"
   },
   {
     "id": "bp-combat-mk3-aggressive-blueprint",
@@ -109,7 +109,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/combat-mk3-aggressive-blueprint.webp"
+    "imageUrl": "icons/combat-mk3-aggressive-blueprint.webp"
   },
   {
     "id": "bp-compensator-ii-recipe",
@@ -117,7 +117,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/compensator-ii-recipe.webp"
+    "imageUrl": "icons/compensator-ii-recipe.webp"
   },
   {
     "id": "bp-compensator-iii-recipe",
@@ -125,7 +125,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/compensator-iii-recipe.webp"
+    "imageUrl": "icons/compensator-iii-recipe.webp"
   },
   {
     "id": "bp-complex-gun-parts-blueprint",
@@ -133,7 +133,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/complex-gun-parts-blueprint.webp"
+    "imageUrl": "icons/complex-gun-parts-blueprint.webp"
   },
   {
     "id": "bp-deadline-blueprint",
@@ -141,7 +141,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/deadline-blueprint.webp"
+    "imageUrl": "icons/deadline-blueprint.webp"
   },
   {
     "id": "bp-defibrillator-recipe",
@@ -149,7 +149,7 @@
     "category": "medical",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/defibrillator-recipe.webp"
+    "imageUrl": "icons/defibrillator-recipe.webp"
   },
   {
     "id": "bp-door-blocker-recipe",
@@ -157,7 +157,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/door-blocker-recipe.webp"
+    "imageUrl": "icons/door-blocker-recipe.webp"
   },
   {
     "id": "bp-energy-ammo-recipe",
@@ -165,7 +165,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/energy-ammo-recipe.webp"
+    "imageUrl": "icons/energy-ammo-recipe.webp"
   },
   {
     "id": "bp-equalizer-recipe",
@@ -173,7 +173,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/equalizer-recipe.webp"
+    "imageUrl": "icons/equalizer-recipe.webp"
   },
   {
     "id": "bp-explosive-mine-blueprint",
@@ -181,7 +181,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/explosive-mine-blueprint.webp"
+    "imageUrl": "icons/explosive-mine-blueprint.webp"
   },
   {
     "id": "bp-extended-barrel-recipe",
@@ -189,7 +189,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-barrel-recipe.webp"
+    "imageUrl": "icons/extended-barrel-recipe.webp"
   },
   {
     "id": "bp-extended-light-mag-ii-recipe",
@@ -197,7 +197,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-light-mag-ii-recipe.webp"
+    "imageUrl": "icons/extended-light-mag-ii-recipe.webp"
   },
   {
     "id": "bp-extended-light-mag-iii-recipe",
@@ -205,7 +205,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-light-mag-iii-recipe.webp"
+    "imageUrl": "icons/extended-light-mag-iii-recipe.webp"
   },
   {
     "id": "bp-extended-medium-mag-ii-recipe",
@@ -213,7 +213,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-medium-mag-ii-recipe.webp"
+    "imageUrl": "icons/extended-medium-mag-ii-recipe.webp"
   },
   {
     "id": "bp-extended-medium-mag-iii-blueprint",
@@ -221,7 +221,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-medium-mag-iii-blueprint.webp"
+    "imageUrl": "icons/extended-medium-mag-iii-blueprint.webp"
   },
   {
     "id": "bp-extended-shotgun-mag-ii-recipe",
@@ -229,7 +229,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-shotgun-mag-ii-recipe.webp"
+    "imageUrl": "icons/extended-shotgun-mag-ii-recipe.webp"
   },
   {
     "id": "bp-extended-shotgun-mag-iii-recipe",
@@ -237,7 +237,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/extended-shotgun-mag-iii-recipe.webp"
+    "imageUrl": "icons/extended-shotgun-mag-iii-recipe.webp"
   },
   {
     "id": "bp-fireworks-box-blueprint",
@@ -245,7 +245,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/fireworks-box-blueprint.webp"
+    "imageUrl": "icons/fireworks-box-blueprint.webp"
   },
   {
     "id": "bp-gas-mine-blueprint",
@@ -253,7 +253,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/gas-mine-blueprint.webp"
+    "imageUrl": "icons/gas-mine-blueprint.webp"
   },
   {
     "id": "bp-green-light-stick-blueprint",
@@ -261,7 +261,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/green-light-stick-blueprint.webp"
+    "imageUrl": "icons/green-light-stick-blueprint.webp"
   },
   {
     "id": "bp-heavy-fuse-grenade-recipe",
@@ -269,7 +269,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/heavy-fuse-grenade-recipe.webp"
+    "imageUrl": "icons/heavy-fuse-grenade-recipe.webp"
   },
   {
     "id": "bp-heavy-gun-parts-recipe",
@@ -277,7 +277,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/heavy-gun-parts-recipe.webp"
+    "imageUrl": "icons/heavy-gun-parts-recipe.webp"
   },
   {
     "id": "bp-horizontal-grip-blueprint",
@@ -285,7 +285,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/horizontal-grip-blueprint.webp"
+    "imageUrl": "icons/horizontal-grip-blueprint.webp"
   },
   {
     "id": "bp-hullcracker-blueprint",
@@ -293,7 +293,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/hullcracker-blueprint.webp"
+    "imageUrl": "icons/hullcracker-blueprint.webp"
   },
   {
     "id": "bp-il-toro-recipe",
@@ -301,7 +301,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/il-toro-recipe.webp"
+    "imageUrl": "icons/il-toro-recipe.webp"
   },
   {
     "id": "bp-jolt-mine-recipe",
@@ -309,7 +309,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/jolt-mine-recipe.webp"
+    "imageUrl": "icons/jolt-mine-recipe.webp"
   },
   {
     "id": "bp-jupiter-i-recipe",
@@ -317,7 +317,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/jupiter-i-recipe.webp"
+    "imageUrl": "icons/jupiter-i-recipe.webp"
   },
   {
     "id": "bp-kinetic-converter-recipe",
@@ -325,7 +325,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/kinetic-converter-recipe.webp"
+    "imageUrl": "icons/kinetic-converter-recipe.webp"
   },
   {
     "id": "bp-laser-trap-fire-recipe",
@@ -333,7 +333,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/laser-trap-fire-recipe.webp"
+    "imageUrl": "icons/laser-trap-fire-recipe.webp"
   },
   {
     "id": "bp-laser-trap-gas-recipe",
@@ -341,7 +341,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/laser-trap-gas-recipe.webp"
+    "imageUrl": "icons/laser-trap-gas-recipe.webp"
   },
   {
     "id": "bp-launcher-ammo-blueprint",
@@ -349,7 +349,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/launcher-ammo-blueprint.webp"
+    "imageUrl": "icons/launcher-ammo-blueprint.webp"
   },
   {
     "id": "bp-light-gun-parts-recipe",
@@ -357,7 +357,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/light-gun-parts-recipe.webp"
+    "imageUrl": "icons/light-gun-parts-recipe.webp"
   },
   {
     "id": "bp-lightweight-stock-recipe",
@@ -365,7 +365,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/lightweight-stock-recipe.webp"
+    "imageUrl": "icons/lightweight-stock-recipe.webp"
   },
   {
     "id": "bp-looting-mk-3-safekeeper-blueprint",
@@ -373,7 +373,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/looting-mk-3-safekeeper-blueprint.webp"
+    "imageUrl": "icons/looting-mk-3-safekeeper-blueprint.webp"
   },
   {
     "id": "bp-looting-mk-3-survivor-blueprint",
@@ -381,7 +381,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/looting-mk-3-survivor-blueprint.webp"
+    "imageUrl": "icons/looting-mk-3-survivor-blueprint.webp"
   },
   {
     "id": "bp-lure-grenade-recipe",
@@ -389,7 +389,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/lure-grenade-recipe.webp"
+    "imageUrl": "icons/lure-grenade-recipe.webp"
   },
   {
     "id": "bp-medium-gun-parts-recipe",
@@ -397,7 +397,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/medium-gun-parts-recipe.webp"
+    "imageUrl": "icons/medium-gun-parts-recipe.webp"
   },
   {
     "id": "bp-mod-components-recipe",
@@ -405,7 +405,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/mod-components-recipe.webp"
+    "imageUrl": "icons/mod-components-recipe.webp"
   },
   {
     "id": "bp-muzzle-brake-ii-recipe",
@@ -413,7 +413,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/muzzle-brake-ii-recipe.webp"
+    "imageUrl": "icons/muzzle-brake-ii-recipe.webp"
   },
   {
     "id": "bp-muzzle-brake-iii-recipe",
@@ -421,7 +421,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/muzzle-brake-iii-recipe.webp"
+    "imageUrl": "icons/muzzle-brake-iii-recipe.webp"
   },
   {
     "id": "bp-osprey-recipe",
@@ -429,7 +429,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/osprey-recipe.webp"
+    "imageUrl": "icons/osprey-recipe.webp"
   },
   {
     "id": "bp-padded-stock-recipe",
@@ -437,7 +437,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/padded-stock-recipe.webp"
+    "imageUrl": "icons/padded-stock-recipe.webp"
   },
   {
     "id": "bp-power-rod-recipe",
@@ -445,7 +445,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/power-rod-recipe.webp"
+    "imageUrl": "icons/power-rod-recipe.webp"
   },
   {
     "id": "bp-pulse-mine-blueprint",
@@ -453,7 +453,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/pulse-mine-blueprint.webp"
+    "imageUrl": "icons/pulse-mine-blueprint.webp"
   },
   {
     "id": "bp-red-light-stick-blueprint",
@@ -461,7 +461,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/red-light-stick-blueprint.webp"
+    "imageUrl": "icons/red-light-stick-blueprint.webp"
   },
   {
     "id": "bp-remote-raider-flare-blueprint",
@@ -469,7 +469,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/remote-raider-flare-blueprint.webp"
+    "imageUrl": "icons/remote-raider-flare-blueprint.webp"
   },
   {
     "id": "bp-renegade-recipe",
@@ -477,7 +477,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/renegade-recipe.webp"
+    "imageUrl": "icons/renegade-recipe.webp"
   },
   {
     "id": "bp-seeker-grenade-blueprint",
@@ -485,7 +485,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/seeker-grenade-blueprint.webp"
+    "imageUrl": "icons/seeker-grenade-blueprint.webp"
   },
   {
     "id": "bp-shotgun-choke-ii-recipe",
@@ -493,7 +493,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/shotgun-choke-ii-recipe.webp"
+    "imageUrl": "icons/shotgun-choke-ii-recipe.webp"
   },
   {
     "id": "bp-shotgun-choke-iii-recipe",
@@ -501,7 +501,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/shotgun-choke-iii-recipe.webp"
+    "imageUrl": "icons/shotgun-choke-iii-recipe.webp"
   },
   {
     "id": "bp-shotgun-parts-recipe",
@@ -509,7 +509,7 @@
     "category": "materials",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/shotgun-parts-recipe.webp"
+    "imageUrl": "icons/shotgun-parts-recipe.webp"
   },
   {
     "id": "bp-shotgun-silencer-blueprint",
@@ -517,7 +517,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/shotgun-silencer-blueprint.webp"
+    "imageUrl": "icons/shotgun-silencer-blueprint.webp"
   },
   {
     "id": "bp-showstopper-blueprint",
@@ -525,7 +525,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/showstopper-blueprint.webp"
+    "imageUrl": "icons/showstopper-blueprint.webp"
   },
   {
     "id": "bp-silencer-i-recipe",
@@ -533,7 +533,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/silencer-i-recipe.webp"
+    "imageUrl": "icons/silencer-i-recipe.webp"
   },
   {
     "id": "bp-silencer-ii-recipe",
@@ -541,7 +541,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/silencer-ii-recipe.webp"
+    "imageUrl": "icons/silencer-ii-recipe.webp"
   },
   {
     "id": "bp-silencer-iii-recipe",
@@ -549,7 +549,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/silencer-iii-recipe.webp"
+    "imageUrl": "icons/silencer-iii-recipe.webp"
   },
   {
     "id": "bp-smoke-grenade-blueprint",
@@ -557,7 +557,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/smoke-grenade-blueprint.webp"
+    "imageUrl": "icons/smoke-grenade-blueprint.webp"
   },
   {
     "id": "bp-snap-hook-recipe",
@@ -565,7 +565,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/snap-hook-recipe.webp"
+    "imageUrl": "icons/snap-hook-recipe.webp"
   },
   {
     "id": "bp-stable-stock-ii-recipe",
@@ -573,7 +573,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/stable-stock-ii-recipe.webp"
+    "imageUrl": "icons/stable-stock-ii-recipe.webp"
   },
   {
     "id": "bp-stable-stock-iii-recipe",
@@ -581,7 +581,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/stable-stock-iii-recipe.webp"
+    "imageUrl": "icons/stable-stock-iii-recipe.webp"
   },
   {
     "id": "bp-sterilized-bandage-recipe",
@@ -589,7 +589,7 @@
     "category": "medical",
     "rarity": "legendary",
     "value": 0,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/sterilized-bandage-recipe.webp"
+    "imageUrl": "icons/sterilized-bandage-recipe.webp"
   },
   {
     "id": "bp-tactical-mk-3-revival-blueprint",
@@ -597,7 +597,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/tactical-mk-3-revival-blueprint.webp"
+    "imageUrl": "icons/tactical-mk-3-revival-blueprint.webp"
   },
   {
     "id": "bp-tactical-mk3-defensive-blueprint",
@@ -605,7 +605,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/tactical-mk3-defensive-blueprint.webp"
+    "imageUrl": "icons/tactical-mk3-defensive-blueprint.webp"
   },
   {
     "id": "bp-tacical-mk3-healing-blueprint",
@@ -613,7 +613,7 @@
     "category": "augments",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/tacical-mk3-healing-blueprint.webp"
+    "imageUrl": "icons/tacical-mk3-healing-blueprint.webp"
   },
   {
     "id": "bp-tagging-grenade-recipe",
@@ -621,7 +621,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/tagging-grenade-recipe.webp"
+    "imageUrl": "icons/tagging-grenade-recipe.webp"
   },
   {
     "id": "bp-tempest-i-recipe",
@@ -629,7 +629,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/tempest-i-recipe.webp"
+    "imageUrl": "icons/tempest-i-recipe.webp"
   },
   {
     "id": "bp-torrent-i-recipe",
@@ -637,7 +637,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/torrent-i-recipe.webp"
+    "imageUrl": "icons/torrent-i-recipe.webp"
   },
   {
     "id": "bp-trailblazer-grenade-blueprint",
@@ -645,7 +645,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/trailblazer-grenade-blueprint.webp"
+    "imageUrl": "icons/trailblazer-grenade-blueprint.webp"
   },
   {
     "id": "bp-trigger-nade-recipe",
@@ -653,7 +653,7 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/trigger-nade-recipe.webp"
+    "imageUrl": "icons/trigger-nade-recipe.webp"
   },
   {
     "id": "bp-venator-recipe",
@@ -661,7 +661,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/venator-recipe.webp"
+    "imageUrl": "icons/venator-recipe.webp"
   },
   {
     "id": "bp-vertical-grip-ii-recipe",
@@ -669,7 +669,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/vertical-grip-ii-recipe.webp"
+    "imageUrl": "icons/vertical-grip-ii-recipe.webp"
   },
   {
     "id": "bp-vertical-grip-iii-recipe",
@@ -677,7 +677,7 @@
     "category": "mods",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/vertical-grip-iii-recipe.webp"
+    "imageUrl": "icons/vertical-grip-iii-recipe.webp"
   },
   {
     "id": "bp-vita-shot-recipe",
@@ -685,7 +685,7 @@
     "category": "medical",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/vita-shot-recipe.webp"
+    "imageUrl": "icons/vita-shot-recipe.webp"
   },
   {
     "id": "bp-vita-spray-recipe",
@@ -693,7 +693,7 @@
     "category": "medical",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/vita-spray-recipe.webp"
+    "imageUrl": "icons/vita-spray-recipe.webp"
   },
   {
     "id": "bp-vulcano-blueprint",
@@ -701,7 +701,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/vulcano-blueprint.webp"
+    "imageUrl": "icons/vulcano-blueprint.webp"
   },
   {
     "id": "bp-wolfpack-recipe",
@@ -709,7 +709,7 @@
     "category": "weapons",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/wolfpack-recipe.webp"
+    "imageUrl": "icons/wolfpack-recipe.webp"
   },
   {
     "id": "bp-yellow-light-stick-blueprint",
@@ -717,6 +717,6 @@
     "category": "gadgets",
     "rarity": "legendary",
     "value": 5000,
-    "imageUrl": "https://cdn.metaforge.app/arc-raiders/icons/yellow-light-stick-blueprint.webp"
+    "imageUrl": "icons/yellow-light-stick-blueprint.webp"
   }
 ]

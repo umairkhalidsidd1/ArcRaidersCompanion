@@ -500,7 +500,7 @@ const IMAGE_REGISTRY: Record<string, any> = {
   'icons/tactical-mk-1.webp': require('../assets/game/icons/tactical-mk-1.webp'),
   'icons/tactical-mk-2.webp': require('../assets/game/icons/tactical-mk-2.webp'),
   'icons/tactical-mk-3-healing.webp': require('../assets/game/icons/tactical-mk-3-healing.webp'),
-  // 'icons/tactical-mk-3-revival-blueprint.webp' — not available on CDN (404)
+  'icons/tactical-mk-3-revival-blueprint.webp': require('../assets/game/icons/tactical-mk-3-revival-blueprint.webp'),
   'icons/tactical-mk-3-revival.webp': require('../assets/game/icons/tactical-mk-3-revival.webp'),
   'icons/tactical-mk3-defensive-blueprint.webp': require('../assets/game/icons/tactical-mk3-defensive-blueprint.webp'),
   'icons/tactical-mk3-defensive.webp': require('../assets/game/icons/tactical-mk3-defensive.webp'),
@@ -618,21 +618,9 @@ const IMAGE_REGISTRY: Record<string, any> = {
  * If the key exists in the registry, returns the local require() result.
  * Otherwise returns {uri: url} for network images.
  */
-export function resolveImage(urlOrKey: string | null | undefined): any {
-  if (!urlOrKey) return null;
-
-  // Direct registry lookup (already a local key)
-  if (IMAGE_REGISTRY[urlOrKey]) return IMAGE_REGISTRY[urlOrKey];
-
-  // Extract path from full CDN URL
-  const cdnPrefix = 'https://cdn.metaforge.app/arc-raiders/';
-  if (urlOrKey.startsWith(cdnPrefix)) {
-    const key = urlOrKey.slice(cdnPrefix.length);
-    if (IMAGE_REGISTRY[key]) return IMAGE_REGISTRY[key];
-  }
-
-  // Fallback to network URI
-  return {uri: urlOrKey};
+export function resolveImage(key: string | null | undefined): any {
+  if (!key) return null;
+  return IMAGE_REGISTRY[key] ?? null;
 }
 
 export default IMAGE_REGISTRY;

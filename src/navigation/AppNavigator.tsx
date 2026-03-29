@@ -8,14 +8,11 @@ import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts, spacing } from '../theme/theme';
 
-// Tab screens — eagerly imported for instant tab switching
 import HomeScreen from '../screens/HomeScreen';
 import TrialsScreen from '../screens/TrialsScreen';
 import MaterialsScreen from '../screens/MaterialsScreen';
 import ArcListScreen from '../screens/ArcListScreen';
 import GuidesScreen from '../screens/GuidesScreen';
-
-// RootStack screens
 import MapListScreen from '../screens/MapListScreen';
 import MapDetailScreen from '../screens/MapDetailScreen';
 import ItemDetailScreen from '../screens/ItemDetailScreen';
@@ -37,6 +34,7 @@ import QuestTreeScreen from '../screens/QuestTreeScreen';
 import CosmeticsScreen from '../screens/CosmeticsScreen';
 import CollectibleTrackerScreen from '../screens/CollectibleTrackerScreen';
 import QuestDetailScreen from '../screens/QuestDetailScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
@@ -163,7 +161,7 @@ function TabNavigator() {
       tabBar={props => <GlassTabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        lazy: false,
+        lazy: true,
         sceneStyle: { backgroundColor: 'transparent' },
       }}>
       <Tab.Screen name="Bunker" component={BunkerStackScreen} />
@@ -215,9 +213,10 @@ const AppNavigator = () => {
           <RootStack.Screen name="CollectibleTracker" component={CollectibleTrackerScreen} />
           <RootStack.Screen name="Submit" component={SubmitScreen} />
           <RootStack.Screen name="Weapons" component={WeaponsScreen} />
-          <RootStack.Screen name="SkillTree" component={SkillTreeScreen} />
+          <RootStack.Screen name="SkillTree" component={SkillTreeScreen} options={{gestureEnabled: false}} />
           <RootStack.Screen name="ArcDetail" component={ArcDetailScreen} />
           <RootStack.Screen name="GuideDetail" component={GuideDetailScreen} />
+          <RootStack.Screen name="Settings" component={SettingsScreen} />
         </RootStack.Navigator>
     </NavigationContainer>
   );

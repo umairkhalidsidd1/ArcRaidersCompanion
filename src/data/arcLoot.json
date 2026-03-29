@@ -2,35 +2,35 @@
   "snitch": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Snitch Scanner",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/snitch-scanner.webp",
+      "icon": "icons/snitch-scanner.webp",
       "rarity": "Uncommon",
       "item_type": "Recyclable",
       "id": "snitch-scanner"
     },
     {
       "name": "ARC Synthetic Resin",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-synthetic-resin.webp",
+      "icon": "icons/arc-synthetic-resin.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-synthetic-resin"
     },
     {
       "name": "Sensors",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sensors-recipe.webp",
+      "icon": "icons/sensors-recipe.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "sensors-recipe"
@@ -39,14 +39,14 @@
   "tick": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "Tick Pod",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/tick-pod.webp",
+      "icon": "icons/tick-pod.webp",
       "rarity": "Uncommon",
       "item_type": "Recyclable",
       "id": "tick-pod"
@@ -55,21 +55,21 @@
   "turret": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "Light Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/light-ammo.webp",
+      "icon": "icons/light-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "light-ammo"
     },
     {
       "name": "Simple Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/simple-gun-parts.webp",
+      "icon": "icons/simple-gun-parts.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "simple-gun-parts"
@@ -78,91 +78,91 @@
   "queen": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Synthetic Resin",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-synthetic-resin.webp",
+      "icon": "icons/arc-synthetic-resin.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-synthetic-resin"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "ARC Circuitry",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry.webp",
+      "icon": "icons/arc-circuitry.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-circuitry"
     },
     {
       "name": "Advanced Mechanical Components",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-mechanical-components.webp",
+      "icon": "icons/advanced-mechanical-components.webp",
       "rarity": "Rare",
       "item_type": "Advanced Material",
       "id": "advanced-mechanical-components"
     },
     {
       "name": "Advanced Electrical Components",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-electrical-components.webp",
+      "icon": "icons/advanced-electrical-components.webp",
       "rarity": "Rare",
       "item_type": "Refined Material",
       "id": "advanced-electrical-components"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "Queen Reactor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen-reactor.webp",
+      "icon": "icons/queen-reactor.webp",
       "rarity": "Legendary",
       "item_type": "Recyclable",
       "id": "queen-reactor"
     },
     {
       "name": "ARC Coolant",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-coolant.webp",
+      "icon": "icons/arc-coolant.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-coolant"
     },
     {
       "name": "ARC Flex Rubber",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-flex-rubber.webp",
+      "icon": "icons/arc-flex-rubber.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-flex-rubber"
     },
     {
       "name": "ARC Thermo Lining",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-thermo-lining.webp",
+      "icon": "icons/arc-thermo-lining.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-thermo-lining"
     },
     {
       "name": "ARC Performance Steel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-performance-steel.webp",
+      "icon": "icons/arc-performance-steel.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-performance-steel"
     },
     {
       "name": "Magnetic Accelerator",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/magnetic-accelerator.webp",
+      "icon": "icons/magnetic-accelerator.webp",
       "rarity": "Epic",
       "item_type": "Refined Material",
       "id": "magnetic-accelerator"
@@ -171,28 +171,28 @@
   "fireball": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Fireball Burner",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/fireball-burner.webp",
+      "icon": "icons/fireball-burner.webp",
       "rarity": "Uncommon",
       "item_type": "Recyclable",
       "id": "fireball-burner"
     },
     {
       "name": "Crude Explosives",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/crude-explosives.webp",
+      "icon": "icons/crude-explosives.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "crude-explosives"
@@ -201,28 +201,28 @@
   "wasp": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Light Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/light-ammo.webp",
+      "icon": "icons/light-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "light-ammo"
     },
     {
       "name": "Wasp Driver",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/wasp-driver.webp",
+      "icon": "icons/wasp-driver.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "wasp-driver"
@@ -231,35 +231,35 @@
   "pop": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "ARC Thermo Lining",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-thermo-lining.webp",
+      "icon": "icons/arc-thermo-lining.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-thermo-lining"
     },
     {
       "name": "Crude Explosives",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/crude-explosives.webp",
+      "icon": "icons/crude-explosives.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "crude-explosives"
     },
     {
       "name": "Pop Trigger",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop-trigger.webp",
+      "icon": "icons/pop-trigger.webp",
       "rarity": "Uncommon",
       "item_type": "Recyclable",
       "id": "pop-trigger"
@@ -268,98 +268,98 @@
   "rollbot": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Sensors",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sensors-recipe.webp",
+      "icon": "icons/sensors-recipe.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "sensors-recipe"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "ARC Circuitry",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry.webp",
+      "icon": "icons/arc-circuitry.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-circuitry"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "Surveyor Vault",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/surveyor-vault.webp",
+      "icon": "icons/surveyor-vault.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "surveyor-vault"
     },
     {
       "name": "Vita Spray Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/vita-spray.webp",
+      "icon": "icons/vita-spray.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "vita-spray-recipe"
     },
     {
       "name": "Barricade Kit Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/barricade-kit.webp",
+      "icon": "icons/barricade-kit.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "barricade-kit-recipe"
     },
     {
       "name": "Extended Medium Mag III Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/extended-medium-mag-iii.webp",
+      "icon": "icons/extended-medium-mag-iii.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "extended-medium-mag-iii-blueprint"
     },
     {
       "name": "Heavy Gun Parts Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/heavy-gun-parts.webp",
+      "icon": "icons/heavy-gun-parts.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "heavy-gun-parts-recipe"
     },
     {
       "name": "Extended Barrel Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/extended-barrel.webp",
+      "icon": "icons/extended-barrel.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "extended-barrel-recipe"
     },
     {
       "name": "Padded Stock Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/padded-stock.webp",
+      "icon": "icons/padded-stock.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "padded-stock-recipe"
     },
     {
       "name": "Vita Shot Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/vita-shot.webp",
+      "icon": "icons/vita-shot.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "vita-shot-recipe"
@@ -368,77 +368,77 @@
   "matriarch": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Synthetic Resin",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-synthetic-resin.webp",
+      "icon": "icons/arc-synthetic-resin.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-synthetic-resin"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "ARC Circuitry",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry.webp",
+      "icon": "icons/arc-circuitry.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-circuitry"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "ARC Flex Rubber",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-flex-rubber.webp",
+      "icon": "icons/arc-flex-rubber.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-flex-rubber"
     },
     {
       "name": "ARC Thermo Lining",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-thermo-lining.webp",
+      "icon": "icons/arc-thermo-lining.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-thermo-lining"
     },
     {
       "name": "ARC Performance Steel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-performance-steel.webp",
+      "icon": "icons/arc-performance-steel.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-performance-steel"
     },
     {
       "name": "Magnetic Accelerator",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/magnetic-accelerator.webp",
+      "icon": "icons/magnetic-accelerator.webp",
       "rarity": "Epic",
       "item_type": "Refined Material",
       "id": "magnetic-accelerator"
     },
     {
       "name": "Matriarch Reactor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch-reactor.webp",
+      "icon": "icons/matriarch-reactor.webp",
       "rarity": "Legendary",
       "item_type": "Recyclable",
       "id": "matriarch-reactor"
     },
     {
       "name": "Aphelion Rifle Blueprint",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/aphelion-rifle-blueprint.webp",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
       "rarity": "Legendary",
       "item_type": "Blueprint",
       "id": "aphelion-rifle-blueprint"
@@ -447,56 +447,56 @@
   "rocketeer": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "ARC Circuitry",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry.webp",
+      "icon": "icons/arc-circuitry.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-circuitry"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "Rocketeer Driver",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer-part.webp",
+      "icon": "icons/rocketeer-part.webp",
       "rarity": "Epic",
       "item_type": "Recyclable",
       "id": "rocketeer-part"
     },
     {
       "name": "Heavy Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/heavy-ammo.webp",
+      "icon": "icons/heavy-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "heavy-ammo"
     },
     {
       "name": "Heavy Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/heavy-gun-parts.webp",
+      "icon": "icons/heavy-gun-parts.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "heavy-gun-parts"
@@ -505,35 +505,35 @@
   "shredder": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Simple Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/simple-gun-parts.webp",
+      "icon": "icons/simple-gun-parts.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "simple-gun-parts"
     },
     {
       "name": "Shotgun ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shotgun-ammo.webp",
+      "icon": "icons/shotgun-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "shotgun-ammo"
     },
     {
       "name": "Shredder Gyro",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder-gyro.webp",
+      "icon": "icons/shredder-gyro.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "shredder-gyro"
@@ -542,63 +542,63 @@
   "bastion": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "ARC Circuitry",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry.webp",
+      "icon": "icons/arc-circuitry.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-circuitry"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "Bastion Cell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion-part.webp",
+      "icon": "icons/bastion-part.webp",
       "rarity": "Epic",
       "item_type": "Recyclable",
       "id": "bastion-part"
     },
     {
       "name": "Mechanical Components",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/mechanical-components.webp",
+      "icon": "icons/mechanical-components.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "mechanical-components"
     },
     {
       "name": "Medium Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/medium-gun-parts.webp",
+      "icon": "icons/medium-gun-parts.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "medium-gun-parts"
     },
     {
       "name": "Medium Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/medium-ammo.webp",
+      "icon": "icons/medium-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "medium-ammo"
@@ -607,70 +607,70 @@
   "bison": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "ARC Circuitry",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-circuitry.webp",
+      "icon": "icons/arc-circuitry.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-circuitry"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "ARC Flex Rubber",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-flex-rubber.webp",
+      "icon": "icons/arc-flex-rubber.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-flex-rubber"
     },
     {
       "name": "ARC Performance Steel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-performance-steel.webp",
+      "icon": "icons/arc-performance-steel.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-performance-steel"
     },
     {
       "name": "Mechanical Components",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/mechanical-components.webp",
+      "icon": "icons/mechanical-components.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "mechanical-components"
     },
     {
       "name": "Leaper Pulse Unit",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/leaper-pulse-unit.webp",
+      "icon": "icons/leaper-pulse-unit.webp",
       "rarity": "Epic",
       "item_type": "Throwable",
       "id": "leaper-pulse-unit"
     },
     {
       "name": "Explosive Compound",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/explosive-compound.webp",
+      "icon": "icons/explosive-compound.webp",
       "rarity": "Rare",
       "item_type": "Refined Material",
       "id": "explosive-compound"
@@ -679,56 +679,56 @@
   "bombardier": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "ARC Performance Steel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-performance-steel.webp",
+      "icon": "icons/arc-performance-steel.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-performance-steel"
     },
     {
       "name": "Mechanical Components",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/mechanical-components.webp",
+      "icon": "icons/mechanical-components.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "mechanical-components"
     },
     {
       "name": "Medium Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/medium-gun-parts.webp",
+      "icon": "icons/medium-gun-parts.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "medium-gun-parts"
     },
     {
       "name": "Bombardier Cell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier-cell.webp",
+      "icon": "icons/bombardier-cell.webp",
       "rarity": "Epic",
       "item_type": "Recyclable",
       "id": "bombardier-cell"
     },
     {
       "name": "Launcher Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/launcher-ammo.webp",
+      "icon": "icons/launcher-ammo.webp",
       "rarity": "Rare",
       "item_type": "Ammunition",
       "id": "launcher-ammo"
@@ -737,42 +737,42 @@
   "comet": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "ARC Coolant",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-coolant.webp",
+      "icon": "icons/arc-coolant.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-coolant"
     },
     {
       "name": "ARC Thermo Lining",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-thermo-lining.webp",
+      "icon": "icons/arc-thermo-lining.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-thermo-lining"
     },
     {
       "name": "Crude Explosives",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/crude-explosives.webp",
+      "icon": "icons/crude-explosives.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "crude-explosives"
     },
     {
       "name": "Explosive Compound",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/explosive-compound.webp",
+      "icon": "icons/explosive-compound.webp",
       "rarity": "Rare",
       "item_type": "Refined Material",
       "id": "explosive-compound"
@@ -782,7 +782,7 @@
     },
     {
       "name": "Electrical Components",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/electrical-components.webp",
+      "icon": "icons/electrical-components.webp",
       "rarity": "Uncommon",
       "item_type": "Refined Material",
       "id": "electrical-components"
@@ -791,21 +791,21 @@
   "firefly": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Simple Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/simple-gun-parts.webp",
+      "icon": "icons/simple-gun-parts.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "simple-gun-parts"
@@ -815,7 +815,7 @@
     },
     {
       "name": "Chemicals",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/chemicals.webp",
+      "icon": "icons/chemicals.webp",
       "rarity": "Common",
       "item_type": "Basic Material",
       "id": "chemicals"
@@ -824,35 +824,35 @@
   "hornet": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Simple Gun Parts",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/simple-gun-parts.webp",
+      "icon": "icons/simple-gun-parts.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "simple-gun-parts"
     },
     {
       "name": "Medium Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/medium-ammo.webp",
+      "icon": "icons/medium-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "medium-ammo"
     },
     {
       "name": "Hornet Driver",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/hornet-driver.webp",
+      "icon": "icons/hornet-driver.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "hornet-driver"
@@ -861,56 +861,56 @@
   "sentinel": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Synthetic Resin",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-synthetic-resin.webp",
+      "icon": "icons/arc-synthetic-resin.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-synthetic-resin"
     },
     {
       "name": "ARC Motion Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-motion-core.webp",
+      "icon": "icons/arc-motion-core.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "arc-motion-core"
     },
     {
       "name": "Advanced ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/advanced-arc-powercell.webp",
+      "icon": "icons/advanced-arc-powercell.webp",
       "rarity": "Rare",
       "item_type": "Topside Material",
       "id": "advanced-arc-powercell"
     },
     {
       "name": "ARC Coolant",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-coolant.webp",
+      "icon": "icons/arc-coolant.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-coolant"
     },
     {
       "name": "ARC Thermo Lining",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-thermo-lining.webp",
+      "icon": "icons/arc-thermo-lining.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "arc-thermo-lining"
     },
     {
       "name": "Heavy Ammo",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/heavy-ammo.webp",
+      "icon": "icons/heavy-ammo.webp",
       "rarity": "Common",
       "item_type": "Ammunition",
       "id": "heavy-ammo"
     },
     {
       "name": "Sentinel Firing Core",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel-part.webp",
+      "icon": "icons/sentinel-part.webp",
       "rarity": "Rare",
       "item_type": "Recyclable",
       "id": "sentinel-part"
@@ -919,21 +919,21 @@
   "spotter": [
     {
       "name": "ARC Alloy",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-alloy.webp",
+      "icon": "icons/arc-alloy.webp",
       "rarity": "Uncommon",
       "item_type": "Topside Material",
       "id": "arc-alloy"
     },
     {
       "name": "ARC Powercell",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/arc-powercell.webp",
+      "icon": "icons/arc-powercell.webp",
       "rarity": "Common",
       "item_type": "Topside Material",
       "id": "arc-powercell"
     },
     {
       "name": "Spotter Relay",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter-relay.webp",
+      "icon": "icons/spotter-relay.webp",
       "rarity": "Uncommon",
       "item_type": "Recyclable",
       "id": "spotter-relay"

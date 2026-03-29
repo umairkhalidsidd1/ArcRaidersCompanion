@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  InteractionManager,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -181,10 +182,19 @@ const EventTimerScreen = ({navigation}: any) => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [tick, setTick] = useState(0);
+  const [ready, setReady] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Defer timer + content until navigation slide-in completes
   useEffect(() => {
-    const iv = setInterval(() => setTick(t => t + 1), 1000);
-    return () => clearInterval(iv);
+    const task = InteractionManager.runAfterInteractions(() => {
+      setReady(true);
+      intervalRef.current = setInterval(() => setTick(t => t + 1), 1000);
+    });
+    return () => {
+      task.cancel();
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   /* ── Fetch logic ─────────────────────────────────────── */
@@ -232,7 +242,10 @@ const EventTimerScreen = ({navigation}: any) => {
   }, []);
 
   useEffect(() => {
-    fetchEvents({silent: true});
+    const task = InteractionManager.runAfterInteractions(() => {
+      fetchEvents({silent: true});
+    });
+    return () => task.cancel();
   }, [fetchEvents]);
 
   const handleRefresh = useCallback(async () => {
@@ -410,57 +423,63 @@ const EventTimerScreen = ({navigation}: any) => {
       </View>
 
       {/* ── Content ────────────────────────────────────── */}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={st.scroll}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            tintColor={CYAN}
-          />
-        }>
-        {/* ACTIVE NOW */}
-        {activeEvents.length > 0 && (
-          <>
-            <View style={st.sectionRow}>
-              <View style={[st.sectionDot, {backgroundColor: GREEN}]} />
-              <Text style={[st.sectionTitle, {color: GREEN}]}>ACTIVE NOW</Text>
-            </View>
-            {activeEvents.map(ev => renderCard(ev, 'active'))}
-          </>
-        )}
-
-        {/* STARTING SOON */}
-        {startingSoon.length > 0 && (
-          <>
-            <View style={[st.sectionRow, {marginTop: activeEvents.length > 0 ? 24 : 0}]}>
-              <View style={[st.sectionDot, {backgroundColor: CYAN}]} />
-              <Text style={[st.sectionTitle, {color: CYAN}]}>STARTING SOON</Text>
-            </View>
-            <Text style={st.sectionSub}>Events starting in the next hour</Text>
-            {startingSoon.map(ev => renderCard(ev, 'soon'))}
-          </>
-        )}
-
-        {/* ALL EVENTS */}
-        <View
-          style={[
-            st.sectionRow,
-            {marginTop: activeEvents.length > 0 || startingSoon.length > 0 ? 24 : 0},
-          ]}>
-          <View style={st.sectionBar} />
-          <Text style={[st.sectionTitle, {color: ORANGE}]}>ALL EVENTS</Text>
+      {!ready ? (
+        <View style={st.loaderWrap}>
+          <ActivityIndicator size="large" color={CYAN} />
         </View>
-        {groupedEvents.map(g => renderGroupedCard(g))}
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={st.scroll}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              tintColor={CYAN}
+            />
+          }>
+          {/* ACTIVE NOW */}
+          {activeEvents.length > 0 && (
+            <>
+              <View style={st.sectionRow}>
+                <View style={[st.sectionDot, {backgroundColor: GREEN}]} />
+                <Text style={[st.sectionTitle, {color: GREEN}]}>ACTIVE NOW</Text>
+              </View>
+              {activeEvents.map(ev => renderCard(ev, 'active'))}
+            </>
+          )}
 
-        {eventsWithStatus.length === 0 && (
-          <View style={st.emptyWrap}>
-            <Icon name="calendar-remove" size={48} color="#555" />
-            <Text style={st.emptyTitle}>No Events</Text>
+          {/* STARTING SOON */}
+          {startingSoon.length > 0 && (
+            <>
+              <View style={[st.sectionRow, {marginTop: activeEvents.length > 0 ? 24 : 0}]}>
+                <View style={[st.sectionDot, {backgroundColor: CYAN}]} />
+                <Text style={[st.sectionTitle, {color: CYAN}]}>STARTING SOON</Text>
+              </View>
+              <Text style={st.sectionSub}>Events starting in the next hour</Text>
+              {startingSoon.map(ev => renderCard(ev, 'soon'))}
+            </>
+          )}
+
+          {/* ALL EVENTS */}
+          <View
+            style={[
+              st.sectionRow,
+              {marginTop: activeEvents.length > 0 || startingSoon.length > 0 ? 24 : 0},
+            ]}>
+            <View style={st.sectionBar} />
+            <Text style={[st.sectionTitle, {color: ORANGE}]}>ALL EVENTS</Text>
           </View>
-        )}
-      </ScrollView>
+          {groupedEvents.map(g => renderGroupedCard(g))}
+
+          {eventsWithStatus.length === 0 && (
+            <View style={st.emptyWrap}>
+              <Icon name="calendar-remove" size={48} color="#555" />
+              <Text style={st.emptyTitle}>No Events</Text>
+            </View>
+          )}
+        </ScrollView>
+      )}
     </View>
   );
 };
@@ -585,6 +604,9 @@ const st = StyleSheet.create({
   slotTime: {fontSize: 13, color: 'rgba(255,255,255,0.55)', fontWeight: '600', fontVariant: ['tabular-nums']},
   slotTimeLive: {color: GREEN},
   slotDivider: {height: 1, backgroundColor: 'rgba(255,255,255,0.05)', marginHorizontal: 18},
+
+  /* Loader */
+  loaderWrap: {flex: 1, alignItems: 'center', justifyContent: 'center'},
 
   /* Empty */
   emptyWrap: {alignItems: 'center', paddingTop: 80, gap: 12},

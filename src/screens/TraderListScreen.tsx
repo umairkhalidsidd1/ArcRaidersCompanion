@@ -15,11 +15,11 @@ import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawTraders from '../data/traders.json';
 
 const TRADER_PORTRAITS: Record<string, ImageSourcePropType> = {
-  TianWen: require('../assets/traders/tian-wen.png'),
-  Shani: require('../assets/traders/shani.png'),
-  Lance: require('../assets/traders/lance.png'),
-  Celeste: require('../assets/traders/celeste.png'),
-  Apollo: require('../assets/traders/apollo.png'),
+  TianWen: require('../assets/traders/tian-wen.webp'),
+  Shani: require('../assets/traders/shani.webp'),
+  Lance: require('../assets/traders/lance.webp'),
+  Celeste: require('../assets/traders/celeste.webp'),
+  Apollo: require('../assets/traders/apollo.webp'),
 };
 
 type TraderRow = {

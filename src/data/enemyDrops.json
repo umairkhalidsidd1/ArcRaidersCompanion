@@ -2,627 +2,627 @@
   "ARC Alloy": [
     {
       "name": "Snitch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/snitch.webp"
+      "icon": "icons/snitch.webp"
     },
     {
       "name": "Tick",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/tick.webp"
+      "icon": "icons/tick.webp"
     },
     {
       "name": "Turret",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/turret.webp"
+      "icon": "icons/turret.webp"
     },
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Fireball",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/fireball.webp"
+      "icon": "icons/fireball.webp"
     },
     {
       "name": "Wasp",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/wasp.webp"
+      "icon": "icons/wasp.webp"
     },
     {
       "name": "Pop",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+      "icon": "icons/pop.webp"
     },
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     },
     {
       "name": "Shredder",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+      "icon": "icons/shredder.webp"
     },
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     },
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     },
     {
       "name": "Firefly",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+      "icon": "icons/firefly.webp"
     },
     {
       "name": "Hornet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/hornet.webp"
+      "icon": "icons/hornet.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     },
     {
       "name": "Spotter",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter.webp"
+      "icon": "icons/spotter.webp"
     }
   ],
   "ARC Powercell": [
     {
       "name": "Snitch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/snitch.webp"
+      "icon": "icons/snitch.webp"
     },
     {
       "name": "Fireball",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/fireball.webp"
+      "icon": "icons/fireball.webp"
     },
     {
       "name": "Wasp",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/wasp.webp"
+      "icon": "icons/wasp.webp"
     },
     {
       "name": "Pop",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+      "icon": "icons/pop.webp"
     },
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     },
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     },
     {
       "name": "Shredder",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+      "icon": "icons/shredder.webp"
     },
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     },
     {
       "name": "Firefly",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+      "icon": "icons/firefly.webp"
     },
     {
       "name": "Hornet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/hornet.webp"
+      "icon": "icons/hornet.webp"
     },
     {
       "name": "Spotter",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter.webp"
+      "icon": "icons/spotter.webp"
     }
   ],
   "Snitch Scanner": [
     {
       "name": "Snitch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/snitch.webp"
+      "icon": "icons/snitch.webp"
     }
   ],
   "ARC Synthetic Resin": [
     {
       "name": "Snitch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/snitch.webp"
+      "icon": "icons/snitch.webp"
     },
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "Sensors": [
     {
       "name": "Snitch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/snitch.webp"
+      "icon": "icons/snitch.webp"
     },
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Tick Pod": [
     {
       "name": "Tick",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/tick.webp"
+      "icon": "icons/tick.webp"
     }
   ],
   "Light Ammo": [
     {
       "name": "Turret",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/turret.webp"
+      "icon": "icons/turret.webp"
     },
     {
       "name": "Wasp",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/wasp.webp"
+      "icon": "icons/wasp.webp"
     }
   ],
   "Simple Gun Parts": [
     {
       "name": "Turret",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/turret.webp"
+      "icon": "icons/turret.webp"
     },
     {
       "name": "Shredder",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+      "icon": "icons/shredder.webp"
     },
     {
       "name": "Firefly",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+      "icon": "icons/firefly.webp"
     },
     {
       "name": "Hornet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/hornet.webp"
+      "icon": "icons/hornet.webp"
     }
   ],
   "ARC Motion Core": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     },
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "ARC Circuitry": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     },
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     }
   ],
   "Advanced Mechanical Components": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     }
   ],
   "Advanced Electrical Components": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     }
   ],
   "Advanced ARC Powercell": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     },
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     },
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "Queen Reactor": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     }
   ],
   "ARC Coolant": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "ARC Flex Rubber": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     }
   ],
   "ARC Thermo Lining": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Pop",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+      "icon": "icons/pop.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "ARC Performance Steel": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     }
   ],
   "Magnetic Accelerator": [
     {
       "name": "Queen",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/queen.webp"
+      "icon": "icons/queen.webp"
     },
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     }
   ],
   "Fireball Burner": [
     {
       "name": "Fireball",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/fireball.webp"
+      "icon": "icons/fireball.webp"
     }
   ],
   "Crude Explosives": [
     {
       "name": "Fireball",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/fireball.webp"
+      "icon": "icons/fireball.webp"
     },
     {
       "name": "Pop",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+      "icon": "icons/pop.webp"
     },
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     }
   ],
   "Wasp Driver": [
     {
       "name": "Wasp",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/wasp.webp"
+      "icon": "icons/wasp.webp"
     }
   ],
   "Pop Trigger": [
     {
       "name": "Pop",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/pop.webp"
+      "icon": "icons/pop.webp"
     }
   ],
   "Surveyor Vault": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Vita Spray Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Barricade Kit Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Extended Medium Mag III Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Heavy Gun Parts Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Extended Barrel Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Padded Stock Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Vita Shot Blueprint": [
     {
       "name": "Surveyor",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rollbot.webp"
+      "icon": "icons/rollbot.webp"
     }
   ],
   "Matriarch Reactor": [
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     }
   ],
   "Aphelion Rifle Blueprint": [
     {
       "name": "Matriarch",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/matriarch.webp"
+      "icon": "icons/matriarch.webp"
     }
   ],
   "Rocketeer Driver": [
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     }
   ],
   "Heavy Ammo": [
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     },
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "Heavy Gun Parts": [
     {
       "name": "Rocketeer",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/rocketeer.webp"
+      "icon": "icons/rocketeer.webp"
     }
   ],
   "Shotgun ammo": [
     {
       "name": "Shredder",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+      "icon": "icons/shredder.webp"
     }
   ],
   "Shredder Gyro": [
     {
       "name": "Shredder",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/shredder.webp"
+      "icon": "icons/shredder.webp"
     }
   ],
   "Bastion Cell": [
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     }
   ],
   "Mechanical Components": [
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     }
   ],
   "Medium Gun Parts": [
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     }
   ],
   "Medium Ammo": [
     {
       "name": "Bastion",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bastion.webp"
+      "icon": "icons/bastion.webp"
     },
     {
       "name": "Hornet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/hornet.webp"
+      "icon": "icons/hornet.webp"
     }
   ],
   "Leaper Pulse Unit": [
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     }
   ],
   "Explosive Compound": [
     {
       "name": "Leaper",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bison.webp"
+      "icon": "icons/bison.webp"
     },
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     }
   ],
   "Bombardier Cell": [
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     }
   ],
   "Launcher Ammo": [
     {
       "name": "Bombardier",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/bombardier.webp"
+      "icon": "icons/bombardier.webp"
     }
   ],
   "Comet Igniter": [
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     }
   ],
   "Electrical Components": [
     {
       "name": "Comet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/comet.webp"
+      "icon": "icons/comet.webp"
     }
   ],
   "Firefly Burner": [
     {
       "name": "Firefly",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+      "icon": "icons/firefly.webp"
     }
   ],
   "Chemicals": [
     {
       "name": "Firefly",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/firefly.webp"
+      "icon": "icons/firefly.webp"
     }
   ],
   "Hornet Driver": [
     {
       "name": "Hornet",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/hornet.webp"
+      "icon": "icons/hornet.webp"
     }
   ],
   "Sentinel Firing Core": [
     {
       "name": "Sentinel",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/sentinel.webp"
+      "icon": "icons/sentinel.webp"
     }
   ],
   "Spotter Relay": [
     {
       "name": "Spotter",
-      "icon": "https://cdn.metaforge.app/arc-raiders/icons/spotter.webp"
+      "icon": "icons/spotter.webp"
     }
   ]
 }

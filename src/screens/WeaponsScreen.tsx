@@ -26,6 +26,13 @@ const CAROUSEL_GAP = 10;
 const SNAP_INTERVAL = CAROUSEL_CARD_W + CAROUSEL_GAP;
 const CAROUSEL_SIDE = (SCREEN_W - CAROUSEL_CARD_W) / 2;
 
+/* ── hoisted constants for LinearGradient (avoid new arrays/objects per render) ── */
+const CAROUSEL_GRAD_COLORS = ['rgba(0,80,200,0.18)', 'rgba(0,180,255,0.06)', 'transparent'] as const;
+const CAROUSEL_GRAD_START = {x: 0, y: 0.5} as const;
+const CAROUSEL_GRAD_END = {x: 1, y: 0.5} as const;
+const CAROUSEL_CONTENT_STYLE = {paddingHorizontal: CAROUSEL_SIDE};
+const HEADER_SPACER = {width: 44};
+
 /* ── helpers ── */
 interface WeaponItem {
   id: string;
@@ -189,7 +196,7 @@ const WeaponsScreen = ({navigation}: any) => {
           <Icon name="chevron-left" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>WEAPON INSPECT</Text>
-        <View style={{width: 44}} />
+        <View style={HEADER_SPACER} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
@@ -203,7 +210,7 @@ const WeaponsScreen = ({navigation}: any) => {
           snapToInterval={SNAP_INTERVAL}
           decelerationRate="fast"
           initialScrollIndex={familyIndex}
-          contentContainerStyle={{paddingHorizontal: CAROUSEL_SIDE}}
+          contentContainerStyle={CAROUSEL_CONTENT_STYLE}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: true, listener: onScrollUpdate},
@@ -254,9 +261,9 @@ const WeaponsScreen = ({navigation}: any) => {
                     {transform: [{scale}, {translateY}], opacity},
                   ]}>
                   <LinearGradient
-                    colors={['rgba(0,80,200,0.18)', 'rgba(0,180,255,0.06)', 'transparent']}
-                    start={{x: 0, y: 0.5}}
-                    end={{x: 1, y: 0.5}}
+                    colors={CAROUSEL_GRAD_COLORS as any}
+                    start={CAROUSEL_GRAD_START}
+                    end={CAROUSEL_GRAD_END}
                     style={StyleSheet.absoluteFill}
                   />
                   <Image

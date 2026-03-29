@@ -1,8 +1,9 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject} from 'react';
 import {
   Animated,
   Dimensions,
   FlatList,
+  InteractionManager,
   PanResponder,
   ScrollView,
   StatusBar,
@@ -37,6 +38,7 @@ const CARD_GAP = spacing.sm;
 const PADDING = spacing.lg;
 const CARD_W = (SCREEN_W - PADDING * 2 - CARD_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 const CARD_H = CARD_W * 1.15;
+const ROW_H = CARD_H + CARD_GAP;
 const THUMB_COLS = 4;
 const THUMB_W = Math.floor((SCREEN_W - PADDING * 2 - 2 - spacing.sm * (THUMB_COLS - 1)) / THUMB_COLS);
 const BP_STORAGE_KEY = '@arcc_blueprints_v2';
@@ -406,17 +408,21 @@ function ensureIndexes() {
       if (k) pushSaved(k, {listName: 'Trophy Display', detail: stage.name, quantity: obj.quantity, icon: 'trophy', color: '#26C6DA'});
     });
   });
-  // Quest objectives — substring match
+  // Quest objectives — pre-lowercase objective strings, then match items
+  const objEntries: {lower: string; questName: string}[] = [];
+  allQuestsData.forEach((q: any) => {
+    (q.objectives || []).forEach((obj: any) => {
+      const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
+      objEntries.push({lower: str.toLowerCase(), questName: q.name});
+    });
+  });
   allItems.forEach(ai => {
     const nameLower = ai.name.toLowerCase();
-    allQuestsData.forEach((q: any) => {
-      (q.objectives || []).forEach((obj: any) => {
-        const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
-        if (str.toLowerCase().includes(nameLower)) {
-          pushSaved(nameLower, {listName: 'Quest Objective', detail: q.name, icon: 'map-marker-check', color: '#FF8A65'});
-        }
-      });
-    });
+    for (const entry of objEntries) {
+      if (entry.lower.includes(nameLower)) {
+        pushSaved(nameLower, {listName: 'Quest Objective', detail: entry.questName, icon: 'map-marker-check', color: '#FF8A65'});
+      }
+    }
   });
 }
 
@@ -1864,7 +1870,6 @@ const MaterialsScreen = ({navigation}: any) => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [bpCollected, setBpCollected] = useState<string[]>([]);
-  const [ready, setReady] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RawItem | null>(null);
   const [sheetVisible, setSheetVisible] = useState(false);
   const [wbSheetVisible, setWbSheetVisible] = useState(false);
@@ -1874,8 +1879,9 @@ const MaterialsScreen = ({navigation}: any) => {
   const [expFromDetail, setExpFromDetail] = useState(false);
   const [tdFromDetail, setTdFromDetail] = useState(false);
   const [wbChecked, setWbChecked] = useState<string[]>([]);
+  const [sheetsReady, setSheetsReady] = useState(false);
 
-  // Load blueprint + workbench state from AsyncStorage
+  // Load blueprint + workbench state from AsyncStorage (non-blocking)
   useEffect(() => {
     Promise.all([
       AsyncStorage.getItem(BP_STORAGE_KEY),
@@ -1885,8 +1891,15 @@ const MaterialsScreen = ({navigation}: any) => {
         if (bpRaw) setBpCollected(JSON.parse(bpRaw));
         if (wbRaw) setWbChecked(JSON.parse(wbRaw));
       })
-      .catch(() => {})
-      .finally(() => setReady(true));
+      .catch(() => {});
+
+    // Defer heavy sheet mounting + index warming until after first frame
+    const task = InteractionManager.runAfterInteractions(() => {
+      ensureItemByName();
+      ensureIndexes();
+      setSheetsReady(true);
+    });
+    return () => task.cancel();
   }, []);
 
   const wbCheckedSet = useMemo(() => new Set(wbChecked), [wbChecked]);
@@ -1902,6 +1915,8 @@ const MaterialsScreen = ({navigation}: any) => {
   }, []);
 
   const bpSet = useMemo(() => new Set(bpCollected), [bpCollected]);
+  const bpSetRef = useRef(bpSet);
+  bpSetRef.current = bpSet;
 
   const toggleBlueprint = useCallback((id: string) => {
     setBpCollected(prev => {
@@ -1999,12 +2014,12 @@ const MaterialsScreen = ({navigation}: any) => {
         <ItemCard
           item={item}
           isBlueprint={isBp}
-          bpCollected={isBp ? bpSet.has(item.id) : false}
+          bpCollected={isBp ? bpSetRef.current.has(item.id) : false}
           onPress={handleItemPress}
         />
       );
     },
-    [bpSet, handleItemPress],
+    [handleItemPress],
   );
 
   const keyExtractor = useCallback((item: RawItem) => item.id, []);
@@ -2023,18 +2038,18 @@ const MaterialsScreen = ({navigation}: any) => {
 
       {/* Material Lists */}
       <View style={styles.listsSection}>
-        <Text style={styles.listsTitle}>Material Lists</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.listsRow}>
-          {MATERIAL_LISTS.map(list => (
-            <TouchableOpacity
-              key={list.id}
-              activeOpacity={0.7}
-              delayPressIn={0}
-              onPress={() => {
-                if (list.id === 'expedition') {
+          <Text style={styles.listsTitle}>Material Lists</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.listsRow}>
+            {MATERIAL_LISTS.map(list => (
+              <TouchableOpacity
+                key={list.id}
+                activeOpacity={0.7}
+                delayPressIn={0}
+                onPress={() => {
+                  if (list.id === 'expedition') {
                   setExpSheetVisible(true);
                 } else if (list.id === 'workbench') {
                   setWbSheetVisible(true);
@@ -2101,11 +2116,7 @@ const MaterialsScreen = ({navigation}: any) => {
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.grid}
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-        maxToRenderPerBatch={18}
-        windowSize={11}
-        initialNumToRender={9}
-        updateCellsBatchingPeriod={50}
+        extraData={bpCollected}
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
@@ -2114,57 +2125,55 @@ const MaterialsScreen = ({navigation}: any) => {
         }
       />
 
-      {/* Workbench Upgrade Sheet */}
-      <WorkbenchUpgradeSheet
-        visible={wbSheetVisible}
-        onClose={handleCloseWbSheet}
-        checkedStations={wbCheckedSet}
-        onToggleStation={toggleWbStation}
-        onMaterialPress={handleWbMaterialPress}
-        overDetail={wbFromDetail}
-      />
-
-      {/* Expedition Sheet */}
-      <ExpeditionSheet
-        visible={expSheetVisible}
-        onClose={handleCloseExpSheet}
-        onMaterialPress={handleExpMaterialPress}
-        overDetail={expFromDetail}
-      />
-
-      {/* Trophy Display Sheet */}
-      <TrophyDisplaySheet
-        visible={tdSheetVisible}
-        onClose={handleCloseTdSheet}
-        onMaterialPress={handleTdMaterialPress}
-        overDetail={tdFromDetail}
-      />
-
-      {/* Detail Bottom Sheet (rendered after WB so it stacks on top) */}
-      <DetailSheet
-        item={selectedItem}
-        visible={sheetVisible}
-        onClose={handleCloseSheet}
-        isBlueprint={isSelectedItem}
-        bpCollected={selectedItem ? bpSet.has(selectedItem.id) : false}
-        onToggleBp={toggleBlueprint}
-        onItemPress={handleSheetItemPress}
-        onOpenWbSheet={() => { setWbFromDetail(true); setWbSheetVisible(true); }}
-        onOpenExpSheet={() => { setExpFromDetail(true); setExpSheetVisible(true); }}
-        onOpenTdSheet={() => { setTdFromDetail(true); setTdSheetVisible(true); }}
-      />
-
-      {/* Filter Modal */}
-      <FilterModal
-        visible={filterVisible}
-        onClose={() => setFilterVisible(false)}
-        categories={RARITY_FILTERS}
-        selected={selectedFilters}
-        onApply={sel => {
-          setSelectedFilters(sel);
-          setFilterVisible(false);
-        }}
-      />
+      {/* Bottom sheets — deferred mount for fast first render */}
+      {sheetsReady && <>
+        <WorkbenchUpgradeSheet
+          visible={wbSheetVisible}
+          onClose={handleCloseWbSheet}
+          checkedStations={wbCheckedSet}
+          onToggleStation={toggleWbStation}
+          onMaterialPress={handleWbMaterialPress}
+          overDetail={wbFromDetail}
+        />
+        <ExpeditionSheet
+          visible={expSheetVisible}
+          onClose={handleCloseExpSheet}
+          onMaterialPress={handleExpMaterialPress}
+          overDetail={expFromDetail}
+        />
+        <TrophyDisplaySheet
+          visible={tdSheetVisible}
+          onClose={handleCloseTdSheet}
+          onMaterialPress={handleTdMaterialPress}
+          overDetail={tdFromDetail}
+        />
+      </>}
+      {sheetVisible && (
+        <DetailSheet
+          item={selectedItem}
+          visible={sheetVisible}
+          onClose={handleCloseSheet}
+          isBlueprint={isSelectedItem}
+          bpCollected={selectedItem ? bpSet.has(selectedItem.id) : false}
+          onToggleBp={toggleBlueprint}
+          onItemPress={handleSheetItemPress}
+          onOpenWbSheet={() => { setWbFromDetail(true); setWbSheetVisible(true); }}
+          onOpenExpSheet={() => { setExpFromDetail(true); setExpSheetVisible(true); }}
+          onOpenTdSheet={() => { setTdFromDetail(true); setTdSheetVisible(true); }}
+        />
+      )}
+      {filterVisible && (
+        <FilterModal
+          visible={filterVisible}
+          onClose={() => setFilterVisible(false)}
+          categories={RARITY_FILTERS}
+          selected={selectedFilters}
+          onApply={sel => {
+            setSelectedFilters(sel);
+            setFilterVisible(false);
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -2187,7 +2196,6 @@ const styles = StyleSheet.create({
 
   /* Material Lists */
   listsSection: {
-    paddingHorizontal: PADDING,
     marginBottom: spacing.md,
   },
   listsTitle: {
@@ -2195,9 +2203,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.textSecondary,
     marginBottom: spacing.sm,
+    paddingHorizontal: PADDING,
   },
   listsRow: {
     gap: spacing.sm,
+    paddingHorizontal: PADDING,
   },
   listCard: {
     width: SCREEN_W * 0.55,

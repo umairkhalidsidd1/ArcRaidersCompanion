@@ -304,6 +304,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         maxToRenderPerBatch={ready ? 30 : 9}
         windowSize={ready ? 21 : 5}
         initialNumToRender={9}
+        getItemLayout={(_data, index) => ({length: ROW_H, offset: Math.floor(index / NUM_COLUMNS) * ROW_H, index})}
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />

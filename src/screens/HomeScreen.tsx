@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  Animated,
   Dimensions,
   FlatList,
-  Image,
   ImageBackground,
   ScrollView,
   StatusBar,
@@ -11,17 +11,72 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
 import { getMapFullImage } from '../data/mapImages';
+import {resolveImage} from '../data/imageRegistry';
 import maps from '../data/maps.json';
 import events from '../data/events.json';
 import rawItems from '../data/items.json';
+import tradersData from '../data/traders.json';
+
+/* ── Animated gradient border (shared spin) ── */
+const _GRAD_COLORS: [string, string, ...string[]] = ['#E0F7FF', '#80DFFF', '#00E5FF', '#40C8FF', '#87CEFA', '#B0E8FF', '#00BFFF', '#E0F7FF'];
+const _spin = new Animated.Value(0);
+let _spinStarted = false;
+function ensureGradSpin() {
+  if (_spinStarted) return;
+  _spinStarted = true;
+  Animated.loop(
+    Animated.timing(_spin, {toValue: 1, duration: 3000, easing: t => t, useNativeDriver: true}),
+  ).start();
+}
+const _rotate = _spin.interpolate({inputRange: [0, 1], outputRange: ['0deg', '360deg']});
+
+const AnimGradBorder = ({children, radius = borderRadius.lg, borderW = 1.5, style}: {children: React.ReactNode; radius?: number; borderW?: number; style?: any}) => {
+  ensureGradSpin();
+  const {width: W} = Dimensions.get('window');
+  return (
+    <View style={[{borderRadius: radius, overflow: 'hidden'}, style]}>
+      <View style={[{...StyleSheet.absoluteFillObject}, {alignItems: 'center', justifyContent: 'center'}]} pointerEvents="none">
+        <Animated.View style={{width: W * 2, height: W * 2, transform: [{rotate: _rotate}]}}>
+          <LinearGradient colors={_GRAD_COLORS} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={{flex: 1}} />
+        </Animated.View>
+      </View>
+      <View style={{margin: borderW, borderRadius: radius - borderW, backgroundColor: colors.bg, overflow: 'hidden'}}>
+        {children}
+      </View>
+    </View>
+  );
+};
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const MAP_CARD_WIDTH = SCREEN_WIDTH * 0.82;
+
+/* ── Hoisted style constants (avoid new objects per render) ── */
+const BOTTOM_FADE_COLORS = ['transparent', 'rgba(5,8,15,0.92)', 'rgba(5,8,15,1)'];
+const BOTTOM_FADE_STYLE = {position: 'absolute' as const, left: 0, right: 0, bottom: 0, height: '25%' as const};
+const SIDE_FADE_COLORS_L = ['rgba(5,8,15,0.5)', 'rgba(5,8,15,0.3)', 'transparent'];
+const SIDE_FADE_COLORS_R = ['transparent', 'rgba(5,8,15,0.3)', 'rgba(5,8,15,0.5)'];
+const SIDE_FADE_START = {x: 0, y: 0};
+const SIDE_FADE_END = {x: 1, y: 0};
+const LEFT_FADE_STYLE = {position: 'absolute' as const, top: 0, bottom: 0, left: 0, width: '10%' as const};
+const RIGHT_FADE_STYLE = {position: 'absolute' as const, top: 0, bottom: 0, right: 0, width: '10%' as const};
+const FLEX_SPACER = {flex: 1};
+
+/* ── Trader card data ── */
+const TRADER_PORTRAITS = [
+  require('../assets/traders/tian-wen.webp'),
+  require('../assets/traders/lance.webp'),
+  require('../assets/traders/celeste.webp'),
+  require('../assets/traders/shani.webp'),
+  require('../assets/traders/apollo.webp'),
+];
+const TRADER_COUNT = new Set((tradersData as any[]).map(t => t.trader_name)).size;
+const TRADER_ITEM_COUNT = (tradersData as any[]).length;
 
 /* ── Event helpers (UTC‑based, matching EventTimerScreen) ── */
 type TimeSlot = { start: string; end: string };
@@ -128,6 +183,35 @@ const getKeysForMap = (mapId: string) => {
   return keyItems.filter(k => k.name.startsWith(prefix));
 };
 
+/* ── Weapon showcase data ── */
+const SHOWCASE_WEAPONS = (() => {
+  const all = (rawItems as any[])
+    .filter(i => i.item_type === 'Weapon' && i.icon && (i.rarity === 'Legendary' || i.rarity === 'Epic'));
+  const prio: Record<string, number> = {Legendary: 0, Epic: 1};
+  all.sort((a: any, b: any) => (prio[a.rarity] ?? 9) - (prio[b.rarity] ?? 9));
+  const seen = new Set<string>();
+  const picks: any[] = [];
+  for (const w of all) {
+    const cat = (w.subcategory || '').toLowerCase();
+    if (cat && seen.has(cat)) continue;
+    seen.add(cat);
+    picks.push(w);
+    if (picks.length >= 4) break;
+  }
+  return picks;
+})();
+const TOTAL_WEAPONS = (rawItems as any[]).filter(i => i.item_type === 'Weapon').length;
+
+/* ── Blueprint count ── */
+const TOTAL_BLUEPRINTS = (rawItems as any[]).filter(i => i.item_type === 'Blueprint').length;
+
+/* ── Cosmetic showcase data ── */
+const SHOWCASE_COSMETICS = (rawItems as any[])
+  .filter(i => (i.item_type === 'Cosmetic' || i.item_type === 'Trinket' || i.item_type === 'Collectible') && i.icon)
+  .slice(0, 4);
+const TOTAL_COSMETICS = (rawItems as any[]).filter(i => i.item_type === 'Cosmetic').length;
+const TOTAL_COLLECTIBLES = (rawItems as any[]).filter(i => i.item_type === 'Collectible' || i.item_type === 'Trinket').length;
+
 const RAIDER_TOOLS = [
   {
     key: 'skilltree',
@@ -162,14 +246,6 @@ const RAIDER_TOOLS = [
     screen: 'TierList',
   },
   {
-    key: 'traders',
-    icon: 'store',
-    color: colors.cyan,
-    title: 'Traders',
-    desc: 'Browse trader inventories and prices.',
-    screen: 'TraderList',
-  },
-  {
     key: 'quests',
     icon: 'clipboard-list-outline',
     color: colors.cyan,
@@ -194,14 +270,6 @@ const RAIDER_TOOLS = [
     screen: 'Expedition',
   },
   {
-    key: 'eventtimers',
-    icon: 'timer-sand',
-    color: colors.cyan,
-    title: 'Event Timers',
-    desc: 'Live countdowns for in-game events.',
-    screen: 'EventTimers',
-  },
-  {
     key: 'cosmetics',
     icon: 'tshirt-crew-outline',
     color: colors.cyan,
@@ -219,31 +287,192 @@ const RAIDER_TOOLS = [
   },
 ];
 
-const HomeScreen = ({ navigation }: any) => {
-  const insets = useSafeAreaInsets();
-  const [, setTick] = useState(0);
+/* ── Live Event Card helpers ── */
+const ALL_EVENTS = events as GameEvent[];
+const TOTAL_EVENTS = ALL_EVENTS.length;
+const MAP_SHORT: Record<string, string> = {Dam: 'Dam', 'Buried City': 'Buried City', Spaceport: 'Spaceport', 'Blue Gate': 'Blue Gate', 'Stella Montis': 'Stella M.'};
 
-  // Re-render every 60s for event countdowns
+type LiveSlot = {name: string; map: string; icon: string; isActive: boolean; countdown: string; localTime: string};
+
+const getLiveEvents = (): LiveSlot[] => {
+  const nowSec = getNowSeconds();
+  const DAY = 24 * 3600;
+  const results: LiveSlot[] = [];
+
+  for (const ev of ALL_EVENTS) {
+    const slots = parseTimeSlots(ev.times);
+    for (const s of slots) {
+      const startSec = parseToSeconds(s.start);
+      const endSec = parseToSeconds(s.end);
+      let active = false;
+      let rem = 0;
+
+      if (endSec > startSec) {
+        if (nowSec >= startSec && nowSec < endSec) { active = true; rem = endSec - nowSec; }
+      } else {
+        if (nowSec >= startSec) { active = true; rem = DAY - nowSec + endSec; }
+        else if (nowSec < endSec) { active = true; rem = endSec - nowSec; }
+      }
+
+      if (active) {
+        const m = Math.floor(rem / 60);
+        const sec = rem % 60;
+        results.push({name: ev.name, map: ev.map, icon: ev.icon, isActive: true, countdown: `${m}m ${sec}s`, localTime: ''});
+      } else {
+        let dist = startSec - nowSec;
+        if (dist <= 0) dist += DAY;
+        if (dist < 3600 * 2) {
+          const totalSec = Math.floor(dist);
+          const h = Math.floor(totalSec / 3600);
+          const m = Math.floor((totalSec % 3600) / 60);
+          const cd = h > 0 ? `${h}h ${m}m` : `${m}m`;
+          results.push({name: ev.name, map: ev.map, icon: ev.icon, isActive: false, countdown: cd, localTime: formatLocalTime(s.start)});
+        }
+      }
+    }
+  }
+
+  // Deduplicate by name+map, prefer active
+  const seen = new Map<string, LiveSlot>();
+  for (const r of results) {
+    const k = `${r.name}|${r.map}`;
+    const prev = seen.get(k);
+    if (!prev || (r.isActive && !prev.isActive)) seen.set(k, r);
+  }
+  const deduped = [...seen.values()];
+  // Sort: active first, then by countdown ascending
+  deduped.sort((a, b) => {
+    if (a.isActive !== b.isActive) return a.isActive ? -1 : 1;
+    return 0;
+  });
+  return deduped;
+};
+
+/* ── Isolated live event card – ticks every second ── */
+const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
+  const [, setTick] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setTick(t => t + 1), 1000);
     return () => clearInterval(iv);
   }, []);
 
+  const liveEvents = getLiveEvents();
+  const activeCount = liveEvents.filter(e => e.isActive).length;
+  const shown = liveEvents.slice(0, 3);
+
+  return (
+      <TouchableOpacity style={styles.eventCard} activeOpacity={0.7} onPress={onPress}>
+        {/* Header row */}
+        <View style={styles.eventCardHeader}>
+          <View style={styles.eventCardIconWrap}>
+            <Icon name="timer-sand" size={20} color={colors.cyan} />
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.eventCardTitle}>EVENT TIMERS</Text>
+            <Text style={styles.eventCardSub}>
+              {activeCount > 0 ? `${activeCount} ACTIVE` : 'NONE ACTIVE'} • {TOTAL_EVENTS} EVENTS
+            </Text>
+          </View>
+          <Icon name="chevron-right" size={24} color={colors.textMuted} />
+        </View>
+
+        {/* Live event rows */}
+        {shown.length > 0 && (
+          <View style={styles.eventCardList}>
+            {shown.map((ev, i) => (
+              <View key={`${ev.name}-${ev.map}-${i}`} style={styles.eventRow}>
+                <View style={[styles.eventDot, ev.isActive && styles.eventDotActive]} />
+                <View style={{flex: 1}}>
+                  <Text style={styles.eventRowName} numberOfLines={1}>{ev.name}</Text>
+                  <Text style={styles.eventRowMap}>{MAP_SHORT[ev.map] || ev.map}</Text>
+                </View>
+                <View style={styles.eventCountdownWrap}>
+                  <Text style={[styles.eventCountdown, ev.isActive && {color: '#4ADE80'}]}>
+                    {ev.countdown}
+                  </Text>
+                  <Text style={styles.eventCountdownLabel}>
+                    {ev.isActive ? 'ENDS IN' : 'STARTS IN'}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        )}
+      </TouchableOpacity>
+  );
+});
+
+/* ── Isolated event badge – only this component re-renders every second ── */
+const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick(t => t + 1), 1000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const eventInfo = getMapEventInfo(mapId);
+  if (!eventInfo) return null;
+
+  return (
+    <View style={[styles.eventBadge, eventInfo.isActive && styles.eventBadgeActive]}>
+      {eventInfo.isActive ? (
+        <>
+          <View style={styles.activeDot} />
+          <View>
+            <Text style={[styles.eventBadgeTitle, { color: '#4ADE80' }]}>
+              ACTIVE: {eventInfo.name}
+            </Text>
+            <Text style={styles.eventBadgeSub}>
+              Ends in {eventInfo.endsIn}
+            </Text>
+          </View>
+        </>
+      ) : (
+        <>
+          <Icon name="clock-outline" size={14} color={colors.textSecondary} />
+          <View>
+            <Text style={styles.eventBadgeTitle}>
+              NEXT: {eventInfo.name}
+            </Text>
+            <Text style={styles.eventBadgeSub}>
+              Starts {eventInfo.startsAt} ({eventInfo.startsIn})
+            </Text>
+          </View>
+        </>
+      )}
+    </View>
+  );
+});
+
+const HomeScreen = ({ navigation }: any) => {
+  const insets = useSafeAreaInsets();
+
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
 
-        {/* Maps Header */}
-        <View style={styles.sectionHeader}>
-          <View style={styles.sectionTitleRow}>
-            <View style={styles.sectionIconWrap}>
-              <Icon name="shield-check" size={18} color={colors.cyan} />
+        {/* ── Title + Settings row ── */}
+        <View style={styles.topBar}>
+          <AnimGradBorder radius={borderRadius.full} borderW={1.5} style={styles.titlePill}>
+            <View style={styles.titlePillInner}>
+              <Text style={styles.titleArc}>ARC</Text>
+              <Text style={styles.titleRaiders}>RAIDERS</Text>
+              <View style={styles.companionBadge}>
+                <Icon name="shield-check" size={12} color="#000" />
+                <Text style={styles.companionBadgeText}>COMPANION</Text>
+              </View>
             </View>
-            <Text style={styles.sectionTitle}>Maps</Text>
-          </View>
+          </AnimGradBorder>
+          <TouchableOpacity
+            style={styles.settingsBtn}
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate('Settings')}>
+            <Icon name="cog-outline" size={24} color={colors.textSecondary} />
+          </TouchableOpacity>
         </View>
 
         {/* Map Carousel */}
@@ -257,7 +486,6 @@ const HomeScreen = ({ navigation }: any) => {
           keyExtractor={item => item.id}
           renderItem={({ item }) => {
             const mapImage = getMapFullImage(item.id);
-            const eventInfo = getMapEventInfo(item.id);
             const keys = getKeysForMap(item.id);
             return (
               <TouchableOpacity
@@ -271,74 +499,28 @@ const HomeScreen = ({ navigation }: any) => {
                   resizeMode="cover">
                   {/* Bottom fade */}
                   <LinearGradient
-                    colors={['transparent', 'rgba(5,8,15,0.92)', 'rgba(5,8,15,1)']}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      height: '25%',
-                    }}
+                    colors={BOTTOM_FADE_COLORS}
+                    style={BOTTOM_FADE_STYLE}
                   />
                   {/* Left fade */}
                   <LinearGradient
-                    colors={['rgba(5,8,15,0.5)', 'rgba(5,8,15,0.3)', 'transparent']}
-                    start={{x: 0, y: 0}}
-                    end={{x: 1, y: 0}}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      left: 0,
-                      width: '10%',
-                    }}
+                    colors={SIDE_FADE_COLORS_L}
+                    start={SIDE_FADE_START}
+                    end={SIDE_FADE_END}
+                    style={LEFT_FADE_STYLE}
                   />
                   {/* Right fade */}
                   <LinearGradient
-                    colors={['transparent', 'rgba(5,8,15,0.3)', 'rgba(5,8,15,0.5)']}
-                    start={{x: 0, y: 0}}
-                    end={{x: 1, y: 0}}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      right: 0,
-                      width: '10%',
-                    }}
+                    colors={SIDE_FADE_COLORS_R}
+                    start={SIDE_FADE_START}
+                    end={SIDE_FADE_END}
+                    style={RIGHT_FADE_STYLE}
                   />
                   <View style={styles.mapCardContent}>
                     {/* Event Badge */}
-                    {eventInfo && (
-                      <View style={[styles.eventBadge, eventInfo.isActive && styles.eventBadgeActive]}>
-                        {eventInfo.isActive ? (
-                          <>
-                            <View style={styles.activeDot} />
-                            <View>
-                              <Text style={[styles.eventBadgeTitle, { color: '#4ADE80' }]}>
-                                ACTIVE: {eventInfo.name}
-                              </Text>
-                              <Text style={styles.eventBadgeSub}>
-                                Ends in {eventInfo.endsIn}
-                              </Text>
-                            </View>
-                          </>
-                        ) : (
-                          <>
-                            <Icon name="clock-outline" size={14} color={colors.textSecondary} />
-                            <View>
-                              <Text style={styles.eventBadgeTitle}>
-                                NEXT: {eventInfo.name}
-                              </Text>
-                              <Text style={styles.eventBadgeSub}>
-                                Starts {eventInfo.startsAt} ({eventInfo.startsIn})
-                              </Text>
-                            </View>
-                          </>
-                        )}
-                      </View>
-                    )}
+                    <EventBadge mapId={item.id} />
 
-                    <View style={{ flex: 1 }} />
+                    <View style={FLEX_SPACER} />
 
                     {/* Keys Row */}
                     {keys.length > 0 && (
@@ -348,7 +530,7 @@ const HomeScreen = ({ navigation }: any) => {
                           {keys.slice(0, 5).map(k => (
                             <View key={k.id} style={styles.keyIconWrap}>
                               {k.icon ? (
-                                <Image source={{ uri: k.icon }} style={styles.keyIcon} />
+                                <Image source={resolveImage(k.icon)} style={styles.keyIcon} />
                               ) : (
                                 <Icon name="key-variant" size={16} color={colors.yellow} />
                               )}
@@ -373,23 +555,69 @@ const HomeScreen = ({ navigation }: any) => {
         </View>
 
         <View style={styles.toolsList}>
-          {RAIDER_TOOLS.map((tool, i) => (
+          {/* ── Traders Card ── */}
             <TouchableOpacity
-              key={tool.screen || String(i)}
+              style={styles.traderCard}
+              activeOpacity={0.7}
+              onPress={() => navigation.navigate('TraderList')}>
+            <View style={styles.traderPortraits}>
+              {TRADER_PORTRAITS.map((src, i) => (
+                <View key={i} style={styles.traderRing}>
+                  <Image source={src} style={styles.traderAvatar} resizeMode="cover" />
+                </View>
+              ))}
+            </View>
+            <View style={styles.traderBottom}>
+              <View style={{flex: 1}}>
+                <Text style={styles.traderTitle}>TRADERS</Text>
+                <Text style={styles.traderSub}>
+                  {TRADER_COUNT} TRADERS • {TRADER_ITEM_COUNT} ITEMS
+                </Text>
+              </View>
+              <Icon name="chevron-right" size={28} color={colors.textMuted} />
+            </View>
+            </TouchableOpacity>
+
+          {/* ── Event Timers Card ── */}
+          <LiveEventCard onPress={() => navigation.navigate('EventTimers')} />
+
+          {/* ── Weapons Showcase ── */}
+          <TouchableOpacity
+            style={styles.showcaseCard}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('Weapons')}>
+            <View style={styles.showcaseHeader}>
+              <View style={{flex: 1}}>
+                <Text style={styles.showcaseTitle}>WEAPONS</Text>
+                <Text style={styles.showcaseSub}>{TOTAL_WEAPONS} WEAPONS • TOP PICKS</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+            <View style={styles.showcaseRow}>
+              {SHOWCASE_WEAPONS.map((w: any) => (
+                <View key={w.id} style={styles.showcaseItemWrap}>
+                  <Image source={resolveImage(w.icon)} style={styles.showcaseItemIcon} resizeMode="contain" />
+                  <Text style={styles.showcaseItemName} numberOfLines={1}>{w.name}</Text>
+                </View>
+              ))}
+            </View>
+          </TouchableOpacity>
+
+          {/* ── Other Tools (full-width list) ── */}
+          {RAIDER_TOOLS.filter(t => t.key !== 'weapons').map(tool => (
+            <TouchableOpacity
+              key={tool.key}
               style={styles.toolCard}
-              onPress={() => {
-                if (tool.screen) {
-                  navigation.navigate(tool.screen);
-                }
-              }}>
+              activeOpacity={0.7}
+              onPress={() => navigation.navigate(tool.screen as any)}>
               <View style={styles.toolIconWrap}>
-                <Icon name={tool.icon} size={24} color={tool.color} />
+                <Icon name={tool.icon} size={22} color={tool.color} />
               </View>
               <View style={styles.toolInfo}>
                 <Text style={styles.toolTitle}>{tool.title}</Text>
                 <Text style={styles.toolDesc}>{tool.desc}</Text>
               </View>
-              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+              <Icon name="chevron-right" size={22} color={colors.textMuted} />
             </TouchableOpacity>
           ))}
         </View>
@@ -405,6 +633,60 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 100,
+  },
+
+  /* Top bar */
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+  },
+  titlePill: {
+    alignSelf: 'flex-start',
+  },
+  titlePillInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    gap: 4,
+  },
+  titleArc: {
+    fontSize: 14,
+    fontWeight: '900',
+    color: colors.textPrimary,
+    letterSpacing: 1,
+  },
+  titleRaiders: {
+    fontSize: 14,
+    fontWeight: '900',
+    color: colors.cyan,
+    letterSpacing: 1,
+  },
+  companionBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    backgroundColor: colors.cyan,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    marginLeft: 4,
+  },
+  companionBadgeText: {
+    fontSize: 8,
+    fontWeight: '900',
+    color: '#000',
+    letterSpacing: 1,
+  },
+  settingsBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   // Section Header
@@ -529,7 +811,7 @@ const styles = StyleSheet.create({
   // Raider Tools
   toolsSectionHeader: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xxl,
+    paddingTop: 20,
     paddingBottom: spacing.md,
   },
   toolsSectionTitle: {
@@ -542,6 +824,152 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     gap: spacing.sm,
   },
+
+  /* Trader card */
+  traderCard: {
+    backgroundColor: 'rgba(10, 16, 28, 0.72)',
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 229, 255, 0.12)',
+    padding: spacing.lg,
+    gap: spacing.md,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+  },
+  traderPortraits: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  traderRing: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    borderWidth: 2,
+    borderColor: 'rgba(0, 229, 255, 0.45)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  traderAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  traderBottom: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  traderTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: colors.textPrimary,
+    letterSpacing: 1.5,
+  },
+  traderSub: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.textMuted,
+    letterSpacing: 1,
+    marginTop: 2,
+  },
+
+  /* Event timer card */
+  eventCard: {
+    flexDirection: 'column',
+    backgroundColor: 'rgba(10, 16, 28, 0.72)',
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 229, 255, 0.12)',
+    padding: spacing.md,
+    gap: 6,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+  },
+  eventCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  eventCardIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 229, 255, 0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 229, 255, 0.18)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  eventCardTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    letterSpacing: 1,
+  },
+  eventCardSub: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: colors.textMuted,
+    letterSpacing: 0.6,
+    marginTop: 1,
+  },
+  eventCardList: {
+    gap: 2,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.06)',
+    paddingTop: 6,
+  },
+  eventRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 3,
+  },
+  eventDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.textMuted,
+  },
+  eventDotActive: {
+    backgroundColor: '#4ADE80',
+    shadowColor: '#4ADE80',
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.6,
+    shadowRadius: 3,
+  },
+  eventRowName: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  eventRowMap: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: colors.textSecondary,
+    marginTop: 0,
+  },
+  eventCountdownWrap: {
+    alignItems: 'flex-end',
+  },
+  eventCountdown: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.cyan,
+    fontVariant: ['tabular-nums'],
+  },
+  eventCountdownLabel: {
+    fontSize: 8,
+    fontWeight: '700',
+    color: colors.textMuted,
+    letterSpacing: 0.8,
+    marginTop: 0,
+  },
+
   toolCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -579,6 +1007,61 @@ const styles = StyleSheet.create({
     fontSize: fonts.sizes.xs,
     color: colors.textSecondary,
   },
+
+  /* Showcase card (weapons) */
+  showcaseCard: {
+    backgroundColor: 'rgba(10, 16, 28, 0.72)',
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 229, 255, 0.12)',
+    padding: spacing.md,
+    gap: 0,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+  },
+  showcaseHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 0,
+  },
+  showcaseTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    letterSpacing: 1,
+  },
+  showcaseSub: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: colors.textMuted,
+    letterSpacing: 0.6,
+    marginTop: 1,
+  },
+  showcaseRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    paddingTop: 0,
+  },
+  showcaseItemWrap: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 6,
+  },
+  showcaseItemIcon: {
+    width: 72,
+    height: 72,
+  },
+  showcaseItemName: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    textAlign: 'center',
+  },
+
+
 });
 
 export default HomeScreen;
