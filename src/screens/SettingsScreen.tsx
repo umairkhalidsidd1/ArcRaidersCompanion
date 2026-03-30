@@ -1,25 +1,53 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
   Linking,
+  Modal,
   Platform,
   ScrollView,
   Share,
   StatusBar,
   StyleSheet,
+  Switch,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useOnboarding} from '../../App';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import { useTranslation } from 'react-i18next';
+import {
+  areNotificationsEnabled,
+  setNotificationsEnabled,
+} from '../utils/notifications';
 
 const APP_NAME = 'Arc Raiders Companion';
 const APP_VERSION = '1.0.0';
 const APP_YEAR = 2026;
+
+/* ── Supported languages ── */
+const LANGUAGES: {code: string; label: string; native: string}[] = [
+  {code: 'en', label: 'English', native: 'English'},
+  {code: 'zh', label: 'Chinese (Simplified)', native: '简体中文'},
+  {code: 'zh-TW', label: 'Chinese (Traditional)', native: '繁體中文'},
+  {code: 'fr', label: 'French', native: 'Français'},
+  {code: 'de', label: 'German', native: 'Deutsch'},
+  {code: 'es', label: 'Spanish', native: 'Español'},
+  {code: 'it', label: 'Italian', native: 'Italiano'},
+  {code: 'ja', label: 'Japanese', native: '日本語'},
+  {code: 'ko', label: 'Korean', native: '한국어'},
+  {code: 'pl', label: 'Polish', native: 'Polski'},
+  {code: 'pt-BR', label: 'Portuguese (Brazil)', native: 'Português (Brasil)'},
+  {code: 'ru', label: 'Russian', native: 'Русский'},
+  {code: 'tr', label: 'Turkish', native: 'Türkçe'},
+];
+
+function getLanguageLabel(code: string): string {
+  return LANGUAGES.find(l => l.code === code)?.native ?? 'English';
+}
 
 /* ── Row item types ── */
 type SettingsRow = {
@@ -53,6 +81,51 @@ const SettingsScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const triggerOnboarding = useOnboarding();
   const { t, i18n } = useTranslation();
+  const [langModalVisible, setLangModalVisible] = useState(false);
+  const [notifEnabled, setNotifEnabled] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+
+  useEffect(() => {
+    areNotificationsEnabled().then(setNotifEnabled);
+    // Check premium status
+    checkPremiumStatus();
+  }, []);
+
+  const checkPremiumStatus = useCallback(async () => {
+    try {
+      const Purchases = require('react-native-purchases').default;
+      const info = await Purchases.getCustomerInfo();
+      const hasPremium = info.entitlements.active?.premium !== undefined;
+      setIsPremium(hasPremium);
+    } catch {
+      setIsPremium(false);
+    }
+  }, []);
+
+  const handleRestorePurchase = useCallback(async () => {
+    try {
+      const Purchases = require('react-native-purchases').default;
+      await Purchases.restorePurchases();
+      await checkPremiumStatus();
+      Alert.alert(t('settings.restoreTitle'), t('settings.restoreSuccess'));
+    } catch {
+      Alert.alert(t('common.error'), t('settings.restoreError'));
+    }
+  }, [checkPremiumStatus, t]);
+
+  const handleUpgrade = useCallback(async () => {
+    navigation.navigate('Paywall' as any);
+    // Re-check premium status when user comes back
+    const unsubscribe = navigation.addListener('focus', () => {
+      checkPremiumStatus();
+      unsubscribe();
+    });
+  }, [navigation, checkPremiumStatus]);
+
+  const handleToggleNotif = async (value: boolean) => {
+    setNotifEnabled(value);
+    await setNotificationsEnabled(value);
+  };
 
   const handleRate = () => {
     const iosId = '6761329723';
@@ -91,7 +164,47 @@ const SettingsScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+
+      {/* ── Language picker modal ── */}
+      <Modal
+        visible={langModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setLangModalVisible(false)}>
+        <View style={s.modalOverlay}>
+          <View style={s.modalContent}>
+            <View style={s.modalHeader}>
+              <Text style={s.modalTitle}>{t('settings.language')}</Text>
+              <TouchableOpacity onPress={() => setLangModalVisible(false)} hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
+                <Icon name="close" size={22} color={colors.textPrimary} />
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={s.modalScroll} showsVerticalScrollIndicator={false}>
+              {LANGUAGES.map(lang => {
+                const isSelected = i18n.language === lang.code;
+                return (
+                  <TouchableOpacity
+                    key={lang.code}
+                    style={[s.langRow, isSelected && s.langRowActive]}
+                    activeOpacity={0.6}
+                    onPress={() => {
+                      i18n.changeLanguage(lang.code);
+                      AsyncStorage.setItem('@arcc_language', lang.code).catch(() => {});
+                      setLangModalVisible(false);
+                    }}>
+                    <View style={s.langTextWrap}>
+                      <Text style={[s.langNative, isSelected && s.langTextActive]}>{lang.native}</Text>
+                      <Text style={s.langLabel}>{lang.label}</Text>
+                    </View>
+                    {isSelected && <Icon name="check-circle" size={20} color={colors.cyan} />}
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
 
       {/* ── Header ── */}
       <View style={s.header}>
@@ -111,18 +224,60 @@ const SettingsScreen = ({navigation}: any) => {
         contentContainerStyle={[s.scrollContent, {paddingBottom: insets.bottom + 32}]}
         showsVerticalScrollIndicator={false}>
 
+        {/* ── PREMIUM STATUS CARD ── */}
+        <TouchableOpacity
+          style={[s.premiumCard, isPremium ? s.premiumCardActive : s.premiumCardFree]}
+          activeOpacity={isPremium ? 1 : 0.7}
+          onPress={isPremium ? undefined : handleUpgrade}>
+          <View style={[s.premiumIconWrap, isPremium ? s.premiumIconActive : s.premiumIconFree]}>
+            <Icon name="crown" size={22} color={isPremium ? '#FFD700' : '#888'} />
+          </View>
+          <View style={s.premiumTextWrap}>
+            <Text style={s.premiumTitle}>
+              {isPremium ? t('settings.premiumActive') : t('settings.upgradePremium')}
+            </Text>
+            <Text style={s.premiumSub}>
+              {isPremium ? t('settings.premiumDesc') : t('settings.freeDesc')}
+            </Text>
+          </View>
+          {isPremium ? (
+            <Icon name="check-circle" size={24} color="#4ADE80" />
+          ) : (
+            <Icon name="chevron-right" size={22} color={colors.textMuted} />
+          )}
+        </TouchableOpacity>
+
+        {/* Restore Purchase */}
+        <TouchableOpacity style={s.restoreRow} activeOpacity={0.6} onPress={handleRestorePurchase}>
+          <Icon name="backup-restore" size={18} color={colors.textSecondary} />
+          <Text style={s.restoreText}>{t('settings.restorePurchase')}</Text>
+        </TouchableOpacity>
+
         {/* ── GENERAL ── */}
         <SectionHeader label={t('settings.general')} />
         <View style={s.section}>
           <RowItem
             icon="translate"
             title={t('settings.language')}
-            subtitle={i18n.language === 'zh' ? '简体中文' : 'English'}
-            onPress={() => {
-              const newLang = i18n.language === 'zh' ? 'en' : 'zh';
-              i18n.changeLanguage(newLang);
-            }}
+            subtitle={getLanguageLabel(i18n.language)}
+            onPress={() => setLangModalVisible(true)}
           />
+          <View style={s.rowDivider} />
+          <View style={s.notifRow}>
+            <View style={[s.rowIconWrap, {backgroundColor: 'rgba(0,229,255,0.10)'}]}>
+              <Icon name="bell-outline" size={20} color={colors.cyan} />
+            </View>
+            <View style={{flex: 1}}>
+              <Text style={s.rowTitle}>{t('settings.notifications')}</Text>
+              <Text style={s.rowSub}>{t('settings.notificationsSub')}</Text>
+            </View>
+            <Switch
+              value={notifEnabled}
+              onValueChange={handleToggleNotif}
+              trackColor={{false: '#333', true: 'rgba(0,229,255,0.35)'}}
+              thumbColor={notifEnabled ? colors.cyan : '#888'}
+            />
+          </View>
           <View style={s.rowDivider} />
           <RowItem
             icon="star-outline"
@@ -195,7 +350,7 @@ const ROW_HEIGHT = 62;
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
   /* Header */
   header: {
@@ -226,6 +381,64 @@ const s = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
 
+  /* Premium card */
+  premiumCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    padding: spacing.lg,
+    marginTop: spacing.xl,
+    gap: spacing.md,
+  },
+  premiumCardActive: {
+    backgroundColor: 'rgba(74,222,128,0.06)',
+    borderColor: 'rgba(74,222,128,0.25)',
+  },
+  premiumCardFree: {
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderColor: 'rgba(255,255,255,0.08)',
+  },
+  premiumIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  premiumIconActive: {
+    backgroundColor: 'rgba(74,222,128,0.12)',
+  },
+  premiumIconFree: {
+    backgroundColor: 'rgba(255,255,255,0.06)',
+  },
+  premiumTextWrap: {
+    flex: 1,
+  },
+  premiumTitle: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  premiumSub: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  restoreRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    marginTop: spacing.sm,
+    paddingVertical: spacing.sm,
+  },
+  restoreText: {
+    fontSize: fonts.sizes.sm,
+    color: colors.textSecondary,
+    fontWeight: '500',
+  },
+
   /* Section header */
   sectionLabel: {
     fontSize: 11,
@@ -248,6 +461,13 @@ const s = StyleSheet.create({
 
   /* Row */
   row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: ROW_HEIGHT,
+    paddingHorizontal: spacing.lg,
+    gap: spacing.md,
+  },
+  notifRow: {
     flexDirection: 'row',
     alignItems: 'center',
     height: ROW_HEIGHT,
@@ -319,6 +539,69 @@ const s = StyleSheet.create({
     color: colors.textSecondary,
     lineHeight: 18,
     textAlign: 'center',
+  },
+
+  /* Language modal */
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.xl,
+  },
+  modalContent: {
+    width: '100%',
+    maxHeight: '75%',
+    backgroundColor: '#0F1318',
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    overflow: 'hidden',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.06)',
+  },
+  modalTitle: {
+    fontSize: fonts.sizes.lg,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  modalScroll: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  langRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.md,
+    paddingVertical: 14,
+    borderRadius: borderRadius.md,
+    marginBottom: 2,
+  },
+  langRowActive: {
+    backgroundColor: 'rgba(0,229,255,0.08)',
+  },
+  langTextWrap: {
+    flex: 1,
+  },
+  langNative: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '600',
+    color: colors.textPrimary,
+  },
+  langLabel: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textSecondary,
+    marginTop: 1,
+  },
+  langTextActive: {
+    color: colors.cyan,
   },
 });
 

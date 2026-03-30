@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -36,9 +37,12 @@ import CosmeticsScreen from '../screens/CosmeticsScreen';
 import CollectibleTrackerScreen from '../screens/CollectibleTrackerScreen';
 import QuestDetailScreen from '../screens/QuestDetailScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import PaywallScreen from '../screens/PaywallScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
+
+export const navigationRef = createNavigationContainerRef();
 
 const BunkerStack = createNativeStackNavigator();
 const TrialsStack = createNativeStackNavigator();
@@ -187,6 +191,7 @@ function TabNavigator() {
 const AppNavigator = () => {
   return (
     <NavigationContainer
+      ref={navigationRef}
       theme={{
         dark: true,
         colors: {
@@ -227,6 +232,7 @@ const AppNavigator = () => {
           <RootStack.Screen name="ArcDetail" component={ArcDetailScreen} />
           <RootStack.Screen name="GuideDetail" component={GuideDetailScreen} />
           <RootStack.Screen name="Settings" component={SettingsScreen} />
+          <RootStack.Screen name="Paywall" component={PaywallScreen} options={{animation: 'none', gestureEnabled: false}} />
         </RootStack.Navigator>
     </NavigationContainer>
   );

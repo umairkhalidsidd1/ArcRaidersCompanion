@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Skaner Snitcha",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Do recyklingu",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "Żywica syntetyczna ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Czujniki",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Kapsuła Ticka",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Do recyklingu",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Lekka amunicja",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Proste części broni",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Żywica syntetyczna ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Obwody ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Zaawansowane komponenty mechaniczne",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał zaawansowany",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "Zaawansowane komponenty elektryczne",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał rafinowany",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Reaktor Królowej",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "Legendarny",
+      "item_type": "Do recyklingu",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "Chłodziwo ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Elastyczny kauczuk ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Wyściółka termiczna ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Stal wysokowydajna ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Akcelerator magnetyczny",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Epicki",
+      "item_type": "Materiał rafinowany",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Palnik Fireballa",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Do recyklingu",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "Surowe materiały wybuchowe",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Lekka amunicja",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Napęd Waspa",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Wyściółka termiczna ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Surowe materiały wybuchowe",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Spust Popa",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Do recyklingu",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Czujniki",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Obwody ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Skarbiec Surveyora",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "Schemat: Spray Vita",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "Schemat: Zestaw barykadowy",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "Schemat: Rozszerzony średni magazynek III",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "Schemat: Ciężkie części broni",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "Schemat: Przedłużona lufa",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "Schemat: Wyściełana kolba",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "Schemat: Zastrzyk Vita",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Żywica syntetyczna ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Obwody ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Elastyczny kauczuk ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Wyściółka termiczna ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Stal wysokowydajna ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Akcelerator magnetyczny",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Epicki",
+      "item_type": "Materiał rafinowany",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "Reaktor Matriarki",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "Legendarny",
+      "item_type": "Do recyklingu",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "Schemat: Karabin Aphelion",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "Legendarny",
+      "item_type": "Schemat",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Obwody ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Napęd Rocketeera",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "Epicki",
+      "item_type": "Do recyklingu",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "Ciężka amunicja",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Ciężkie części broni",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Proste części broni",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Amunicja do strzelby",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "Żyroskop Shreddera",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Obwody ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Ogniwo Bastiona",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "Epicki",
+      "item_type": "Do recyklingu",
+      "id": "bastion-part"
+    },
+    {
+      "name": "Komponenty mechaniczne",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Średnie części broni",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Średnia amunicja",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Obwody ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Elastyczny kauczuk ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Stal wysokowydajna ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Komponenty mechaniczne",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Jednostka impulsowa Leapera",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "Epicki",
+      "item_type": "Rzucany",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "Związek wybuchowy",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał rafinowany",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Stal wysokowydajna ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Komponenty mechaniczne",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Średnie części broni",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Ogniwo Bombardiera",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "Epicki",
+      "item_type": "Do recyklingu",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "Amunicja wyrzutni",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "Rzadki",
+      "item_type": "Amunicja",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Chłodziwo ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Wyściółka termiczna ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Surowe materiały wybuchowe",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Związek wybuchowy",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał rafinowany",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "Zapalnik Cometa"
+    },
+    {
+      "name": "Komponenty elektryczne",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał rafinowany",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Proste części broni",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Palnik Firefly"
+    },
+    {
+      "name": "Substancje chemiczne",
+      "icon": "icons/chemicals.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał podstawowy",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Proste części broni",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Średnia amunicja",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "Napęd Horneta",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Żywica syntetyczna ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Rdzeń ruchu ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Zaawansowane ogniwo ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rzadki",
+      "item_type": "Materiał powierzchniowy",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Chłodziwo ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Wyściółka termiczna ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Ciężka amunicja",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Zwykły",
+      "item_type": "Amunicja",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Rdzeń ognia Sentinela",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "Rzadki",
+      "item_type": "Do recyklingu",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "Stop ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Ogniwo energetyczne ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Zwykły",
+      "item_type": "Materiał powierzchniowy",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Przekaźnik Spottera",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "Niezwykły",
+      "item_type": "Do recyklingu",
+      "id": "spotter-relay"
+    }
+  ]
+}

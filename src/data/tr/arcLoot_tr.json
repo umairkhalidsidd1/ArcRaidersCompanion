@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Snitch Tarayıcısı",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "ARC Sentetik Reçine",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Sensörler",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Tick Kapsülü",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Hafif Mühimmat",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Basit Silah Parçaları",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Sentetik Reçine",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Devresi",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Gelişmiş Mekanik Bileşenler",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "Nadir",
+      "item_type": "Gelişmiş Malzeme",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "Gelişmiş Elektrik Bileşenler",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "Nadir",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Kraliçe Reaktörü",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "ARC Soğutucu",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC Esnek Kauçuk",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC Termal Kaplama",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC Yüksek Performans Çeliği",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Manyetik Hızlandırıcı",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Destansı",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Fireball Yakıcı",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "Ham Patlayıcı",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Hafif Mühimmat",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Wasp Sürücüsü",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Termal Kaplama",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Ham Patlayıcı",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Pop Tetikleyicisi",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Sensörler",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Devresi",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Keşifçi Kasası",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "Taslak: Vita Sprey",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "Taslak: Barikat Kiti",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "Taslak: Genişletilmiş Orta Şarjör III",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "Taslak: Ağır Silah Parçaları",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "Taslak: Uzatılmış Namlu",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "Taslak: Yastıklı Dipçik",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "Taslak: Vita Enjeksiyonu",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Sentetik Reçine",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Devresi",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Esnek Kauçuk",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC Termal Kaplama",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC Yüksek Performans Çeliği",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Manyetik Hızlandırıcı",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Destansı",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "Matriark Reaktörü",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "Taslak: Aphelion Tüfeği",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "Efsanevi",
+      "item_type": "Taslak",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Devresi",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Rocketeer Sürücüsü",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "Destansı",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "Ağır Mühimmat",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Ağır Silah Parçaları",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Basit Silah Parçaları",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Pompalı Mühimmatı",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "Shredder Jiroskopu",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Devresi",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Bastion Hücresi",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "Destansı",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "bastion-part"
+    },
+    {
+      "name": "Mekanik Bileşenler",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Orta Silah Parçaları",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Orta Mühimmat",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Devresi",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Esnek Kauçuk",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC Yüksek Performans Çeliği",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Mekanik Bileşenler",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Leaper Darbe Birimi",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "Destansı",
+      "item_type": "Fırlatılabilir",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "Patlayıcı Bileşik",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Nadir",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Yüksek Performans Çeliği",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Mekanik Bileşenler",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Orta Silah Parçaları",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Bombardier Hücresi",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "Destansı",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "Fırlatıcı Mühimmatı",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "Nadir",
+      "item_type": "Mühimmat",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Soğutucu",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC Termal Kaplama",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Ham Patlayıcı",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Patlayıcı Bileşik",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Nadir",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "Comet Ateşleyicisi"
+    },
+    {
+      "name": "Elektrik Bileşenleri",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "İşlenmiş Malzeme",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Basit Silah Parçaları",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Firefly Yakıcı"
+    },
+    {
+      "name": "Kimyasallar",
+      "icon": "icons/chemicals.webp",
+      "rarity": "Sıradan",
+      "item_type": "Temel Malzeme",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Basit Silah Parçaları",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Orta Mühimmat",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "Hornet Sürücüsü",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Sentetik Reçine",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC Hareket Çekirdeği",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Gelişmiş ARC Güç Hücresi",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Nadir",
+      "item_type": "Yüzey Malzemesi",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Soğutucu",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC Termal Kaplama",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Ağır Mühimmat",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Sıradan",
+      "item_type": "Mühimmat",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Sentinel Ateş Çekirdeği",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "Nadir",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "ARC Alaşımı",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Güç Hücresi",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Sıradan",
+      "item_type": "Yüzey Malzemesi",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Spotter Rölesi",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "Nadir olmayan",
+      "item_type": "Geri Dönüştürülebilir",
+      "id": "spotter-relay"
+    }
+  ]
+}

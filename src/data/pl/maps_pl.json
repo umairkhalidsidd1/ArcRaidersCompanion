@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Pola bitewne zapory",
+    "description": "Masywna zapora wodna opanowana przez siły ARC. Gęste strefy walki wokół przelewów i pomieszczeń generatorów.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Średni"
+  },
+  {
+    "id": "buried-city",
+    "name": "Pogrzebane miasto",
+    "description": "Ruiny niegdyś kwitnącej metropolii, teraz na wpół pogrzebane pod piaskiem i gruzem. Bogate w łupy, ale niebezpieczne.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Trudny"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "Kosmodrom",
+    "description": "Opuszczone stanowisko startowe z hangarami, wieżami kontrolnymi i rozproszoną technologią ARC. Szerokie otwarte linie widzenia.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Łatwy"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Niebieska brama",
+    "description": "Ufortyfikowany punkt kontrolny między regionami. Ciasne korytarze i pionowość zapewniają intensywne walki.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Średni"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "Górski region z alpejskimi lasami i ukrytymi bunkrami. Zasoby o dużej wartości rozproszone po szczytach.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Trudny"
+  }
+]

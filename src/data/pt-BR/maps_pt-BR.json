@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Campos de batalha da represa",
+    "description": "Uma enorme represa hidroelétrica tomada pelas forças ARC. Zonas de combate denso ao redor dos vertedouros e salas de geradores.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Médio"
+  },
+  {
+    "id": "buried-city",
+    "name": "Cidade soterrada",
+    "description": "As ruínas de uma metrópole que já foi próspera, agora meio enterrada sob areia e escombros. Rica em espólios, mas perigosa.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Difícil"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "O espaçoporto",
+    "description": "Uma instalação de lançamento abandonada com hangares, torres de controle e tecnologia ARC espalhada. Linhas de visão amplas.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Fácil"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Portão azul",
+    "description": "Um posto de controle fortificado entre regiões. Corredores estreitos e verticalidade tornam os combates intensos.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Médio"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "Uma região montanhosa com florestas alpinas e bunkers ocultos. Recursos de alto valor espalhados pelos picos.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Difícil"
+  }
+]

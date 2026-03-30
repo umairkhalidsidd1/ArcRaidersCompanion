@@ -106,7 +106,17 @@
     "copyright": "© {{year}} {{appName}}。保留所有权利。",
     "disclaimer": "⚠️ 本应用是一款粉丝制作的辅助工具，与 Embark Studios 或 Arc Raiders 游戏无关，未获其认可或关联。所有游戏素材归其各自所有者所有。",
     "emailError": "无法打开邮件客户端。",
-    "allRightsReserved": "保留所有权利。"
+    "allRightsReserved": "保留所有权利。",
+    "notifications": "活动通知",
+    "notificationsSub": "活动开始前获取提醒",
+    "premiumActive": "已激活高级版",
+    "upgradePremium": "升级至高级版",
+    "premiumDesc": "您已拥有所有功能的完整访问权限",
+    "freeDesc": "解锁所有高级功能",
+    "restorePurchase": "恢复购买",
+    "restoreTitle": "恢复",
+    "restoreSuccess": "购买已成功恢复。",
+    "restoreError": "无法恢复购买，请重试。"
   },
   "onboarding": {
     "loot": "战利品",
@@ -697,7 +707,7 @@
       "Augment": "增强器",
       "Shield": "护盾",
       "Quick Use": "快速使用",
-      "Throwable": "投捷物",
+      "Throwable": "投掷物",
       "Modification": "模组",
       "Trinket": "饰品",
       "Blueprint": "蓝图",
@@ -842,7 +852,7 @@
       "secondary": "副武器",
       "shield": "护盾",
       "augment": "增强器",
-      "throwable": "投捷物",
+      "throwable": "投掷物",
       "quickUse1": "快速使用 1",
       "quickUse2": "快速使用 2"
     }

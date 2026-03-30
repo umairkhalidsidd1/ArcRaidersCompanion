@@ -1,0 +1,201 @@
+{
+  "description": "Les Expéditions sont un système optionnel de prestige/réinitialisation douce. Disponible au niveau 20, les joueurs réinitialisent leur progression en échange de récompenses permanentes. Le projet comporte 6 étapes de difficulté croissante.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Fondations",
+      "description": "Rassemblez les matériaux de construction de base pour commencer à construire la caravane.",
+      "objectives": [
+        {
+          "item": "Pièces métalliques",
+          "quantity": 150
+        },
+        {
+          "item": "Produits chimiques",
+          "quantity": 100
+        },
+        {
+          "item": "Alliage ARC",
+          "quantity": 80
+        },
+        {
+          "item": "Ressort en acier",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Systèmes centraux",
+      "description": "Installez les systèmes électriques et mécaniques centraux de la caravane.",
+      "objectives": [
+        {
+          "item": "Tissu résistant",
+          "quantity": 30
+        },
+        {
+          "item": "Câbles",
+          "quantity": 25
+        },
+        {
+          "item": "Composants électriques",
+          "quantity": 20
+        },
+        {
+          "item": "Chargeur industriel",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "Charpente",
+      "description": "Assemblez la charpente structurelle et les composants spécialisés.",
+      "objectives": [
+        {
+          "item": "Cafetière",
+          "quantity": 1
+        },
+        {
+          "item": "Batterie",
+          "quantity": 25
+        },
+        {
+          "item": "Brûleur de boule de feu",
+          "quantity": 5
+        },
+        {
+          "item": "Modules Exodus",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Équipement",
+      "description": "Équipez la caravane avec de la technologie avancée et des composants ARC rares.",
+      "objectives": [
+        {
+          "item": "Système de guidage cassé",
+          "quantity": 1
+        },
+        {
+          "item": "Composants électriques avancés",
+          "quantity": 10
+        },
+        {
+          "item": "Boule à neige magnifique",
+          "quantity": 3
+        },
+        {
+          "item": "Cellule de bombardier",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Phase de chargement",
+      "description": "Remplissez la caravane de fournitures classées par valeur en pièces.",
+      "objectives": [
+        {
+          "item": "Matériaux (par valeur en pièces)",
+          "quantity": 300000
+        },
+        {
+          "item": "Objets de combat (par valeur en pièces)",
+          "quantity": 200000
+        },
+        {
+          "item": "Objets de survie (par valeur en pièces)",
+          "quantity": 100000
+        },
+        {
+          "item": "Provisions (par valeur en pièces)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Départ",
+      "description": "Enregistrez votre Raider pendant la fenêtre de départ. Tous les objets restants en réserve contribuent à votre valeur d'expédition.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "Points de compétence bonus",
+        "description": "Jusqu'à 5 points de compétence bonus (1 par million de valeur en pièces)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 Espaces de réserve",
+        "description": "Stockage supplémentaire pour votre prochain Raider",
+        "icon": "archive"
+      },
+      {
+        "name": "Tenue de Raider rapiécée",
+        "description": "Cosmétique évolutif exclusif",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "Cosmétique Bricolé",
+        "description": "Couvre-chef unique (ex: Casquette de concierge bricolée)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "Indicateur d'expédition",
+        "description": "Badge montrant votre nombre d'expéditions",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "Boost de valeur de réparation",
+        "description": "+60-70% valeur de réparation (cumul x3)",
+        "icon": "tools"
+      },
+      {
+        "name": "Boost d'XP",
+        "description": "+5-10% gain d'XP (cumul x3)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "Matériaux bricolés",
+        "description": "+6% matériaux du Bricoleur (cumul x3)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "Cartes débloquées",
+    "Cosmétiques",
+    "Decks de Raider",
+    "Jetons de Raider",
+    "Crédits",
+    "Entrées du Codex",
+    "Stations d'atelier",
+    "Épreuves",
+    "Classements actifs",
+    "Progression d'événements personnelle",
+    "Points de compétence bonus (antérieurs)"
+  ],
+  "loses": [
+    "Plans",
+    "Inventaire et Réserve",
+    "Niveau du joueur",
+    "Pièces",
+    "Améliorations d'atelier",
+    "Progression des quêtes",
+    "Points de compétence (initiaux)"
+  ]
+}

@@ -89,6 +89,8 @@
     "general": "GENERAL",
     "language": "Language",
     "languageValue": "English",
+    "notifications": "Event Notifications",
+    "notificationsSub": "Get alerts before events start",
     "viewTutorial": "View Tutorial",
     "viewTutorialSub": "Restart the onboarding guide",
     "rateApp": "Rate App",
@@ -106,7 +108,15 @@
     "copyright": "© {{year}} {{appName}}. All rights reserved.",
     "disclaimer": "⚠️ This app is a fan-made companion tool and is not affiliated with, endorsed by, or connected to Embark Studios or the Arc Raiders game. All game assets belong to their respective owners.",
     "emailError": "Could not open email client.",
-    "allRightsReserved": "All rights reserved."
+    "allRightsReserved": "All rights reserved.",
+    "premiumActive": "Premium Active",
+    "upgradePremium": "Upgrade to Premium",
+    "premiumDesc": "You have full access to all features",
+    "freeDesc": "Unlock all premium features",
+    "restorePurchase": "Restore Purchase",
+    "restoreTitle": "Restore",
+    "restoreSuccess": "Purchases restored successfully.",
+    "restoreError": "Could not restore purchases. Please try again."
   },
   "onboarding": {
     "loot": "Loot",

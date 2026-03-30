@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "name": "호넷에 피해 입히기",
+    "description": "레이드 제한 시간 내에 호넷에 최대한 많은 피해를 입히세요.",
+    "image": "weekly-trials/damage-hornets.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "블루 게이트",
+      "우주항"
+    ],
+    "tip": "스니치를 자극하여 추가 호넷 스폰을 유도하세요. 블루 게이트의 순례자의 봉우리가 훌륭한 고지대입니다."
+  },
+  {
+    "id": 2,
+    "name": "와스프에 피해 입히기",
+    "description": "모든 맵에서 와스프에 피해를 입히세요.",
+    "image": "weekly-trials/damage-wasps.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "와스프는 모든 지역에서 흔합니다. 스니치 경보를 이용해 무리로 스폰시키세요."
+  },
+  {
+    "id": 3,
+    "name": "배스천에 피해 입히기",
+    "description": "중장갑 ARC 적인 배스천에 피해를 입히세요.",
+    "image": "weekly-trials/damage-bastions.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "배스천은 두꺼운 장갑을 가지고 있습니다. 앤빌 IV나 헐크래커 같은 고화력 무기를 가져가세요."
+  },
+  {
+    "id": 4,
+    "name": "로켓병에 피해 입히기",
+    "description": "모든 원정에서 로켓병에 피해를 입히세요.",
+    "image": "weekly-trials/damage-rocketeers.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "로켓병은 폭발 발사체를 쏩니다 — 거리를 유지하고 엄폐물을 활용하세요."
+  },
+  {
+    "id": 5,
+    "name": "도약자에 피해 입히기",
+    "description": "빠르게 이동하는 ARC 적 도약자에 피해를 입히세요.",
+    "image": "weekly-trials/trial-1769368839314.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "도약자는 빠릅니다. 근접 전투에는 산탄총이나 기관단총을 사용하세요."
+  },
+  {
+    "id": 6,
+    "name": "폭격병에 피해 입히기",
+    "description": "대형 ARC 위협인 폭격병에 피해를 입히세요.",
+    "image": "custom/damagebombardiers.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "폭격병에는 항상 측량사 2기가 동행합니다. 먼저 측량사를 처리하세요."
+  },
+  {
+    "id": 7,
+    "name": "퀸 또는 매트리아크에 피해 입히기",
+    "description": "가장 위험한 ARC인 퀸 또는 매트리아크에 피해를 입히세요.",
+    "image": "weekly-trials/damage-queens-or-matriarchs.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "보스급 ARC입니다. 완전한 분대와 중화기를 가져가세요."
+  },
+  {
+    "id": 8,
+    "name": "측량사에 피해 입히기",
+    "description": "폭격병에 동행하는 측량사에 피해를 입히세요.",
+    "image": "weekly-trials/damage-spotters.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "폭격병을 찾으세요 — 각각 항상 측량사 2기가 있습니다."
+  },
+  {
+    "id": 9,
+    "name": "로켓병, 도약자 또는 배스천에 피해 입히기",
+    "description": "로켓병, 도약자, 배스천 중 아무 조합에든 피해를 입히세요.",
+    "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "세 종류 모두 카운트됩니다 — 먼저 찾은 것에 집중하세요."
+  },
+  {
+    "id": 10,
+    "name": "지상 ARC 적에 피해 입히기",
+    "description": "지상 ARC 적에게 피해를 입히세요.",
+    "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "지상 ARC에는 틱, 도약자, 배스천이 포함됩니다. 모든 맵에서 바로 파밍 가능합니다."
+  },
+  {
+    "id": 11,
+    "name": "비행 ARC 적에 피해 입히기",
+    "description": "모든 맵에서 비행 ARC 적에게 피해를 입히세요.",
+    "image": "weekly-trials/damage-flying-arc-enemies.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "호넷, 와스프, 스니치 모두 카운트됩니다. 높은 곳으로 올라가 더 나은 각도를 확보하세요."
+  },
+  {
+    "id": 12,
+    "name": "우주항 벽 안에서 비행 ARC에 피해 입히기",
+    "description": "우주항 벽 안에서 비행 ARC 적에게 피해를 입히세요.",
+    "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "우주항"
+    ],
+    "tip": "우주항 벽 안에 머무르세요 — 밖에서 입힌 피해는 카운트되지 않습니다."
+  },
+  {
+    "id": 13,
+    "name": "틱 파괴하기",
+    "description": "모든 맵에서 틱 ARC 유닛을 파괴하세요.",
+    "image": "weekly-trials/destroy-ticks.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "틱은 작은 지상 ARC입니다. 올바른 스킬이면 근접 한 방으로 파괴됩니다."
+  },
+  {
+    "id": 14,
+    "name": "틱, 파이어볼, 팝 파괴하기",
+    "description": "틱, 파이어볼, 팝 ARC 유닛을 파괴하세요.",
+    "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "세 종류의 소형 ARC 모두 카운트됩니다. ARC 밀집 지역에서 연속 격파가 쉽습니다."
+  },
+  {
+    "id": 15,
+    "name": "파이어볼 파괴하기",
+    "description": "파이어볼 ARC 유닛을 파괴하세요.",
+    "image": "weekly-trials/trial-1769368872612.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "파이어볼은 접촉 시 폭발합니다 — 사격 시 거리를 유지하세요."
+  },
+  {
+    "id": 16,
+    "name": "팝 파괴하기",
+    "description": "원정 지역의 팝 ARC 유닛을 파괴하세요.",
+    "image": "weekly-trials/destroy-pops.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "팝은 작고 빠릅니다. 소리 단서를 듣고 위치를 파악하세요."
+  },
+  {
+    "id": 17,
+    "name": "늪지에서 ARC 적 파괴하기",
+    "description": "댐 전장의 늪지 지역에서 ARC 적을 파괴하세요.",
+    "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "댐"
+    ],
+    "tip": "늪지는 댐 전장 맵에 있습니다. 여기서의 처치만 카운트됩니다."
+  },
+  {
+    "id": 18,
+    "name": "식물 채집하기",
+    "description": "모든 원정 맵에서 식물을 채집하세요.",
+    "image": "weekly-trials/harvest-plants.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
+    "category": "채집",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "식물은 모든 맵에 풍부합니다. 최대 효율을 위해 채집 루트를 따르세요."
+  },
+  {
+    "id": 19,
+    "name": "운반물 배달하기",
+    "description": "운반물을 추출 또는 보관 지점에 배달하세요.",
+    "image": "weekly-trials/deliver-carriables.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
+    "category": "목표",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "운반물은 이벤트와 POI 근처에서 찾을 수 있습니다. 추출선에 배달하세요."
+  },
+  {
+    "id": 20,
+    "name": "ARC 탐사선 열기",
+    "description": "맵에 흩어진 ARC 탐사선을 여세요.",
+    "image": "weekly-trials/open-arc-probes.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
+    "category": "탐험",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "ARC 탐사선은 모든 맵에 흩어져 있습니다. 독특한 윙윙 소리를 들으세요."
+  },
+  {
+    "id": 21,
+    "name": "레이더 은닉처 수색",
+    "description": "맵에 숨겨진 레이더 은닉처를 수색하세요.",
+    "image": "weekly-trials/search-raider-caches.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
+    "category": "약탈",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "은닉처는 다른 플레이어가 사망한 곳에 숨겨져 있습니다. 인기 전투 지역을 확인하세요."
+  },
+  {
+    "id": 22,
+    "name": "첫 번째 웨이브 잔해 수색",
+    "description": "모든 맵에서 첫 번째 웨이브 잔해 컨테이너를 수색하세요.",
+    "image": "weekly-trials/search-first-wave-husks.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
+    "category": "약탈",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "첫 번째 웨이브 잔해는 전리품이 있는 해골 유해입니다. 건물과 대피소 근처에 있습니다."
+  },
+  {
+    "id": 23,
+    "name": "새둥지 약탈하기",
+    "description": "높은 곳에 있는 새둥지를 약탈하세요.",
+    "image": "weekly-trials/loot-birds-nests.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
+    "category": "약탈",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "새둥지는 높은 곳에 있습니다 — 옥상, 탑, 절벽 위."
+  },
+  {
+    "id": 24,
+    "name": "의료 연구동의 컨테이너 수색",
+    "description": "스텔라 몬티스의 의료 연구동 안에 있는 컨테이너를 수색하세요.",
+    "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
+    "category": "약탈",
+    "threeStarScore": 4000,
+    "maps": [
+      "스텔라 몬티스"
+    ],
+    "tip": "의료 연구동은 스텔라 몬티스에 있습니다. 지역을 지키는 슈레더를 조심하세요."
+  },
+  {
+    "id": 25,
+    "name": "교통 터널의 컨테이너 열기",
+    "description": "블루 게이트의 잠긴 문 이벤트 중 교통 터널 안의 컨테이너를 여세요.",
+    "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
+    "category": "약탈",
+    "threeStarScore": 4000,
+    "maps": [
+      "블루 게이트"
+    ],
+    "tip": "블루 게이트의 잠긴 문 이벤트 중에만 이용 가능합니다."
+  },
+  {
+    "id": 26,
+    "name": "잠긴 문 중 지뢰 해체하기",
+    "description": "블루 게이트의 잠긴 문 이벤트 중 4개 주요 위치에서 지뢰를 해체하세요.",
+    "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
+    "category": "목표",
+    "threeStarScore": 4000,
+    "maps": [
+      "블루 게이트"
+    ],
+    "tip": "잠긴 문 중 4개 주요 위치에 지뢰가 나타납니다. 조심히 접근하세요."
+  },
+  {
+    "id": 27,
+    "name": "벙커 안에서 정보 다운로드하기",
+    "description": "숨겨진 벙커 안의 터미널에서 정보를 다운로드하세요.",
+    "image": "weekly-trials/download-information-inside-the-bunker.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
+    "category": "목표",
+    "threeStarScore": 4000,
+    "maps": [
+      "우주항"
+    ],
+    "tip": "우주항의 숨겨진 벙커 이벤트 중에만 이용 가능합니다."
+  },
+  {
+    "id": 28,
+    "name": "번개에 맞기",
+    "description": "전자기 폭풍 이벤트 중 번개에 맞으세요.",
+    "image": "weekly-trials/get-hit-by-lightning.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
+    "category": "특수",
+    "threeStarScore": 4000,
+    "maps": [
+      "모든 맵"
+    ],
+    "tip": "전자기 이벤트 중에만 가능. 높은 곳과 금속 구조물 위에 서세요."
+  },
+  {
+    "id": 29,
+    "name": "슈레더에 피해 입히기",
+    "description": "슈레더 ARC 적에게 피해를 입히세요.",
+    "image": "weekly-trials/deal-damage-to-shredders.webp",
+    "reward": "코스메틱 보상 + 랭크 포인트",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
+    "category": "전투",
+    "threeStarScore": 4000,
+    "maps": [
+      "스텔라 몬티스"
+    ],
+    "tip": "슈레더는 스텔라 몬티스에서 발견됩니다. 중화기와 방패를 가져가세요."
+  }
+]

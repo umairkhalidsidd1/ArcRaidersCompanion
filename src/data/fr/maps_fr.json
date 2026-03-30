@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Champs de bataille du barrage",
+    "description": "Un barrage hydroélectrique massif envahi par les forces ARC. Zones de combat denses autour des déversoirs et des salles de générateurs.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Moyen"
+  },
+  {
+    "id": "buried-city",
+    "name": "Cité ensevelie",
+    "description": "Les ruines d'une métropole autrefois prospère, à moitié ensevelie sous le sable et les décombres. Riche en butin mais dangereuse.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Difficile"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "L'astroport",
+    "description": "Une installation de lancement abandonnée avec des hangars, des tours de contrôle et de la technologie ARC dispersée. Lignes de vue dégagées.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Facile"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Porte bleue",
+    "description": "Un point de contrôle fortifié entre les régions. Des couloirs étroits et de la verticalité rendent les combats intenses.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Moyen"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "Une région montagneuse avec des forêts alpines et des bunkers cachés. Ressources de grande valeur disséminées sur les sommets.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Difficile"
+  }
+]

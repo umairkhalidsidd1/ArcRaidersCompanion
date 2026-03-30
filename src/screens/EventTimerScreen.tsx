@@ -18,6 +18,15 @@ import {useTranslation} from 'react-i18next';
 import {colors} from '../theme/theme';
 import localEvents from '../data/events.json';
 import {resolveImage} from '../data/imageRegistry';
+import {
+  areNotificationsEnabled,
+  setNotificationsEnabled,
+  getNotifiedEvents,
+  toggleEventNotification,
+  scheduleEventNotifications,
+  rescheduleAllNotifications,
+  requestPermissions,
+} from '../utils/notifications';
 
 /* ── Types ────────────────────────────────────────────────── */
 type TimeSlot = {start: string; end: string};
@@ -199,6 +208,8 @@ const EventTimerScreen = ({navigation}: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [tick, setTick] = useState(0);
   const [ready, setReady] = useState(false);
+  const [notifiedEvents, setNotifiedEvents] = useState<Set<string>>(new Set());
+  const [allEventsNotifOn, setAllEventsNotifOn] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Defer timer + content until navigation slide-in completes
@@ -206,6 +217,11 @@ const EventTimerScreen = ({navigation}: any) => {
     const task = InteractionManager.runAfterInteractions(() => {
       setReady(true);
       intervalRef.current = setInterval(() => setTick(t => t + 1), 1000);
+      // Load notification preferences
+      getNotifiedEvents().then(prefs => setNotifiedEvents(prefs));
+      areNotificationsEnabled().then(on => setAllEventsNotifOn(on));
+      // Reschedule existing notifications
+      rescheduleAllNotifications(events).catch(() => {});
     });
     return () => {
       task.cancel();
@@ -332,6 +348,43 @@ const EventTimerScreen = ({navigation}: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventsWithStatus, tick]);
 
+  /* ── Toggle notification for an event ──────────────── */
+  const handleToggleNotif = useCallback(async (group: GroupedEvent) => {
+    const granted = await requestPermissions();
+    if (!granted) return;
+    const isNowEnabled = await toggleEventNotification(group.name);
+    setNotifiedEvents(prev => {
+      const next = new Set(prev);
+      if (isNowEnabled) {
+        next.add(group.name);
+      } else {
+        next.delete(group.name);
+      }
+      return next;
+    });
+    // Schedule notifications for this event's slots
+    if (isNowEnabled) {
+      const matchingEvents = eventsWithStatus.filter(e => e.name === group.name);
+      for (const ev of matchingEvents) {
+        await scheduleEventNotifications(ev.name, ev.slots, ev.map);
+      }
+    }
+  }, [eventsWithStatus]);
+
+  /* ── Toggle ALL event notifications from header bell ── */
+  const handleToggleAllNotif = useCallback(async () => {
+    const newVal = !allEventsNotifOn;
+    if (newVal) {
+      const granted = await requestPermissions();
+      if (!granted) return;
+    }
+    setAllEventsNotifOn(newVal);
+    await setNotificationsEnabled(newVal);
+    if (newVal) {
+      await rescheduleAllNotifications(events);
+    }
+  }, [allEventsNotifOn, events]);
+
   /* ── Card for ACTIVE / STARTING SOON ─────────────────── */
   const renderCard = (ev: EventWithStatus, type: 'active' | 'soon') => {
     const isActive = type === 'active';
@@ -382,14 +435,23 @@ const EventTimerScreen = ({navigation}: any) => {
   };
 
   /* ── Expanded event card for ALL EVENTS ──────────────── */
-  const renderGroupedCard = (group: GroupedEvent) => (
+  const renderGroupedCard = (group: GroupedEvent) => {
+    const isNotifOn = notifiedEvents.has(group.name);
+    return (
     <View key={group.name} style={st.allCard}>
       {/* Header */}
       <View style={st.allCardHeader}>
         <Text style={st.allCardTitle}>{group.name}</Text>
-        <View style={st.bellWrap}>
-          <Icon name="bell-outline" size={18} color="rgba(255,255,255,0.4)" />
-        </View>
+        <TouchableOpacity
+          style={st.bellWrap}
+          activeOpacity={0.6}
+          onPress={() => handleToggleNotif(group)}>
+          <Icon
+            name={isNotifOn ? 'bell-ring' : 'bell-outline'}
+            size={18}
+            color={isNotifOn ? CYAN : 'rgba(255,255,255,0.4)'}
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Divider */}
@@ -418,6 +480,7 @@ const EventTimerScreen = ({navigation}: any) => {
       ))}
     </View>
   );
+  };
 
   return (
     <View style={[st.root, {paddingTop: insets.top}]}>
@@ -429,6 +492,13 @@ const EventTimerScreen = ({navigation}: any) => {
           <Icon name="arrow-left" size={20} color="#fff" />
         </TouchableOpacity>
         <Text style={st.headerTitle}>{t('events.title')}</Text>
+        <TouchableOpacity onPress={handleToggleAllNotif} style={st.headerBellBtn}>
+          <Icon
+            name={allEventsNotifOn ? 'bell-ring' : 'bell-outline'}
+            size={18}
+            color={allEventsNotifOn ? CYAN : 'rgba(255,255,255,0.4)'}
+          />
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleRefresh} style={st.refreshBtn}>
           {loading ? (
             <ActivityIndicator size="small" color={CYAN} />
@@ -527,6 +597,7 @@ const st = StyleSheet.create({
     letterSpacing: 2,
   },
   refreshBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
+  headerBellBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
 
   scroll: {paddingHorizontal: 20, paddingTop: 8, paddingBottom: 100},
 

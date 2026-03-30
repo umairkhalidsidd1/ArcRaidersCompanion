@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -17,6 +17,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 'react-native-svg';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';
+import {requestReview} from 'react-native-store-review';
 
 const {width: W, height: H} = Dimensions.get('window');
 const ONBOARDING_KEY = '@arcc_onboarding_done';
@@ -750,6 +751,17 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
   }, [onDone]);
 
   const isLast = currentPage === NUM_SLIDES - 1;
+
+  /* Show native review prompt when the last slide appears */
+  useEffect(() => {
+    if (currentPage === NUM_SLIDES - 1) {
+      try {
+        requestReview();
+      } catch (_) {
+        // Silently ignore — review dialog isn't guaranteed to appear
+      }
+    }
+  }, [currentPage]);
 
   return (
     <View style={styles.root}>

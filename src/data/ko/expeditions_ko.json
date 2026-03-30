@@ -1,0 +1,201 @@
+{
+  "description": "원정은 선택적 프레스티지/소프트 리셋 시스템입니다. 레벨 20에서 이용 가능하며, 플레이어는 영구 보상과 교환하여 진행도를 리셋합니다. 프로젝트에는 난이도가 증가하는 6개 단계가 있습니다.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "기초",
+      "description": "캐러밴 건설을 시작하기 위한 기본 건축 자재를 수집하세요.",
+      "objectives": [
+        {
+          "item": "금속 부품",
+          "quantity": 150
+        },
+        {
+          "item": "화학 물질",
+          "quantity": 100
+        },
+        {
+          "item": "ARC 합금",
+          "quantity": 80
+        },
+        {
+          "item": "강철 스프링",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "핵심 시스템",
+      "description": "캐러밴의 전기 및 기계 핵심 시스템을 설치하세요.",
+      "objectives": [
+        {
+          "item": "내구성 천",
+          "quantity": 30
+        },
+        {
+          "item": "전선",
+          "quantity": 25
+        },
+        {
+          "item": "전기 부품",
+          "quantity": 20
+        },
+        {
+          "item": "산업용 충전기",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "골격",
+      "description": "구조 골격과 특수 부품을 조립하세요.",
+      "objectives": [
+        {
+          "item": "커피포트",
+          "quantity": 1
+        },
+        {
+          "item": "배터리",
+          "quantity": 25
+        },
+        {
+          "item": "파이어볼 버너",
+          "quantity": 5
+        },
+        {
+          "item": "엑소더스 모듈",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "장비",
+      "description": "첨단 기술과 희귀 ARC 부품으로 캐러밴을 장비하세요.",
+      "objectives": [
+        {
+          "item": "파손된 유도 시스템",
+          "quantity": 1
+        },
+        {
+          "item": "고급 전기 부품",
+          "quantity": 10
+        },
+        {
+          "item": "아름다운 스노우글로브",
+          "quantity": 3
+        },
+        {
+          "item": "폭격병 셀",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "적재 단계",
+      "description": "코인 가치별로 분류된 보급품을 캐러밴에 적재하세요.",
+      "objectives": [
+        {
+          "item": "재료 (코인 가치별)",
+          "quantity": 300000
+        },
+        {
+          "item": "전투 아이템 (코인 가치별)",
+          "quantity": 200000
+        },
+        {
+          "item": "생존 아이템 (코인 가치별)",
+          "quantity": 100000
+        },
+        {
+          "item": "식량 (코인 가치별)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "출발",
+      "description": "출발 시간 동안 레이더를 등록하세요. 남은 모든 보관함 아이템이 원정 가치에 반영됩니다.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "보너스 스킬 포인트",
+        "description": "최대 5 보너스 스킬 포인트 (코인 가치 100만당 1)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 보관함 공간",
+        "description": "다음 레이더를 위한 추가 보관 공간",
+        "icon": "archive"
+      },
+      {
+        "name": "누더기 레이더 의상",
+        "description": "독점 진화 코스메틱",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "스크래피 코스메틱",
+        "description": "고유한 머리 장식 (예: 스크래피 청소부 모자)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "원정 표시기",
+        "description": "원정 횟수를 보여주는 배지",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "수리 가치 부스트",
+        "description": "+60-70% 수리 가치 (3회 중첩)",
+        "icon": "tools"
+      },
+      {
+        "name": "XP 부스트",
+        "description": "+5-10% XP 획득 (3회 중첩)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "스크래피 재료",
+        "description": "+6% 스크래피 재료 (3회 중첩)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "해금된 맵",
+    "코스메틱",
+    "레이더 덱",
+    "레이더 토큰",
+    "크레드",
+    "코덱스 항목",
+    "작업장 스테이션",
+    "시련",
+    "활성 리더보드",
+    "개인 이벤트 진행도",
+    "보너스 스킬 포인트 (이전)"
+  ],
+  "loses": [
+    "설계도",
+    "인벤토리 및 보관함",
+    "플레이어 레벨",
+    "코인",
+    "작업장 업그레이드",
+    "퀘스트 진행도",
+    "스킬 포인트 (초기)"
+  ]
+}

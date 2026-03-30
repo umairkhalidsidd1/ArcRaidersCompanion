@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Scanner de Snitch",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "Peu commun",
+      "item_type": "Recyclable",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "Résine synthétique ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Capteurs",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Capsule de Tick",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "Peu commun",
+      "item_type": "Recyclable",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Munitions légères",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Pièces d'arme simples",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Résine synthétique ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuits ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Composants mécaniques avancés",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau avancé",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "Composants électriques avancés",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau raffiné",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Réacteur de Reine",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "Légendaire",
+      "item_type": "Recyclable",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "Liquide de refroidissement ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Caoutchouc flexible ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Revêtement thermique ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Acier haute performance ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Accélérateur magnétique",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Épique",
+      "item_type": "Matériau raffiné",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Brûleur de Fireball",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "Peu commun",
+      "item_type": "Recyclable",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "Explosifs bruts",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Munitions légères",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Pilote de Wasp",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Revêtement thermique ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Explosifs bruts",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Déclencheur de Pop",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "Peu commun",
+      "item_type": "Recyclable",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Capteurs",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuits ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Coffre d'Arpenteur",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "Plan du Spray Vita",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "Plan du Kit barricade",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "Plan du Chargeur moyen III étendu",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "Plan des Pièces d'arme lourde",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "Plan du Canon allongé",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "Plan de la Crosse rembourrée",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "Plan de l'Injection Vita",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Résine synthétique ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuits ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Caoutchouc flexible ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Revêtement thermique ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Acier haute performance ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Accélérateur magnétique",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Épique",
+      "item_type": "Matériau raffiné",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "Réacteur de Matriarche",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "Légendaire",
+      "item_type": "Recyclable",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "Plan du Fusil Aphelion",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "Légendaire",
+      "item_type": "Plan",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuits ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Pilote de Rocketeer",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "Épique",
+      "item_type": "Recyclable",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "Munitions lourdes",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Pièces d'arme lourde",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Pièces d'arme simples",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Munitions de fusil à pompe",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "Gyroscope de Shredder",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuits ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Cellule de Bastion",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "Épique",
+      "item_type": "Recyclable",
+      "id": "bastion-part"
+    },
+    {
+      "name": "Composants mécaniques",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Pièces d'arme moyenne",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Munitions moyennes",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuits ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Caoutchouc flexible ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Acier haute performance ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Composants mécaniques",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Unité d'impulsion Leaper",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "Épique",
+      "item_type": "Lançable",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "Composé explosif",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau raffiné",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Acier haute performance ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Composants mécaniques",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Pièces d'arme moyenne",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Cellule de Bombardier",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "Épique",
+      "item_type": "Recyclable",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "Munitions de lanceur",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "Rare",
+      "item_type": "Munitions",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Liquide de refroidissement ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Revêtement thermique ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Explosifs bruts",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Composé explosif",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau raffiné",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "Allumeur de Comet"
+    },
+    {
+      "name": "Composants électriques",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau raffiné",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Pièces d'arme simples",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Brûleur de Firefly"
+    },
+    {
+      "name": "Produits chimiques",
+      "icon": "icons/chemicals.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de base",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Pièces d'arme simples",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Munitions moyennes",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "Pilote de Hornet",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Résine synthétique ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Cœur moteur ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Batterie ARC avancée",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Matériau de surface",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Liquide de refroidissement ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Revêtement thermique ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Munitions lourdes",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Commun",
+      "item_type": "Munitions",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Cœur de tir de Sentinelle",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "Alliage ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Peu commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Batterie ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Commun",
+      "item_type": "Matériau de surface",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Relais de Spotter",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "Peu commun",
+      "item_type": "Recyclable",
+      "id": "spotter-relay"
+    }
+  ]
+}

@@ -1,0 +1,2663 @@
+{
+  "quest_data": {
+    "description": "Dati missioni ARC Raiders con prerequisiti e ordine di sblocco",
+    "last_updated": "2026-03-24",
+    "source": "https://arcraiders.wiki/wiki/Quests"
+  },
+  "unlock_requirements": {
+    "dam_battlegrounds": "Area di partenza",
+    "blue_gate": "18 round giocati",
+    "stella_montis": "24 round giocati"
+  },
+  "quests": [
+    {
+      "id": 1,
+      "name": "Raccogliere i pezzi",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Visita un'area con un'icona di categoria bottino sulla mappa",
+        "Saccheggia 3 contenitori"
+      ],
+      "rewards": [
+        {
+          "item_id": "rattler-iii",
+          "name": "Rattler III",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-ammo",
+          "name": "Medium Ammo",
+          "quantity": 80
+        }
+      ],
+      "prerequisites": [],
+      "unlock_requirement": "Campi di battaglia della diga Sbloccato",
+      "tree_position": "root"
+    },
+    {
+      "id": 2,
+      "name": "Cieli più sereni",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi 3 nemici ARC",
+        "Ottieni 3 Lega ARC per Shani"
+      ],
+      "rewards": [
+        {
+          "item_id": "black-hiker-colour",
+          "name": "Hiker Backpack (Black Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "sterilized-bandage",
+          "name": "Sterilized Bandage",
+          "quantity": 3
+        },
+        {
+          "item_id": "light-shield",
+          "name": "Light Shield",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Picking Up The Pieces"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 3,
+      "name": "Dai rifiuti al tesoro",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Ottieni 6 cavi",
+        "Ottieni 1 batteria"
+      ],
+      "rewards": [
+        {
+          "item_id": "tactical-mk-1",
+          "name": "Tactical Mk. 1",
+          "quantity": 1
+        },
+        {
+          "item_id": "adrenaline-shot",
+          "name": "Adrenaline Shot",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Picking Up The Pieces"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 4,
+      "name": "Fuori dai radar",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "In un round: Visita un deposito sul campo",
+        "Ripara l'antenna sul tetto del deposito sul campo"
+      ],
+      "rewards": [
+        {
+          "item_id": "defibrillator",
+          "name": "Defibrillator",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Clearer Skies",
+        "Trash Into Treasure"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 5,
+      "name": "Un brutto presentimento",
+      "quest_giver": "Celeste",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Trova e perquisci una Sonda ARC o Corriere ARC"
+      ],
+      "rewards": [
+        {
+          "item_id": "metal-parts",
+          "name": "Metal Parts",
+          "quantity": 10
+        },
+        {
+          "item_id": "spring",
+          "name": "Steel Spring",
+          "quantity": 5
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "Duct Tape",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Off The Radar"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 6,
+      "name": "Passaggio sicuro",
+      "quest_giver": "Apollo",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi 2 nemici ARC con una granata esplosiva"
+      ],
+      "rewards": [
+        {
+          "item_id": "lil-smoke-grenade",
+          "name": "Li'l Smoke Grenade",
+          "quantity": 5
+        },
+        {
+          "item_id": "shrapnel-grenade",
+          "name": "Shrapnel Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "barricade-kit",
+          "name": "Barricade Kit",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A Bad Feeling"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a"
+    },
+    {
+      "id": 7,
+      "name": "Chi la fa l'aspetti",
+      "quest_giver": "Apollo",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi un ARC con un bruciatore di palle di fuoco"
+      ],
+      "rewards": [
+        {
+          "item_id": "cans-backpack-attachment",
+          "name": "Backpack Attachment (Cans)",
+          "quantity": 1
+        },
+        {
+          "item_id": "blaze-grenade",
+          "name": "Blaze Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "Noisemaker",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Safe Passage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a"
+    },
+    {
+      "id": 8,
+      "name": "Scintille volano",
+      "quest_giver": "Apollo",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi un Hornet con una Granata gâchette o Granata a detonazione rapida"
+      ],
+      "rewards": [
+        {
+          "item_id": "crude-explosives",
+          "name": "Crude Explosives",
+          "quantity": 4
+        },
+        {
+          "item_id": "processor",
+          "name": "Processor",
+          "quantity": 2
+        },
+        {
+          "item_id": "trigger-nade-recipe",
+          "name": "Trigger 'Nade Blueprint",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "What Goes Around"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a"
+    },
+    {
+      "id": 9,
+      "name": "Lo strumento giusto",
+      "quest_giver": "Tian Wen",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi una palla di fuoco",
+        "Distruggi un calabrone",
+        "Distruggi una torretta"
+      ],
+      "rewards": [
+        {
+          "item_id": "cheer-emote",
+          "name": "Cheer Emote",
+          "quantity": 1
+        },
+        {
+          "item_id": "stitcher-ii",
+          "name": "Stitcher II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-light-mag-i",
+          "name": "Extended Light Mag I",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Bad Feeling"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2b"
+    },
+    {
+      "id": 10,
+      "name": "Un uso migliore",
+      "quest_giver": "Tian Wen",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Richiedi un rifornimento da una stazione di chiamata",
+        "Saccheggia un rifornimento aereo"
+      ],
+      "rewards": [
+        {
+          "item_id": "extended-light-mag-i",
+          "name": "Extended Light Magazine I",
+          "quantity": 1
+        },
+        {
+          "item_id": "compensator-i",
+          "name": "Compensator I",
+          "quantity": 1
+        },
+        {
+          "item_id": "stable-stock-i",
+          "name": "Stable Stock I",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "The Right Tool"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2b"
+    },
+    {
+      "id": 11,
+      "name": "Ungere le mani",
+      "quest_giver": "Celeste",
+      "location": "Spazioporto, Campi di battaglia della diga, Città sepolta",
+      "objectives": [
+        "Allo spazioporto, ispeziona i propulsori del razzo all'esterno dell'assemblaggio",
+        "Ai campi di battaglia, visita la stanza chiusa nell'edificio di controllo acque",
+        "Nella Città sepolta, visita l'area barricata al 6° piano dell'edificio viaggi spaziali"
+      ],
+      "rewards": [
+        {
+          "item_id": "lure-grenade-recipe",
+          "name": "Lure Grenade Blueprint",
+          "quantity": 1
+        },
+        {
+          "item_id": "speaker-component",
+          "name": "Speaker Component",
+          "quantity": 1
+        },
+        {
+          "item_id": "electrical-components",
+          "name": "Electrical Components",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Better Use"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2b"
+    },
+    {
+      "id": 12,
+      "name": "Riparazioni del portello",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Ripara i tubi idraulici che perdono vicino a un portello",
+        "Cerca una chiave del portello vicino al portello"
+      ],
+      "rewards": [
+        {
+          "item_id": "raider-hatch-key",
+          "name": "Raider Hatch Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "binoculars",
+          "name": "Binoculars",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Bad Feeling"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2c"
+    },
+    {
+      "id": 13,
+      "name": "Con i piedi per terra",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "In un round: Visita un deposito sul campo",
+        "Consegna una cassa da campo a una stazione di rifornimento",
+        "Riscuoti la ricompensa"
+      ],
+      "rewards": [
+        {
+          "item_id": "combat-mk-1",
+          "name": "Combat Mk. 1",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-shield",
+          "name": "Medium Shield",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Hatch Repairs"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2c"
+    },
+    {
+      "id": 14,
+      "name": "La tripletta",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi una vespa",
+        "Ottieni un driver di vespa per Shani",
+        "Distruggi un calabrone",
+        "Ottieni un driver di calabrone per Shani",
+        "Distruggi una spia",
+        "Ottieni uno scanner di spia per Shani"
+      ],
+      "rewards": [
+        {
+          "item_id": "orange-camo-origin-outfit",
+          "name": "Origin Outfit (Orange Camo Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "Raider Hatch Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "defibrillator",
+          "name": "Defibrillator",
+          "quantity": 2
+        },
+        {
+          "item_id": "dam-control-center-tower-key",
+          "name": "Dam Control Tower Key",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Down To Earth"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2c"
+    },
+    {
+      "id": 15,
+      "name": "Ordini del dottore",
+      "quest_giver": "Lance",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Ottieni 1 siringa",
+        "Ottieni 2 antisettici",
+        "Ottieni 1 tessuto resistente",
+        "Ottieni 1 Verbasco"
+      ],
+      "rewards": [
+        {
+          "item_id": "adrenaline-shot",
+          "name": "Adrenaline Shot",
+          "quantity": 3
+        },
+        {
+          "item_id": "sterilized-bandage",
+          "name": "Sterilized Bandage",
+          "quantity": 3
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "Surge Shield Recharger",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Greasing Her Palms"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 16,
+      "name": "Merce medica",
+      "quest_giver": "Lance",
+      "location": "Spazioporto, Città sepolta, Campi di battaglia della diga",
+      "objectives": [
+        "Allo spazioporto, perquisci 2 contenitori nelle sale visite dell'edificio partenze",
+        "Perquisci 3 contenitori nell'ospedale della Città sepolta",
+        "Ai campi di battaglia, perquisci 2 contenitori nella sala medica dell'edificio ricerca"
+      ],
+      "rewards": [
+        {
+          "item_id": "banana-backpack-charm",
+          "name": "Backpack Charm (Banana)",
+          "quantity": 1
+        },
+        {
+          "item_id": "defibrillator",
+          "name": "Defibrillator",
+          "quantity": 3
+        },
+        {
+          "item_id": "vita-shot",
+          "name": "Vita Shot",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Doctor's Orders"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 17,
+      "name": "Una rivelazione tra le rovine",
+      "quest_giver": "Lance",
+      "location": "Città sepolta",
+      "objectives": [
+        "In un round: Cerca un analizzatore ESR in una farmacia della Città sepolta",
+        "Consegna l'analizzatore ESR a Lance"
+      ],
+      "rewards": [
+        {
+          "item_id": "tactical-mk-3-healing",
+          "name": "Tactical Mk. 3 (Healing)",
+          "quantity": 1
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "Surge Shield Recharger",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Medical Merchandise"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 18,
+      "name": "Un giro del territorio",
+      "quest_giver": "Shani",
+      "location": "Spazioporto",
+      "objectives": [
+        "In un round: Raggiungi il magazzino di Jiangsu",
+        "Trova le note di spedizione nell'ufficio del caposquadra",
+        "Localizza gli scanner al piano superiore della torre A6",
+        "Consegna 1 scanner LiDAR a Shani"
+      ],
+      "rewards": [
+        {
+          "item_id": "dam-testing-annex-key",
+          "name": "Dam Testing Annex Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "zipline",
+          "name": "Zipline",
+          "quantity": 3
+        },
+        {
+          "item_id": "smoke-grenade",
+          "name": "Smoke Grenade",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "A Reveal In Ruins"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 19,
+      "name": "Occhi nel cielo",
+      "quest_giver": "Shani",
+      "location": "Campi di battaglia della diga, Città sepolta, Spazioporto",
+      "objectives": [
+        "Ai campi di battaglia, installa uno scanner LiDAR in cima alla torre di controllo",
+        "Allo spazioporto, installa uno scanner LiDAR alla torre delle comunicazioni",
+        "Nella Città sepolta, installa uno scanner LiDAR sull'insegna della Galleria"
+      ],
+      "rewards": [
+        {
+          "item_id": "tagging-grenade",
+          "name": "Tagging Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "vita-spray",
+          "name": "Vita Spray",
+          "quantity": 1
+        },
+        {
+          "item_id": "yellow-light-stick",
+          "name": "Yellow Light Stick",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "A Lay Of The Land"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 20,
+      "name": "Dopo la pioggia arriva",
+      "quest_giver": "Celeste",
+      "location": "Città sepolta",
+      "objectives": [
+        "Trova i pannelli solari allagati vicino agli appartamenti Grandioso",
+        "Ripara i pannelli solari con 5 cavi e 2 batterie"
+      ],
+      "rewards": [
+        {
+          "item_id": "blue-light-stick",
+          "name": "Blue Light Stick",
+          "quantity": 5
+        },
+        {
+          "item_id": "antiseptic",
+          "name": "Antiseptic",
+          "quantity": 3
+        },
+        {
+          "item_id": "durable-cloth",
+          "name": "Durable Cloth",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Eyes In The Sky"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 21,
+      "name": "Un raccolto equilibrato",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Vai all'edificio di ricerca e amministrazione",
+        "Localizza il Lab 1 al piano superiore sopra la reception",
+        "Cerca tracce del progetto di ricerca agricola"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "Advanced Mechanical Components",
+          "quantity": 3
+        },
+        {
+          "item_id": "medium-gun-parts",
+          "name": "Medium Gun Parts",
+          "quantity": 3
+        },
+        {
+          "item_id": "spring",
+          "name": "Steel Spring",
+          "quantity": 10
+        }
+      ],
+      "prerequisites": [
+        "Eyes In The Sky"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 22,
+      "name": "Giardino incustodito",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Vai al complesso delle cupole idroponiche",
+        "Accedi all'archivio dati in una delle cupole",
+        "Carica i dati al terminale in un deposito sul campo"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "Advanced Mechanical Components",
+          "quantity": 3
+        },
+        {
+          "item_id": "heavy-gun-parts",
+          "name": "Heavy Gun Parts",
+          "quantity": 3
+        },
+        {
+          "item_id": "canister",
+          "name": "Canister",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "A Balanced Harvest"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 23,
+      "name": "La radice del problema",
+      "quest_giver": "Celeste",
+      "location": "Città sepolta",
+      "objectives": [
+        "In un round: Vai all'edificio di ricerca",
+        "Cerca la riserva di semi nella 'stanza con una bella vista'",
+        "Consegna il campione di semi sperimentali a Celeste"
+      ],
+      "rewards": [
+        {
+          "item_id": "succulent-backpack-charm",
+          "name": "Backpack Charm (Succulent)",
+          "quantity": 1
+        },
+        {
+          "item_id": "credits",
+          "name": "Credits",
+          "quantity": 1000
+        }
+      ],
+      "prerequisites": [
+        "Untended Garden"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 24,
+      "name": "Problemi idrici",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Localizza il tunnel d'accesso alle inondazioni sotto il balcone del Lago Rosso",
+        "Trova l'ingresso dell'approvvigionamento idrico del distretto"
+      ],
+      "rewards": [
+        {
+          "item_id": "mechanical-components",
+          "name": "Mechanical Components",
+          "quantity": 3
+        },
+        {
+          "item_id": "simple-gun-parts",
+          "name": "Simple Gun Parts",
+          "quantity": 3
+        },
+        {
+          "item_id": "spring",
+          "name": "Steel Spring",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "The Root Of The Matter",
+        "After Rain Comes"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 25,
+      "name": "Fonte della contaminazione",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "Raggiungi l'edificio di trattamento acque alla diga",
+        "Cerca lo sfioratore delle inondazioni vicino alla palude",
+        "Indaga su oggetti sospetti"
+      ],
+      "rewards": [
+        {
+          "item_id": "spring",
+          "name": "Steel Spring",
+          "quantity": 5
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "Duct Tape",
+          "quantity": 5
+        },
+        {
+          "item_id": "mod-components",
+          "name": "Mod Components",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Water Troubles"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 26,
+      "name": "Cambiare la fornitura",
+      "quest_giver": "Celeste",
+      "location": "Spazioporto",
+      "objectives": [
+        "In un round: Trova i tunnel sotto lo spazioporto",
+        "Trova e gira la valvola nei tunnel sotto lo spazioporto"
+      ],
+      "rewards": [
+        {
+          "item_id": "blue-radio-renegade-color",
+          "name": "Radio Renegade Outfit (Blue Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "spaceport-trench-tower-key",
+          "name": "Spaceport Trench Tower Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "synthesized-fuel",
+          "name": "Synthesized Fuel",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Source Of The Contamination"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 27,
+      "name": "Un posto caldo per riposare",
+      "quest_giver": "Apollo",
+      "location": "Città sepolta",
+      "objectives": [
+        "Localizza il campo dell'autostrada abbandonata",
+        "Cerca segni di sopravvissuti",
+        "Segui i marcatori rossi",
+        "Ispeziona la tomba"
+      ],
+      "rewards": [
+        {
+          "item_id": "goggles-radio-renegade-variant",
+          "name": "Radio Renegade Outfit (Goggles Variant)",
+          "quantity": 1
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "Noisemaker",
+          "quantity": 3
+        },
+        {
+          "item_id": "blue-light-stick",
+          "name": "Blue Light Stick",
+          "quantity": 5
+        },
+        {
+          "item_id": "rosary",
+          "name": "Rosary",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Switching The Supply"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 28,
+      "name": "Prescrizioni del passato",
+      "quest_giver": "Lance",
+      "location": "Spazioporto",
+      "objectives": [
+        "In un round: Visita l'edificio partenze allo spazioporto",
+        "Trova la sala visite mediche nell'edificio partenze",
+        "Cerca gli archivi"
+      ],
+      "rewards": [
+        {
+          "item_id": "heavy-shield",
+          "name": "Heavy Shield",
+          "quantity": 1
+        },
+        {
+          "item_id": "tactical-mk-3-healing",
+          "name": "Tactical Mk. 3 (Healing)",
+          "quantity": 1
+        },
+        {
+          "item_id": "adrenaline-shot",
+          "name": "Adrenaline Shot",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A Warm Place To Rest"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 29,
+      "name": "Mancanza di corrente",
+      "quest_giver": "Celeste",
+      "location": "Spazioporto",
+      "objectives": [
+        "In un round: Trova la sottostazione elettrica a sud dello spazioporto",
+        "Trova un segno dell'ingegnere scomparso",
+        "Installa il fusibile",
+        "Ripristina l'alimentazione"
+      ],
+      "rewards": [
+        {
+          "item_id": "bag-radio-renegade-variant",
+          "name": "Radio Renegade Outfit (Bag Variant)",
+          "quantity": 1
+        },
+        {
+          "item_id": "wires-recipe",
+          "name": "Wires",
+          "quantity": 5
+        },
+        {
+          "item_id": "explosive-compound",
+          "name": "Explosive Compound",
+          "quantity": 5
+        },
+        {
+          "item_id": "oil",
+          "name": "Oil",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Prescriptions Of The Past"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 30,
+      "name": "Minaccia tremolante",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "Entra nel complesso di generazione energetica alla diga",
+        "Trova la sala del generatore",
+        "Ripara il generatore",
+        "Trova il condotto di ventilazione",
+        "Attiva l'alimentazione tramite l'interruttore sotto le scale"
+      ],
+      "rewards": [
+        {
+          "item_id": "helmet-radio-renegade-variant",
+          "name": "Radio Renegade Outfit (Helmet Variant)",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-gun-parts",
+          "name": "Medium Gun Parts",
+          "quantity": 5
+        },
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "Advanced Mechanical Components",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Power Out"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 31,
+      "name": "Api!",
+      "quest_giver": "Celeste",
+      "location": "Il Cancello Blu",
+      "objectives": [
+        "In un round: Raggiungi l'uliveto al Cancello Blu",
+        "Perquisci gli alveari intorno all'uliveto"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-electrical-components",
+          "name": "Advanced Electrical Components",
+          "quantity": 1
+        },
+        {
+          "item_id": "sensors-recipe",
+          "name": "Sensors",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Flickering Threat"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 32,
+      "name": "Espresso",
+      "quest_giver": "Apollo",
+      "location": "Qualsiasi",
+      "objectives": [
+        "In un round: Trova una macchina espresso da recuperare",
+        "Ottieni le parti della macchina espresso per Apollo"
+      ],
+      "rewards": [
+        {
+          "item_id": "coffee-pot",
+          "name": "Coffee Pot",
+          "quantity": 1
+        },
+        {
+          "item_id": "adrenaline-shot",
+          "name": "Adrenaline Shot",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Bees!"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 33,
+      "name": "Vita da farmacista",
+      "quest_giver": "Lance",
+      "location": "Città sepolta",
+      "objectives": [
+        "Trova la Farmacia Arbusto vicino all'autostrada crollata",
+        "Documenta gli hobby del farmacista",
+        "Documenta la famiglia del farmacista",
+        "Documenta i gusti del farmacista",
+        "Documenta le competenze del farmacista"
+      ],
+      "rewards": [
+        {
+          "item_id": "defibrillator",
+          "name": "Defibrillator",
+          "quantity": 1
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "Surge Shield Recharger",
+          "quantity": 1
+        },
+        {
+          "item_id": "sterilized-bandage",
+          "name": "Sterilized Bandage",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Espresso"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 34,
+      "name": "Tributo a Toledo",
+      "quest_giver": "Celeste",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Ottieni una barra energetica per Celeste"
+      ],
+      "rewards": [
+        {
+          "item_id": "magnet",
+          "name": "Magnet",
+          "quantity": 5
+        },
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "Advanced Mechanical Components",
+          "quantity": 2
+        },
+        {
+          "item_id": "synthesized-fuel",
+          "name": "Synthesized Fuel",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Life Of A Pharmacist"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 35,
+      "name": "Scavare nella polvere",
+      "quest_giver": "Celeste",
+      "location": "Città sepolta",
+      "objectives": [
+        "Localizza le case di Santa Maria nella città vecchia",
+        "Localizza il punto di consegna nel cortile"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-electrical-components",
+          "name": "Advanced Electrical Components",
+          "quantity": 2
+        },
+        {
+          "item_id": "speaker-component",
+          "name": "Speaker Component",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Tribute To Toledo"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 36,
+      "name": "Costruire una biblioteca",
+      "quest_giver": "Apollo",
+      "location": "Città sepolta",
+      "objectives": [
+        "In un round: Localizza la biblioteca nel centro città",
+        "Trova 1 romanzo rosa",
+        "Trova 1 giallo",
+        "Trova 1 romanzo d'avventura"
+      ],
+      "rewards": [
+        {
+          "item_id": "explosive-mine",
+          "name": "Explosive Mine",
+          "quantity": 1
+        },
+        {
+          "item_id": "jolt-mine",
+          "name": "Jolt Mine",
+          "quantity": 1
+        },
+        {
+          "item_id": "heavy-fuze-grenade",
+          "name": "Heavy Fuze Grenade",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Digging Up Dirt"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 37,
+      "name": "Un nuovo tipo di pianta",
+      "quest_giver": "Lance",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Cerca la nuova pianta vicino al relitto del Baron nel vecchio campo di battaglia",
+        "Consegna la pianta possibilmente tossica a Lance"
+      ],
+      "rewards": [
+        {
+          "item_id": "vita-shot",
+          "name": "Vita Shot",
+          "quantity": 1
+        },
+        {
+          "item_id": "antiseptic",
+          "name": "Antiseptic",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Building A Library"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 38,
+      "name": "Trasporti corazzati",
+      "quest_giver": "Tian Wen",
+      "location": "Il Cancello Blu",
+      "objectives": [
+        "Raggiungi il checkpoint",
+        "Perquisci le guardiole per un tesserino di pattuglia blindata",
+        "Raggiungi il tunnel del traffico vicino al checkpoint del Cancello Blu",
+        "Trova e sblocca la porta posteriore di una pattuglia blindata"
+      ],
+      "rewards": [
+        {
+          "item_id": "blue-yellow-aviator-color",
+          "name": "Aviator Outfit (Blue Yellow Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "smoke-grenade",
+          "name": "Smoke Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "defibrillator",
+          "name": "Defibrillator",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A New Type Of Plant",
+        "With A Trace"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 39,
+      "name": "Rivolta",
+      "quest_giver": "Celeste",
+      "location": "Spazioporto",
+      "objectives": [
+        "Vai alla torre della trincea nord",
+        "Localizza e carica i file di ricatto per Celeste"
+      ],
+      "rewards": [
+        {
+          "item_id": "heavy-gun-parts",
+          "name": "Heavy Gun Parts",
+          "quantity": 2
+        },
+        {
+          "item_id": "medium-gun-parts",
+          "name": "Medium Gun Parts",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Digging Up Dirt"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4_end"
+    },
+    {
+      "id": 40,
+      "name": "Di nuovo in cima",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta, Spazioporto, Campi di battaglia della diga, Il Cancello Blu",
+      "objectives": [
+        "Al Cancello Blu, segna la torre di avvistamento bianca a sud del complesso magazzini",
+        "Ai campi di battaglia, segna la Casa dei modelli",
+        "Allo spazioporto, segna la torre della trincea sud",
+        "Nella Città sepolta, segna l'edificio con il murale"
+      ],
+      "rewards": [
+        {
+          "item_id": "renegade-i",
+          "name": "Renegade I",
+          "quantity": 1
+        },
+        {
+          "item_id": "stable-stock-iii",
+          "name": "Stable Stock III",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-ammo",
+          "name": "Medium Ammo",
+          "quantity": 80
+        }
+      ],
+      "prerequisites": [
+        "Celeste's Journals",
+        "Eyes In The Sky",
+        "The Major's Footlocker"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 41,
+      "name": "La nostra presenza lassù",
+      "quest_giver": "Shani",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Visita la Casa dei modelli alla diga",
+        "Trova e attiva l'interruttore",
+        "Completa l'installazione dell'antenna sul tetto"
+      ],
+      "rewards": [
+        {
+          "item_id": "buried-city-town-hall-key",
+          "name": "Buried City Town Hall Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "Raider Hatch Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "jolt-mine",
+          "name": "Jolt Mine",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Back On Top"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 42,
+      "name": "Perso nella trasmissione",
+      "quest_giver": "Shani",
+      "location": "Spazioporto",
+      "objectives": [
+        "In un round: Visita la torre di controllo A6",
+        "Raggiungi la cima della torre di controllo A6",
+        "Stabilisci una connessione dal terminale"
+      ],
+      "rewards": [
+        {
+          "item_id": "snap-hook",
+          "name": "Snap Hook",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Our Presence Up There"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 43,
+      "name": "Rifugio delle comunicazioni",
+      "quest_giver": "Shani",
+      "location": "Città sepolta",
+      "objectives": [
+        "In un round: Raggiungi la Torre Rossa nella città vecchia",
+        "Trova la cella di batteria mancante",
+        "Installa la cella batteria nel generatore",
+        "Attiva il generatore",
+        "Avvia il terminale antenna vicino alla Torre Rossa"
+      ],
+      "rewards": [
+        {
+          "item_id": "crimson-racer-aviator-colour",
+          "name": "Aviator Outfit (Crimson Racer Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "anvil-iii",
+          "name": "Anvil III",
+          "quantity": 1
+        },
+        {
+          "item_id": "heavy-ammo",
+          "name": "Heavy Ammo",
+          "quantity": 40
+        }
+      ],
+      "prerequisites": [
+        "Lost In Transmission"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 44,
+      "name": "Nella mischia",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi un saltatore",
+        "Ottieni un'unità impulso di saltatore"
+      ],
+      "rewards": [
+        {
+          "item_id": "radio-renegade-outfit",
+          "name": "Radio Renegade Outfit (Grey Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "burgerboy-backpack-charm",
+          "name": "Backpack Charm (Burger Boy)",
+          "quantity": 1
+        },
+        {
+          "item_id": "vulcano-iii",
+          "name": "Vulcano III",
+          "quantity": 1
+        },
+        {
+          "item_id": "shotgun-ammo",
+          "name": "Shotgun Ammo",
+          "quantity": 40
+        }
+      ],
+      "prerequisites": [
+        "Communication Hideout",
+        "Water Troubles"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 45,
+      "name": "Baroni dormienti",
+      "quest_giver": "Shani",
+      "location": "Campi di battaglia della diga, Spazioporto, Il Cancello Blu",
+      "objectives": [
+        "Saccheggia un relitto di Baron"
+      ],
+      "rewards": [
+        {
+          "item_id": "door-blocker",
+          "name": "Door Blocker",
+          "quantity": 3
+        },
+        {
+          "item_id": "lil-smoke-grenade",
+          "name": "Li'l Smoke Grenade",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Greasing Her Palms",
+        "The Trifecta"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 46,
+      "name": "Quello che ci siamo lasciati alle spalle",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta, Campi di battaglia della diga, Spazioporto",
+      "objectives": [
+        "Nella Città sepolta, perquisci 2 contenitori nel campo sotto il parcheggio",
+        "Ai campi di battaglia, cerca qualcosa di significativo all'avamposto della palude sud",
+        "Allo spazioporto, cerca qualcosa di significativo nel nascondiglio di Bilguun"
+      ],
+      "rewards": [
+        {
+          "item_id": "muzzle-brake-ii",
+          "name": "Muzzle Brake II",
+          "quantity": 1
+        },
+        {
+          "item_id": "vertical-grip-ii",
+          "name": "Vertical Grip II",
+          "quantity": 1
+        },
+        {
+          "item_id": "stable-stock-ii",
+          "name": "Stable Stock II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Dormant Barons"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 47,
+      "name": "Monumento spezzato",
+      "quest_giver": "Tian Wen",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Raggiungi il terreno sacro vicino alla discarica",
+        "Cerca una bussola vicino ai veicoli rotti",
+        "Cerca la videocassetta vicino ai contenitori cilindrici",
+        "Cerca le vecchie razioni nel campo dei predoni",
+        "Consegna la cassetta della Prima Ondata a Tian Wen",
+        "Consegna la bussola della Prima Ondata a Tian Wen",
+        "Consegna le razioni della Prima Ondata a Tian Wen"
+      ],
+      "rewards": [
+        {
+          "item_id": "arpeggio-i",
+          "name": "Arpeggio I",
+          "quantity": 1
+        },
+        {
+          "item_id": "compensator-ii",
+          "name": "Compensator II",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-ammo",
+          "name": "Medium Ammo",
+          "quantity": 80
+        }
+      ],
+      "prerequisites": [
+        "What We Left Behind"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 48,
+      "name": "Segnali confusi",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi un Esploratore ARC",
+        "Ottieni 1 cassaforte dell'esploratore"
+      ],
+      "rewards": [
+        {
+          "item_id": "photoelectric-cloak",
+          "name": "Photoelectric Cloak",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "Raider Hatch Key",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Dormant Barons"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 49,
+      "name": "Mettere le cose in chiaro",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "Raggiungi Victory Ridge",
+        "Trova la vecchia trappola EMP",
+        "Disattiva il primo interruttore",
+        "Disattiva il secondo interruttore",
+        "Disattiva il terzo interruttore",
+        "Disattiva la trappola EMP"
+      ],
+      "rewards": [
+        {
+          "item_id": "medium-gun-parts",
+          "name": "Medium Gun Parts",
+          "quantity": 5
+        },
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "Advanced Mechanical Components",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Broken Monument"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6a"
+    },
+    {
+      "id": 50,
+      "name": "Custodire la memoria",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Raggiungi il relitto nelle colline Formicai",
+        "Cerca il casco mancante",
+        "Riporta il casco al memoriale"
+      ],
+      "rewards": [
+        {
+          "item_id": "simple-gun-parts",
+          "name": "Simple Gun Parts",
+          "quantity": 5
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "Duct Tape",
+          "quantity": 5
+        },
+        {
+          "item_id": "magnet",
+          "name": "Magnet",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Straight Record"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6a"
+    },
+    {
+      "id": 51,
+      "name": "Echi di Victory Ridge",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Raggiungi Victory Ridge",
+        "Recupera i piani di battaglia dal nascondiglio sotto l'autostrada rotta",
+        "Consegna il distintivo del Maggiore Aiva a Celeste"
+      ],
+      "rewards": [
+        {
+          "item_id": "crude-explosives",
+          "name": "Crude Explosives",
+          "quantity": 6
+        },
+        {
+          "item_id": "processor",
+          "name": "Processor",
+          "quantity": 2
+        },
+        {
+          "item_id": "music-box",
+          "name": "Music Box",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Keeping The Memory"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6a"
+    },
+    {
+      "id": 52,
+      "name": "Segnato per la morte",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta",
+      "objectives": [
+        "Raggiungi i magazzini Su Durante nella periferia della Città sepolta",
+        "Cerca il nascondiglio di Tian Wen vicino ai magazzini",
+        "Segui gli indizi"
+      ],
+      "rewards": [
+        {
+          "item_id": "shotgun-choke-ii",
+          "name": "Shotgun Choke II",
+          "quantity": 1
+        },
+        {
+          "item_id": "angled-grip-ii",
+          "name": "Angled Grip II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Broken Monument"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 53,
+      "name": "Correzione di mercato",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta",
+      "objectives": [
+        "In un round: Localizza il nascondiglio vicino alla stazione di Marano",
+        "Sabota il deposito"
+      ],
+      "rewards": [
+        {
+          "item_id": "silencer-ii",
+          "name": "Silencer II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-light-mag-i",
+          "name": "Extended Light Mag I",
+          "quantity": 1
+        },
+        {
+          "item_id": "compensator-i",
+          "name": "Compensator I",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Marked For Death"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 54,
+      "name": "Occhi sul premio",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta",
+      "objectives": [
+        "Trova la terrazza appartata a sud-ovest della stazione sud, cerca i teloni blu",
+        "Ricablare il pannello solare con 3 cavi"
+      ],
+      "rewards": [
+        {
+          "item_id": "extended-shotgun-mag-ii",
+          "name": "Extended Shotgun Mag II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-medium-mag-ii",
+          "name": "Extended Medium Mag II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Market Correction"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 55,
+      "name": "Spionaggio industriale",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta",
+      "objectives": [
+        "Trova il deposito armi di Tian Wen vicino alla stazione di servizio in periferia",
+        "Consegna il Burletta al deposito armi rivale",
+        "Pianta una cimice sul deposito armi"
+      ],
+      "rewards": [
+        {
+          "item_id": "burletta-recipe",
+          "name": "Burletta Blueprint",
+          "quantity": 1
+        },
+        {
+          "item_id": "mechanical-components",
+          "name": "Mechanical Components",
+          "quantity": 3
+        },
+        {
+          "item_id": "simple-gun-parts",
+          "name": "Simple Gun Parts",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Eyes On The Prize"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 56,
+      "name": "Iniziativa inaspettata",
+      "quest_giver": "Tian Wen",
+      "location": "Città sepolta",
+      "objectives": [
+        "In un round: Raggiungi gli appartamenti Grandioso nella Città sepolta",
+        "Cerca l'igrometro sul tetto degli appartamenti Grandioso",
+        "Raggiungi Piazza Roma nella Città sepolta",
+        "Cerca un contatore nutrienti nei giardini pensili di Piazza Roma",
+        "Consegna un igrometro a Tian Wen",
+        "Consegna un contatore nutrienti a Tian Wen"
+      ],
+      "rewards": [
+        {
+          "item_id": "il-toro-i",
+          "name": "Il Toro I",
+          "quantity": 1
+        },
+        {
+          "item_id": "shotgun-ammo",
+          "name": "Shotgun Ammo",
+          "quantity": 40
+        },
+        {
+          "item_id": "shotgun-choke-ii",
+          "name": "Shotgun Choke II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Echoes Of Victory Ridge",
+        "Industrial Espionage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_merge"
+    },
+    {
+      "id": 57,
+      "name": "Un simbolo di unificazione",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Raggiungi l'avamposto Formicai ai campi di battaglia della diga",
+        "Localizza la bandiera all'avamposto Formicai",
+        "Issa la bandiera sulla piccola piattaforma che si affaccia sul Lago Rosso"
+      ],
+      "rewards": [
+        {
+          "item_id": "aviator-outfit",
+          "name": "Aviator Outfit (Dusted Cream Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "mod-components",
+          "name": "Mod Components",
+          "quantity": 3
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "Duct Tape",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Unexpected Initiative"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_merge"
+    },
+    {
+      "id": 58,
+      "name": "I diari di Celeste",
+      "quest_giver": "Celeste",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Recupera i diari di Celeste dall'avamposto della palude sud",
+        "Recupera i diari di Celeste dall'avamposto nord che si affaccia sui Laghi Rossi",
+        "Consegna 2 diari a Celeste"
+      ],
+      "rewards": [
+        {
+          "item_id": "magnetic-accelerator",
+          "name": "Magnetic Accelerator",
+          "quantity": 1
+        },
+        {
+          "item_id": "heavy-gun-parts",
+          "name": "Heavy Gun Parts",
+          "quantity": 3
+        },
+        {
+          "item_id": "exodus-modules",
+          "name": "Exodus Modules",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Symbol Of Unification"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_merge"
+    },
+    {
+      "id": 59,
+      "name": "Fuori dall'ombra",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi un lanciarazzi",
+        "Ottieni un driver del lanciarazzi"
+      ],
+      "rewards": [
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "Surge Shield Recharger",
+          "quantity": 3
+        },
+        {
+          "item_id": "wolfpack",
+          "name": "Wolfpack",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "A Symbol Of Unification",
+        "Sparks Fly"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_end"
+    },
+    {
+      "id": 60,
+      "name": "L'armadietto del Maggiore",
+      "quest_giver": "Tian Wen",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "In un round: Cerca i ricordi del Maggiore Aiva negli appartamenti a nord-ovest della diga",
+        "Consegna i ricordi del Maggiore Aiva a Tian Wen"
+      ],
+      "rewards": [
+        {
+          "item_id": "hullcracker-recipe",
+          "name": "Hullcracker Blueprint",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Symbol Of Unification"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_end"
+    },
+    {
+      "id": 61,
+      "name": "Aprire la strada",
+      "quest_giver": "Apollo",
+      "location": "Campi di battaglia della diga, Blue Gate, Città sepolta",
+      "objectives": [
+        "Vai in un edificio ENELICA",
+        "Cerca una bacheca con una nota del ricercatore",
+        "Nella Città sepolta, raggiungi l'ultimo piano sopra il Convinio a Piazza Roma",
+        "Trova l'appartamento del ricercatore e cerca dati di ricerca"
+      ],
+      "rewards": [
+        {
+          "item_id": "raider-hatch-key",
+          "name": "Raider Hatch Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "seeker-grenade",
+          "name": "Seeker Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "advanced-electrical-components",
+          "name": "Advanced Electrical Components",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Into The Fray"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "convergence_1"
+    },
+    {
+      "id": 62,
+      "name": "Decifrare i dati",
+      "quest_giver": "Shani",
+      "location": "Spazioporto",
+      "objectives": [
+        "Usa il decriptatore magnetico nell'edificio di controllo carburante",
+        "Raggiungi l'edificio arrivi allo spazioporto",
+        "Usa il decriptatore magnetico all'ultimo piano dell'edificio arrivi"
+      ],
+      "rewards": [
+        {
+          "item_id": "defibrillator",
+          "name": "Defibrillator",
+          "quantity": 3
+        },
+        {
+          "item_id": "trailblazer-grenade",
+          "name": "Trailblazer",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Paving The Way"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "convergence_1"
+    },
+    {
+      "id": 63,
+      "name": "Scoperta rivoluzionaria",
+      "quest_giver": "Apollo",
+      "location": "Blue Gate",
+      "objectives": [
+        "Entra nella stanza chiusa al Picco del Pellegrino",
+        "Perquisci la stanza per ricerche edili",
+        "Trova l'edificio raffigurato sulla lavagna bianca",
+        "Fotografa il progetto abitativo abbandonato"
+      ],
+      "rewards": [
+        {
+          "item_id": "tangerine-warden-color",
+          "name": "Warden Outfit (Tangerine Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "power-rod",
+          "name": "Power Rod",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Deciphering The Data"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "convergence_1"
+    },
+    {
+      "id": 64,
+      "name": "Una scia tossica",
+      "quest_giver": "Shani",
+      "location": "Campi di battaglia della diga",
+      "objectives": [
+        "Torna all'ingresso acqua sotto l'edificio di controllo acque",
+        "Cerca nella palude tracce dell'origine del barile",
+        "Scatta una foto del camion cisterna",
+        "Fruga nel baule per indizi sull'identità del sabotatore"
+      ],
+      "rewards": [
+        {
+          "item_id": "tactical-mk-2",
+          "name": "Tactical Mk. 2",
+          "quantity": 1
+        },
+        {
+          "item_id": "zipline",
+          "name": "Zipline",
+          "quantity": 3
+        },
+        {
+          "item_id": "pulse-mine",
+          "name": "Pulse Mine",
+          "quantity": 3
+        },
+        {
+          "item_id": "gas-mine",
+          "name": "Gas Mine",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Life Of A Pharmacist"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 65,
+      "name": "Il fetore della corruzione",
+      "quest_giver": "Shani",
+      "location": "Spazioporto",
+      "objectives": [
+        "In un round: Raggiungi l'atrio sud-ovest dell'edificio partenze",
+        "Trova lo spogliatoio del personale",
+        "Perquisci la stanza per indizi sull'identità del sabotatore",
+        "Raggiungi i tunnel sotto lo spazioporto",
+        "Usa la chiave su un terminale di spurgo per sovrascrivere il protocollo"
+      ],
+      "rewards": [
+        {
+          "item_id": "warden-outfit",
+          "name": "Warden Outfit (Blue Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "air-freshener",
+          "name": "Air Freshener",
+          "quantity": 1
+        },
+        {
+          "item_id": "dam-staff-room-key",
+          "name": "Dam Staff Room Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "Noisemaker",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A Toxic Trail"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 66,
+      "name": "Il sogno pulito",
+      "quest_giver": "Apollo",
+      "location": "Spazioporto, Blue Gate",
+      "objectives": [
+        "Allo spazioporto, perquisci 4 contenitori nei tunnel sotterranei",
+        "Trova e monitora un sistema di filtrazione nei tunnel",
+        "Al Cancello Blu, visita il bunker di manutenzione",
+        "Monitora il sistema di purificazione nel bunker",
+        "Trova e fotografa i progetti nel bunker"
+      ],
+      "rewards": [
+        {
+          "item_id": "deadline",
+          "name": "Deadline",
+          "quantity": 1
+        },
+        {
+          "item_id": "showstopper",
+          "name": "Showstopper",
+          "quantity": 3
+        },
+        {
+          "item_id": "heavy-fuze-grenade",
+          "name": "Heavy Fuze Grenade",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "With A Trace"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame_final"
+    },
+    {
+      "id": 67,
+      "name": "Un primo punto d'appoggio",
+      "quest_giver": "Apollo",
+      "location": "Il Cancello Blu",
+      "quest_line": "Blue Gate Introduction",
+      "objectives": [
+        "Inchioda le lastre del tetto sulla struttura dei predoni vicino alla Radura del Cacciatore",
+        "Stabilizza il ponte di osservazione vicino al crinale",
+        "Attiva il terminale comunicazioni vicino all'uliveto",
+        "Ruota le antenne paraboliche sul tetto della chiesa"
+      ],
+      "rewards": [
+        {
+          "item_id": "shrapnel-grenade",
+          "name": "Shrapnel Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "snap-blast-grenade",
+          "name": "Snap Blast Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "heavy-fuze-grenade",
+          "name": "Heavy Fuze Grenade",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [],
+      "unlock_requirement": "Blue Gate Sbloccato (18 round giocati)",
+      "tree_position": "blue_gate_intro"
+    },
+    {
+      "id": 68,
+      "name": "Ridotto in macerie",
+      "quest_giver": "Shani",
+      "location": "Il Cancello Blu",
+      "quest_line": "Blue Gate Introduction",
+      "objectives": [
+        "Scatta una foto dell'autostrada crollata",
+        "Vai alla Terra Spezzata",
+        "Segui la scia di distruzione attraverso la Terra Spezzata",
+        "Indaga sulle macchine ARC sconosciute"
+      ],
+      "rewards": [
+        {
+          "item_id": "zipline",
+          "name": "Zipline",
+          "quantity": 1
+        },
+        {
+          "item_id": "barricade-kit",
+          "name": "Barricade Kit",
+          "quantity": 3
+        },
+        {
+          "item_id": "door-blocker",
+          "name": "Door Blocker",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A First Foothold"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "blue_gate_intro"
+    },
+    {
+      "id": 69,
+      "name": "Con una traccia",
+      "quest_giver": "Shani",
+      "location": "Il Cancello Blu",
+      "quest_line": "Blue Gate Introduction",
+      "objectives": [
+        "Raggiungi la radura arida",
+        "Trova segni di chi ha abbattuto le macchine ARC",
+        "Ispeziona il relitto ornato",
+        "Ispeziona il dispositivo di comunicazione"
+      ],
+      "rewards": [
+        {
+          "item_id": "looting-mk-2",
+          "name": "Looting Mk. 2",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-shield",
+          "name": "Medium Shield",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Reduced To Rubble"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "blue_gate_intro"
+    },
+    {
+      "id": 70,
+      "name": "A mia immagine",
+      "quest_giver": "Lance",
+      "location": "Stella Montis",
+      "quest_line": "Stella Montis Introduction",
+      "objectives": [
+        "Schierati a Stella Montis",
+        "Trova e perquisci 3 androidi"
+      ],
+      "rewards": [
+        {
+          "item_id": "looting-mk-2",
+          "name": "Looting Mk. 2",
+          "quantity": 2
+        },
+        {
+          "item_id": "green-light-stick",
+          "name": "Green Light Stick",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [],
+      "unlock_requirement": "Stella Montis Sbloccato (24 round giocati)",
+      "tree_position": "stella_montis_intro"
+    },
+    {
+      "id": 71,
+      "name": "Stoccaggio a freddo",
+      "quest_giver": "Shani",
+      "location": "Stella Montis",
+      "quest_line": "Stella Montis Introduction",
+      "objectives": [
+        "Perquisci un contenitore J Kozma Ventures"
+      ],
+      "rewards": [
+        {
+          "item_id": "gas-mine",
+          "name": "Gas Mine",
+          "quantity": 3
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "Raider Hatch Key",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "In My Image"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_intro"
+    },
+    {
+      "id": 72,
+      "name": "Scatta e recupera",
+      "quest_giver": "Tian Wen",
+      "location": "Stella Montis",
+      "quest_line": "Stella Montis Introduction",
+      "objectives": [
+        "Scatta una foto di un rover nella sabbiera",
+        "Cerca i documenti nella stanza del checkpoint di sicurezza",
+        "Consegna un regolatore di flusso a Tian Wen",
+        "Consegna un magnetron a Tian Wen"
+      ],
+      "rewards": [
+        {
+          "item_id": "burletta-iiii",
+          "name": "Burletta III",
+          "quantity": 1
+        },
+        {
+          "item_id": "silencer-ii",
+          "name": "Silencer II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-light-mag-ii",
+          "name": "Extended Light Mag II",
+          "quantity": 1
+        },
+        {
+          "item_id": "light-ammo",
+          "name": "Light Ammo",
+          "quantity": 100
+        }
+      ],
+      "prerequisites": [
+        "Cold Storage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_intro"
+    },
+    {
+      "id": 73,
+      "name": "La lega",
+      "quest_giver": "Apollo",
+      "location": "Campi di battaglia della diga, Città sepolta",
+      "objectives": [
+        "Consegna un pallone sgonfio a Apollo",
+        "Consegna una pompa per bici per Apollo",
+        "Ai campi di battaglia, fotografa la porta vicino alle torri idriche",
+        "Nella Città sepolta, fotografa le riviste di calcio in un chiosco"
+      ],
+      "rewards": [
+        {
+          "item_id": "faded-flush-aviator-color",
+          "name": "Faded Flush (Aviator Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagging-grenade",
+          "name": "Tagging Grenade",
+          "quantity": 5
+        },
+        {
+          "item_id": "firecracker",
+          "name": "Firecracker",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Sparks Fly"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a_end"
+    },
+    {
+      "id": 74,
+      "name": "Ricognizione di combattimento",
+      "quest_giver": "Shani",
+      "location": "Città sepolta",
+      "objectives": [
+        "Individua un riparo nelle scale del parcheggio",
+        "Individua un riparo negli autobus vicino al parco Marano",
+        "Individua un riparo nelle soffitte della via principale",
+        "Distruggi 2 osservatori",
+        "Consegna un relè osservatore a Shani"
+      ],
+      "rewards": [
+        {
+          "item_id": "red-radio-renegade-color",
+          "name": "Radio Renegade Outfit (Red Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "firecracker",
+          "name": "Firecracker",
+          "quantity": 5
+        },
+        {
+          "item_id": "fireworks-box",
+          "name": "Fireworks Box",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Into The Fray"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5_end"
+    },
+    {
+      "id": 75,
+      "name": "Bombardamento",
+      "quest_giver": "Shani",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Distruggi un bombardiere",
+        "Consegna una cella bombardiere a Shani"
+      ],
+      "rewards": [
+        {
+          "item_id": "finger-gun-single-shot-emote",
+          "name": "Finger Gun Single Shot Emote",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-tokens",
+          "name": "Raider Tokens",
+          "quantity": 30
+        }
+      ],
+      "prerequisites": [
+        "Combat Recon"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5_end"
+    },
+    {
+      "id": 76,
+      "name": "Orecchie da mercante",
+      "quest_giver": "Lance",
+      "location": "Stella Montis",
+      "objectives": [
+        "Trova i registri ospiti del ricercatore sui computer della reception",
+        "Trova dove il ricercatore ha tenuto la lezione e accedi ai suoi appunti",
+        "Trova informazioni sui prototipi nei computer di ricerca medica",
+        "Trova i registri di spedizione negli atelier di assemblaggio"
+      ],
+      "rewards": [
+        {
+          "item_id": "navy-blue-warden-color",
+          "name": "Navy Blue (Warden Color)",
+          "quantity": 1
+        },
+        {
+          "item_id": "lure-grenade",
+          "name": "Lure Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "Noisemaker",
+          "quantity": 5
+        },
+        {
+          "item_id": "shaker",
+          "name": "Shaker",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Groundbreaking"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 77,
+      "name": "Sulla mappa",
+      "quest_giver": "Lance",
+      "location": "Spazioporto",
+      "objectives": [
+        "Vai dove le linee di carburante si sono spezzate e trasmetti la tua posizione",
+        "Vai all'antenna vicino al controllo carburante e trasmetti la tua posizione",
+        "Vai al bosco di cactus nella breccia e trasmetti la tua posizione",
+        "Trasmetti la tua posizione dal tetto dell'edificio di stoccaggio contenitori",
+        "Trova il contenitore coperto dal telone e segnalo"
+      ],
+      "rewards": [
+        {
+          "item_id": "sterilized-bandage",
+          "name": "Sterilized Bandage",
+          "quantity": 3
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "Surge Shield Recharger",
+          "quantity": 3
+        },
+        {
+          "item_id": "tactical-mk-3-healing",
+          "name": "Tactical Mk. 3 (Healing)",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "On Deaf Ears"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 78,
+      "name": "Con vista",
+      "quest_giver": "Shani",
+      "location": "Stella Montis",
+      "objectives": [
+        "Ottieni un encoder rotativo",
+        "Visita una delle sale di controllo vicino alla catena di montaggio",
+        "Usa l'encoder rotativo per attivare l'interruttore del server",
+        "Interagisci con un computer vicino per identificare i percorsi corretti",
+        "Consegna uno spruzzatore ionico a Shani"
+      ],
+      "rewards": [
+        {
+          "item_id": "spring",
+          "name": "Steel Spring",
+          "quantity": 5
+        },
+        {
+          "item_id": "wires-recipe",
+          "name": "Wires",
+          "quantity": 5
+        },
+        {
+          "item_id": "tactical-mk-2",
+          "name": "Tactical Mk. 2",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Snap And Salvage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_end"
+    },
+    {
+      "id": 79,
+      "name": "Serata cinema",
+      "quest_giver": "Apollo",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Consegna una TV portatile a Apollo",
+        "A Stella Montis, cerca nelle archivi culturali vecchie cassette",
+        "Consegna la pila di cassette a Apollo"
+      ],
+      "rewards": [
+        {
+          "item_id": "showstopper",
+          "name": "Showstopper",
+          "quantity": 3
+        },
+        {
+          "item_id": "smoke-grenade",
+          "name": "Smoke Grenade",
+          "quantity": 3
+        },
+        {
+          "item_id": "fireworks-box",
+          "name": "Fireworks Box",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "With A View"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_end"
+    },
+    {
+      "id": 80,
+      "name": "Un esemplare primo",
+      "quest_giver": "Shani",
+      "location": "Il Cancello Blu",
+      "objectives": [
+        "In un round: Ottieni 2 celle energetiche ARC",
+        "Interagisci con un disboscatore ARC",
+        "Saccheggia un disboscatore ARC"
+      ],
+      "rewards": [
+        {
+          "item_id": "patrol-car-key",
+          "name": "Patrol Car Key",
+          "quantity": 1
+        },
+        {
+          "item_id": "door-blocker",
+          "name": "Door Blocker",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "The Clean Dream"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame_final"
+    },
+    {
+      "id": 81,
+      "name": "Alloggio stabile",
+      "quest_giver": "Tian Wen",
+      "location": "Stella Montis",
+      "objectives": [
+        "Trova una posizione stabile a Stella Montis",
+        "Metti in sicurezza la zona per Tian Wen"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "Stella Montis Sbloccato",
+      "tree_position": "root"
+    },
+    {
+      "id": 82,
+      "name": "Tenere d'occhio",
+      "quest_giver": "Celeste",
+      "location": "Il Cancello Blu",
+      "objectives": [
+        "Perlusta la zona intorno al Cancello Blu",
+        "Riporta le scoperte a Celeste"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "Il Cancello Blu Sbloccato",
+      "tree_position": "root"
+    },
+    {
+      "id": 83,
+      "name": "Un vicolo cieco",
+      "quest_giver": "Shani",
+      "location": "Il Cancello Blu",
+      "objectives": [
+        "Indaga sul vicolo cieco al Cancello Blu",
+        "Trova un passaggio"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "Il Cancello Blu Sbloccato",
+      "tree_position": "root"
+    },
+    {
+      "id": 84,
+      "name": "Una marea crescente",
+      "quest_giver": "Celeste",
+      "location": "Città sepolta, Campi di battaglia della diga",
+      "objectives": [
+        "Indaga sulla marea crescente nella zona",
+        "Aiuta Celeste a mettere in sicurezza le provviste"
+      ],
+      "rewards": [],
+      "prerequisites": [
+        "A Dead End"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 85,
+      "name": "Arrangiarsi",
+      "quest_giver": "Tian Wen",
+      "location": "Qualsiasi",
+      "objectives": [
+        "Raccogli materiali di base",
+        "Porta provviste a Tian Wen"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "Campi di battaglia della diga Sbloccato",
+      "tree_position": "root"
+    }
+  ],
+  "quest_givers": [
+    {
+      "name": "Shani",
+      "quest_count": 29
+    },
+    {
+      "name": "Celeste",
+      "quest_count": 24
+    },
+    {
+      "name": "Tian Wen",
+      "quest_count": 15
+    },
+    {
+      "name": "Apollo",
+      "quest_count": 11
+    },
+    {
+      "name": "Lance",
+      "quest_count": 10
+    }
+  ],
+  "locations": [
+    "Qualsiasi",
+    "Campi di battaglia della diga",
+    "Città sepolta",
+    "Spazioporto",
+    "Il Cancello Blu",
+    "Stella Montis"
+  ]
+}

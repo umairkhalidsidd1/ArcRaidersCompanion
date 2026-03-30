@@ -39,6 +39,11 @@ PODS:
   - libwebp/sharpyuv (1.5.0)
   - libwebp/webp (1.5.0):
     - libwebp/sharpyuv
+  - PurchasesHybridCommon (17.53.0):
+    - RevenueCat (= 5.66.0)
+  - PurchasesHybridCommonUI (17.53.0):
+    - PurchasesHybridCommon (= 17.53.0)
+    - RevenueCatUI (= 5.66.0)
   - RCTDeprecation (0.84.1)
   - RCTRequired (0.84.1)
   - RCTSwiftUI (0.84.1)
@@ -2026,6 +2031,9 @@ PODS:
     - React-utils (= 0.84.1)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.84.1)
+  - RevenueCat (5.66.0)
+  - RevenueCatUI (5.66.0):
+    - RevenueCat (= 5.66.0)
   - rive-react-native (9.8.1):
     - React-Core
     - RiveRuntime (= 6.15.2)
@@ -2078,6 +2086,17 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - RNNotifee (9.1.8):
+    - React-Core
+    - RNNotifee/NotifeeCore (= 9.1.8)
+  - RNNotifee/NotifeeCore (9.1.8):
+    - React-Core
+  - RNPaywalls (9.15.0):
+    - PurchasesHybridCommonUI (= 17.53.0)
+    - React-Core
+  - RNPurchases (9.15.0):
+    - PurchasesHybridCommon (= 17.53.0)
+    - React-Core
   - RNReactNativeHapticFeedback (2.3.4):
     - hermes-engine
     - RCTRequired
@@ -2213,6 +2232,28 @@ PODS:
     - React-NativeModulesApple
     - React-RCTFabric
     - React-RCTImage
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
+  - RNStoreReview (0.4.3):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
     - React-renderercss
     - React-rendererdebug
     - React-utils
@@ -2455,9 +2496,13 @@ DEPENDENCIES:
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
+  - RNPaywalls (from `../node_modules/react-native-purchases-ui`)
+  - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWorklets (from `../node_modules/react-native-worklets`)
@@ -2466,6 +2511,10 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - libwebp
+    - PurchasesHybridCommon
+    - PurchasesHybridCommonUI
+    - RevenueCat
+    - RevenueCatUI
     - RiveRuntime
     - SDWebImage
     - SDWebImageWebPCoder
@@ -2644,12 +2693,20 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
+  RNPaywalls:
+    :path: "../node_modules/react-native-purchases-ui"
+  RNPurchases:
+    :path: "../node_modules/react-native-purchases"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNStoreReview:
+    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -2665,6 +2722,8 @@ SPEC CHECKSUMS:
   FBLazyVector: e97c19a5a442429d1988f182a1940fb08df514da
   hermes-engine: a16ff658813014f00aba44c5e66a236edbc11479
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
+  PurchasesHybridCommon: 53d966ac5c39df13c3c759289bb3ef3e2f9f1622
+  PurchasesHybridCommonUI: c9ac2debefc5a098cfeca28bf05a9602eb49cb32
   RCTDeprecation: af44b104091a34482596cd9bd7e8d90c4e9b4bd7
   RCTRequired: bb77b070f75f53398ce43c0aaaa58337cebe2bf6
   RCTSwiftUI: afc0a0a635860da1040a0b894bfd529da06d7810
@@ -2743,14 +2802,20 @@ SPEC CHECKSUMS:
   ReactCodegen: 797de5178718324c6eba3327b07f9a423fbd5787
   ReactCommon: 07572bf9e687c8a52fbe4a3641e9e3a1a477c78e
   ReactNativeDependencies: 10c7004f8bc46c19da61a45fabc4f0d5109667ea
+  RevenueCat: a3cf721ad8b1b56a930d748a40342aba16c09bbb
+  RevenueCatUI: 1091be7f4e7eb6068bc0c78d470af3a2a19d3a49
   rive-react-native: f0e39caddbd2bc7b2bf486db6852c421c4579ddb
   RiveRuntime: b2c29a7e1fbf2aabd1fffcb7b9cf43c4d515a841
   RNFastImage: 462a183c4b0b6b26fdfd639e1ed6ba37536c3b87
   RNGestureHandler: 07de6f059e0ee5744ae9a56feb07ee345338cc31
   RNLocalize: 1e6eb4290e89502c3d2193d82dfb7de14a9e672b
+  RNNotifee: 5e3b271e8ea7456a36eec994085543c9adca9168
+  RNPaywalls: ce7defe6876f9d3952ea230b9ada67363925ec5f
+  RNPurchases: f3384f8db42ad8abb7525b13c2ecb9bd2a443102
   RNReactNativeHapticFeedback: d6666654afe70a15d04ecb6257809a4081fab84c
   RNReanimated: 923eb30d50cea473eed734767d4c33c374fae5fc
   RNScreens: 6cb648bdad8fe9bee9259fe144df95b6d1d5b707
+  RNStoreReview: 6595aaa538f6730ece284f2d814a4a1689f1df79
   RNSVG: c69f7709226108f5eb89b5aa8833c17a36345468
   RNVectorIcons: 4351544f100d4f12cac156a7c13399e60bab3e26
   RNWorklets: bc32c788b41ef5f9ee519d6bf3f495b73fb7741b

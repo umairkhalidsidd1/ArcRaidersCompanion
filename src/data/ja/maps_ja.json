@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "ダム戦場",
+    "description": "ARC部隊に制圧された巨大な水力発電ダム。放水路や発電室周辺の激しい戦闘地帯。",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "中級"
+  },
+  {
+    "id": "buried-city",
+    "name": "埋もれた都市",
+    "description": "かつて繁栄した大都市の廃墟。砂と瓦礫の下に半分埋もれている。戦利品は豊富だが危険。",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "上級"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "宇宙港",
+    "description": "格納庫、管制塔、散在するARC技術を持つ放棄された発射施設。広い視界線。",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "初級"
+  },
+  {
+    "id": "blue-gate",
+    "name": "ブルーゲート",
+    "description": "地域間の要塞化された検問所。狭い通路と垂直構造が激しい銃撃戦を生む。",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "中級"
+  },
+  {
+    "id": "stella-montis",
+    "name": "ステラ・モンティス",
+    "description": "高山の森と隠されたバンカーがある山岳地帯。山頂に散在する高価値資源。",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "上級"
+  }
+]

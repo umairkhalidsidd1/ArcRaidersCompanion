@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "댐 전장",
+    "description": "ARC 군대에 점령된 거대한 수력 발전 댐. 방수로와 발전실 주변의 밀집 전투 구역.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "중간"
+  },
+  {
+    "id": "buried-city",
+    "name": "매장된 도시",
+    "description": "한때 번영했던 대도시의 폐허, 이제 모래와 잔해 속에 반쯤 묻혀 있다. 전리품은 풍부하지만 위험하다.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "어려움"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "우주항",
+    "description": "격납고, 관제탑, 그리고 흩어진 ARC 기술이 있는 버려진 발사 시설. 넓은 시야선.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "쉬움"
+  },
+  {
+    "id": "blue-gate",
+    "name": "블루 게이트",
+    "description": "지역 간의 요새화된 검문소. 좁은 복도와 수직 구조가 치열한 교전을 만든다.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "중간"
+  },
+  {
+    "id": "stella-montis",
+    "name": "스텔라 몬티스",
+    "description": "고산 숲과 숨겨진 벙커가 있는 산악 지역. 봉우리에 흩어진 고가치 자원.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "어려움"
+  }
+]
