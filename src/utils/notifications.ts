@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NOTIF_PREFS_KEY = '@arcc_notif_prefs';
 const NOTIF_ENABLED_KEY = '@arcc_notif_enabled';
+const EVENT_NOTIF_ENABLED_KEY = '@arcc_event_notif_enabled';
 
 let notifee: any = null;
 let TriggerType: any = null;
@@ -38,6 +39,24 @@ export async function areNotificationsEnabled(): Promise<boolean> {
 /** Set global notification toggle */
 export async function setNotificationsEnabled(enabled: boolean): Promise<void> {
   await AsyncStorage.setItem(NOTIF_ENABLED_KEY, enabled ? 'true' : 'false');
+  if (!enabled) {
+    await cancelAllEventNotifications();
+  }
+}
+
+/** Check if event notifications are enabled */
+export async function areEventNotificationsEnabled(): Promise<boolean> {
+  try {
+    const val = await AsyncStorage.getItem(EVENT_NOTIF_ENABLED_KEY);
+    return val === 'true';
+  } catch {
+    return false;
+  }
+}
+
+/** Set event notification toggle */
+export async function setEventNotificationsEnabled(enabled: boolean): Promise<void> {
+  await AsyncStorage.setItem(EVENT_NOTIF_ENABLED_KEY, enabled ? 'true' : 'false');
   if (!enabled) {
     await cancelAllEventNotifications();
   }

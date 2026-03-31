@@ -20,6 +20,7 @@ import {
   toggleCompletedQuest,
   resetCompletedQuests,
 } from '../utils/storage';
+import {usePremium} from '../context/PremiumContext';
 
 /* ─── Trader portraits (reuse from TraderListScreen) ─── */
 const TRADER_PORTRAITS: Record<string, any> = {
@@ -60,10 +61,12 @@ const QuestCard = memo(
     quest,
     tab,
     onPress,
+    isLockedByPremium,
   }: {
     quest: Quest;
     tab: Tab;
     onPress: (id: number) => void;
+    isLockedByPremium?: boolean;
   }) => {
     const {t} = useTranslation();
     const giverColor = GIVER_COLORS[quest.quest_giver] || colors.orange;
@@ -75,7 +78,7 @@ const QuestCard = memo(
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => onPress(quest.id)}
-        style={s.card}>
+        style={[s.card, isLockedByPremium && {opacity: 0.5}]}>
         {/* Portrait */}
         {portrait ? (
           <Image source={portrait} style={s.portrait} />
@@ -87,9 +90,17 @@ const QuestCard = memo(
 
         {/* Info */}
         <View style={s.cardInfo}>
-          <Text style={s.questName} numberOfLines={1}>
-            {quest.name}
-          </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+            <Text style={[s.questName, {flexShrink: 1}]} numberOfLines={1}>
+              {quest.name}
+            </Text>
+            {isLockedByPremium && (
+              <View style={{flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(0,229,255,0.12)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4}}>
+                <Icon name="lock" size={10} color={colors.cyan} />
+                <Text style={{fontSize: 9, fontWeight: '900', color: colors.cyan, letterSpacing: 1}}>PRO</Text>
+              </View>
+            )}
+          </View>
           <Text style={[s.questGiver, {color: giverColor}]}>
             {quest.quest_giver}
           </Text>
@@ -109,7 +120,9 @@ const QuestCard = memo(
         </View>
 
         {/* Status icon */}
-        {isLocked ? (
+        {isLockedByPremium ? (
+          <Icon name="lock" size={18} color={colors.textMuted} />
+        ) : isLocked ? (
           <Icon name="lock" size={18} color={colors.textMuted} />
         ) : isCompleted ? (
           <Icon name="check-circle" size={20} color={colors.green} />
@@ -127,6 +140,8 @@ const QuestListScreen = ({navigation, route}: any) => {
   const isFocused = useIsFocused();
   const initialGiver = route?.params?.filterGiver || null;
   const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
+  const {isPremium} = usePremium();
+  const FREE_QUEST_COUNT = 3;
 
   const [activeTab, setActiveTab] = useState<Tab>('AVAILABLE');
   const [completedIds, setCompletedIds] = useState<number[]>([]);
@@ -222,10 +237,13 @@ const QuestListScreen = ({navigation, route}: any) => {
   }, []);
 
   const renderItem = useCallback(
-    ({item}: {item: Quest}) => (
-      <QuestCard quest={item} tab={activeTab} onPress={handlePress} />
-    ),
-    [activeTab, handlePress],
+    ({item, index}: {item: Quest; index: number}) => {
+      const isLockedByPremium = !isPremium && index >= FREE_QUEST_COUNT;
+      return (
+        <QuestCard quest={item} tab={activeTab} onPress={isLockedByPremium ? () => navigation.navigate('Paywall') : handlePress} isLockedByPremium={isLockedByPremium} />
+      );
+    },
+    [activeTab, handlePress, isPremium, navigation],
   );
 
   const keyExtractor = useCallback((item: Quest) => String(item.id), []);

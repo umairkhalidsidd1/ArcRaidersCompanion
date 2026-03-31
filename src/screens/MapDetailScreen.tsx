@@ -28,6 +28,7 @@ import {getWaypoints, saveWaypoint, deleteWaypoint, Waypoint} from '../utils/sto
 import {MarkerIcons} from '../assets/icons/markers';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import blueprintHeatmapData from '../data/blueprintHeatmap.json';
+import {usePremium} from '../context/PremiumContext';
 
 /* ─────────────── MAP URLs & DB NAMES ─────────────── */
 
@@ -185,6 +186,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
   const {mapId} = route.params;
   const { t } = useTranslation();
   const maps = getMaps();
+  const {isPremium} = usePremium();
 
   const [currentMapId, setCurrentMapId] = useState(mapId);
   const map = maps.find(m => m.id === currentMapId);
@@ -775,6 +777,8 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
         categories={FILTER_CATEGORIES}
         selected={selectedCategories}
         onApply={handleFilterApply}
+        lockedKeys={isPremium ? [] : ['blueprint-heatmap']}
+        onLockedPress={() => navigation.navigate('Paywall')}
       />
 
       {/* ── ADD CUSTOM MARKER FORM ── */}

@@ -15,6 +15,7 @@ import {navigationRef} from './src/navigation/AppNavigator';
 import SmokeBackground from './src/components/SmokeBackground';
 import OnboardingScreen, {ONBOARDING_KEY} from './src/screens/OnboardingScreen';
 import SplashScreen from './src/screens/SplashScreen';
+import {PremiumProvider} from './src/context/PremiumContext';
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
@@ -28,6 +29,8 @@ function App() {
     try {
       const Purchases = require('react-native-purchases').default;
       Purchases.configure({apiKey: 'appl_VxNOzHvNXDGxuwGuEORYsIJQQIP'});
+      // Pre-fetch offerings so the paywall renders instantly when opened
+      Purchases.getOfferings().catch(() => {});
     } catch (_) {
       // RevenueCat native module not yet available — will retry on paywall
     }
@@ -68,9 +71,11 @@ function App() {
         {showOnboarding ? (
           <OnboardingScreen onDone={handleOnboardingDone} />
         ) : (
-          <OnboardingContext.Provider value={triggerOnboarding}>
-            <AppNavigator />
-          </OnboardingContext.Provider>
+          <PremiumProvider>
+            <OnboardingContext.Provider value={triggerOnboarding}>
+              <AppNavigator />
+            </OnboardingContext.Provider>
+          </PremiumProvider>
         )}
       </SafeAreaProvider>
       {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}

@@ -4583,7 +4583,7 @@
     "name": "일 토로 I",
     "description": "큰 총알 확산, 날카로운 감소, 높은 손상 출력을 갖춘 펌프 액션 샷건입니다.",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

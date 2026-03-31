@@ -4583,7 +4583,7 @@
     "name": "Il Toro I",
     "description": "Pump-Action-Schrotflinte mit großer Geschossverteilung, scharfem Abfall und hohem Schadensausstoß.",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

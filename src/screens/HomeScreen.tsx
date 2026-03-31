@@ -23,6 +23,9 @@ import rawItems from '../data/items.json';
 import tradersData from '../data/traders.json';
 import {getItems, getEvents, getMaps} from '../data/localizedData';
 import { useTranslation } from 'react-i18next';
+import {usePremium} from '../context/PremiumContext';
+import PremiumLockOverlay from '../components/PremiumLockOverlay';
+import {trackSessionAndMaybeReview} from '../utils/review';
 
 /* ── Animated gradient border (shared spin) ── */
 const _GRAD_COLORS: [string, string, ...string[]] = ['#E0F7FF', '#80DFFF', '#00E5FF', '#40C8FF', '#87CEFA', '#B0E8FF', '#00BFFF', '#E0F7FF'];
@@ -220,8 +223,8 @@ const RAIDER_TOOLS = [
   { key: 'tierlist', icon: 'trophy-outline', color: colors.cyan, titleKey: 'home.tierList', descKey: 'home.tierListDesc', screen: 'TierList' },
   { key: 'quests', icon: 'clipboard-list-outline', color: colors.cyan, titleKey: 'home.quests', descKey: 'home.questsDesc', screen: 'QuestList' },
   { key: 'questtree', icon: 'sitemap-outline', color: colors.cyan, titleKey: 'home.questTree', descKey: 'home.questTreeDesc', screen: 'QuestTree' },
-  { key: 'expedition', icon: 'compass-outline', color: colors.cyan, titleKey: 'home.expeditions', descKey: 'home.expeditionsDesc', screen: 'Expedition' },
   { key: 'cosmetics', icon: 'tshirt-crew-outline', color: colors.cyan, titleKey: 'home.cosmetics', descKey: 'home.cosmeticsDesc', screen: 'Cosmetics' },
+  { key: 'expedition', icon: 'compass-outline', color: colors.cyan, titleKey: 'home.expeditions', descKey: 'home.expeditionsDesc', screen: 'Expedition' },
   { key: 'collectibles', icon: 'star-circle-outline', color: colors.cyan, titleKey: 'home.collectibles', descKey: 'home.collectiblesDesc', screen: 'CollectibleTracker' },
 ];
 
@@ -399,9 +402,36 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
   );
 });
 
+// Resets every cold start — ensures paywall shows once per app launch for free users
+// Module-level flag: true only on fresh app launch
+let _isFirstLaunch = true;
+
 const HomeScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const {isPremium, isLoading} = usePremium();
+
+  // Show paywall once per app launch — only after premium check resolves
+  useEffect(() => {
+    if (isLoading) return;
+    if (isPremium) return;
+    if (!_isFirstLaunch) return;
+    _isFirstLaunch = false;
+
+    let cancelled = false;
+    const show = async () => {
+      // Give HomeScreen time to render first
+      await new Promise<void>(resolve => setTimeout(resolve, 1000));
+      if (!cancelled) navigation.navigate('Paywall');
+    };
+    show();
+    return () => { cancelled = true; };
+  }, [isLoading, isPremium, navigation]);
+
+  // Track session for review prompt (3rd session)
+  useEffect(() => {
+    trackSessionAndMaybeReview();
+  }, []);
 
   // Localized data for display
   const localMaps = getMaps();
@@ -438,6 +468,9 @@ const HomeScreen = ({ navigation }: any) => {
 
         {/* ── Title + Settings row ── */}
         <View style={styles.topBar}>
+          <TouchableOpacity
+            activeOpacity={isPremium ? 1 : 0.7}
+            onPress={() => { if (!isPremium) navigation.navigate('Paywall'); }}>
           <AnimGradBorder radius={borderRadius.full} borderW={1.5} style={styles.titlePill}>
             <View style={styles.titlePillInner}>
               <Text style={styles.titleArc}>{t('home.arc')}</Text>
@@ -448,6 +481,7 @@ const HomeScreen = ({ navigation }: any) => {
               </View>
             </View>
           </AnimGradBorder>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.settingsBtn}
             activeOpacity={0.6}
@@ -465,14 +499,16 @@ const HomeScreen = ({ navigation }: any) => {
           snapToInterval={MAP_CARD_WIDTH + spacing.md}
           decelerationRate="fast"
           keyExtractor={item => item.id}
-          renderItem={({ item }) => {
+          renderItem={({ item, index }) => {
             const mapImage = getMapFullImage(item.id);
             const keys = getKeysForMap(item.id);
+            const FREE_MAP_COUNT = 2;
+            const isLocked = !isPremium && index >= FREE_MAP_COUNT;
             return (
               <TouchableOpacity
                 activeOpacity={0.9}
                 style={styles.mapCardWrap}
-                onPress={() => navigation.navigate('MapDetail', { mapId: item.id })}>
+                onPress={() => isLocked ? navigation.navigate('Paywall') : navigation.navigate('MapDetail', { mapId: item.id })}>
                 <ImageBackground
                   source={mapImage}
                   style={styles.mapCard}
@@ -497,6 +533,12 @@ const HomeScreen = ({ navigation }: any) => {
                     end={SIDE_FADE_END}
                     style={RIGHT_FADE_STYLE}
                   />
+                  {isLocked && (
+                    <PremiumLockOverlay
+                      onPress={() => navigation.navigate('Paywall')}
+                      style={{borderRadius: borderRadius.xl}}
+                    />
+                  )}
                   <View style={styles.mapCardContent}>
                     {/* Event Badge */}
                     <EventBadge mapId={item.id} />
@@ -585,22 +627,37 @@ const HomeScreen = ({ navigation }: any) => {
           </TouchableOpacity>
 
           {/* ── Other Tools (full-width list) ── */}
-          {RAIDER_TOOLS.filter(t => t.key !== 'weapons').map(tool => (
-            <TouchableOpacity
-              key={tool.key}
-              style={styles.toolCard}
-              activeOpacity={0.7}
-              onPress={() => navigation.navigate(tool.screen as any)}>
-              <View style={styles.toolIconWrap}>
-                <Icon name={tool.icon} size={22} color={tool.color} />
-              </View>
-              <View style={styles.toolInfo}>
-                <Text style={styles.toolTitle}>{t(tool.titleKey)}</Text>
-                <Text style={styles.toolDesc}>{t(tool.descKey)}</Text>
-              </View>
-              <Icon name="chevron-right" size={22} color={colors.textMuted} />
-            </TouchableOpacity>
-          ))}
+          {RAIDER_TOOLS.filter(t => t.key !== 'weapons').map(tool => {
+            const isToolLocked = !isPremium && (tool.key === 'expedition' || tool.key === 'collectibles' || tool.key === 'cosmetics');
+            return (
+              <TouchableOpacity
+                key={tool.key}
+                style={[styles.toolCard, isToolLocked && {opacity: 0.5}]}
+                activeOpacity={0.7}
+                onPress={() => isToolLocked ? navigation.navigate('Paywall') : navigation.navigate(tool.screen as any)}>
+                <View style={styles.toolIconWrap}>
+                  <Icon name={tool.icon} size={22} color={tool.color} />
+                </View>
+                <View style={styles.toolInfo}>
+                  <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+                    <Text style={styles.toolTitle}>{t(tool.titleKey)}</Text>
+                    {isToolLocked && (
+                      <View style={{flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(0,229,255,0.12)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4}}>
+                        <Icon name="lock" size={10} color={colors.cyan} />
+                        <Text style={{fontSize: 9, fontWeight: '900', color: colors.cyan, letterSpacing: 1}}>PRO</Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text style={styles.toolDesc}>{t(tool.descKey)}</Text>
+                </View>
+                {isToolLocked ? (
+                  <Icon name="lock" size={18} color={colors.textMuted} />
+                ) : (
+                  <Icon name="chevron-right" size={22} color={colors.textMuted} />
+                )}
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
     </View>

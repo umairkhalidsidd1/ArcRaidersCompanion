@@ -4583,7 +4583,7 @@
     "name": "Il Toro I",
     "description": "Strzelba typu Pump-Action z dużym rozrzutem pocisków, ostrym opadaniem i wysokimi obrażeniami.",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

@@ -4583,7 +4583,7 @@
     "name": "イル トロ I",
     "description": "弾丸の広がりが大きく、減衰が激しく、ダメージ出力が高いポンプアクションショットガン。",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

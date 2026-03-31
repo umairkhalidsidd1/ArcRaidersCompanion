@@ -4583,7 +4583,7 @@
     "name": "O Toro I",
     "description": "Espingarda de bombeamento com grande dispersão de bala, queda acentuada e alto dano.",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

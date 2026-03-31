@@ -491,6 +491,7 @@ const EventTimerScreen = ({navigation}: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
           <Icon name="arrow-left" size={20} color="#fff" />
         </TouchableOpacity>
+        <View style={{width: 40}} />
         <Text style={st.headerTitle}>{t('events.title')}</Text>
         <TouchableOpacity onPress={handleToggleAllNotif} style={st.headerBellBtn}>
           <Icon

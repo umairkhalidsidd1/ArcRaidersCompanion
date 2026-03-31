@@ -17,6 +17,7 @@ import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getTraders, getQuests} from '../data/localizedData';
 import {TRADER_INFO} from './TraderListScreen';
 import {resolveImage} from '../data/imageRegistry';
+import {usePremium} from '../context/PremiumContext';
 
 type TraderRow = {
   trader_name: string;
@@ -156,6 +157,8 @@ const TraderDetailScreen = ({route, navigation}: any) => {
     [navigation],
   );
 
+  const {isPremium} = usePremium();
+
   const navigateToQuests = useCallback(
     () =>
       navigation.navigate('QuestList', {
@@ -216,15 +219,22 @@ const TraderDetailScreen = ({route, navigation}: any) => {
         {questCount > 0 && (
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={navigateToQuests}
-            style={[s.questBtn, {borderColor: info.color + '50'}]}>
-            <Icon name="clipboard-text-outline" size={18} color={info.color} />
+            onPress={isPremium ? navigateToQuests : () => navigation.navigate('Paywall')}
+            style={[s.questBtn, {borderColor: info.color + '50', opacity: isPremium ? 1 : 0.55}]}>
+            <Icon name={isPremium ? 'clipboard-text-outline' : 'lock'} size={18} color={info.color} />
             <Text style={[s.questBtnText, {color: info.color}]}>
               {t('traders.viewQuests', {name: info.displayName.toUpperCase()})}
             </Text>
-            <View style={s.questCountBadge}>
-              <Text style={s.questCountText}>{questCount}</Text>
-            </View>
+            {!isPremium && (
+              <View style={[s.questCountBadge, {backgroundColor: colors.cyan}]}>
+                <Text style={[s.questCountText, {color: colors.bg}]}>PRO</Text>
+              </View>
+            )}
+            {isPremium && (
+              <View style={s.questCountBadge}>
+                <Text style={s.questCountText}>{questCount}</Text>
+              </View>
+            )}
             <Icon name="chevron-right" size={18} color={info.color} />
           </TouchableOpacity>
         )}
@@ -236,7 +246,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
         </View>
       </View>
     ),
-    [info, questCount, inventory.length, navigateToQuests, t],
+    [info, questCount, inventory.length, navigateToQuests, isPremium, navigation, t],
   );
 
   return (

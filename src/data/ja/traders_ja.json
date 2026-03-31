@@ -928,7 +928,7 @@
     "trader_name": "TianWen",
     "item_id": "il-toro-i",
     "item_name": "イルトロ I",
-    "item_icon": "icons/il%20Toro-i.webp",
+    "item_icon": "icons/il-toro-i.webp",
     "item_value": 5000,
     "item_rarity": "アンコモン",
     "item_type": "武器",

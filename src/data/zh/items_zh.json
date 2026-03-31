@@ -4583,7 +4583,7 @@
     "name": "公牛 I",
     "description": "泵动式霰弹枪，弹丸散布大、衰减明显、伤害输出高。",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

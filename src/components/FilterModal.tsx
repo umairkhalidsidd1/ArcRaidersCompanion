@@ -28,6 +28,8 @@ interface FilterModalProps {
   categories: FilterCategory[];
   selected: string[];
   onApply: (selected: string[]) => void;
+  lockedKeys?: string[];
+  onLockedPress?: () => void;
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({
@@ -36,6 +38,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
   categories,
   selected,
   onApply,
+  lockedKeys = [],
+  onLockedPress,
 }) => {
   const [localSelected, setLocalSelected] = useState<string[]>(selected);
   const [search, setSearch] = useState('');
@@ -59,6 +63,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
   );
 
   const handleToggle = (key: string) => {
+    if (lockedKeys.includes(key)) {
+      onClose();
+      setTimeout(() => onLockedPress?.(), 350);
+      return;
+    }
     setLocalSelected(prev =>
       prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key],
     );
@@ -141,11 +150,12 @@ const FilterModal: React.FC<FilterModalProps> = ({
               }
             }}>
             {filteredCategories.map(cat => {
-              const isChecked = localSelected.includes(cat.key);
+              const isLocked = lockedKeys.includes(cat.key);
+              const isChecked = !isLocked && localSelected.includes(cat.key);
               return (
                 <TouchableOpacity
                   key={cat.key}
-                  style={styles.categoryItem}
+                  style={[styles.categoryItem, isLocked && {opacity: 0.55}]}
                   activeOpacity={0.6}
                   onPress={() => handleToggle(cat.key)}>
                   {/* Icon */}
@@ -161,6 +171,12 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   <View style={styles.catLabelWrap}>
                     <View style={styles.catLabelRow}>
                       <Text style={styles.catLabel}>{cat.label}</Text>
+                      {isLocked && (
+                        <View style={{flexDirection: 'row', alignItems: 'center', gap: 4, marginLeft: 6, backgroundColor: 'rgba(0,229,255,0.10)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6}}>
+                          <Icon name="lock" size={10} color={colors.cyan} />
+                          <Text style={{fontSize: 8, fontWeight: '900', color: colors.cyan, letterSpacing: 1}}>PRO</Text>
+                        </View>
+                      )}
                     </View>
                     {cat.description && (
                       <Text style={styles.catDesc}>
@@ -170,15 +186,21 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   </View>
 
                   {/* Checkbox (right side) */}
-                  <View
-                    style={[
-                      styles.checkbox,
-                      isChecked && styles.checkboxActive,
-                    ]}>
-                    {isChecked && (
-                      <Icon name="check" size={14} color={colors.textInverse} />
-                    )}
-                  </View>
+                  {isLocked ? (
+                    <View style={[styles.checkbox, {borderColor: colors.cyan + '40'}]}>
+                      <Icon name="lock" size={14} color={colors.cyan} />
+                    </View>
+                  ) : (
+                    <View
+                      style={[
+                        styles.checkbox,
+                        isChecked && styles.checkboxActive,
+                      ]}>
+                      {isChecked && (
+                        <Icon name="check" size={14} color={colors.textInverse} />
+                      )}
+                    </View>
+                  )}
                 </TouchableOpacity>
               );
             })}

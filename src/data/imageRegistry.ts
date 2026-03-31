@@ -264,7 +264,7 @@ const IMAGE_REGISTRY: Record<string, any> = {
   'icons/hullcracker.webp': require('../assets/game/icons/hullcracker.webp'),
   'icons/humidifier.webp': require('../assets/game/icons/humidifier.webp'),
   'icons/ice-cream-scooper.webp': require('../assets/game/icons/ice-cream-scooper.webp'),
-  'icons/il%20Toro-i.webp': require('../assets/game/icons/il%20Toro-i.webp'),
+  'icons/il-toro-i.webp': require('../assets/game/icons/il-toro-i.webp'),
   'icons/il-toro-ii.webp': require('../assets/game/icons/il-toro-ii.webp'),
   'icons/il-toro-iiii.webp': require('../assets/game/icons/il-toro-iiii.webp'),
   'icons/il-toro-iv.webp': require('../assets/game/icons/il-toro-iv.webp'),

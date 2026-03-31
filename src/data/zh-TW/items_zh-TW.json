@@ -4583,7 +4583,7 @@
     "name": "伊爾托羅一號",
     "description": "泵動霰彈槍，子彈擴散範圍大，衰減劇烈，傷害輸出高。",
     "item_type": "Weapon",
-    "icon": "icons/il%20Toro-i.webp",
+    "icon": "icons/il-toro-i.webp",
     "rarity": "Uncommon",
     "value": 5000,
     "workbench": "Weapon Bench 1",

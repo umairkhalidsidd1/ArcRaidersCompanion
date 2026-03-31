@@ -16,6 +16,7 @@ import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import {getQuests} from '../data/localizedData';
 import {getCompletedQuests, toggleCompletedQuest} from '../utils/storage';
 import {resolveImage} from '../data/imageRegistry';
+import {checkQuestMilestoneReview} from '../utils/review';
 
 
 const TRADER_PORTRAITS: Record<string, any> = {
@@ -165,13 +166,18 @@ const QuestDetailScreen = ({route, navigation}: any) => {
   const guide = useMemo(() => generateGuide(quest, t), [quest, t]);
 
   const handleMarkCompleted = useCallback(async () => {
+    const wasCompleted = completedIds.includes(questId);
     await toggleCompletedQuest(questId);
-    setCompletedIds(prev =>
-      prev.includes(questId)
-        ? prev.filter(id => id !== questId)
-        : [...prev, questId],
-    );
-  }, [questId]);
+    const newIds = wasCompleted
+      ? completedIds.filter(id => id !== questId)
+      : [...completedIds, questId];
+    setCompletedIds(newIds);
+
+    // Check for 5th quest review milestone (only when marking complete, not incomplete)
+    if (!wasCompleted) {
+      checkQuestMilestoneReview(newIds.length);
+    }
+  }, [questId, completedIds]);
 
   const handleMarkPrereqsCompleted = useCallback(async () => {
     const prereqQuests = allQuests.filter(q =>

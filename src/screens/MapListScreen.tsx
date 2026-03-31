@@ -13,6 +13,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import {usePremium} from '../context/PremiumContext';
+import PremiumLockOverlay from '../components/PremiumLockOverlay';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
 import { getMapImage } from '../data/mapImages';
 import {getMaps} from '../data/localizedData';
@@ -59,17 +61,26 @@ const MapListScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const maps = getMaps();
+  const {isPremium} = usePremium();
+  const FREE_MAP_COUNT = 2;
 
   const renderMap = ({ item, index }: { item: (typeof maps)[0]; index: number }) => {
     const mapDbName = DB_MAP_NAME[item.id] || 'Dam';
     const markerCount = ((markers as Record<string, any[]>)[mapDbName] || []).length;
     const tags = MAP_TAGS[item.id] || [];
     const mapImage = getMapImage(item.id);
+    const isLocked = !isPremium && index >= FREE_MAP_COUNT;
 
     return (
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => navigation.navigate('MapDetail', { mapId: item.id })}>
+          onPress={() => {
+            if (isLocked) {
+              navigation.navigate('Paywall');
+              return;
+            }
+            navigation.navigate('MapDetail', { mapId: item.id });
+          }}>
           <View style={styles.mapCard}>
           <ImageBackground
             source={mapImage}
@@ -82,6 +93,14 @@ const MapListScreen = ({ navigation }: any) => {
               colors={['transparent', 'rgba(15, 16, 28, 0.4)', 'rgba(15, 16, 28, 0.95)']}
               style={StyleSheet.absoluteFillObject}
             />
+
+            {/* Lock overlay for premium maps */}
+            {isLocked && (
+              <PremiumLockOverlay
+                onPress={() => navigation.navigate('Paywall')}
+                style={{borderRadius: borderRadius.xl}}
+              />
+            )}
 
             {/* Floating UI Elements */}
             <View style={styles.cardOverlayContent}>

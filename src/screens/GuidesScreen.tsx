@@ -16,6 +16,8 @@ import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getGuides} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
+import {usePremium} from '../context/PremiumContext';
+import PremiumLockOverlay from '../components/PremiumLockOverlay';
 
 const {width: SCREEN_W} = Dimensions.get('window');
 const THUMB_W = SCREEN_W * 0.32;
@@ -34,6 +36,8 @@ const GuidesScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<'general' | 'quest'>('general');
   const [search, setSearch] = useState('');
+  const {isPremium} = usePremium();
+  const FREE_GUIDE_COUNT = 3;
 
   const filtered = useMemo(() => {
     return (getGuides() as Guide[]).filter(g => {
@@ -53,71 +57,82 @@ const GuidesScreen = ({navigation}: any) => {
   }, [activeTab, search, i18n.language]);
 
   const renderGuide = useCallback(
-    ({item}: {item: Guide}) => {
+    ({item, index}: {item: Guide; index: number}) => {
       const steps = countSteps(item.content);
       const summary = item.summary || '';
       const trimmedSummary =
         summary.length > 80 ? summary.slice(0, 80).trimEnd() + '…' : summary;
 
-      return (
-        <TouchableOpacity
-          style={styles.card}
-          activeOpacity={0.7}
-          onPress={() =>
-            navigation.navigate('GuideDetail', {guideId: item.id})
-          }>
-          {/* Thumbnail */}
-          {item.thumbnail_url ? (
-            <Image
-              source={resolveImage(item.thumbnail_url)}
-              style={styles.cardThumb}
-              resizeMode="contain"
-            />
-          ) : (
-            <View style={[styles.cardThumb, styles.cardThumbPlaceholder]}>
-              <Icon name="book-open-page-variant" size={28} color={colors.textMuted} />
-            </View>
-          )}
+      const isLockedByPremium = !isPremium && index >= FREE_GUIDE_COUNT;
 
-          {/* Info */}
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle} numberOfLines={2}>
-              {item.title}
-            </Text>
-            <Text style={styles.cardAuthor} numberOfLines={1}>
-              {item.author || t('common.unknown')}
-            </Text>
-            {trimmedSummary ? (
-              <Text style={styles.cardSummary} numberOfLines={2}>
-                {trimmedSummary}
+      return (
+        <View>
+          <TouchableOpacity
+            style={styles.card}
+            activeOpacity={0.7}
+            onPress={() => {
+              if (isLockedByPremium) {
+                navigation.navigate('Paywall');
+                return;
+              }
+              navigation.navigate('GuideDetail', {guideId: item.id});
+            }}>
+            {/* Thumbnail */}
+            {item.thumbnail_url ? (
+              <Image
+                source={resolveImage(item.thumbnail_url)}
+                style={styles.cardThumb}
+                resizeMode="contain"
+              />
+            ) : (
+              <View style={[styles.cardThumb, styles.cardThumbPlaceholder]}>
+                <Icon name="book-open-page-variant" size={28} color={colors.textMuted} />
+              </View>
+            )}
+
+            {/* Info */}
+            <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle} numberOfLines={2}>
+                {item.title}
               </Text>
-            ) : null}
-            {/* Bottom row: step count + rewards */}
-            <View style={styles.cardMeta}>
-              {steps > 0 && (
-                <View style={styles.stepBadge}>
-                  <Icon
-                    name="format-list-numbered"
-                    size={12}
-                    color={colors.cyan}
-                  />
-                  <Text style={styles.stepBadgeText}>{steps} {t('guides.steps')}</Text>
-                </View>
-              )}
-              {(item.rewards?.length ?? 0) > 0 && (
-                <View style={styles.rewardBadge}>
-                  <Icon name="gift-outline" size={12} color={colors.orange} />
-                  <Text style={styles.rewardBadgeText}>
-                    {item.rewards!.length}
-                  </Text>
-                </View>
-              )}
+              <Text style={styles.cardAuthor} numberOfLines={1}>
+                {item.author || 'Arc Companion Team'}
+              </Text>
+              {trimmedSummary ? (
+                <Text style={styles.cardSummary} numberOfLines={2}>
+                  {trimmedSummary}
+                </Text>
+              ) : null}
+              {/* Bottom row: step count + rewards */}
+              <View style={styles.cardMeta}>
+                {steps > 0 && (
+                  <View style={styles.stepBadge}>
+                    <Icon
+                      name="format-list-numbered"
+                      size={12}
+                      color={colors.cyan}
+                    />
+                    <Text style={styles.stepBadgeText}>{steps} {t('guides.steps')}</Text>
+                  </View>
+                )}
+                {(item.rewards?.length ?? 0) > 0 && (
+                  <View style={styles.rewardBadge}>
+                    <Icon name="gift-outline" size={12} color={colors.orange} />
+                    <Text style={styles.rewardBadgeText}>
+                      {item.rewards!.length}
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          {isLockedByPremium && (
+            <PremiumLockOverlay variant="card" onPress={() => navigation.navigate('Paywall')} />
+          )}
+        </View>
       );
     },
-    [navigation],
+    [navigation, isPremium],
   );
 
   return (

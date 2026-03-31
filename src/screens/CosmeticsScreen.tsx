@@ -280,64 +280,64 @@ const CosmeticsScreen = ({navigation}: any) => {
             {/* ── Detail Card ── */}
             {activeItem && (
               <View style={styles.detailCard}>
-                <LinearGradient
-                  colors={[`${catCfg.color}18`, 'transparent']}
-                  style={styles.detailGradient}
-                />
+                  <LinearGradient
+                    colors={[`${catCfg.color}18`, 'transparent']}
+                    style={styles.detailGradient}
+                  />
 
-                {/* Rarity badge */}
-                <View style={[styles.rarityBadge, {backgroundColor: `${rarityColor}25`}]}>
-                  <Text style={[styles.rarityText, {color: rarityColor}]}>
-                    {activeItem.rarity.toUpperCase()}
-                  </Text>
-                </View>
+                  {/* Rarity badge */}
+                  <View style={[styles.rarityBadge, {backgroundColor: `${rarityColor}25`}]}>
+                    <Text style={[styles.rarityText, {color: rarityColor}]}>
+                      {activeItem.rarity.toUpperCase()}
+                    </Text>
+                  </View>
 
-                {/* Name */}
-                <Text style={styles.itemName}>{activeItem.name}</Text>
+                  {/* Name */}
+                  <Text style={styles.itemName}>{activeItem.name}</Text>
 
-                {/* Description */}
-                {activeItem.description ? (
-                  <Text style={styles.itemDesc}>{activeItem.description}</Text>
-                ) : null}
+                  {/* Description */}
+                  {activeItem.description ? (
+                    <Text style={styles.itemDesc}>{activeItem.description}</Text>
+                  ) : null}
 
-                {/* Category detail section */}
-                <View style={styles.detailSection}>
-                  <View style={styles.detailInfoRow}>
-                    <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.category')}</Text>
-                    <View style={styles.detailInfoValueRow}>
-                      <Icon name={catCfg.icon} size={14} color={catCfg.color} />
-                      <Text style={[styles.detailInfoValue, {color: catCfg.color}]}>
-                        {activeItem.subcategory}
+                  {/* Category detail section */}
+                  <View style={styles.detailSection}>
+                    <View style={styles.detailInfoRow}>
+                      <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.category')}</Text>
+                      <View style={styles.detailInfoValueRow}>
+                        <Icon name={catCfg.icon} size={14} color={catCfg.color} />
+                        <Text style={[styles.detailInfoValue, {color: catCfg.color}]}>
+                          {activeItem.subcategory}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.detailInfoRow}>
+                      <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.type')}</Text>
+                      <Text style={styles.detailInfoValue}>{t('cosmeticsScreen.cosmetic')}</Text>
+                    </View>
+                    <View style={styles.detailInfoRow}>
+                      <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.rarity')}</Text>
+                      <Text style={[styles.detailInfoValue, {color: rarityColor}]}>
+                        {activeItem.rarity}
                       </Text>
                     </View>
                   </View>
-                  <View style={styles.detailInfoRow}>
-                    <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.type')}</Text>
-                    <Text style={styles.detailInfoValue}>{t('cosmeticsScreen.cosmetic')}</Text>
-                  </View>
-                  <View style={styles.detailInfoRow}>
-                    <Text style={styles.detailInfoLabel}>{t('cosmeticsScreen.rarity')}</Text>
-                    <Text style={[styles.detailInfoValue, {color: rarityColor}]}>
-                      {activeItem.rarity}
-                    </Text>
-                  </View>
-                </View>
 
-                {/* Info row — type + value */}
-                <View style={styles.infoRow}>
-                  <View style={styles.infoItem}>
-                    <Icon name="tag" size={14} color={colors.textSecondary} />
-                    <Text style={styles.infoValue}>{t('cosmeticsScreen.cosmetic')}</Text>
-                  </View>
-                  <View style={styles.infoDivider} />
-                  <View style={styles.infoItem}>
-                    <Icon name="circle-multiple" size={14} color={colors.yellow} />
-                    <Text style={styles.infoValue}>
-                      {activeItem.value.toLocaleString()}
-                    </Text>
+                  {/* Info row — type + value */}
+                  <View style={styles.infoRow}>
+                    <View style={styles.infoItem}>
+                      <Icon name="tag" size={14} color={colors.textSecondary} />
+                      <Text style={styles.infoValue}>{t('cosmeticsScreen.cosmetic')}</Text>
+                    </View>
+                    <View style={styles.infoDivider} />
+                    <View style={styles.infoItem}>
+                      <Icon name="circle-multiple" size={14} color={colors.yellow} />
+                      <Text style={styles.infoValue}>
+                        {activeItem.value.toLocaleString()}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
             )}
 
             {/* ── How to Unlock ── */}
@@ -413,72 +413,72 @@ const CosmeticsScreen = ({navigation}: any) => {
               }
               return (
                 <View style={styles.relatedSection}>
-                  <View style={styles.relatedHeader}>
-                    <Text style={styles.relatedTitle}>{sectionTitle}</Text>
-                    {setItems.length > 0 && (
-                      <Text style={styles.relatedCount}>
-                        {t('cosmeticsScreen.pieces', {count: setItems.length + 1})}
-                      </Text>
-                    )}
-                  </View>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.relatedScroll}>
-                    {related.map(item => {
-                      const ic =
-                        CATEGORIES.find(c => c.key === item.subcategory) ||
-                        CATEGORIES[CATEGORIES.length - 1];
-                      return (
-                        <TouchableOpacity
-                          key={item.id}
-                          style={styles.relatedCard}
-                          activeOpacity={0.8}
-                          onPress={() => {
-                            const idx = filtered.findIndex(
-                              f => f.id === item.id,
-                            );
-                            if (idx >= 0) {
-                              isNavigating.current = true;
-                              lastFiredIndex.current = idx;
-                              setActiveIndex(idx);
-                              outerScrollRef.current?.scrollTo({
-                                y: 0,
-                                animated: true,
-                              });
-                              setTimeout(() => {
-                                carouselRef.current?.scrollToOffset({
-                                  offset: idx * SNAP_INTERVAL,
-                                  animated: false,
+                    <View style={styles.relatedHeader}>
+                      <Text style={styles.relatedTitle}>{sectionTitle}</Text>
+                      {setItems.length > 0 && (
+                        <Text style={styles.relatedCount}>
+                          {t('cosmeticsScreen.pieces', {count: setItems.length + 1})}
+                        </Text>
+                      )}
+                    </View>
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.relatedScroll}>
+                      {related.map(item => {
+                        const ic =
+                          CATEGORIES.find(c => c.key === item.subcategory) ||
+                          CATEGORIES[CATEGORIES.length - 1];
+                        return (
+                          <TouchableOpacity
+                            key={item.id}
+                            style={styles.relatedCard}
+                            activeOpacity={0.8}
+                            onPress={() => {
+                              const idx = filtered.findIndex(
+                                f => f.id === item.id,
+                              );
+                              if (idx >= 0) {
+                                isNavigating.current = true;
+                                lastFiredIndex.current = idx;
+                                setActiveIndex(idx);
+                                outerScrollRef.current?.scrollTo({
+                                  y: 0,
+                                  animated: true,
                                 });
                                 setTimeout(() => {
-                                  isNavigating.current = false;
-                                }, 50);
-                              }, 350);
-                            }
-                          }}>
-                          <LinearGradient
-                            colors={[`${ic.color}12`, 'transparent']}
-                            start={{x: 0, y: 0}}
-                            end={{x: 1, y: 1}}
-                            style={StyleSheet.absoluteFill}
-                          />
-                          {item.icon ? (
-                            <Image
-                              source={resolveImage(item.icon)}
-                              style={styles.relatedImage}
-                              resizeMode="contain"
+                                  carouselRef.current?.scrollToOffset({
+                                    offset: idx * SNAP_INTERVAL,
+                                    animated: false,
+                                  });
+                                  setTimeout(() => {
+                                    isNavigating.current = false;
+                                  }, 50);
+                                }, 350);
+                              }
+                            }}>
+                            <LinearGradient
+                              colors={[`${ic.color}12`, 'transparent']}
+                              start={{x: 0, y: 0}}
+                              end={{x: 1, y: 1}}
+                              style={StyleSheet.absoluteFill}
                             />
-                          ) : (
-                            <Icon name={ic.icon} size={24} color={ic.color} />
-                          )}
-                          <Text style={styles.relatedName} numberOfLines={1}>
-                            {item.name}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </ScrollView>
+                            {item.icon ? (
+                              <Image
+                                source={resolveImage(item.icon)}
+                                style={styles.relatedImage}
+                                resizeMode="contain"
+                              />
+                            ) : (
+                              <Icon name={ic.icon} size={24} color={ic.color} />
+                            )}
+                            <Text style={styles.relatedName} numberOfLines={1}>
+                              {item.name}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </ScrollView>
                 </View>
               );
             })()}
@@ -769,6 +769,8 @@ const styles = StyleSheet.create({
   /* Empty */
   emptyState: {alignItems: 'center', paddingTop: 60, gap: spacing.md},
   emptyText: {fontSize: fonts.sizes.md, color: colors.textMuted},
+
+
 });
 
 export default CosmeticsScreen;

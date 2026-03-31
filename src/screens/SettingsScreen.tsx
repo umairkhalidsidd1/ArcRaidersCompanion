@@ -19,10 +19,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useOnboarding} from '../../App';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import { useTranslation } from 'react-i18next';
+import {requestAppReview} from '../utils/review';
 import {
   areNotificationsEnabled,
   setNotificationsEnabled,
+  areEventNotificationsEnabled,
+  setEventNotificationsEnabled,
 } from '../utils/notifications';
+import {usePremium} from '../context/PremiumContext';
 
 const APP_NAME = 'Arc Raiders Companion';
 const APP_VERSION = '1.0.0';
@@ -83,23 +87,12 @@ const SettingsScreen = ({navigation}: any) => {
   const { t, i18n } = useTranslation();
   const [langModalVisible, setLangModalVisible] = useState(false);
   const [notifEnabled, setNotifEnabled] = useState(false);
-  const [isPremium, setIsPremium] = useState(false);
+  const [eventNotifEnabled, setEventNotifEnabled] = useState(false);
+  const {isPremium, checkPremiumStatus} = usePremium();
 
   useEffect(() => {
     areNotificationsEnabled().then(setNotifEnabled);
-    // Check premium status
-    checkPremiumStatus();
-  }, []);
-
-  const checkPremiumStatus = useCallback(async () => {
-    try {
-      const Purchases = require('react-native-purchases').default;
-      const info = await Purchases.getCustomerInfo();
-      const hasPremium = info.entitlements.active?.premium !== undefined;
-      setIsPremium(hasPremium);
-    } catch {
-      setIsPremium(false);
-    }
+    areEventNotificationsEnabled().then(setEventNotifEnabled);
   }, []);
 
   const handleRestorePurchase = useCallback(async () => {
@@ -127,13 +120,23 @@ const SettingsScreen = ({navigation}: any) => {
     await setNotificationsEnabled(value);
   };
 
-  const handleRate = () => {
-    const iosId = '6761329723';
-    const url = Platform.select({
-      ios: `itms-apps://apps.apple.com/app/id${iosId}?action=write-review`,
-      android: `market://details?id=com.arcraiders.companion`,
-    });
-    if (url) Linking.openURL(url).catch(() => {});
+  const handleToggleEventNotif = async (value: boolean) => {
+    setEventNotifEnabled(value);
+    await setEventNotificationsEnabled(value);
+  };
+
+  const handleRate = async () => {
+    // Try native in-app review first (force=true for explicit user action)
+    const shown = await requestAppReview(true);
+    // If native review wasn't shown (e.g., iOS limit reached), open store directly
+    if (!shown) {
+      const iosId = '6761329723';
+      const url = Platform.select({
+        ios: `itms-apps://apps.apple.com/app/id${iosId}?action=write-review`,
+        android: `market://details?id=com.arcraiders.companion`,
+      });
+      if (url) Linking.openURL(url).catch(() => {});
+    }
   };
 
   const handleShare = async () => {
@@ -264,18 +267,34 @@ const SettingsScreen = ({navigation}: any) => {
           />
           <View style={s.rowDivider} />
           <View style={s.notifRow}>
-            <View style={[s.rowIconWrap, {backgroundColor: 'rgba(0,229,255,0.10)'}]}>
+            <View style={[s.rowIconWrap, {backgroundColor: 'rgba(0,229,255,0.08)'}]}>
               <Icon name="bell-outline" size={20} color={colors.cyan} />
             </View>
-            <View style={{flex: 1}}>
-              <Text style={s.rowTitle}>{t('settings.notifications')}</Text>
-              <Text style={s.rowSub}>{t('settings.notificationsSub')}</Text>
+            <View style={s.rowText}>
+              <Text style={s.rowTitle}>{t('settings.notifications', {defaultValue: 'Notifications'})}</Text>
+              <Text style={s.rowSub}>{t('settings.notificationsSub', {defaultValue: 'Tips, updates and game news'})}</Text>
             </View>
             <Switch
               value={notifEnabled}
               onValueChange={handleToggleNotif}
               trackColor={{false: '#333', true: 'rgba(0,229,255,0.35)'}}
               thumbColor={notifEnabled ? colors.cyan : '#888'}
+            />
+          </View>
+          <View style={s.rowDivider} />
+          <View style={s.notifRow}>
+            <View style={[s.rowIconWrap, {backgroundColor: 'rgba(255,152,0,0.10)'}]}>
+              <Icon name="calendar-clock" size={20} color="#FF9800" />
+            </View>
+            <View style={s.rowText}>
+              <Text style={s.rowTitle}>{t('settings.eventNotifications', {defaultValue: 'Event Reminders'})}</Text>
+              <Text style={s.rowSub}>{t('settings.eventNotificationsSub', {defaultValue: 'Get notified before in-game events start'})}</Text>
+            </View>
+            <Switch
+              value={eventNotifEnabled}
+              onValueChange={handleToggleEventNotif}
+              trackColor={{false: '#333', true: 'rgba(255,152,0,0.35)'}}
+              thumbColor={eventNotifEnabled ? '#FF9800' : '#888'}
             />
           </View>
           <View style={s.rowDivider} />
@@ -470,8 +489,9 @@ const s = StyleSheet.create({
   notifRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: ROW_HEIGHT,
+    minHeight: ROW_HEIGHT,
     paddingHorizontal: spacing.lg,
+    paddingVertical: 12,
     gap: spacing.md,
   },
   rowIconWrap: {
