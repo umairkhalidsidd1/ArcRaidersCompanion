@@ -794,11 +794,6 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
         <View style={[styles.gridLineV, {left: W * 0.66}]} />
       </View>
 
-      {/* Skip button */}
-      <TouchableOpacity style={[styles.skipBtn, {top: insets.top + 12}]} onPress={skipOnboarding} activeOpacity={0.6}>
-        <Text style={styles.skipText}>{t('onboarding.skip')}</Text>
-      </TouchableOpacity>
-
       {/* Pages */}
       <Animated.ScrollView
         ref={scrollRef}

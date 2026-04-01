@@ -13,7 +13,7 @@ const SplashScreen = ({onFinish}: {onFinish: () => void}) => {
   useEffect(() => {
     Animated.sequence([
       Animated.timing(contentOpacity, {toValue: 1, duration: 300, useNativeDriver: true}),
-      Animated.delay(500),
+      Animated.delay(250),
       Animated.timing(fadeOut, {toValue: 0, duration: 300, easing: Easing.in(Easing.cubic), useNativeDriver: true}),
     ]).start(() => onFinish());
   }, []);
