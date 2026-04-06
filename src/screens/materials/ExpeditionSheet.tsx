@@ -1,0 +1,265 @@
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  Animated,
+  PanResponder,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Image from 'react-native-fast-image';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
+import {colors} from '../../theme/theme';
+import {resolveImage} from '../../data/imageRegistry';
+import {
+  type RawItem,
+  EXPEDITION_STAGES,
+  PADDING,
+  EXP_CHECKED_KEY,
+  getRarityColor,
+  WB_SHEET_H,
+  WB_TY_HIDDEN,
+  WB_TY_HALF,
+  WB_TY_FULL,
+} from './constants';
+import {ensureItemByName, itemByName} from './dataIndexes';
+import {wbStyles} from './styles';
+
+const ExpeditionSheet = ({
+  visible,
+  onClose,
+  onMaterialPress,
+}: {
+  visible: boolean;
+  onClose: () => void;
+  onMaterialPress?: (item: RawItem) => void;
+}) => {
+  const { t } = useTranslation();
+  ensureItemByName();
+  const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
+  const backdropAnim = useRef(new Animated.Value(0)).current;
+  const currentTY = useRef(WB_TY_HIDDEN);
+  const gestureStartTY = useRef(WB_TY_HIDDEN);
+  const scrollOffset = useRef(0);
+  const scrollRef = useRef<any>(null);
+  const isExpanded = useRef(false);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; });
+
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    AsyncStorage.getItem(EXP_CHECKED_KEY).then(raw => {
+      if (raw) setCheckedItems(JSON.parse(raw));
+    }).catch(() => {});
+  }, []);
+
+  const toggleItem = useCallback((key: string) => {
+    setCheckedItems(prev => {
+      const updated = {...prev, [key]: !prev[key]};
+      AsyncStorage.setItem(EXP_CHECKED_KEY, JSON.stringify(updated)).catch(() => {});
+      return updated;
+    });
+  }, []);
+
+  useEffect(() => {
+    const id = translateY.addListener(({value}) => { currentTY.current = value; });
+    return () => translateY.removeListener(id);
+  }, []);
+
+  const animateTo = useCallback((target: number) => {
+    if (target >= WB_TY_HIDDEN) {
+      isExpanded.current = false;
+      Animated.parallel([
+        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 250, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 0, duration: 250, useNativeDriver: true}),
+      ]).start(({finished}) => {
+        if (finished) onCloseRef.current();
+      });
+    } else {
+      const goingFull = target <= WB_TY_FULL + 5;
+      isExpanded.current = goingFull;
+      if (!goingFull) scrollRef.current?.scrollTo?.({y: 0, animated: true});
+      Animated.parallel([
+        Animated.spring(translateY, {toValue: target, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
+      ]).start();
+    }
+  }, []);
+
+  const snapNearest = useCallback((ty: number, vy: number) => {
+    if (vy > 1.2) { animateTo(WB_TY_HIDDEN); return; }
+    if (vy < -1.2) { animateTo(WB_TY_FULL); return; }
+    const dH = Math.abs(ty - WB_TY_HIDDEN);
+    const dM = Math.abs(ty - WB_TY_HALF);
+    const dF = Math.abs(ty - WB_TY_FULL);
+    const min = Math.min(dH, dM, dF);
+    if (min === dH) animateTo(WB_TY_HIDDEN);
+    else if (min === dM) animateTo(WB_TY_HALF);
+    else animateTo(WB_TY_FULL);
+  }, [animateTo]);
+
+  const expHandlePan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        translateY.stopAnimation();
+        gestureStartTY.current = currentTY.current;
+      },
+      onPanResponderMove: (_, gs) => {
+        const newTY = gestureStartTY.current + gs.dy;
+        translateY.setValue(Math.max(WB_TY_FULL, Math.min(newTY, WB_TY_HIDDEN)));
+      },
+      onPanResponderRelease: (_, gs) => snapNearest(currentTY.current, gs.vy),
+    }),
+  ).current;
+
+  const expContentPan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: (_, gs) => {
+        const isVertical = Math.abs(gs.dy) > 8 && Math.abs(gs.dy) > Math.abs(gs.dx);
+        if (!isExpanded.current && isVertical) return true;
+        if (isExpanded.current && scrollOffset.current <= 2 && gs.dy > 8) return true;
+        return false;
+      },
+      onPanResponderGrant: () => {
+        translateY.stopAnimation();
+        gestureStartTY.current = currentTY.current;
+        if (isExpanded.current) scrollRef.current?.scrollTo?.({y: 0, animated: false});
+      },
+      onPanResponderMove: (_, gs) => {
+        const newTY = gestureStartTY.current + gs.dy;
+        translateY.setValue(Math.max(WB_TY_FULL, Math.min(newTY, WB_TY_HIDDEN)));
+      },
+      onPanResponderRelease: (_, gs) => snapNearest(currentTY.current, gs.vy),
+    }),
+  ).current;
+
+  useEffect(() => {
+    if (visible) {
+      scrollOffset.current = 0;
+      scrollRef.current?.scrollTo?.({y: 0, animated: false});
+      animateTo(WB_TY_HALF);
+    } else {
+      isExpanded.current = false;
+      translateY.stopAnimation();
+      backdropAnim.stopAnimation();
+      translateY.setValue(WB_TY_HIDDEN);
+      backdropAnim.setValue(0);
+    }
+  }, [visible]);
+
+  const onScrollEvent = useCallback((e: any) => {
+    scrollOffset.current = e.nativeEvent.contentOffset.y;
+  }, []);
+
+  const isStageChecked = useCallback((stageId: number, objectives: {item: string; quantity: number}[]) => {
+    return objectives.length > 0 && objectives.every((_, i) => checkedItems[`${stageId}-${i}`]);
+  }, [checkedItems]);
+
+  const toggleStage = useCallback((stageId: number, objectives: {item: string; quantity: number}[]) => {
+    const allChecked = isStageChecked(stageId, objectives);
+    setCheckedItems(prev => {
+      const updated = {...prev};
+      objectives.forEach((_, i) => { updated[`${stageId}-${i}`] = !allChecked; });
+      AsyncStorage.setItem(EXP_CHECKED_KEY, JSON.stringify(updated)).catch(() => {});
+      return updated;
+    });
+  }, [isStageChecked]);
+
+  return (
+    <>
+      {visible && (
+        <Animated.View style={[wbStyles.backdrop, {opacity: backdropAnim}]} pointerEvents="auto">
+          <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => animateTo(WB_TY_HIDDEN)} />
+        </Animated.View>
+      )}
+      <Animated.View pointerEvents={visible ? 'auto' : 'none'} style={[wbStyles.sheet, {height: WB_SHEET_H, transform: [{translateY}]}]}>
+        <View {...expHandlePan.panHandlers} style={wbStyles.handleArea}>
+          <View style={wbStyles.handle} />
+        </View>
+
+        <View style={wbStyles.sheetHeader}>
+          <Icon name="compass" size={22} color={colors.textPrimary} />
+          <View>
+            <Text style={wbStyles.sheetTitle}>{t('materials.expedition')}</Text>
+            <Text style={wbStyles.sheetSubtitle}>{t('materials.expeditionDesc')}</Text>
+          </View>
+        </View>
+
+        <View style={{flex: 1}} {...expContentPan.panHandlers}>
+          <ScrollView
+            ref={scrollRef}
+            style={{flex: 1}}
+            contentContainerStyle={{paddingHorizontal: PADDING, paddingBottom: 60}}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            scrollEventThrottle={16}
+            onScroll={onScrollEvent}
+            nestedScrollEnabled>
+            {EXPEDITION_STAGES.map(stage => {
+              const stageChecked = isStageChecked(stage.id, stage.objectives);
+              const accentColor = stageChecked ? '#4ADE80' : colors.textMuted;
+              return (
+                <View key={stage.id} style={wbStyles.stationBlock}>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => toggleStage(stage.id, stage.objectives)}
+                    style={wbStyles.stationHeader}>
+                    <View style={[wbStyles.stationBar, {backgroundColor: accentColor}]} />
+                    <View style={wbStyles.checkboxWrap}>
+                      {stageChecked ? (
+                        <Icon name="checkbox-marked" size={22} color="#4ADE80" />
+                      ) : (
+                        <Icon name="checkbox-blank-outline" size={22} color={colors.textMuted} />
+                      )}
+                    </View>
+                    <Text style={wbStyles.stationName}>{stage.name}</Text>
+                    <View style={[wbStyles.stationLine, {backgroundColor: accentColor}]} />
+                  </TouchableOpacity>
+                  {stage.objectives.map((obj, idx) => {
+                    const itemData = itemByName.get(obj.item.toLowerCase());
+                    const rarityColor = itemData ? getRarityColor(itemData.rarity) : colors.textMuted;
+                    return (
+                      <TouchableOpacity
+                        key={`${stage.id}-${idx}`}
+                        activeOpacity={0.7}
+                        onPress={() => {
+                          if (itemData && onMaterialPress) onMaterialPress(itemData);
+                        }}
+                        style={[wbStyles.matCard, {borderColor: rarityColor + '60'}]}>
+                        <View style={wbStyles.matIconWrap}>
+                          {itemData?.icon ? (
+                            <Image source={resolveImage(itemData.icon)} style={wbStyles.matIcon} resizeMode="contain" />
+                          ) : (
+                            <Icon name="help-circle-outline" size={24} color={colors.textMuted} />
+                          )}
+                        </View>
+                        <View style={wbStyles.matInfo}>
+                          <Text style={wbStyles.matName}>{obj.item}</Text>
+                          {itemData?.description ? (
+                            <Text style={wbStyles.matDesc} numberOfLines={1}>{itemData.description}</Text>
+                          ) : null}
+                        </View>
+                        <View style={[wbStyles.qtyBadge, {borderColor: rarityColor}]}>
+                          <Text style={[wbStyles.qtyText, {color: rarityColor}]}>{obj.quantity}x</Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
+      </Animated.View>
+    </>
+  );
+};
+
+export default ExpeditionSheet;
