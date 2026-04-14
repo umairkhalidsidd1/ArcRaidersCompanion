@@ -1,8 +1,10 @@
-import React, {useCallback, useEffect, useMemo, useState, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   InteractionManager,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -16,7 +18,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getItems} from '../data/localizedData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Svg, {Defs, Pattern, Rect, Line} from 'react-native-svg';
+import Svg, {Defs, Line, Pattern, Rect} from 'react-native-svg';
 import {resolveImage} from '../data/imageRegistry';
 import {useTranslation} from 'react-i18next';
 
@@ -25,9 +27,19 @@ const BP_STORAGE_KEY = '@arcc_blueprints_v2';
 type Blueprint = {
   id: string;
   name: string;
+  searchKey: string;
   icon: string | null;
   rarity: string;
   value: number;
+};
+
+type ItemRecord = {
+  id: string;
+  name?: string;
+  icon?: string | null;
+  rarity?: string;
+  value?: number;
+  item_type?: string;
 };
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
@@ -37,24 +49,19 @@ const PADDING = spacing.lg;
 const CARD_W = (SCREEN_WIDTH - PADDING * 2 - CARD_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 const CARD_H = CARD_W * 1.15;
 const ROW_H = CARD_H + CARD_GAP;
+const GRID_CELL = Platform.OS === 'android' ? 20 : 14;
+const GRID_LINE_COLOR = 'rgba(30,80,180,0.45)';
 
-const GRID_CELL = 14;
-const GRID_LINE_COLOR = 'rgba(30,80,180,0.5)';
+const BLUEPRINT_CACHE = new Map<string, Blueprint[]>();
 
-/* Single SVG grid background — 1 native view instead of ~16 Views */
-const GridBg = React.memo(() => (
-  <View style={StyleSheet.absoluteFill} pointerEvents="none">
-    <Svg width={CARD_W} height={CARD_H}>
-      <Defs>
-        <Pattern id="grid" width={GRID_CELL} height={GRID_CELL} patternUnits="userSpaceOnUse">
-          <Line x1="0" y1={GRID_CELL} x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={StyleSheet.hairlineWidth} />
-          <Line x1={GRID_CELL} y1="0" x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={StyleSheet.hairlineWidth} />
-        </Pattern>
-      </Defs>
-      <Rect width={CARD_W} height={CARD_H} fill="url(#grid)" />
-    </Svg>
-  </View>
-));
+type BlueprintScreenCache = {
+  language: string;
+  blueprints: Blueprint[];
+  orderedIds: string[];
+  collected: string[];
+};
+
+let BLUEPRINT_SCREEN_CACHE: BlueprintScreenCache | null = null;
 
 const getRarityColor = (rarity: string) => {
   switch (rarity.toLowerCase()) {
@@ -67,21 +74,99 @@ const getRarityColor = (rarity: string) => {
   }
 };
 
-/* ── Blueprint Card ── */
+const getCachedBlueprints = (language: string): Blueprint[] => {
+  const cached = BLUEPRINT_CACHE.get(language);
+  if (cached) return cached;
+
+  const items = getItems() as ItemRecord[];
+  const blueprints = items
+    .filter(item => item.item_type === 'Blueprint')
+    .map(item => {
+      const name = (item.name || '').replace(' Blueprint', '');
+      return {
+        id: item.id,
+        name,
+        searchKey: name.toLowerCase(),
+        icon: item.icon ?? null,
+        rarity: item.rarity || 'Common',
+        value: item.value || 0,
+      } as Blueprint;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  BLUEPRINT_CACHE.set(language, blueprints);
+  return blueprints;
+};
+
+const partitionByCollected = (ids: string[], collectedSet: Set<string>) => {
+  const uncollected: string[] = [];
+  const collected: string[] = [];
+
+  for (const id of ids) {
+    if (collectedSet.has(id)) {
+      collected.push(id);
+    } else {
+      uncollected.push(id);
+    }
+  }
+
+  return [...uncollected, ...collected];
+};
+
+/* Keep pattern lines inside each card while staying lightweight. */
+const GridBg = React.memo(() => (
+  <View style={StyleSheet.absoluteFill} pointerEvents="none">
+    <Svg width={CARD_W} height={CARD_H}>
+      <Defs>
+        <Pattern id="bp-grid" width={GRID_CELL} height={GRID_CELL} patternUnits="userSpaceOnUse">
+          <Line
+            x1={GRID_CELL}
+            y1={0}
+            x2={GRID_CELL}
+            y2={GRID_CELL}
+            stroke={GRID_LINE_COLOR}
+            strokeWidth={StyleSheet.hairlineWidth}
+          />
+          <Line
+            x1={0}
+            y1={GRID_CELL}
+            x2={GRID_CELL}
+            y2={GRID_CELL}
+            stroke={GRID_LINE_COLOR}
+            strokeWidth={StyleSheet.hairlineWidth}
+          />
+        </Pattern>
+      </Defs>
+      <Rect width={CARD_W} height={CARD_H} fill="url(#bp-grid)" />
+    </Svg>
+  </View>
+));
+
 const BlueprintCard = React.memo(
-  ({item, collected, onPress}: {item: Blueprint; collected: boolean; onPress: (id: string) => void}) => {
+  ({
+    item,
+    collected,
+    onPress,
+  }: {
+    item: Blueprint;
+    collected: boolean;
+    onPress: (id: string) => void;
+  }) => {
     const rarityColor = getRarityColor(item.rarity);
+
     return (
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={0.8}
         onPress={() => onPress(item.id)}
         style={[cardStyles.card, collected && cardStyles.cardCollected]}>
         <GridBg />
+
         {collected && (
           <View style={cardStyles.tickBadge}>
             <Icon name="check-circle" size={18} color="#4ADE80" />
           </View>
         )}
+
         {item.value > 0 && (
           <View style={cardStyles.valueBadge}>
             <Text style={cardStyles.valueBadgeText}>
@@ -89,15 +174,31 @@ const BlueprintCard = React.memo(
             </Text>
           </View>
         )}
+
         <View style={cardStyles.imageWrap}>
           {item.icon ? (
-            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" />
+            <Image
+              source={resolveImage(item.icon)}
+              style={cardStyles.itemImage}
+              resizeMode="contain"
+              fadeDuration={0}
+            />
           ) : (
             <Icon name="file-document-outline" size={28} color={colors.textMuted} />
           )}
         </View>
+
         <Text style={cardStyles.cardName} numberOfLines={1}>{item.name}</Text>
-        <View style={[cardStyles.rarityBar, {backgroundColor: '#2563EB', shadowColor: '#2563EB'}]} />
+
+        <View
+          style={[
+            cardStyles.rarityBar,
+            {
+              backgroundColor: rarityColor,
+              shadowColor: rarityColor,
+            },
+          ]}
+        />
       </TouchableOpacity>
     );
   },
@@ -163,98 +264,215 @@ const cardStyles = StyleSheet.create({
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
     shadowRadius: 6,
-    elevation: 6,
+    elevation: Platform.OS === 'ios' ? 6 : 0,
   },
 });
 
 const BlueprintTrackerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
-  const {t} = useTranslation();
-  const blueprints: Blueprint[] = (getItems() as any[])
-    .filter(i => i.item_type === 'Blueprint')
-    .map(i => ({
-      id: i.id,
-      name: i.name.replace(' Blueprint', ''),
-      icon: i.icon,
-      rarity: i.rarity || 'Common',
-      value: i.value || 0,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name));
-  const [collected, setCollected] = useState<string[]>([]);
-  const [initialOrder, setInitialOrder] = useState<string[]>(() => blueprints.map(bp => bp.id));
+  const {t, i18n} = useTranslation();
+  const isAndroid = Platform.OS === 'android';
+
+  const seed = BLUEPRINT_SCREEN_CACHE && BLUEPRINT_SCREEN_CACHE.language === i18n.language
+    ? BLUEPRINT_SCREEN_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
   const [search, setSearch] = useState('');
-  const [ready, setReady] = useState(false);
+  const [blueprints, setBlueprints] = useState<Blueprint[]>(seed?.blueprints ?? []);
+  const [orderedIds, setOrderedIds] = useState<string[]>(seed?.orderedIds ?? []);
+  const [collected, setCollected] = useState<string[]>(seed?.collected ?? []);
+  const [movingId, setMovingId] = useState<string | null>(null);
+  const [listVisible, setListVisible] = useState(false);
 
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
+    let active = true;
+    setListVisible(false);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
+    });
+
+    const cached = BLUEPRINT_SCREEN_CACHE && BLUEPRINT_SCREEN_CACHE.language === i18n.language
+      ? BLUEPRINT_SCREEN_CACHE
+      : null;
+
+    if (cached) {
+      setBlueprints(cached.blueprints);
+      setOrderedIds(cached.orderedIds);
+      setCollected(cached.collected);
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+
+    const load = () => {
+      const nextBlueprints = getCachedBlueprints(i18n.language);
+      const allIds = nextBlueprints.map(bp => bp.id);
+      const allIdsSet = new Set(allIds);
+
       AsyncStorage.getItem(BP_STORAGE_KEY)
         .then(raw => {
-          const saved: string[] = raw ? JSON.parse(raw) : [];
-          setCollected(saved);
-          const savedSet = new Set(saved);
-          const uncollected = blueprints.filter(bp => !savedSet.has(bp.id)).map(bp => bp.id);
-          const obtained = blueprints.filter(bp => savedSet.has(bp.id)).map(bp => bp.id);
-          setInitialOrder([...uncollected, ...obtained]);
+          const parsed: string[] = raw ? JSON.parse(raw) : [];
+          const validSaved = parsed.filter(id => allIdsSet.has(id));
+          const savedSet = new Set(validSaved);
+          const nextOrder = isAndroid ? allIds : partitionByCollected(allIds, savedSet);
+
+          if (!active) return;
+          setBlueprints(nextBlueprints);
+          setCollected(validSaved);
+          setOrderedIds(nextOrder);
+          BLUEPRINT_SCREEN_CACHE = {
+            language: i18n.language,
+            blueprints: nextBlueprints,
+            orderedIds: nextOrder,
+            collected: validSaved,
+          };
         })
-        .catch(() => {})
-        .finally(() => setReady(true));
-    });
-    return () => task.cancel();
-  }, []);
+        .catch(() => {
+          if (!active) return;
+          setBlueprints(nextBlueprints);
+          setCollected([]);
+          setOrderedIds(allIds);
+          BLUEPRINT_SCREEN_CACHE = {
+            language: i18n.language,
+            blueprints: nextBlueprints,
+            orderedIds: allIds,
+            collected: [],
+          };
+        })
+        .finally(() => {
+          if (active) setReady(true);
+        });
+    };
 
-  const toggleBlueprint = useCallback((id: string) => {
-    setCollected(prev => {
-      const updated = prev.includes(id)
-        ? prev.filter(c => c !== id)
-        : [...prev, id];
-      AsyncStorage.setItem(BP_STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
+    const task = cached ? null : InteractionManager.runAfterInteractions(load);
+    if (cached) load();
 
-      // Re-sort: uncollected first, then collected, both alphabetical
-      const updatedSet = new Set(updated);
-      const uncollected = blueprints.filter(bp => !updatedSet.has(bp.id)).map(bp => bp.id);
-      const obtained = blueprints.filter(bp => updatedSet.has(bp.id)).map(bp => bp.id);
-      setInitialOrder([...uncollected, ...obtained]);
+    return () => {
+      active = false;
+      listTask.cancel();
+      task?.cancel();
+    };
+  }, [i18n.language]);
 
-      return updated;
-    });
-  }, []);
+  useEffect(() => {
+    if (!ready) return;
+    BLUEPRINT_SCREEN_CACHE = {
+      language: i18n.language,
+      blueprints,
+      orderedIds,
+      collected,
+    };
+  }, [ready, i18n.language, blueprints, orderedIds, collected]);
+
+  const blueprintById = useMemo(
+    () => new Map(blueprints.map(bp => [bp.id, bp])),
+    [blueprints],
+  );
 
   const collectedSet = useMemo(() => new Set(collected), [collected]);
 
-  const totalCount = blueprints.length;
-  const collectedCount = useMemo(
-    () => blueprints.filter(bp => collectedSet.has(bp.id)).length,
-    [collectedSet],
+  const allIds = useMemo(
+    () => blueprints.map(bp => bp.id),
+    [blueprints],
   );
-  const progress =
-    totalCount > 0 ? Math.round((collectedCount / totalCount) * 100) : 0;
 
-  // Stable order: only re-sort based on initialOrder, not live toggles
-  const sortedBlueprints = useMemo(() => {
-    const orderMap = new Map(initialOrder.map((id, i) => [id, i]));
-    let list = blueprints;
-    if (search) {
-      const q = search.toLowerCase();
-      list = list.filter(bp => bp.name.toLowerCase().includes(q));
+  const toggleBlueprint = useCallback((id: string) => {
+    if (isAndroid) {
+      setCollected(prev => {
+        const next = prev.includes(id)
+          ? prev.filter(value => value !== id)
+          : [...prev, id];
+
+        AsyncStorage.setItem(BP_STORAGE_KEY, JSON.stringify(next)).catch(() => {});
+        return next;
+      });
+      return;
     }
-    return [...list].sort((a, b) => (orderMap.get(a.id) ?? 0) - (orderMap.get(b.id) ?? 0));
-  }, [initialOrder, search]);
+
+    // Hide tapped card first so Android feels instant.
+    setMovingId(id);
+
+    requestAnimationFrame(() => {
+      setCollected(prev => {
+        const wasCollected = prev.includes(id);
+        const next = wasCollected
+          ? prev.filter(value => value !== id)
+          : [...prev, id];
+
+        setOrderedIds(prevOrder => {
+          const sourceOrder = prevOrder.length > 0 ? prevOrder : allIds;
+          const index = sourceOrder.indexOf(id);
+          if (index === -1) return sourceOrder;
+
+          const nextOrder = [...sourceOrder];
+          nextOrder.splice(index, 1);
+
+          // Collect: move to absolute bottom. Un-collect: move to top.
+          if (wasCollected) {
+            nextOrder.unshift(id);
+          } else {
+            nextOrder.push(id);
+          }
+
+          return nextOrder;
+        });
+
+        AsyncStorage.setItem(BP_STORAGE_KEY, JSON.stringify(next)).catch(() => {});
+        return next;
+      });
+
+      requestAnimationFrame(() => {
+        setMovingId(current => (current === id ? null : current));
+      });
+    });
+  }, [allIds, isAndroid]);
+
+  const query = search.trim().toLowerCase();
+  const renderAllAndroid = isAndroid && query.length === 0;
+
+  const filteredIds = useMemo(() => {
+    let ids = orderedIds;
+
+    if (!isAndroid && movingId) {
+      ids = ids.filter(id => id !== movingId);
+    }
+
+    if (!query) {
+      return ids;
+    }
+
+    return ids.filter(id => {
+      const bp = blueprintById.get(id);
+      return !!bp && bp.searchKey.includes(query);
+    });
+  }, [orderedIds, movingId, query, blueprintById, isAndroid]);
+
+  const totalCount = blueprints.length;
+  const collectedCount = collected.length;
+  const progress = totalCount > 0 ? Math.round((collectedCount / totalCount) * 100) : 0;
 
   const renderBlueprint = useCallback(
-    ({item}: {item: Blueprint}) => {
-      const isCollected = collectedSet.has(item.id);
+    ({item}: {item: string}) => {
+      const blueprint = blueprintById.get(item);
+      if (!blueprint) return null;
+
       return (
-        <BlueprintCard item={item} collected={isCollected} onPress={toggleBlueprint} />
+        <BlueprintCard
+          item={blueprint}
+          collected={collectedSet.has(item)}
+          onPress={toggleBlueprint}
+        />
       );
     },
-    [toggleBlueprint, collectedSet],
+    [blueprintById, collectedSet, toggleBlueprint],
   );
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={[styles.container, {paddingTop: insets.top}]}> 
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
@@ -263,7 +481,6 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         <View style={styles.headerSpacer} />
       </View>
 
-      {/* Progress */}
       <View style={styles.progressRow}>
         <Text style={styles.progressText}>
           {t('blueprints.progressText', {collected: collectedCount, total: totalCount, progress})}
@@ -273,7 +490,6 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         </View>
       </View>
 
-      {/* Search */}
       <View style={styles.searchWrap}>
         <Icon name="magnify" size={18} color={colors.textMuted} />
         <TextInput
@@ -285,34 +501,45 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
         />
       </View>
 
-      {/* Hint */}
-      {collectedCount > 0 && (
+      {!isAndroid && collectedCount > 0 && (
         <Text style={styles.hintText}>
           {t('blueprints.hint')}
         </Text>
       )}
 
-      {/* Grid */}
       <FlatList
-        data={sortedBlueprints}
+        data={ready && listVisible ? filteredIds : []}
         renderItem={renderBlueprint}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.grid}
+        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews={false}
-        maxToRenderPerBatch={ready ? 30 : 9}
-        windowSize={ready ? 21 : 5}
-        initialNumToRender={9}
-        getItemLayout={(_data, index) => ({length: ROW_H, offset: Math.floor(index / NUM_COLUMNS) * ROW_H, index})}
-        ListEmptyComponent={
+        disableVirtualization={renderAllAndroid}
+        removeClippedSubviews={!renderAllAndroid && Platform.OS === 'android'}
+        maxToRenderPerBatch={renderAllAndroid ? 24 : (Platform.OS === 'android' ? 8 : 9)}
+        initialNumToRender={renderAllAndroid ? Math.max(12, filteredIds.length) : (Platform.OS === 'android' ? 8 : 9)}
+        windowSize={renderAllAndroid ? 21 : (Platform.OS === 'android' ? 9 : 11)}
+        updateCellsBatchingPeriod={renderAllAndroid ? 0 : (Platform.OS === 'android' ? 24 : 16)}
+        getItemLayout={(_data, index) => ({
+          length: ROW_H,
+          offset: Math.floor(index / NUM_COLUMNS) * ROW_H,
+          index,
+        })}
+        ListEmptyComponent={ready ? (
           <View style={styles.emptyState}>
             <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
             <Text style={styles.emptyText}>{t('blueprints.noResults')}</Text>
           </View>
-        }
+        ) : null}
       />
+
+      {(!ready || !listVisible) && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
     </View>
   );
 };
@@ -387,20 +614,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     fontStyle: 'italic',
   },
-  sectionHeader: {
-    width: SCREEN_WIDTH - PADDING * 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: spacing.sm,
-    marginBottom: spacing.xs,
-  },
-  sectionHeaderText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#4ADE80',
-    letterSpacing: 0.5,
-  },
   grid: {paddingHorizontal: PADDING, paddingBottom: 100},
   row: {gap: CARD_GAP, marginBottom: CARD_GAP},
   emptyState: {
@@ -409,6 +622,12 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   emptyText: {fontSize: fonts.sizes.md, color: colors.textMuted},
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.4)',
+  },
 });
 
 export default BlueprintTrackerScreen;

@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   ImageBackground,
+  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -413,6 +414,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   // Show paywall once per app launch — only after premium check resolves
   useEffect(() => {
+    if (Platform.OS === 'android') return; // Android paywall not configured yet
     if (isLoading) return;
     if (isPremium) return;
     if (!_isFirstLaunch) return;

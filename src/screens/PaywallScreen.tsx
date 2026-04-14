@@ -1,5 +1,5 @@
-import React, {useRef, useCallback} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useRef, useCallback, useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import RevenueCatUI from 'react-native-purchases-ui';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -16,13 +16,22 @@ const PaywallScreen: React.FC = () => {
     navigation.goBack();
   }, [navigation]);
 
+  // Android: no paywall configured yet — redirect back immediately
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      handleDismiss();
+    }
+  }, [handleDismiss]);
+
   return (
     <View style={styles.container}>
-      <RevenueCatUI.Paywall
-        onDismiss={handleDismiss}
-        onPurchaseCompleted={handleDismiss}
-        onRestoreCompleted={handleDismiss}
-      />
+      {Platform.OS !== 'android' && (
+        <RevenueCatUI.Paywall
+          onDismiss={handleDismiss}
+          onPurchaseCompleted={handleDismiss}
+          onRestoreCompleted={handleDismiss}
+        />
+      )}
       <TouchableOpacity
         style={[styles.closeButton, {top: insets.top + 12}]}
         onPress={handleDismiss}

@@ -6,16 +6,22 @@
  */
 
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {StatusBar, View} from 'react-native';
+import {Platform, StatusBar, View} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import './src/i18n/i18n';
 import AppNavigator from './src/navigation/AppNavigator';
 import {navigationRef} from './src/navigation/AppNavigator';
-import SmokeBackground from './src/components/SmokeBackground';
 import OnboardingScreen, {ONBOARDING_KEY} from './src/screens/OnboardingScreen';
+
+// Lazy-load SmokeBackground — it imports react-native-reanimated which
+// triggers NativeWorklets init that crashes on Android at module scope.
+const SmokeBackground = Platform.OS === 'android'
+  ? () => <View style={{...require('react-native').StyleSheet.absoluteFillObject, backgroundColor: '#0A0E17'}} />
+  : require('./src/components/SmokeBackground').default;
 import SplashScreen from './src/screens/SplashScreen';
-import {PremiumProvider} from './src/context/PremiumContext';
+import {PremiumProvider, TEMP_UNLOCK_ALL_PREMIUM} from './src/context/PremiumContext';
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
@@ -55,16 +61,18 @@ function App() {
 
   const handleOnboardingDone = async () => {
     setShowOnboarding(false);
-    // Navigate to paywall after navigator mounts
-    setTimeout(() => {
-      if (navigationRef.isReady()) {
-        (navigationRef as any).navigate('Paywall');
-      }
-    }, 500);
+    // Navigate to paywall after navigator mounts (skip on Android — not configured yet)
+    if (Platform.OS !== 'android' && !TEMP_UNLOCK_ALL_PREMIUM) {
+      setTimeout(() => {
+        if (navigationRef.isReady()) {
+          (navigationRef as any).navigate('Paywall');
+        }
+      }, 500);
+    }
   };
 
   return (
-    <View style={{flex: 1}}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <SmokeBackground />
       <SafeAreaProvider>
         <StatusBar barStyle="light-content" backgroundColor="#0D0D0D" />
@@ -79,7 +87,7 @@ function App() {
         )}
       </SafeAreaProvider>
       {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
-    </View>
+    </GestureHandlerRootView>
   );
 }
 

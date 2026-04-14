@@ -1,7 +1,10 @@
 import React, {useMemo, useState, useCallback, useEffect} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
+  InteractionManager,
+  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -50,6 +53,18 @@ type Quest = {
 type TreeNode = Quest & {children: TreeNode[]};
 type FlatRow = Quest & {depth: number; isLastChild: boolean; isChainStart: boolean};
 
+const EMPTY_QUESTS: Quest[] = [];
+const EMPTY_FOREST: TreeNode[] = [];
+const EMPTY_ROWS: FlatRow[] = [];
+
+type QuestTreeScreenCache = {
+  language: string;
+  quests: Quest[];
+  givers: string[];
+};
+
+let QUEST_TREE_SCREEN_CACHE: QuestTreeScreenCache | null = null;
+
 const buildForest = (qs: Quest[]): TreeNode[] => {
   const byName = new Map<string, Quest>();
   qs.forEach(q => byName.set(q.name, q));
@@ -84,49 +99,122 @@ const QuestTreeScreen = ({navigation}: any) => {
   const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
-  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
+
+  const seed = QUEST_TREE_SCREEN_CACHE && QUEST_TREE_SCREEN_CACHE.language === i18n.language
+    ? QUEST_TREE_SCREEN_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(false);
+  const [allQuests, setAllQuests] = useState<Quest[]>(seed?.quests ?? EMPTY_QUESTS);
+  const [givers, setGivers] = useState<string[]>(seed?.givers ?? ['All']);
   const [activeGiver, setActiveGiver] = useState('All');
   const [completedIds, setCompletedIds] = useState<number[]>([]);
 
   useEffect(() => {
-    if (isFocused) getCompletedQuests().then(setCompletedIds);
+    let active = true;
+    setListVisible(false);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
+    });
+
+    const cached = QUEST_TREE_SCREEN_CACHE && QUEST_TREE_SCREEN_CACHE.language === i18n.language
+      ? QUEST_TREE_SCREEN_CACHE
+      : null;
+
+    if (cached) {
+      setAllQuests(cached.quests);
+      setGivers(cached.givers);
+      setReady(true);
+    } else {
+      setReady(false);
+      const loadTask = InteractionManager.runAfterInteractions(() => {
+        const quests = ((getQuests() as any).quests || []) as Quest[];
+        const nextGivers = ['All', ...Array.from(new Set(quests.map(q => q.quest_giver)))];
+        if (!active) return;
+
+        setAllQuests(quests);
+        setGivers(nextGivers);
+        QUEST_TREE_SCREEN_CACHE = {
+          language: i18n.language,
+          quests,
+          givers: nextGivers,
+        };
+        setReady(true);
+      });
+
+      return () => {
+        active = false;
+        listTask.cancel();
+        loadTask.cancel();
+      };
+    }
+
+    return () => {
+      active = false;
+      listTask.cancel();
+    };
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (!isFocused) return;
+
+    let active = true;
+    const task = InteractionManager.runAfterInteractions(() => {
+      getCompletedQuests().then(ids => {
+        if (active) setCompletedIds(ids);
+      });
+    });
+
+    return () => {
+      active = false;
+      task.cancel();
+    };
   }, [isFocused]);
+
+  useEffect(() => {
+    if (!givers.includes(activeGiver)) {
+      setActiveGiver('All');
+    }
+  }, [givers, activeGiver]);
+
+  const showContent = ready && listVisible;
+
+  const completedIdSet = useMemo(() => new Set(completedIds), [completedIds]);
 
   const completedNames = useMemo(() => {
     const set = new Set<string>();
     allQuests.forEach(q => {
-      if (completedIds.includes(q.id)) set.add(q.name);
+      if (completedIdSet.has(q.id)) set.add(q.name);
     });
     return set;
-  }, [completedIds, i18n.language]);
+  }, [allQuests, completedIdSet]);
 
-  const givers = useMemo(() => {
-    const set = new Set(allQuests.map(q => q.quest_giver));
-    return ['All', ...Array.from(set)];
-  }, [i18n.language]);
+  const filtered = useMemo(() => {
+    if (!showContent) return EMPTY_QUESTS;
+    return activeGiver === 'All'
+      ? allQuests
+      : allQuests.filter(q => q.quest_giver === activeGiver);
+  }, [showContent, activeGiver, allQuests]);
 
-  const filtered = useMemo(
-    () => (activeGiver === 'All' ? allQuests : allQuests.filter(q => q.quest_giver === activeGiver)),
-    [activeGiver, i18n.language],
-  );
-
-  const forest = useMemo(() => buildForest(filtered), [filtered]);
-  const flatRows = useMemo(() => flattenTree(forest), [forest]);
+  const forest = useMemo(() => (showContent ? buildForest(filtered) : EMPTY_FOREST), [showContent, filtered]);
+  const flatRows = useMemo(() => (showContent ? flattenTree(forest) : EMPTY_ROWS), [showContent, forest]);
 
   const getStatus = useCallback(
     (q: Quest): 'completed' | 'available' | 'locked' => {
-      if (completedIds.includes(q.id)) return 'completed';
+      if (completedIdSet.has(q.id)) return 'completed';
       if (q.prerequisites.length > 0 && !q.prerequisites.every(p => completedNames.has(p)))
         return 'locked';
       return 'available';
     },
-    [completedIds, completedNames],
+    [completedIdSet, completedNames],
   );
 
   /* ── Stats ───────────────────────────────────────────── */
   const chainCount = forest.length;
   const totalCount = filtered.length;
-  const completedCount = filtered.filter(q => completedIds.includes(q.id)).length;
+  const completedCount = filtered.filter(q => completedIdSet.has(q.id)).length;
   const progressRatio = totalCount > 0 ? completedCount / totalCount : 0;
 
   /* ── Render row ──────────────────────────────────────── */
@@ -225,78 +313,85 @@ const QuestTreeScreen = ({navigation}: any) => {
   const keyExtractor = useCallback((item: FlatRow) => String(item.id), []);
 
   const ListHeader = useMemo(
-    () => (
-      <>
-        {/* Progress */}
-        <View style={st.progressWrap}>
-          <View style={st.progressLabelRow}>
-            <Text style={st.progressLabel}>{t('questTree.chainProgress')}</Text>
-            <Text style={st.progressCount}>
-              <Text style={st.progressHi}>{completedCount}</Text>
-              {' / '}
-              {totalCount}
+    () => {
+      if (!showContent) return null;
+
+      return (
+        <>
+          {/* Progress */}
+          <View style={st.progressWrap}>
+            <View style={st.progressLabelRow}>
+              <Text style={st.progressLabel}>{t('questTree.chainProgress')}</Text>
+              <Text style={st.progressCount}>
+                <Text style={st.progressHi}>{completedCount}</Text>
+                {' / '}
+                {totalCount}
+              </Text>
+            </View>
+            <View style={st.progressBg}>
+              <View
+                style={[st.progressFill, {width: `${Math.min(progressRatio * 100, 100)}%`}]}
+              />
+            </View>
+            <Text style={st.chainsText}>
+              {chainCount} {chainCount !== 1 ? t('questTree.questChains') : t('questTree.questChain')}
             </Text>
           </View>
-          <View style={st.progressBg}>
-            <View
-              style={[st.progressFill, {width: `${Math.min(progressRatio * 100, 100)}%`}]}
-            />
-          </View>
-          <Text style={st.chainsText}>
-            {chainCount} {chainCount !== 1 ? t('questTree.questChains') : t('questTree.questChain')}
-          </Text>
-        </View>
 
-        {/* Giver pills */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={st.pillRow}>
-          {givers.map(g => {
-            const isActive = activeGiver === g;
-            const gc2 = GIVER_COLORS[g] || colors.orange;
-            const pt = TRADER_PORTRAITS[g];
-            return (
-              <TouchableOpacity
-                key={g}
-                activeOpacity={0.7}
-                onPress={() => setActiveGiver(g)}
-                style={[
-                  st.pill,
-                  isActive && {backgroundColor: gc2 + '25', borderColor: gc2},
-                ]}>
-                {g !== 'All' && pt ? (
-                  <Image source={pt} style={st.pillPt} />
-                ) : g === 'All' ? (
-                  <Icon
-                    name="account-group"
-                    size={14}
-                    color={isActive ? colors.cyan : colors.textMuted}
-                  />
-                ) : null}
-                <Text style={[st.pillText, isActive && {color: gc2}]}>
-                  {g.toUpperCase()}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+          {/* Giver pills */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={st.pillRow}>
+            {givers.map(g => {
+              const isActive = activeGiver === g;
+              const gc2 = GIVER_COLORS[g] || colors.orange;
+              const pt = TRADER_PORTRAITS[g];
+              return (
+                <TouchableOpacity
+                  key={g}
+                  activeOpacity={0.7}
+                  onPress={() => setActiveGiver(g)}
+                  style={[
+                    st.pill,
+                    isActive && {backgroundColor: gc2 + '25', borderColor: gc2},
+                  ]}>
+                  {g !== 'All' && pt ? (
+                    <Image source={pt} style={st.pillPt} />
+                  ) : g === 'All' ? (
+                    <Icon
+                      name="account-group"
+                      size={14}
+                      color={isActive ? colors.cyan : colors.textMuted}
+                    />
+                  ) : null}
+                  <Text style={[st.pillText, isActive && {color: gc2}]}>
+                    {g.toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
 
-        <View style={st.sep} />
-      </>
-    ),
-    [completedCount, totalCount, progressRatio, chainCount, givers, activeGiver],
+          <View style={st.sep} />
+        </>
+      );
+    },
+    [showContent, t, completedCount, totalCount, progressRatio, chainCount, givers, activeGiver],
   );
 
   const emptyComponent = useMemo(
-    () => (
-      <View style={st.emptyWrap}>
-        <Icon name="file-tree-outline" size={56} color={colors.textMuted} />
-        <Text style={st.emptyTitle}>{t('questTree.noQuestChains')}</Text>
-        <Text style={st.emptySub}>{t('questTree.selectDifferentTrader')}</Text>
-      </View>
-    ),
-    [],
+    () => {
+      if (!showContent) return null;
+      return (
+        <View style={st.emptyWrap}>
+          <Icon name="file-tree-outline" size={56} color={colors.textMuted} />
+          <Text style={st.emptyTitle}>{t('questTree.noQuestChains')}</Text>
+          <Text style={st.emptySub}>{t('questTree.selectDifferentTrader')}</Text>
+        </View>
+      );
+    },
+    [showContent, t],
   );
 
   return (
@@ -313,7 +408,7 @@ const QuestTreeScreen = ({navigation}: any) => {
       </View>
 
       <FlatList
-        data={flatRows}
+        data={showContent ? flatRows : EMPTY_ROWS}
         renderItem={renderRow}
         keyExtractor={keyExtractor}
         ListHeaderComponent={ListHeader}
@@ -321,7 +416,18 @@ const QuestTreeScreen = ({navigation}: any) => {
         contentContainerStyle={st.listContent}
         showsVerticalScrollIndicator={false}
         bounces={false}
+        initialNumToRender={Platform.OS === 'android' ? 8 : 12}
+        maxToRenderPerBatch={Platform.OS === 'android' ? 8 : 12}
+        windowSize={Platform.OS === 'android' ? 7 : 9}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+        removeClippedSubviews={Platform.OS === 'android'}
       />
+
+      {!showContent && (
+        <View style={st.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
     </View>
   );
 };
@@ -478,6 +584,12 @@ const st = StyleSheet.create({
     letterSpacing: 2,
   },
   emptySub: {fontSize: fonts.sizes.sm, color: colors.textMuted},
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
+  },
 });
 
 export default QuestTreeScreen;

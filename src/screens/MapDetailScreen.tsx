@@ -782,7 +782,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
       />
 
       {/* ── ADD CUSTOM MARKER FORM ── */}
-      <Modal visible={addMarkerFormVisible} transparent animationType="slide">
+      <Modal visible={addMarkerFormVisible} transparent animationType={Platform.OS === 'android' ? 'fade' : 'slide'}>
         <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.bottomSheetOverlay}>
           <TouchableOpacity style={styles.bottomSheetDismiss} onPress={() => {if (markerTypeSheetVisible) { setMarkerTypeSheetVisible(false); } else { setAddMarkerFormVisible(false); setPendingCoords(null); setEditingMarkerId(null); }}} />
@@ -979,7 +979,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
       </Modal>
 
       {/* ── MARKER INFO MODAL (on tap existing marker) ── */}
-      <Modal visible={markerInfoVisible && !!selectedMarkerInfo} transparent animationType="slide">
+      <Modal visible={markerInfoVisible && !!selectedMarkerInfo} transparent animationType={Platform.OS === 'android' ? 'fade' : 'slide'}>
         <View style={styles.bottomSheetOverlay}>
           <TouchableOpacity style={styles.bottomSheetDismiss} onPress={() => {setMarkerInfoVisible(false); setSelectedMarkerInfo(null);}} />
           <View style={[styles.bottomSheet, {paddingBottom: Math.max(insets.bottom, 20)}]}>

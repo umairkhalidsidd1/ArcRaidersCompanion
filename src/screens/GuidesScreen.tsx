@@ -1,7 +1,10 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useMemo, useState, useCallback, useEffect} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
+  InteractionManager,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -23,6 +26,16 @@ const {width: SCREEN_W} = Dimensions.get('window');
 const THUMB_W = SCREEN_W * 0.32;
 
 type Guide = ReturnType<typeof getGuides>[number];
+type GuideListItem = Guide & {stepCount: number; searchBlob: string};
+
+const EMPTY_GUIDES: GuideListItem[] = [];
+
+type GuidesScreenCache = {
+  language: string;
+  guides: GuideListItem[];
+};
+
+let GUIDES_SCREEN_CACHE: GuidesScreenCache | null = null;
 
 /* count steps from HTML h2 tags */
 function countSteps(html: string): number {
@@ -31,34 +44,118 @@ function countSteps(html: string): number {
   return matches ? matches.length : 0;
 }
 
+const buildGuideList = (): GuideListItem[] => {
+  return (getGuides() as Guide[]).map(g => ({
+    ...g,
+    stepCount: countSteps(g.content),
+    searchBlob: `${g.title} ${g.summary || ''} ${g.author || ''}`.toLowerCase(),
+  }));
+};
+
 const GuidesScreen = ({navigation}: any) => {
   const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
+
+  const seed = GUIDES_SCREEN_CACHE && GUIDES_SCREEN_CACHE.language === i18n.language
+    ? GUIDES_SCREEN_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(false);
+  const [guides, setGuides] = useState<GuideListItem[]>(seed?.guides ?? EMPTY_GUIDES);
+  const [visibleCount, setVisibleCount] = useState(
+    seed ? Math.min(seed.guides.length, Platform.OS === 'android' ? 4 : seed.guides.length) : 0,
+  );
   const [activeTab, setActiveTab] = useState<'general' | 'quest'>('general');
   const [search, setSearch] = useState('');
   const {isPremium} = usePremium();
   const FREE_GUIDE_COUNT = 3;
 
+  const showContent = ready && listVisible;
+
+  useEffect(() => {
+    let active = true;
+    setListVisible(false);
+    setVisibleCount(0);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
+    });
+
+    const cached = GUIDES_SCREEN_CACHE && GUIDES_SCREEN_CACHE.language === i18n.language
+      ? GUIDES_SCREEN_CACHE
+      : null;
+
+    if (cached) {
+      setGuides(cached.guides);
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+
+    const loadTask = InteractionManager.runAfterInteractions(() => {
+      const nextGuides = buildGuideList();
+      if (!active) return;
+
+      setGuides(nextGuides);
+      GUIDES_SCREEN_CACHE = {
+        language: i18n.language,
+        guides: nextGuides,
+      };
+      setReady(true);
+    });
+
+    return () => {
+      active = false;
+      listTask.cancel();
+      loadTask.cancel();
+    };
+  }, [i18n.language]);
+
   const filtered = useMemo(() => {
-    return (getGuides() as Guide[]).filter(g => {
+    if (!showContent) return EMPTY_GUIDES;
+
+    return guides.filter(g => {
       const gType = g.type || 'general';
       if (gType !== activeTab) return false;
       if (search) {
         const q = search.toLowerCase();
-        if (
-          !g.title.toLowerCase().includes(q) &&
-          !(g.summary || '').toLowerCase().includes(q) &&
-          !(g.author || '').toLowerCase().includes(q)
-        )
-          return false;
+        if (!g.searchBlob.includes(q)) return false;
       }
       return true;
     });
-  }, [activeTab, search, i18n.language]);
+  }, [showContent, guides, activeTab, search]);
+
+  useEffect(() => {
+    if (!showContent) return;
+
+    const initial = Platform.OS === 'android' ? 4 : filtered.length;
+    const batch = Platform.OS === 'android' ? 4 : filtered.length;
+    const max = filtered.length;
+
+    setVisibleCount(Math.min(initial, max));
+
+    if (Platform.OS !== 'android' || max <= initial) return;
+
+    const interval = setInterval(() => {
+      setVisibleCount(prev => {
+        const next = Math.min(max, prev + batch);
+        if (next >= max) clearInterval(interval);
+        return next;
+      });
+    }, 80);
+
+    return () => clearInterval(interval);
+  }, [showContent, filtered.length, activeTab, search]);
+
+  const visibleGuides = useMemo(
+    () => (showContent ? filtered.slice(0, visibleCount) : EMPTY_GUIDES),
+    [showContent, filtered, visibleCount],
+  );
 
   const renderGuide = useCallback(
-    ({item, index}: {item: Guide; index: number}) => {
-      const steps = countSteps(item.content);
+    ({item, index}: {item: GuideListItem; index: number}) => {
+      const steps = item.stepCount;
       const summary = item.summary || '';
       const trimmedSummary =
         summary.length > 80 ? summary.slice(0, 80).trimEnd() + '…' : summary;
@@ -185,22 +282,34 @@ const GuidesScreen = ({navigation}: any) => {
 
       {/* Guide List */}
       <FlatList
-        data={filtered}
+        data={visibleGuides}
         renderItem={renderGuide}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews
-        initialNumToRender={6}
-        maxToRenderPerBatch={10}
-        windowSize={7}
-        ListEmptyComponent={
+        removeClippedSubviews={Platform.OS === 'android'}
+        initialNumToRender={Platform.OS === 'android' ? 4 : 6}
+        maxToRenderPerBatch={Platform.OS === 'android' ? 6 : 10}
+        windowSize={Platform.OS === 'android' ? 7 : 9}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+        ListFooterComponent={showContent && visibleCount < filtered.length ? (
+          <View style={styles.loadingMore}>
+            <ActivityIndicator size="small" color={colors.cyan} />
+          </View>
+        ) : null}
+        ListEmptyComponent={showContent ? (
           <View style={styles.emptyState}>
             <Icon name="book-open-variant" size={48} color={colors.textMuted} />
             <Text style={styles.emptyText}>{t('guides.noGuides')}</Text>
           </View>
-        }
+        ) : null}
       />
+
+      {!showContent && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
     </View>
   );
 };
@@ -285,6 +394,17 @@ const styles = StyleSheet.create({
 
   /* list */
   list: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.md},
+  loadingMore: {
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
+  },
 
   /* card */
   card: {

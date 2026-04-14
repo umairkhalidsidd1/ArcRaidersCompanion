@@ -1,7 +1,9 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
 import {
   ActivityIndicator,
-  InteractionManager,
+  Animated,
+  BackHandler,
+  Dimensions,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -10,11 +12,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
+import {useFocusEffect} from '@react-navigation/native';
 import {colors} from '../theme/theme';
 import localEvents from '../data/events.json';
 import {resolveImage} from '../data/imageRegistry';
@@ -179,6 +183,85 @@ const formatBadge = (sec: number): string => {
   return `${m}m ${String(s).padStart(2, '0')}s`;
 };
 
+/* ── Skeleton shimmer (per-card gradient sweep) ──────── */
+const CARD_W = Dimensions.get('window').width - 40; // scroll paddingHorizontal 20*2
+
+const useShimmerTranslate = () => {
+  const translateX = useRef(new Animated.Value(-CARD_W)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(translateX, {
+        toValue: CARD_W,
+        duration: 1200,
+        useNativeDriver: true,
+      }),
+    ).start();
+  }, [translateX]);
+  return translateX;
+};
+
+const ShimmerOverlay = ({translateX}: {translateX: Animated.Value}) => (
+  <Animated.View
+    pointerEvents="none"
+    style={[StyleSheet.absoluteFill, {transform: [{translateX}]}]}>
+    <LinearGradient
+      colors={[
+        'rgba(255,255,255,0)',
+        'rgba(255,255,255,0.06)',
+        'rgba(255,255,255,0.12)',
+        'rgba(255,255,255,0.06)',
+        'rgba(255,255,255,0)',
+      ]}
+      start={{x: 0, y: 0.5}}
+      end={{x: 1, y: 0.5}}
+      style={{flex: 1}}
+    />
+  </Animated.View>
+);
+
+const Bone = ({style}: {style: any}) => (
+  <View style={[{backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 6}, style]} />
+);
+
+const SkeletonCard = ({nameW, translateX}: {nameW: number; translateX: Animated.Value}) => (
+  <View style={[st.card, st.cardActive, {marginTop: 10, overflow: 'hidden'}]}>
+    <View style={st.cardLeft}>
+      <Bone style={{width: 42, height: 42, borderRadius: 21}} />
+      <View style={st.cardInfo}>
+        <Bone style={{width: nameW, height: 14, marginBottom: 6}} />
+        <Bone style={{width: 80, height: 11}} />
+      </View>
+    </View>
+    <View style={st.cardRight}>
+      <Bone style={{width: 110, height: 26, borderRadius: 8}} />
+      <Bone style={{width: 130, height: 10, marginTop: 4}} />
+    </View>
+    <ShimmerOverlay translateX={translateX} />
+  </View>
+);
+
+const SkeletonContent = () => {
+  const translateX = useShimmerTranslate();
+
+  return (
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={st.scroll}>
+      <View style={st.sectionRow}>
+        <View style={[st.sectionDot, {backgroundColor: GREEN}]} />
+        <Bone style={{width: 110, height: 16}} />
+      </View>
+      <SkeletonCard nameW={100} translateX={translateX} />
+      <SkeletonCard nameW={160} translateX={translateX} />
+      <SkeletonCard nameW={90} translateX={translateX} />
+      <SkeletonCard nameW={90} translateX={translateX} />
+      <SkeletonCard nameW={90} translateX={translateX} />
+      <SkeletonCard nameW={80} translateX={translateX} />
+      <SkeletonCard nameW={80} translateX={translateX} />
+      <SkeletonCard nameW={120} translateX={translateX} />
+      <SkeletonCard nameW={120} translateX={translateX} />
+    </ScrollView>
+  );
+};
+
 /* ══════════════════════════════════════════════════════════ */
 const EventTimerScreen = ({navigation}: any) => {
   const {t} = useTranslation();
@@ -207,26 +290,74 @@ const EventTimerScreen = ({navigation}: any) => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [tick, setTick] = useState(0);
-  const [ready, setReady] = useState(false);
   const [notifiedEvents, setNotifiedEvents] = useState<Set<string>>(new Set());
   const [allEventsNotifOn, setAllEventsNotifOn] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const frozenRef = useRef(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const skeletonFade = useRef(new Animated.Value(1)).current;
 
-  // Defer timer + content until navigation slide-in completes
+  // Freeze timer on Android hardware back to prevent janky exit animation
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      setReady(true);
-      intervalRef.current = setInterval(() => setTick(t => t + 1), 1000);
-      // Load notification preferences
-      getNotifiedEvents().then(prefs => setNotifiedEvents(prefs));
-      areNotificationsEnabled().then(on => setAllEventsNotifOn(on));
-      // Reschedule existing notifications
-      rescheduleAllNotifications(events).catch(() => {});
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      frozenRef.current = true;
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+      return false; // let default back happen
     });
-    return () => {
-      task.cancel();
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
+    return () => sub.remove();
+  }, []);
+
+  // Crossfade: skeleton out, real content in — no gap
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      const timer = setTimeout(() => {
+        setIsReady(true);
+        // Start crossfade on next frame so React has committed the real content
+        requestAnimationFrame(() => {
+          Animated.parallel([
+            Animated.timing(fadeAnim, {
+              toValue: 1,
+              duration: 300,
+              useNativeDriver: true,
+            }),
+            Animated.timing(skeletonFade, {
+              toValue: 0,
+              duration: 300,
+              useNativeDriver: true,
+            }),
+          ]).start();
+        });
+      }, 50);
+      return () => clearTimeout(timer);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [fadeAnim, skeletonFade]);
+
+  // Start/stop the 1-second countdown timer based on screen focus.
+  // Stopping on blur ensures the JS thread is free for back-navigation animation.
+  // Only start ticking after the screen is ready.
+  useFocusEffect(
+    useCallback(() => {
+      if (!isReady) return;
+      frozenRef.current = false;
+      intervalRef.current = setInterval(() => {
+        if (!frozenRef.current) setTick(t => t + 1);
+      }, 1000);
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      };
+    }, [isReady]),
+  );
+
+  // Load notification prefs once on mount
+  useEffect(() => {
+    getNotifiedEvents().then(prefs => setNotifiedEvents(prefs));
+    areNotificationsEnabled().then(on => setAllEventsNotifOn(on));
+    rescheduleAllNotifications(events).catch(() => {});
   }, []);
 
   /* ── Fetch logic ─────────────────────────────────────── */
@@ -274,10 +405,7 @@ const EventTimerScreen = ({navigation}: any) => {
   }, []);
 
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      fetchEvents({silent: true});
-    });
-    return () => task.cancel();
+    fetchEvents({silent: true});
   }, [fetchEvents]);
 
   const handleRefresh = useCallback(async () => {
@@ -290,14 +418,19 @@ const EventTimerScreen = ({navigation}: any) => {
   }, [fetchEvents]);
 
   /* ── Computed ─────────────────────────────────────────── */
+
+  // 1. Parse time slots ONCE when events change (not every tick)
+  const parsedEvents = useMemo(
+    () => events.map(e => ({...e, slots: parseTimeSlots(e.times)})),
+    [events],
+  );
+
+  // 2. Recalc status every tick (lightweight: ~41 status checks)
+  // Data is computed even before isReady so it's available instantly
   const eventsWithStatus: EventWithStatus[] = useMemo(
-    () =>
-      events.map(e => {
-        const slots = parseTimeSlots(e.times);
-        return {...e, slots, status: getEventStatus(slots)};
-      }),
+    () => parsedEvents.map(e => ({...e, status: getEventStatus(e.slots)})),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [events, tick],
+    [parsedEvents, tick],
   );
 
   const activeEvents = useMemo(
@@ -319,21 +452,20 @@ const EventTimerScreen = ({navigation}: any) => {
   );
 
   /* ── ALL EVENTS: group by event name, flatten slots ── */
-  const groupedEvents: GroupedEvent[] = useMemo(() => {
-    const map = new Map<string, GroupedEvent>();
+  // Structure only rebuilds when events change (NOT every tick)
+  const groupedEventsBase = useMemo(() => {
+    const map = new Map<string, Omit<GroupedEvent, 'rows'> & {rows: Omit<SlotRow, 'isLive'>[]}>();
 
-    for (const ev of eventsWithStatus) {
+    for (const ev of parsedEvents) {
       if (!map.has(ev.name)) {
         map.set(ev.name, {name: ev.name, icon: ev.icon, rows: []});
       }
       const group = map.get(ev.name)!;
       for (const slot of ev.slots) {
-        const live = isSlotActive(slot);
         const localD = utcToLocalDate(slot.start);
         group.rows.push({
           map: ev.map,
           slot,
-          isLive: live,
           localStartSec: localD.getTime(),
         });
       }
@@ -345,8 +477,18 @@ const EventTimerScreen = ({navigation}: any) => {
     }
 
     return Array.from(map.values());
+  }, [parsedEvents]);
+
+  // Only update isLive flags on tick (very cheap: just time comparisons)
+  const groupedEvents: GroupedEvent[] = useMemo(
+    () =>
+      groupedEventsBase.map(g => ({
+        ...g,
+        rows: g.rows.map(r => ({...r, isLive: isSlotActive(r.slot)})),
+      })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventsWithStatus, tick]);
+    [groupedEventsBase, tick],
+  );
 
   /* ── Toggle notification for an event ──────────────── */
   const handleToggleNotif = useCallback(async (group: GroupedEvent) => {
@@ -488,7 +630,11 @@ const EventTimerScreen = ({navigation}: any) => {
 
       {/* ── Header ─────────────────────────────────────── */}
       <View style={st.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={st.backBtn}>
+        <TouchableOpacity onPress={() => {
+          frozenRef.current = true;
+          if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+          navigation.goBack();
+        }} style={st.backBtn}>
           <Icon name="arrow-left" size={20} color="#fff" />
         </TouchableOpacity>
         <View style={{width: 40}} />
@@ -509,12 +655,15 @@ const EventTimerScreen = ({navigation}: any) => {
         </TouchableOpacity>
       </View>
 
-      {/* ── Content ────────────────────────────────────── */}
-      {!ready ? (
-        <View style={st.loaderWrap}>
-          <ActivityIndicator size="large" color={CYAN} />
-        </View>
-      ) : (
+      {/* ── Content ──────────────────────────────────────── */}
+      <View style={{flex: 1}}>
+        {/* Skeleton stays underneath and fades out */}
+        <Animated.View style={[StyleSheet.absoluteFill, {opacity: skeletonFade}]} pointerEvents={isReady ? 'none' : 'auto'}>
+          <SkeletonContent />
+        </Animated.View>
+        {/* Real content renders on top and fades in */}
+        {isReady && (
+          <Animated.View style={{flex: 1, opacity: fadeAnim}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={st.scroll}
@@ -566,7 +715,9 @@ const EventTimerScreen = ({navigation}: any) => {
             </View>
           )}
         </ScrollView>
-      )}
+        </Animated.View>
+        )}
+      </View>
     </View>
   );
 };

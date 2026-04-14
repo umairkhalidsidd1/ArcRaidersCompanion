@@ -119,6 +119,62 @@ const UPGRADE_KEYS: {key: string; label: string}[] = [
   {key: 'reducedDurabilityBurnRate', label: 'weapons.upgrades.durabilityBurn'},
 ];
 
+/* ── Memoized carousel card (prevents re‑render on parent state change) ── */
+interface CarouselCardProps {
+  item: WeaponFamily;
+  index: number;
+  scrollX: Animated.Value;
+  onCardPress: (index: number) => void;
+}
+const CarouselCard = React.memo(
+  ({item, index, scrollX, onCardPress}: CarouselCardProps) => {
+    const inputRange = [
+      (index - 1) * SNAP_INTERVAL,
+      index * SNAP_INTERVAL,
+      (index + 1) * SNAP_INTERVAL,
+    ];
+    const scale = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.88, 1, 0.88],
+      extrapolate: 'clamp',
+    });
+    const opacity = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.5, 1, 0.5],
+      extrapolate: 'clamp',
+    });
+    const translateY = scrollX.interpolate({
+      inputRange,
+      outputRange: [8, 0, 8],
+      extrapolate: 'clamp',
+    });
+    return (
+      <TouchableOpacity activeOpacity={0.9} onPress={() => onCardPress(index)}>
+        <Animated.View
+          style={[
+            styles.carouselCard,
+            {transform: [{scale}, {translateY}], opacity},
+          ]}>
+          <LinearGradient
+            colors={CAROUSEL_GRAD_COLORS as any}
+            start={CAROUSEL_GRAD_START}
+            end={CAROUSEL_GRAD_END}
+            style={StyleSheet.absoluteFill}
+          />
+          <Image
+            source={resolveImage(item.variants[0].icon)}
+            style={styles.carouselImage}
+            resizeMode="contain"
+          />
+          <Text style={styles.carouselName}>
+            {item.baseName.toUpperCase()}
+          </Text>
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  },
+);
+
 /* ── component ── */
 const WeaponsScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
@@ -164,9 +220,8 @@ const WeaponsScreen = ({navigation}: any) => {
   const totalLevels = family?.variants.length ?? 1;
   const rarityColor = weapon ? getRarityColor(weapon.rarity) : colors.textMuted;
 
-  const onScrollUpdate = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const x = e.nativeEvent.contentOffset.x;
+  const updateIndex = useCallback(
+    (x: number) => {
       const idx = Math.round(x / SNAP_INTERVAL);
       if (idx >= 0 && idx < families.length && idx !== lastFiredIndex.current) {
         lastFiredIndex.current = idx;
@@ -175,6 +230,66 @@ const WeaponsScreen = ({navigation}: any) => {
       }
     },
     [families.length],
+  );
+
+  /* On every scroll frame, check if we're close enough to a snap point to
+     update the detail card.  This makes the bottom section update while the
+     carousel is still decelerating — feels instant on both platforms. */
+  const onScroll = useMemo(
+    () =>
+      Animated.event(
+        [{nativeEvent: {contentOffset: {x: scrollX}}}],
+        {
+          useNativeDriver: true,
+          listener: (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+            const x = e.nativeEvent.contentOffset.x;
+            const nearest = Math.round(x / SNAP_INTERVAL);
+            if (
+              nearest >= 0 &&
+              nearest < families.length &&
+              nearest !== lastFiredIndex.current &&
+              Math.abs(x - nearest * SNAP_INTERVAL) < SNAP_INTERVAL * 0.3
+            ) {
+              lastFiredIndex.current = nearest;
+              setFamilyIndex(nearest);
+              setLevelIndex(0);
+            }
+          },
+        },
+      ),
+    [scrollX, families.length],
+  );
+
+  const onMomentumEnd = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      updateIndex(e.nativeEvent.contentOffset.x);
+    },
+    [updateIndex],
+  );
+
+  const onCardPress = useCallback(
+    (index: number) => {
+      carouselRef.current?.scrollToOffset({
+        offset: index * SNAP_INTERVAL,
+        animated: true,
+      });
+      lastFiredIndex.current = index;
+      setFamilyIndex(index);
+      setLevelIndex(0);
+    },
+    [],
+  );
+
+  const renderCarouselItem = useCallback(
+    ({item, index}: {item: WeaponFamily; index: number}) => (
+      <CarouselCard
+        item={item}
+        index={index}
+        scrollX={scrollX}
+        onCardPress={onCardPress}
+      />
+    ),
+    [scrollX, onCardPress],
   );
 
   /* gather upgrade perks that have non-zero values */
@@ -201,7 +316,7 @@ const WeaponsScreen = ({navigation}: any) => {
         <View style={HEADER_SPACER} />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+      <ScrollView showsVerticalScrollIndicator={false} bounces={false} overScrollMode="never" contentContainerStyle={styles.scroll}>
         {/* ── Weapon Carousel ── */}
         <Animated.FlatList
           ref={carouselRef}
@@ -211,75 +326,20 @@ const WeaponsScreen = ({navigation}: any) => {
           showsHorizontalScrollIndicator={false}
           snapToInterval={SNAP_INTERVAL}
           decelerationRate="fast"
+          bounces={false}
+          overScrollMode="never"
+          disableIntervalMomentum={true}
           initialScrollIndex={familyIndex}
           contentContainerStyle={CAROUSEL_CONTENT_STYLE}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {x: scrollX}}}],
-            {useNativeDriver: true, listener: onScrollUpdate},
-          )}
+          onScroll={onScroll}
           scrollEventThrottle={16}
-          onMomentumScrollEnd={onScrollUpdate}
+          onMomentumScrollEnd={onMomentumEnd}
           getItemLayout={(_: any, index: number) => ({
             length: SNAP_INTERVAL,
             offset: index * SNAP_INTERVAL,
             index,
           })}
-          renderItem={({item, index}: {item: WeaponFamily; index: number}) => {
-            const inputRange = [
-              (index - 1) * SNAP_INTERVAL,
-              index * SNAP_INTERVAL,
-              (index + 1) * SNAP_INTERVAL,
-            ];
-            const scale = scrollX.interpolate({
-              inputRange,
-              outputRange: [0.82, 1, 0.82],
-              extrapolate: 'clamp',
-            });
-            const opacity = scrollX.interpolate({
-              inputRange,
-              outputRange: [0.4, 1, 0.4],
-              extrapolate: 'clamp',
-            });
-            const translateY = scrollX.interpolate({
-              inputRange,
-              outputRange: [12, 0, 12],
-              extrapolate: 'clamp',
-            });
-            return (
-              <TouchableOpacity
-                activeOpacity={0.9}
-                onPress={() => {
-                  carouselRef.current?.scrollToOffset({
-                    offset: index * SNAP_INTERVAL,
-                    animated: true,
-                  });
-                  lastFiredIndex.current = index;
-                  setFamilyIndex(index);
-                  setLevelIndex(0);
-                }}>
-                <Animated.View
-                  style={[
-                    styles.carouselCard,
-                    {transform: [{scale}, {translateY}], opacity},
-                  ]}>
-                  <LinearGradient
-                    colors={CAROUSEL_GRAD_COLORS as any}
-                    start={CAROUSEL_GRAD_START}
-                    end={CAROUSEL_GRAD_END}
-                    style={StyleSheet.absoluteFill}
-                  />
-                  <Image
-                    source={resolveImage(item.variants[0].icon)}
-                    style={styles.carouselImage}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.carouselName}>
-                    {item.baseName.toUpperCase()}
-                  </Text>
-                </Animated.View>
-              </TouchableOpacity>
-            );
-          }}
+          renderItem={renderCarouselItem}
         />
 
         {/* ── Detail area: level sidebar + card ── */}

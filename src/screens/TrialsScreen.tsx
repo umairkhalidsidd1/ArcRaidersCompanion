@@ -1,9 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Dimensions,
   FlatList,
+  InteractionManager,
   Linking,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -34,6 +37,15 @@ type Trial = {
   tip: string;
 };
 
+const EMPTY_TRIALS: Trial[] = [];
+
+type TrialsScreenCache = {
+  language: string;
+  trials: Trial[];
+};
+
+let TRIALS_SCREEN_CACHE: TrialsScreenCache | null = null;
+
 const CATEGORY_CONFIG: Record<string, {icon: string; color: string}> = {
   Combat: {icon: 'sword-cross', color: '#FF5252'},
   Looting: {icon: 'treasure-chest', color: '#FFB300'},
@@ -57,12 +69,86 @@ const getResetTime = () => {
 };
 
 const TrialsScreen = ({navigation}: any) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
-  const trials = getTrials() as Trial[];
+  const seed = TRIALS_SCREEN_CACHE && TRIALS_SCREEN_CACHE.language === i18n.language
+    ? TRIALS_SCREEN_CACHE
+    : null;
+
+  const [trials, setTrials] = useState<Trial[]>(seed?.trials ?? EMPTY_TRIALS);
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(
+    seed ? Math.min(seed.trials.length, Platform.OS === 'android' ? 4 : seed.trials.length) : 0,
+  );
   const [resetTime, setResetTime] = useState(getResetTime());
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const showContent = ready && listVisible;
+
+  useEffect(() => {
+    let active = true;
+    setListVisible(false);
+    setVisibleCount(0);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
+    });
+
+    const cached = TRIALS_SCREEN_CACHE && TRIALS_SCREEN_CACHE.language === i18n.language
+      ? TRIALS_SCREEN_CACHE
+      : null;
+
+    if (cached) {
+      setTrials(cached.trials);
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+
+    const loadTask = InteractionManager.runAfterInteractions(() => {
+      const nextTrials = getTrials() as Trial[];
+      if (!active) return;
+
+      setTrials(nextTrials);
+      TRIALS_SCREEN_CACHE = {
+        language: i18n.language,
+        trials: nextTrials,
+      };
+      setReady(true);
+    });
+
+    return () => {
+      active = false;
+      listTask.cancel();
+      loadTask.cancel();
+    };
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (!showContent) return;
+
+    const initial = Platform.OS === 'android' ? 4 : trials.length;
+    const batch = Platform.OS === 'android' ? 4 : trials.length;
+    const max = trials.length;
+
+    setVisibleCount(Math.min(initial, max));
+
+    if (Platform.OS !== 'android' || max <= initial) return;
+
+    const interval = setInterval(() => {
+      setVisibleCount(prev => {
+        const next = Math.min(max, prev + batch);
+        if (next >= max) {
+          clearInterval(interval);
+        }
+        return next;
+      });
+    }, 80);
+
+    return () => clearInterval(interval);
+  }, [showContent, trials.length]);
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -220,13 +306,29 @@ const TrialsScreen = ({navigation}: any) => {
 
         {/* Trials list */}
         <FlatList
-          data={trials}
+          data={showContent ? trials.slice(0, visibleCount) : EMPTY_TRIALS}
           renderItem={renderTrialCard}
           keyExtractor={item => String(item.id)}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
+          initialNumToRender={Platform.OS === 'android' ? 4 : 8}
+          maxToRenderPerBatch={Platform.OS === 'android' ? 6 : 10}
+          windowSize={Platform.OS === 'android' ? 7 : 9}
+          updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+          removeClippedSubviews={Platform.OS === 'android'}
+          ListFooterComponent={showContent && visibleCount < trials.length ? (
+            <View style={styles.loadingMore}>
+              <ActivityIndicator size="small" color={colors.cyan} />
+            </View>
+          ) : null}
         />
       </Animated.View>
+
+      {!showContent && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
     </View>
   );
 };
@@ -326,6 +428,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingBottom: 100,
     gap: spacing.md,
+  },
+  loadingMore: {
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
   },
 
   /* Card */

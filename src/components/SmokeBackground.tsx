@@ -14,7 +14,13 @@ const { width: W, height: H } = Dimensions.get('window');
 const FRAME_SKIP = 3; // update every 4th frame (60/4 = 15fps)
 
 const APP_START = Date.now();
-const globalTime = makeMutable(0);
+let globalTime: ReturnType<typeof makeMutable<number>> | null = null;
+function getGlobalTime() {
+  if (!globalTime) {
+    globalTime = makeMutable(0);
+  }
+  return globalTime;
+}
 
 /*
  * Matched to Raiders Map neuron_background.frag shader exactly.
@@ -74,18 +80,19 @@ half4 main(float2 pos) {
 
 const SmokeCanvas = React.memo(() => {
   const frameCount = makeMutable(0);
+  const time = getGlobalTime();
 
   useFrameCallback(() => {
     'worklet';
     frameCount.value = frameCount.value + 1;
     if (frameCount.value % (FRAME_SKIP + 1) === 0) {
-      globalTime.value = Date.now() - APP_START;
+      time.value = Date.now() - APP_START;
     }
   });
 
   const uniforms = useDerivedValue(() => ({
     uResolution: [W, H],
-    uTime: globalTime.value,
+    uTime: time.value,
   }));
 
   return (

@@ -1,7 +1,10 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
+  InteractionManager,
+  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -93,39 +96,173 @@ const CARD_WIDTH = (SCREEN_WIDTH - spacing.lg * 2 - CARD_GAP) / NUM_COLS;
 const TABS = ['ALL', 'MISSING', 'FOUND'] as const;
 type Tab = typeof TABS[number];
 
+const EMPTY_COLLECTIBLES: CollectibleItem[] = [];
+const SPACER_ITEM: CollectibleItem = {
+  id: '__spacer__',
+  name: '',
+  description: null,
+  icon: null,
+  rarity: 'Common',
+  category: '',
+};
+
+type CollectibleTrackerCache = {
+  language: string;
+  items: CollectibleItem[];
+  categories: string[];
+  collected: string[];
+};
+
+let COLLECTIBLE_TRACKER_CACHE: CollectibleTrackerCache | null = null;
+
 /* ═══════ COMPONENT ═══════ */
 const CollectibleTrackerScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const {t, i18n: i18nHook} = useTranslation();
-  refreshCollectibles();
-  const [collected, setCollected] = useState<string[]>([]);
+
+  const seed = COLLECTIBLE_TRACKER_CACHE && COLLECTIBLE_TRACKER_CACHE.language === i18nHook.language
+    ? COLLECTIBLE_TRACKER_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(false);
+  const [items, setItems] = useState<CollectibleItem[]>(seed?.items ?? collectibles);
+  const [categories, setCategories] = useState<string[]>(seed?.categories ?? ALL_CATEGORIES);
+  const [collected, setCollected] = useState<string[]>(seed?.collected ?? []);
   const [activeCategory, setActiveCategory] = useState('All');
   const [activeTab, setActiveTab] = useState<Tab>('ALL');
 
   useEffect(() => {
-    getCollectibles().then(setCollected);
-  }, []);
+    let active = true;
+    setListVisible(false);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
+    });
+
+    const cached = COLLECTIBLE_TRACKER_CACHE && COLLECTIBLE_TRACKER_CACHE.language === i18nHook.language
+      ? COLLECTIBLE_TRACKER_CACHE
+      : null;
+
+    if (cached) {
+      setItems(cached.items);
+      setCategories(cached.categories);
+      setCollected(cached.collected);
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+
+    const loadTask = InteractionManager.runAfterInteractions(() => {
+      refreshCollectibles();
+      const nextItems = collectibles;
+      const nextCategories = ALL_CATEGORIES;
+
+      getCollectibles()
+        .then(ids => {
+          if (!active) return;
+          setItems(nextItems);
+          setCategories(nextCategories);
+          setCollected(ids);
+          COLLECTIBLE_TRACKER_CACHE = {
+            language: i18nHook.language,
+            items: nextItems,
+            categories: nextCategories,
+            collected: ids,
+          };
+        })
+        .catch(() => {
+          if (!active) return;
+          setItems(nextItems);
+          setCategories(nextCategories);
+          setCollected([]);
+          COLLECTIBLE_TRACKER_CACHE = {
+            language: i18nHook.language,
+            items: nextItems,
+            categories: nextCategories,
+            collected: [],
+          };
+        })
+        .finally(() => {
+          if (active) setReady(true);
+        });
+    });
+
+    return () => {
+      active = false;
+      listTask.cancel();
+      loadTask.cancel();
+    };
+  }, [i18nHook.language]);
+
+  useEffect(() => {
+    if (!categories.includes(activeCategory)) {
+      setActiveCategory('All');
+    }
+  }, [categories, activeCategory]);
+
+  useEffect(() => {
+    if (!ready) return;
+    COLLECTIBLE_TRACKER_CACHE = {
+      language: i18nHook.language,
+      items,
+      categories,
+      collected,
+    };
+  }, [ready, i18nHook.language, items, categories, collected]);
 
   const handleToggle = useCallback(async (id: string) => {
     const isNow = await toggleCollectible(id);
     setCollected(prev => isNow ? [...prev, id] : prev.filter(c => c !== id));
   }, []);
 
+  const collectedSet = useMemo(() => new Set(collected), [collected]);
+
+  const collectibleIdSet = useMemo(() => {
+    const ids = new Set<string>();
+    items.forEach(item => ids.add(item.id));
+    return ids;
+  }, [items]);
+
+  const showContent = ready && listVisible;
+
   const filtered = useMemo(() => {
-    let result = collectibles;
+    if (!showContent) return EMPTY_COLLECTIBLES;
+
+    let result = items;
     if (activeCategory !== 'All') {
       result = result.filter(c => c.category === activeCategory);
     }
     if (activeTab === 'FOUND') {
-      result = result.filter(c => collected.includes(c.id));
+      result = result.filter(c => collectedSet.has(c.id));
     } else if (activeTab === 'MISSING') {
-      result = result.filter(c => !collected.includes(c.id));
+      result = result.filter(c => !collectedSet.has(c.id));
     }
     return result;
-  }, [activeCategory, activeTab, collected, i18nHook.language]);
+  }, [showContent, items, activeCategory, activeTab, collectedSet]);
 
-  const totalCount = collectibles.length;
-  const foundCount = collected.filter(c => collectibles.some(co => co.id === c)).length;
+  const paddedFiltered = useMemo(
+    () => (filtered.length % NUM_COLS !== 0 ? [...filtered, SPACER_ITEM] : filtered),
+    [filtered],
+  );
+
+  const categoryCounts = useMemo(() => {
+    const map = new Map<string, number>();
+    map.set('All', items.length);
+    for (const item of items) {
+      map.set(item.category, (map.get(item.category) || 0) + 1);
+    }
+    return map;
+  }, [items]);
+
+  const totalCount = items.length;
+  const foundCount = useMemo(() => {
+    let count = 0;
+    for (const id of collectedSet) {
+      if (collectibleIdSet.has(id)) count += 1;
+    }
+    return count;
+  }, [collectedSet, collectibleIdSet]);
   const progress = totalCount > 0 ? Math.round((foundCount / totalCount) * 100) : 0;
 
   const renderItem = useCallback(
@@ -133,7 +270,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
       if (item.id === '__spacer__') {
         return <View style={{width: CARD_WIDTH}} />;
       }
-      const isFound = collected.includes(item.id);
+      const isFound = collectedSet.has(item.id);
       const rc = RARITY_COLORS[item.rarity] || '#9E9E9E';
       const catCfg = CATEGORY_ICONS[item.category] || CATEGORY_ICONS.Other;
 
@@ -170,7 +307,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
         </TouchableOpacity>
       );
     },
-    [collected, handleToggle],
+    [collectedSet, handleToggle],
   );
 
   return (
@@ -205,7 +342,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
       <View style={styles.segBar}>
         {TABS.map(tab => {
           const isActive = activeTab === tab;
-          let count = collectibles.length;
+            let count = totalCount;
           if (tab === 'FOUND') count = foundCount;
           else if (tab === 'MISSING') count = totalCount - foundCount;
           return (
@@ -227,12 +364,10 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
         showsHorizontalScrollIndicator={false}
         style={{flexGrow: 0}}
         contentContainerStyle={styles.chipBar}>
-        {ALL_CATEGORIES.map(cat => {
+        {categories.map(cat => {
           const cfg = CATEGORY_ICONS[cat] || CATEGORY_ICONS.Other;
           const isActive = activeCategory === cat;
-          const count = cat === 'All'
-            ? collectibles.length
-            : collectibles.filter(c => c.category === cat).length;
+          const count = categoryCounts.get(cat) || 0;
           if (cat !== 'All' && count === 0) return null;
           return (
             <TouchableOpacity
@@ -250,7 +385,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
 
       {/* Grid */}
       <FlatList
-        data={filtered.length % NUM_COLS !== 0 ? [...filtered, {id: '__spacer__', name: '', description: null, icon: null, rarity: 'Common', category: ''}] : filtered}
+        data={showContent ? paddedFiltered : EMPTY_COLLECTIBLES}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={NUM_COLS}
@@ -258,13 +393,24 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
         contentContainerStyle={styles.gridContent}
         ItemSeparatorComponent={() => <View style={{height: CARD_GAP}} />}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
+        initialNumToRender={Platform.OS === 'android' ? 8 : 12}
+        maxToRenderPerBatch={Platform.OS === 'android' ? 8 : 12}
+        windowSize={Platform.OS === 'android' ? 9 : 11}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+        removeClippedSubviews={Platform.OS === 'android'}
+        ListEmptyComponent={showContent ? (
           <View style={styles.emptyState}>
             <Icon name="diamond-stone" size={48} color={colors.textMuted} />
             <Text style={styles.emptyText}>{t('collectibleTracker.noResults')}</Text>
           </View>
-        }
+        ) : null}
       />
+
+      {!showContent && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
     </View>
   );
 };
@@ -380,6 +526,12 @@ const styles = StyleSheet.create({
   // Empty
   emptyState: {alignItems: 'center', paddingTop: 60, gap: spacing.md},
   emptyText: {fontSize: fonts.sizes.md, color: colors.textMuted},
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
+  },
 });
 
 export default CollectibleTrackerScreen;

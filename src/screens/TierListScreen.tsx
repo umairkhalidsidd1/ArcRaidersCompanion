@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Animated,
   Dimensions,
@@ -93,6 +94,15 @@ function refreshItemData() {
 }
 refreshItemData();
 const EMPTY_IDS: string[] = [];
+const EMPTY_ITEMS: Item[] = [];
+
+type TierListScreenCache = {
+  language: string;
+  tiers: TierDef[];
+  assignments: Record<string, string[]>;
+};
+
+let TIER_LIST_SCREEN_CACHE: TierListScreenCache | null = null;
 
 const PoolItemCard = memo(({item, isSelected, onSelect}: {item: Item; isSelected: boolean; onSelect: (id: string) => void}) => (
   <TouchableOpacity style={[s.itemCard, isSelected && s.itemCardSelected]} onPress={() => onSelect(item.id)} activeOpacity={0.7}>
@@ -164,10 +174,14 @@ const NUM_COLUMNS = 4;
 const TierListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const {t, i18n: i18nHook} = useTranslation();
-  refreshItemData();
-  const [ready, setReady] = useState(false);
-  const [tiers, setTiers] = useState<TierDef[]>(DEFAULT_TIERS);
-  const [assignments, setAssignments] = useState<Record<string, string[]>>({});
+  const seed = TIER_LIST_SCREEN_CACHE && TIER_LIST_SCREEN_CACHE.language === i18nHook.language
+    ? TIER_LIST_SCREEN_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(false);
+  const [tiers, setTiers] = useState<TierDef[]>(seed?.tiers ?? DEFAULT_TIERS);
+  const [assignments, setAssignments] = useState<Record<string, string[]>>(seed?.assignments ?? {});
   const [filter, setFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [editingTier, setEditingTier] = useState<TierDef | null>(null);
@@ -180,34 +194,100 @@ const TierListScreen = ({navigation}: any) => {
   tiersRef.current = tiers;
 
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      AsyncStorage.getItem(STORAGE_KEY).then(json => {
-        if (json) {
-          try {
-            const saved: SavedState = JSON.parse(json);
-            if (saved.tiers) setTiers(saved.tiers);
-            if (saved.assignments) setAssignments(saved.assignments);
-          } catch {}
-        }
-        setReady(true);
-      });
+    refreshItemData();
+  }, [i18nHook.language]);
+
+  useEffect(() => {
+    let active = true;
+    setListVisible(false);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
     });
-    return () => task.cancel();
-  }, []);
+
+    const cached = TIER_LIST_SCREEN_CACHE && TIER_LIST_SCREEN_CACHE.language === i18nHook.language
+      ? TIER_LIST_SCREEN_CACHE
+      : null;
+
+    if (cached) {
+      setTiers(cached.tiers);
+      setAssignments(cached.assignments);
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+
+    const load = () => {
+      AsyncStorage.getItem(STORAGE_KEY)
+        .then(json => {
+          let nextTiers = DEFAULT_TIERS;
+          let nextAssignments: Record<string, string[]> = {};
+
+          if (json) {
+            try {
+              const saved: SavedState = JSON.parse(json);
+              if (Array.isArray(saved.tiers) && saved.tiers.length > 0) {
+                nextTiers = saved.tiers;
+              }
+              if (saved.assignments && typeof saved.assignments === 'object') {
+                nextAssignments = saved.assignments;
+              }
+            } catch {}
+          }
+
+          if (!active) return;
+          setTiers(nextTiers);
+          setAssignments(nextAssignments);
+          TIER_LIST_SCREEN_CACHE = {
+            language: i18nHook.language,
+            tiers: nextTiers,
+            assignments: nextAssignments,
+          };
+        })
+        .finally(() => {
+          if (active) setReady(true);
+        });
+    };
+
+    const task = cached ? null : InteractionManager.runAfterInteractions(load);
+    if (cached) load();
+
+    return () => {
+      active = false;
+      listTask.cancel();
+      task?.cancel();
+    };
+  }, [i18nHook.language]);
+
+  useEffect(() => {
+    if (!ready) return;
+    TIER_LIST_SCREEN_CACHE = {
+      language: i18nHook.language,
+      tiers,
+      assignments,
+    };
+  }, [ready, i18nHook.language, tiers, assignments]);
 
   const save = useCallback((t: TierDef[], a: Record<string, string[]>) => {
     setTiers(t);
     setAssignments(a);
+    TIER_LIST_SCREEN_CACHE = {
+      language: i18nHook.language,
+      tiers: t,
+      assignments: a,
+    };
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({tiers: t, assignments: a})).catch(() => {});
-  }, []);
+  }, [i18nHook.language]);
 
   const assignedIds = useMemo(() => {
+    if (!ready) return new Set<string>();
     const ids = new Set<string>();
     Object.values(assignments).forEach(arr => arr.forEach(id => ids.add(id)));
     return ids;
-  }, [assignments]);
+  }, [ready, assignments]);
 
   const filteredItems = useMemo(() => {
+    if (!ready || !listVisible) return EMPTY_ITEMS;
     let items = allItems.filter(i => !assignedIds.has(i.id));
     if (filter !== 'All') items = items.filter(i => i.item_type === filter);
     if (searchQuery.trim()) {
@@ -215,7 +295,7 @@ const TierListScreen = ({navigation}: any) => {
       items = items.filter(i => i.name.toLowerCase().includes(q));
     }
     return items;
-  }, [assignedIds, filter, searchQuery, i18nHook.language]);
+  }, [ready, listVisible, assignedIds, filter, searchQuery, i18nHook.language]);
 
   const totalAssigned = assignedIds.size;
 
@@ -329,20 +409,7 @@ const TierListScreen = ({navigation}: any) => {
 
   const keyExtractor = useCallback((item: Item) => item.id, []);
 
-  if (!ready) {
-    return (
-      <View style={[s.root, {paddingTop: insets.top}]}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
-        <View style={s.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
-            <Icon name="arrow-left" size={22} color={colors.textPrimary} />
-          </TouchableOpacity>
-          <Text style={s.headerTitle}>{t('tierList.title')}</Text>
-          <View style={s.headerActions} />
-        </View>
-      </View>
-    );
-  }
+  const showContent = ready && listVisible;
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
@@ -366,7 +433,7 @@ const TierListScreen = ({navigation}: any) => {
         <Text style={s.subtitleCount}>{t('tierList.itemsRanked', {count: totalAssigned})}</Text>
       </View>
       <FlatList
-        data={filteredItems}
+        data={showContent ? filteredItems : EMPTY_ITEMS}
         extraData={selectedItem}
         renderItem={renderPoolItem}
         keyExtractor={keyExtractor}
@@ -374,12 +441,13 @@ const TierListScreen = ({navigation}: any) => {
         showsVerticalScrollIndicator={false}
         columnWrapperStyle={s.itemsRow}
         contentContainerStyle={{paddingBottom: insets.bottom + 20, gap: 8}}
-        initialNumToRender={16}
-        maxToRenderPerBatch={16}
-        windowSize={5}
-        removeClippedSubviews
+        initialNumToRender={Platform.OS === 'android' ? 8 : 16}
+        maxToRenderPerBatch={Platform.OS === 'android' ? 8 : 16}
+        windowSize={Platform.OS === 'android' ? 7 : 5}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+        removeClippedSubviews={Platform.OS === 'android'}
         keyboardShouldPersistTaps="handled"
-        ListHeaderComponent={
+        ListHeaderComponent={showContent ? (
           <>
             <View collapsable={false} style={s.tiersContainer}>
               {tiers.map(tier => (
@@ -423,8 +491,8 @@ const TierListScreen = ({navigation}: any) => {
               )}
             </View>
           </>
-        }
-        ListEmptyComponent={
+        ) : null}
+        ListEmptyComponent={showContent ? (
           !searchQuery ? (
             <View style={s.emptyState}>
               <Icon name="check-circle-outline" size={40} color={colors.green + '60'} />
@@ -437,8 +505,15 @@ const TierListScreen = ({navigation}: any) => {
               <Text style={s.emptyTitle}>{t('tierList.noMatches')}</Text>
             </View>
           )
-        }
+        ) : null}
       />
+
+      {!showContent && (
+        <View style={s.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
+
       <Modal visible={showEditModal} transparent animationType="slide">
         <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <TouchableOpacity style={s.modalOverlay} activeOpacity={1} onPress={() => { setEditingTier(null); setAddingTier(false); }}>
@@ -515,6 +590,12 @@ const s = StyleSheet.create({
   emptyState: {width: '100%', alignItems: 'center', paddingVertical: 40, gap: 8},
   emptyTitle: {fontSize: 16, fontWeight: '700', color: colors.textPrimary},
   emptySub: {fontSize: 12, color: colors.textMuted},
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
+  },
   modalOverlay: {flex: 1, backgroundColor: 'transparent', justifyContent: 'flex-end'},
   modalSheet: {backgroundColor: colors.bg, borderTopLeftRadius: borderRadius.xl, borderTopRightRadius: borderRadius.xl, paddingHorizontal: spacing.xl, paddingTop: spacing.md, paddingBottom: 40, borderWidth: 1, borderBottomWidth: 0, borderColor: colors.borderLight},
   modalHandle: {width: 40, height: 4, borderRadius: 2, backgroundColor: colors.textMuted, alignSelf: 'center', marginBottom: spacing.lg},

@@ -620,7 +620,12 @@ const IMAGE_REGISTRY: Record<string, any> = {
  */
 export function resolveImage(key: string | null | undefined): any {
   if (!key) return null;
-  return IMAGE_REGISTRY[key] ?? null;
+  // Strip CDN prefix so remote URLs resolve to local bundled assets
+  const CDN_PREFIX = 'https://cdn.metaforge.app/arc-raiders/';
+  const normalizedKey = key.startsWith(CDN_PREFIX)
+    ? key.slice(CDN_PREFIX.length)
+    : key;
+  return IMAGE_REGISTRY[normalizedKey] ?? null;
 }
 
 export default IMAGE_REGISTRY;

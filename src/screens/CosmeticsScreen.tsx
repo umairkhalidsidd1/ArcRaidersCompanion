@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -26,6 +26,11 @@ const CAROUSEL_CARD_W = SCREEN_W * 0.58;
 const CAROUSEL_GAP = 10;
 const SNAP_INTERVAL = CAROUSEL_CARD_W + CAROUSEL_GAP;
 const CAROUSEL_SIDE = (SCREEN_W - CAROUSEL_CARD_W) / 2;
+
+const CAROUSEL_GRAD_START = {x: 0, y: 0.5} as const;
+const CAROUSEL_GRAD_END = {x: 1, y: 0.5} as const;
+const CAROUSEL_CONTENT_STYLE = {paddingHorizontal: CAROUSEL_SIDE};
+const HEADER_SPACER = {width: 44};
 
 /* ═══════ DATA ═══════ */
 type CosmeticItem = {
@@ -138,6 +143,79 @@ const getSetItems = (item: CosmeticItem): CosmeticItem[] => {
   });
 };
 
+type CarouselCardProps = {
+  item: CosmeticItem;
+  index: number;
+  scrollX: Animated.Value;
+  onCardPress: (index: number) => void;
+};
+
+const CarouselCard = React.memo(
+  ({item, index, scrollX, onCardPress}: CarouselCardProps) => {
+    const inputRange = [
+      (index - 1) * SNAP_INTERVAL,
+      index * SNAP_INTERVAL,
+      (index + 1) * SNAP_INTERVAL,
+    ];
+    const scale = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.82, 1, 0.82],
+      extrapolate: 'clamp',
+    });
+    const opac = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.4, 1, 0.4],
+      extrapolate: 'clamp',
+    });
+    const transY = scrollX.interpolate({
+      inputRange,
+      outputRange: [12, 0, 12],
+      extrapolate: 'clamp',
+    });
+
+    const ic =
+      CATEGORIES.find(c => c.key === item.subcategory) ||
+      CATEGORIES[CATEGORIES.length - 1];
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.9}
+        onPress={() => onCardPress(index)}>
+        <Animated.View
+          style={[
+            styles.carouselCard,
+            {transform: [{scale}, {translateY: transY}], opacity: opac},
+          ]}>
+          <LinearGradient
+            colors={[`${ic.color}18`, `${ic.color}06`, 'transparent']}
+            start={CAROUSEL_GRAD_START}
+            end={CAROUSEL_GRAD_END}
+            style={StyleSheet.absoluteFill}
+          />
+          {item.icon ? (
+            <Image
+              source={resolveImage(item.icon)}
+              style={styles.carouselImage}
+              resizeMode="contain"
+              fadeDuration={0}
+            />
+          ) : (
+            <Icon
+              name={ic.icon}
+              size={44}
+              color={ic.color}
+              style={{marginBottom: spacing.sm}}
+            />
+          )}
+          <Text style={styles.carouselName}>
+            {item.name.toUpperCase()}
+          </Text>
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  },
+);
+
 /* ═══════ COMPONENT ═══════ */
 const CosmeticsScreen = ({navigation}: any) => {
   const {t} = useTranslation();
@@ -171,6 +249,43 @@ const CosmeticsScreen = ({navigation}: any) => {
     [filtered.length],
   );
 
+  const onScroll = useMemo(
+    () =>
+      Animated.event(
+        [{nativeEvent: {contentOffset: {x: scrollX}}}],
+        {useNativeDriver: true, listener: onScrollUpdate},
+      ),
+    [scrollX, onScrollUpdate],
+  );
+
+  const onMomentumEnd = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      onScrollUpdate(e);
+    },
+    [onScrollUpdate],
+  );
+
+  const onCardPress = useCallback((index: number) => {
+    carouselRef.current?.scrollToOffset({
+      offset: index * SNAP_INTERVAL,
+      animated: true,
+    });
+    lastFiredIndex.current = index;
+    setActiveIndex(index);
+  }, []);
+
+  const renderCarouselItem = useCallback(
+    ({item, index}: {item: CosmeticItem; index: number}) => (
+      <CarouselCard
+        item={item}
+        index={index}
+        scrollX={scrollX}
+        onCardPress={onCardPress}
+      />
+    ),
+    [scrollX, onCardPress],
+  );
+
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
@@ -181,7 +296,7 @@ const CosmeticsScreen = ({navigation}: any) => {
           <Icon name="chevron-left" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('cosmeticsScreen.title')}</Text>
-        <View style={{width: 44}} />
+        <View style={HEADER_SPACER} />
       </View>
 
       <ScrollView ref={outerScrollRef} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
@@ -196,85 +311,23 @@ const CosmeticsScreen = ({navigation}: any) => {
               showsHorizontalScrollIndicator={false}
               snapToInterval={SNAP_INTERVAL}
               decelerationRate="fast"
-              contentContainerStyle={{paddingHorizontal: CAROUSEL_SIDE}}
-              onScroll={Animated.event(
-                [{nativeEvent: {contentOffset: {x: scrollX}}}],
-                {useNativeDriver: true, listener: onScrollUpdate},
-              )}
+              bounces={false}
+              overScrollMode="never"
+              disableIntervalMomentum={true}
+              removeClippedSubviews={false}
+              initialNumToRender={8}
+              maxToRenderPerBatch={8}
+              windowSize={7}
+              contentContainerStyle={CAROUSEL_CONTENT_STYLE}
+              onScroll={onScroll}
               scrollEventThrottle={16}
-              onMomentumScrollEnd={onScrollUpdate}
+              onMomentumScrollEnd={onMomentumEnd}
               getItemLayout={(_: any, index: number) => ({
                 length: SNAP_INTERVAL,
                 offset: index * SNAP_INTERVAL,
                 index,
               })}
-              renderItem={({item, index}: {item: CosmeticItem; index: number}) => {
-                const inputRange = [
-                  (index - 1) * SNAP_INTERVAL,
-                  index * SNAP_INTERVAL,
-                  (index + 1) * SNAP_INTERVAL,
-                ];
-                const scale = scrollX.interpolate({
-                  inputRange,
-                  outputRange: [0.82, 1, 0.82],
-                  extrapolate: 'clamp',
-                });
-                const opac = scrollX.interpolate({
-                  inputRange,
-                  outputRange: [0.4, 1, 0.4],
-                  extrapolate: 'clamp',
-                });
-                const transY = scrollX.interpolate({
-                  inputRange,
-                  outputRange: [12, 0, 12],
-                  extrapolate: 'clamp',
-                });
-                const ic =
-                  CATEGORIES.find(c => c.key === item.subcategory) ||
-                  CATEGORIES[CATEGORIES.length - 1];
-                return (
-                  <TouchableOpacity
-                    activeOpacity={0.9}
-                    onPress={() => {
-                      carouselRef.current?.scrollToOffset({
-                        offset: index * SNAP_INTERVAL,
-                        animated: true,
-                      });
-                      lastFiredIndex.current = index;
-                      setActiveIndex(index);
-                    }}>
-                    <Animated.View
-                      style={[
-                        styles.carouselCard,
-                        {transform: [{scale}, {translateY: transY}], opacity: opac},
-                      ]}>
-                      <LinearGradient
-                        colors={[`${ic.color}18`, `${ic.color}06`, 'transparent']}
-                        start={{x: 0, y: 0.5}}
-                        end={{x: 1, y: 0.5}}
-                        style={StyleSheet.absoluteFill}
-                      />
-                      {item.icon ? (
-                        <Image
-                          source={resolveImage(item.icon)}
-                          style={styles.carouselImage}
-                          resizeMode="contain"
-                        />
-                      ) : (
-                        <Icon
-                          name={ic.icon}
-                          size={44}
-                          color={ic.color}
-                          style={{marginBottom: spacing.sm}}
-                        />
-                      )}
-                      <Text style={styles.carouselName}>
-                        {item.name.toUpperCase()}
-                      </Text>
-                    </Animated.View>
-                  </TouchableOpacity>
-                );
-              }}
+              renderItem={renderCarouselItem}
             />
 
             {/* ── Detail Card ── */}
@@ -468,6 +521,7 @@ const CosmeticsScreen = ({navigation}: any) => {
                                 source={resolveImage(item.icon)}
                                 style={styles.relatedImage}
                                 resizeMode="contain"
+                                fadeDuration={0}
                               />
                             ) : (
                               <Icon name={ic.icon} size={24} color={ic.color} />

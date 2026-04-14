@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
+  InteractionManager,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -25,6 +28,15 @@ type Arc = {
   image: string;
 };
 
+const EMPTY_ARCS: Arc[] = [];
+
+type ArcListCache = {
+  language: string;
+  arcs: Arc[];
+};
+
+let ARC_LIST_CACHE: ArcListCache | null = null;
+
 const NUM_COLS = 3;
 const SCREEN_W = Dimensions.get('window').width;
 const CARD_GAP = spacing.sm;
@@ -33,8 +45,81 @@ const CARD_W = (SCREEN_W - PADDING * 2 - CARD_GAP * (NUM_COLS - 1)) / NUM_COLS;
 
 const ArcListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
-  const arcs = getArcs() as Arc[];
-  const { t } = useTranslation();
+  const {t, i18n} = useTranslation();
+
+  const seed = ARC_LIST_CACHE && ARC_LIST_CACHE.language === i18n.language
+    ? ARC_LIST_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(false);
+  const [arcs, setArcs] = useState<Arc[]>(seed?.arcs ?? EMPTY_ARCS);
+  const [visibleCount, setVisibleCount] = useState(
+    seed ? Math.min(seed.arcs.length, Platform.OS === 'android' ? 12 : seed.arcs.length) : 0,
+  );
+
+  const showContent = ready && listVisible;
+
+  useEffect(() => {
+    let active = true;
+    setListVisible(false);
+    setVisibleCount(0);
+
+    const listTask = InteractionManager.runAfterInteractions(() => {
+      if (active) setListVisible(true);
+    });
+
+    const cached = ARC_LIST_CACHE && ARC_LIST_CACHE.language === i18n.language
+      ? ARC_LIST_CACHE
+      : null;
+
+    if (cached) {
+      setArcs(cached.arcs);
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+
+    const loadTask = InteractionManager.runAfterInteractions(() => {
+      const nextArcs = getArcs() as Arc[];
+      if (!active) return;
+
+      setArcs(nextArcs);
+      ARC_LIST_CACHE = {
+        language: i18n.language,
+        arcs: nextArcs,
+      };
+      setReady(true);
+    });
+
+    return () => {
+      active = false;
+      listTask.cancel();
+      loadTask.cancel();
+    };
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (!showContent) return;
+
+    const initial = Platform.OS === 'android' ? 12 : arcs.length;
+    const batch = Platform.OS === 'android' ? 12 : arcs.length;
+    const max = arcs.length;
+
+    setVisibleCount(Math.min(initial, max));
+
+    if (Platform.OS !== 'android' || max <= initial) return;
+
+    const interval = setInterval(() => {
+      setVisibleCount(prev => {
+        const next = Math.min(max, prev + batch);
+        if (next >= max) clearInterval(interval);
+        return next;
+      });
+    }, 70);
+
+    return () => clearInterval(interval);
+  }, [showContent, arcs.length]);
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
@@ -49,7 +134,7 @@ const ArcListScreen = ({navigation}: any) => {
       </View>
 
       <FlatList
-        data={arcs}
+        data={showContent ? arcs.slice(0, visibleCount) : EMPTY_ARCS}
         numColumns={NUM_COLS}
         columnWrapperStyle={styles.row}
         renderItem={({item, index}) => (
@@ -69,6 +154,7 @@ const ArcListScreen = ({navigation}: any) => {
                     source={resolveImage(item.icon)}
                     style={styles.arcIcon}
                     resizeMode="contain"
+                    fadeDuration={0}
                   />
                 ) : (
                   <Icon name="robot" size={32} color={colors.textMuted} />
@@ -82,7 +168,23 @@ const ArcListScreen = ({navigation}: any) => {
         keyExtractor={item => String(item.id)}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
+        initialNumToRender={Platform.OS === 'android' ? 12 : 18}
+        maxToRenderPerBatch={Platform.OS === 'android' ? 12 : 18}
+        windowSize={Platform.OS === 'android' ? 9 : 11}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+        removeClippedSubviews={Platform.OS === 'android'}
+        ListFooterComponent={showContent && visibleCount < arcs.length ? (
+          <View style={styles.loadingMore}>
+            <ActivityIndicator size="small" color={colors.cyan} />
+          </View>
+        ) : null}
       />
+
+      {!showContent && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.cyan} />
+        </View>
+      )}
     </View>
   );
 };
@@ -112,6 +214,18 @@ const styles = StyleSheet.create({
   },
   list: {paddingHorizontal: PADDING, paddingBottom: 100},
   row: {gap: CARD_GAP, marginBottom: CARD_GAP},
+  loadingMore: {
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
+  },
   arcCard: {
     width: CARD_W,
     backgroundColor: colors.bgCard,

@@ -1,6 +1,7 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useMemo, useState, useCallback, useEffect} from 'react';
 import {
   Dimensions,
+  InteractionManager,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -63,23 +64,97 @@ const htmlRenderers = {
 type Guide = ReturnType<typeof getGuides>[number];
 type Reward = NonNullable<Guide['rewards']>[number];
 
+type GuideDetailScreenCache = {
+  language: string;
+  byId: Map<string, Guide>;
+};
+
+let GUIDE_DETAIL_SCREEN_CACHE: GuideDetailScreenCache | null = null;
+
 const GuideDetailScreen = ({route, navigation}: any) => {
   const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const {guideId} = route.params;
-  const guide = (getGuides() as Guide[]).find(g => g.id === guideId);
+  const guideKey = String(guideId);
+
+  const seedGuide = GUIDE_DETAIL_SCREEN_CACHE && GUIDE_DETAIL_SCREEN_CACHE.language === i18n.language
+    ? GUIDE_DETAIL_SCREEN_CACHE.byId.get(guideKey) || null
+    : null;
+
+  const [guide, setGuide] = useState<Guide | null>(seedGuide);
+  const [ready, setReady] = useState(!!seedGuide);
+  const [renderStage, setRenderStage] = useState(seedGuide ? 1 : 0);
+
+  useEffect(() => {
+    let active = true;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
+    const startStages = () => {
+      if (!active) return;
+      setRenderStage(1);
+      timers.push(
+        setTimeout(() => {
+          if (active) setRenderStage(2);
+        }, 90),
+      );
+      timers.push(
+        setTimeout(() => {
+          if (active) setRenderStage(3);
+        }, 200),
+      );
+    };
+
+    setRenderStage(0);
+
+    const cachedGuide = GUIDE_DETAIL_SCREEN_CACHE && GUIDE_DETAIL_SCREEN_CACHE.language === i18n.language
+      ? GUIDE_DETAIL_SCREEN_CACHE.byId.get(guideKey) || null
+      : null;
+
+    if (cachedGuide) {
+      setGuide(cachedGuide);
+      setReady(true);
+      startStages();
+    } else {
+      setReady(false);
+      setGuide(null);
+    }
+
+    const loadTask = cachedGuide
+      ? null
+      : InteractionManager.runAfterInteractions(() => {
+          const guides = getGuides() as Guide[];
+          const byId = new Map<string, Guide>(guides.map(g => [String(g.id), g]));
+          const nextGuide = byId.get(guideKey) || null;
+
+          if (!active) return;
+          GUIDE_DETAIL_SCREEN_CACHE = {
+            language: i18n.language,
+            byId,
+          };
+          setGuide(nextGuide);
+          setReady(true);
+          startStages();
+        });
+
+    return () => {
+      active = false;
+      loadTask?.cancel();
+      timers.forEach(clearTimeout);
+    };
+  }, [i18n.language, guideKey]);
+
+  const showPrimary = !!guide && renderStage >= 1;
+  const showSecondary = !!guide && renderStage >= 2;
+  const showHtml = !!guide && renderStage >= 3;
 
   const htmlSource = useMemo(
-    () => (guide?.content ? {html: guide.content} : null),
-    [guide?.content, i18n.language],
+    () => (showHtml && guide?.content ? {html: guide.content} : null),
+    [showHtml, guide?.content, i18n.language],
   );
 
-  if (!guide) return null;
-
-  const hasObjectives =
-    guide.objectives && (guide.objectives as string[]).length > 0;
-  const hasRewards = guide.rewards && guide.rewards.length > 0;
-  const hasVideo = !!guide.video_url;
+  const hasObjectives = !!guide?.objectives && (guide.objectives as string[]).length > 0;
+  const hasRewards = !!guide?.rewards && guide.rewards.length > 0;
+  const hasVideo = !!guide?.video_url;
 
   return (
     <View style={styles.container}>
@@ -97,8 +172,14 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
         style={{backgroundColor: 'transparent'}}>
+        {!showPrimary && (
+          <View style={styles.initialLoading}>
+            <ActivityIndicator size="large" color={colors.cyan} />
+          </View>
+        )}
+
         {/* Hero Image */}
-        {guide.thumbnail_url ? (
+        {showPrimary && guide?.thumbnail_url ? (
           <View style={styles.heroWrap}>
             <View style={styles.heroIconCenter}>
               <View style={styles.heroIconGlow}>
@@ -106,33 +187,38 @@ const GuideDetailScreen = ({route, navigation}: any) => {
                   source={resolveImage(guide.thumbnail_url)}
                   style={styles.heroIcon}
                   resizeMode="contain"
+                  fadeDuration={0}
                 />
               </View>
             </View>
           </View>
-        ) : (
+        ) : showPrimary ? (
           <View style={{height: insets.top + 50}} />
-        )}
+        ) : null}
 
         {/* Title + Author */}
-        <Text style={styles.title}>{guide.title}</Text>
-        <View style={styles.metaRow}>
-          <Icon name="account" size={14} color={colors.cyan} />
-          <Text style={styles.author}>{guide.author || t('guides.author')}</Text>
-          {guide.type === 'quest' && (
-            <View style={styles.typeBadge}>
-              <Text style={styles.typeBadgeText}>{t('guides.questBadge')}</Text>
+        {showPrimary && guide && (
+          <>
+            <Text style={styles.title}>{guide.title}</Text>
+            <View style={styles.metaRow}>
+              <Icon name="account" size={14} color={colors.cyan} />
+              <Text style={styles.author}>{guide.author || t('guides.author')}</Text>
+              {guide.type === 'quest' && (
+                <View style={styles.typeBadge}>
+                  <Text style={styles.typeBadgeText}>{t('guides.questBadge')}</Text>
+                </View>
+              )}
             </View>
-          )}
-        </View>
+          </>
+        )}
 
         {/* Summary */}
-        {guide.summary ? (
+        {showPrimary && guide?.summary ? (
           <Text style={styles.summary}>{guide.summary}</Text>
         ) : null}
 
         {/* Video link */}
-        {hasVideo && (
+        {showSecondary && guide && hasVideo && (
           <TouchableOpacity
             style={styles.videoBtn}
             activeOpacity={0.7}
@@ -144,7 +230,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         )}
 
         {/* Objectives */}
-        {hasObjectives && (
+        {showSecondary && guide && hasObjectives && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Icon name="target" size={16} color={colors.cyan} />
@@ -160,7 +246,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         )}
 
         {/* Rewards */}
-        {hasRewards && (
+        {showSecondary && guide && hasRewards && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Icon name="gift-outline" size={16} color={colors.orange} />
@@ -174,6 +260,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
                       source={resolveImage(r.item.icon)}
                       style={styles.rewardIcon}
                       resizeMode="contain"
+                      fadeDuration={0}
                     />
                   )}
                   <View style={styles.rewardInfo}>
@@ -212,6 +299,12 @@ const GuideDetailScreen = ({route, navigation}: any) => {
               defaultTextProps={{selectable: true}}
               renderers={htmlRenderers}
             />
+          </View>
+        )}
+
+        {ready && showPrimary && !showHtml && (
+          <View style={styles.loadingMore}>
+            <ActivityIndicator size="small" color={colors.cyan} />
           </View>
         )}
       </ScrollView>
@@ -272,6 +365,18 @@ const styles = StyleSheet.create({
   },
 
   scrollContent: {paddingBottom: 120},
+  initialLoading: {
+    paddingTop: 80,
+    paddingBottom: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingMore: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
   /* hero */
   heroWrap: {

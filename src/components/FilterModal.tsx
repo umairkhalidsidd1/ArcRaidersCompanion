@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import {
   Modal,
   PanResponder,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -74,7 +75,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   const handleSelectAll = () => {
-    setLocalSelected(categories.map(c => c.key));
+    setLocalSelected(categories.filter(c => !lockedKeys.includes(c.key)).map(c => c.key));
   };
 
   const handleClearAll = () => {
@@ -98,7 +99,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
     <Modal
       visible={visible}
       transparent
-      animationType="slide"
+      animationType={Platform.OS === 'android' ? 'fade' : 'slide'}
       onRequestClose={onClose}>
       <View style={styles.overlay}>
         <Pressable style={styles.dismissArea} onPress={onClose} />
@@ -207,18 +208,29 @@ const FilterModal: React.FC<FilterModalProps> = ({
           </ScrollView>
 
           {/* Apply Button - floating over content */}
-          <BlurView
-            style={styles.applyBlur}
-            blurType="dark"
-            blurAmount={20}
-            reducedTransparencyFallbackColor="rgba(0, 150, 255, 0.75)">
-            <TouchableOpacity
-              style={styles.applyBtn}
-              activeOpacity={0.8}
-              onPress={handleApply}>
-              <Text style={styles.applyText}>APPLY FILTER</Text>
-            </TouchableOpacity>
-          </BlurView>
+          {Platform.OS === 'android' ? (
+            <View style={[styles.applyBlur, {backgroundColor: 'rgba(10,14,23,0.95)'}]}>
+              <TouchableOpacity
+                style={styles.applyBtn}
+                activeOpacity={0.8}
+                onPress={handleApply}>
+                <Text style={styles.applyText}>APPLY FILTER</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <BlurView
+              style={styles.applyBlur}
+              blurType="dark"
+              blurAmount={20}
+              reducedTransparencyFallbackColor="rgba(0, 150, 255, 0.75)">
+              <TouchableOpacity
+                style={styles.applyBtn}
+                activeOpacity={0.8}
+                onPress={handleApply}>
+                <Text style={styles.applyText}>APPLY FILTER</Text>
+              </TouchableOpacity>
+            </BlurView>
+          )}
         </View>
       </View>
     </Modal>

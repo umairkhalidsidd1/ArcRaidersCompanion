@@ -10,6 +10,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { colors, fonts, spacing } from '../theme/theme';
 
+const BLUR_TYPE = Platform.OS === 'ios' ? 'ultraThinMaterialDark' : 'dark';
+const CONTENT_BG = Platform.OS === 'android' ? colors.bg : 'transparent';
+
 import HomeScreen from '../screens/HomeScreen';
 import TrialsScreen from '../screens/TrialsScreen';
 import MaterialsScreen from '../screens/MaterialsScreen';
@@ -52,7 +55,13 @@ const GuidesStack = createNativeStackNavigator();
 
 function BunkerStackScreen() {
   return (
-    <BunkerStack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+    <BunkerStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: CONTENT_BG },
+        animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
+        gestureEnabled: Platform.OS !== 'android',
+      }}>
       <BunkerStack.Screen name="BunkerHome" component={HomeScreen} />
     </BunkerStack.Navigator>
   );
@@ -60,7 +69,13 @@ function BunkerStackScreen() {
 
 function TrialsStackScreen() {
   return (
-    <TrialsStack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+    <TrialsStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: CONTENT_BG },
+        animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
+        gestureEnabled: Platform.OS !== 'android',
+      }}>
       <TrialsStack.Screen name="TrialsMain" component={TrialsScreen} />
     </TrialsStack.Navigator>
   );
@@ -68,7 +83,13 @@ function TrialsStackScreen() {
 
 function MaterialsStackScreen() {
   return (
-    <MaterialsStack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+    <MaterialsStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: CONTENT_BG },
+        animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
+        gestureEnabled: Platform.OS !== 'android',
+      }}>
       <MaterialsStack.Screen name="MaterialsMain" component={MaterialsScreen} />
     </MaterialsStack.Navigator>
   );
@@ -76,7 +97,13 @@ function MaterialsStackScreen() {
 
 function EnemiesStackScreen() {
   return (
-    <EnemiesStack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+    <EnemiesStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: CONTENT_BG },
+        animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
+        gestureEnabled: Platform.OS !== 'android',
+      }}>
       <EnemiesStack.Screen name="ArcList" component={ArcListScreen} />
     </EnemiesStack.Navigator>
   );
@@ -84,7 +111,13 @@ function EnemiesStackScreen() {
 
 function GuidesStackScreen() {
   return (
-    <GuidesStack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+    <GuidesStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: CONTENT_BG },
+        animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
+        gestureEnabled: Platform.OS !== 'android',
+      }}>
       <GuidesStack.Screen name="GuidesMain" component={GuidesScreen} />
     </GuidesStack.Navigator>
   );
@@ -112,13 +145,18 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
     Guides: t('tabs.guides'),
   };
 
+  const TabBarWrapper = Platform.OS === 'android'
+    ? ({children, style}: any) => <View style={[style, {backgroundColor: 'rgba(8,12,22,0.96)'}]}>{children}</View>
+    : ({children, style}: any) => (
+        <BlurView blurType="ultraThinMaterialDark" blurAmount={24}
+          reducedTransparencyFallbackColor="rgba(17,24,39,0.85)" style={style}>
+          {children}
+        </BlurView>
+      );
+
   return (
     <View style={[styles.tabBarOuter, { bottom: bottomPad }]}>
-      <BlurView
-        blurType="ultraThinMaterialDark"
-        blurAmount={24}
-        reducedTransparencyFallbackColor="rgba(17,24,39,0.85)"
-        style={styles.blurWrap}>
+      <TabBarWrapper style={styles.blurWrap}>
         <View style={styles.tabBarInner}>
           {state.routes.map((route: any, index: number) => {
             const { options } = descriptors[route.key];
@@ -163,7 +201,7 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
             );
           })}
         </View>
-      </BlurView>
+      </TabBarWrapper>
     </View>
   );
 }
@@ -176,7 +214,7 @@ function TabNavigator() {
       screenOptions={{
         headerShown: false,
         lazy: true,
-        sceneStyle: { backgroundColor: 'transparent' },
+        sceneStyle: { backgroundColor: CONTENT_BG },
       }}>
       <Tab.Screen name="Bunker" component={BunkerStackScreen} />
       <Tab.Screen name="Trials" component={TrialsStackScreen} />
@@ -189,6 +227,8 @@ function TabNavigator() {
 
 /* ── Root Navigator (MapDetail lives here — completely outside tabs) ── */
 const AppNavigator = () => {
+  const navBackground = Platform.OS === 'android' ? colors.bg : 'transparent';
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -196,7 +236,7 @@ const AppNavigator = () => {
         dark: true,
         colors: {
           primary: colors.cyan,
-          background: 'transparent',
+          background: navBackground,
           card: 'transparent',
           text: '#FFFFFF',
           border: 'transparent',
@@ -209,12 +249,22 @@ const AppNavigator = () => {
           heavy: {fontFamily: 'System', fontWeight: '900' as const},
         },
       }}>
-      <RootStack.Navigator screenOptions={{ headerShown: false, gestureEnabled: true, animation: 'slide_from_right', contentStyle: { backgroundColor: 'transparent' } }}>
+      <RootStack.Navigator
+        screenOptions={{
+          headerShown: false,
+          gestureEnabled: Platform.OS !== 'android',
+          animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
+          contentStyle: { backgroundColor: navBackground },
+        }}>
           <RootStack.Screen name="MainTabs" component={TabNavigator} />
           <RootStack.Screen name="MapList" component={MapListScreen} />
           <RootStack.Screen name="MapDetail" component={MapDetailScreen} />
           <RootStack.Screen name="ItemDetail" component={ItemDetailScreen} />
-          <RootStack.Screen name="BlueprintTracker" component={BlueprintTrackerScreen} />
+          <RootStack.Screen
+            name="BlueprintTracker"
+            component={BlueprintTrackerScreen}
+            options={{animation: 'none'}}
+          />
           <RootStack.Screen name="LoadoutBuilder" component={LoadoutBuilderScreen} />
           <RootStack.Screen name="TraderList" component={TraderListScreen} />
           <RootStack.Screen name="TraderDetail" component={TraderDetailScreen} />
@@ -222,8 +272,16 @@ const AppNavigator = () => {
           <RootStack.Screen name="QuestDetail" component={QuestDetailScreen} />
           <RootStack.Screen name="EventTimers" component={EventTimerScreen} />
           <RootStack.Screen name="Expedition" component={ExpeditionScreen} />
-          <RootStack.Screen name="TierList" component={TierListScreen} />
-          <RootStack.Screen name="QuestTree" component={QuestTreeScreen} />
+          <RootStack.Screen
+            name="TierList"
+            component={TierListScreen}
+            options={{animation: Platform.OS === 'android' ? 'none' : 'slide_from_right'}}
+          />
+          <RootStack.Screen
+            name="QuestTree"
+            component={QuestTreeScreen}
+            options={{animation: Platform.OS === 'android' ? 'none' : 'slide_from_right'}}
+          />
           <RootStack.Screen name="Cosmetics" component={CosmeticsScreen} />
           <RootStack.Screen name="CollectibleTracker" component={CollectibleTrackerScreen} />
           <RootStack.Screen name="Submit" component={SubmitScreen} />
