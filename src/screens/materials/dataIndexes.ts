@@ -33,7 +33,8 @@ export function ensureItemByName() {
   if (_itemByNameLang === lang) return;
   _itemByNameLang = lang;
   itemByName = new Map<string, RawItem>();
-  (getItems() as RawItem[]).forEach(item => {
+  const source = allItems.length > 0 ? allItems : (getItems() as RawItem[]);
+  source.forEach(item => {
     itemByName.set(item.name.toLowerCase(), item);
   });
 }

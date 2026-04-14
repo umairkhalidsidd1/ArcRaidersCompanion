@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Animated,
   PanResponder,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,6 +28,11 @@ import {
 } from './constants';
 import {ensureItemByName, itemByName} from './dataIndexes';
 import {wbStyles} from './styles';
+
+const PAN_CAPTURE_DY = Platform.OS === 'android' ? 5 : 8;
+const CLOSE_VELOCITY = Platform.OS === 'android' ? 0.9 : 1.2;
+const OPEN_VELOCITY = Platform.OS === 'android' ? -0.9 : -1.2;
+const CLOSE_OFFSET_FROM_HALF = Platform.OS === 'android' ? 36 : 52;
 
 const ExpeditionSheet = ({
   visible,
@@ -57,25 +63,17 @@ const ExpeditionSheet = ({
     }).catch(() => {});
   }, []);
 
-  const toggleItem = useCallback((key: string) => {
-    setCheckedItems(prev => {
-      const updated = {...prev, [key]: !prev[key]};
-      AsyncStorage.setItem(EXP_CHECKED_KEY, JSON.stringify(updated)).catch(() => {});
-      return updated;
-    });
-  }, []);
-
   useEffect(() => {
     const id = translateY.addListener(({value}) => { currentTY.current = value; });
     return () => translateY.removeListener(id);
-  }, []);
+  }, [translateY]);
 
   const animateTo = useCallback((target: number) => {
     if (target >= WB_TY_HIDDEN) {
       isExpanded.current = false;
       Animated.parallel([
-        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 250, useNativeDriver: true}),
-        Animated.timing(backdropAnim, {toValue: 0, duration: 250, useNativeDriver: true}),
+        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 210, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 0, duration: 210, useNativeDriver: true}),
       ]).start(({finished}) => {
         if (finished) onCloseRef.current();
       });
@@ -85,21 +83,27 @@ const ExpeditionSheet = ({
       if (!goingFull) scrollRef.current?.scrollTo?.({y: 0, animated: true});
       Animated.parallel([
         Animated.spring(translateY, {toValue: target, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
-        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 120, useNativeDriver: true}),
       ]).start();
     }
-  }, []);
+  }, [backdropAnim, translateY]);
 
   const snapNearest = useCallback((ty: number, vy: number) => {
-    if (vy > 1.2) { animateTo(WB_TY_HIDDEN); return; }
-    if (vy < -1.2) { animateTo(WB_TY_FULL); return; }
-    const dH = Math.abs(ty - WB_TY_HIDDEN);
-    const dM = Math.abs(ty - WB_TY_HALF);
-    const dF = Math.abs(ty - WB_TY_FULL);
-    const min = Math.min(dH, dM, dF);
-    if (min === dH) animateTo(WB_TY_HIDDEN);
-    else if (min === dM) animateTo(WB_TY_HALF);
-    else animateTo(WB_TY_FULL);
+    if (vy > CLOSE_VELOCITY || ty > WB_TY_HALF + CLOSE_OFFSET_FROM_HALF) {
+      animateTo(WB_TY_HIDDEN);
+      return;
+    }
+    if (vy < OPEN_VELOCITY) {
+      animateTo(WB_TY_FULL);
+      return;
+    }
+
+    const halfMidpoint = (WB_TY_FULL + WB_TY_HALF) / 2;
+    if (ty <= halfMidpoint) {
+      animateTo(WB_TY_FULL);
+      return;
+    }
+    animateTo(WB_TY_HALF);
   }, [animateTo]);
 
   const expHandlePan = useRef(
@@ -122,9 +126,9 @@ const ExpeditionSheet = ({
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => false,
       onMoveShouldSetPanResponderCapture: (_, gs) => {
-        const isVertical = Math.abs(gs.dy) > 8 && Math.abs(gs.dy) > Math.abs(gs.dx);
+        const isVertical = Math.abs(gs.dy) > PAN_CAPTURE_DY && Math.abs(gs.dy) > Math.abs(gs.dx);
         if (!isExpanded.current && isVertical) return true;
-        if (isExpanded.current && scrollOffset.current <= 2 && gs.dy > 8) return true;
+        if (isExpanded.current && scrollOffset.current <= 4 && gs.dy > PAN_CAPTURE_DY) return true;
         return false;
       },
       onPanResponderGrant: () => {
@@ -144,7 +148,7 @@ const ExpeditionSheet = ({
     if (visible) {
       scrollOffset.current = 0;
       scrollRef.current?.scrollTo?.({y: 0, animated: false});
-      animateTo(WB_TY_HALF);
+      animateTo(WB_TY_FULL);
     } else {
       isExpanded.current = false;
       translateY.stopAnimation();
@@ -152,7 +156,7 @@ const ExpeditionSheet = ({
       translateY.setValue(WB_TY_HIDDEN);
       backdropAnim.setValue(0);
     }
-  }, [visible]);
+  }, [visible, animateTo, backdropAnim, translateY]);
 
   const onScrollEvent = useCallback((e: any) => {
     scrollOffset.current = e.nativeEvent.contentOffset.y;

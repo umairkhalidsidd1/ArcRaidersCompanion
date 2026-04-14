@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useRef} from 'react';
 import {
   Animated,
   PanResponder,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,7 +12,7 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTranslation} from 'react-i18next';
-import {colors, fonts, spacing} from '../../theme/theme';
+import {colors} from '../../theme/theme';
 import {resolveImage} from '../../data/imageRegistry';
 import {
   type RawItem,
@@ -34,6 +35,11 @@ import {
   getDroppedBy,
 } from './dataIndexes';
 import {detailStyles} from './styles';
+
+const PAN_CAPTURE_DY = Platform.OS === 'android' ? 5 : 8;
+const CLOSE_VELOCITY = Platform.OS === 'android' ? 0.9 : 1.2;
+const OPEN_VELOCITY = Platform.OS === 'android' ? -0.9 : -1.2;
+const CLOSE_OFFSET_FROM_HALF = Platform.OS === 'android' ? 36 : 52;
 
 /* ═══════════════ STAT BAR ═══════════════ */
 const StatBarRow = ({label, value, maxVal}: {label: string; value: number; maxVal: number}) => {
@@ -88,14 +94,14 @@ const DetailSheet = ({
   useEffect(() => {
     const id = translateY.addListener(({value}) => { currentTY.current = value; });
     return () => translateY.removeListener(id);
-  }, []);
+  }, [translateY]);
 
   const animateTo = useCallback((target: number) => {
     if (target >= WB_TY_HIDDEN) {
       isExpanded.current = false;
       Animated.parallel([
-        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 250, useNativeDriver: true}),
-        Animated.timing(backdropAnim, {toValue: 0, duration: 250, useNativeDriver: true}),
+        Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 210, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 0, duration: 210, useNativeDriver: true}),
       ]).start(({finished}) => {
         if (finished) onCloseRef.current();
       });
@@ -113,21 +119,27 @@ const DetailSheet = ({
           stiffness: 180,
           mass: 1,
         }),
-        Animated.timing(backdropAnim, {toValue: 1, duration: 150, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: 120, useNativeDriver: true}),
       ]).start();
     }
-  }, []);
+  }, [backdropAnim, translateY]);
 
   const snapNearest = useCallback((ty: number, vy: number) => {
-    if (vy > 1.2) { animateTo(WB_TY_HIDDEN); return; }
-    if (vy < -1.2) { animateTo(WB_TY_FULL); return; }
-    const dH = Math.abs(ty - WB_TY_HIDDEN);
-    const dM = Math.abs(ty - WB_TY_HALF);
-    const dF = Math.abs(ty - WB_TY_FULL);
-    const min = Math.min(dH, dM, dF);
-    if (min === dH) animateTo(WB_TY_HIDDEN);
-    else if (min === dM) animateTo(WB_TY_HALF);
-    else animateTo(WB_TY_FULL);
+    if (vy > CLOSE_VELOCITY || ty > WB_TY_HALF + CLOSE_OFFSET_FROM_HALF) {
+      animateTo(WB_TY_HIDDEN);
+      return;
+    }
+    if (vy < OPEN_VELOCITY) {
+      animateTo(WB_TY_FULL);
+      return;
+    }
+
+    const halfMidpoint = (WB_TY_FULL + WB_TY_HALF) / 2;
+    if (ty <= halfMidpoint) {
+      animateTo(WB_TY_FULL);
+      return;
+    }
+    animateTo(WB_TY_HALF);
   }, [animateTo]);
 
   const dtHandlePan = useRef(
@@ -150,9 +162,9 @@ const DetailSheet = ({
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => false,
       onMoveShouldSetPanResponderCapture: (_, gs) => {
-        const isVertical = Math.abs(gs.dy) > 8 && Math.abs(gs.dy) > Math.abs(gs.dx);
+        const isVertical = Math.abs(gs.dy) > PAN_CAPTURE_DY && Math.abs(gs.dy) > Math.abs(gs.dx);
         if (!isExpanded.current && isVertical) return true;
-        if (isExpanded.current && scrollOffset.current <= 2 && gs.dy > 8) return true;
+        if (isExpanded.current && scrollOffset.current <= 4 && gs.dy > PAN_CAPTURE_DY) return true;
         return false;
       },
       onPanResponderGrant: () => {
@@ -185,7 +197,7 @@ const DetailSheet = ({
       backdropAnim.setValue(0);
       isExpanded.current = false;
     }
-  }, [visible, item, animateTo]);
+  }, [visible, item, animateTo, backdropAnim, translateY]);
 
   const onScrollEvent = useCallback((e: any) => {
     scrollOffset.current = e.nativeEvent.contentOffset.y;

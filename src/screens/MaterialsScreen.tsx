@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   InteractionManager,
+  Platform,
   ScrollView,
   StatusBar,
   Text,
@@ -42,29 +44,52 @@ import TrophyDisplaySheet from './materials/TrophyDisplaySheet';
 
 type ActiveSheet = 'none' | 'detail' | 'workbench' | 'expedition' | 'trophy';
 
+type MaterialsScreenCache = {
+  language: string;
+  items: RawItem[];
+  bpCollected: string[];
+  wbChecked: string[];
+};
+
+const EMPTY_ITEMS: RawItem[] = [];
+
+let MATERIALS_SCREEN_CACHE: MaterialsScreenCache | null = null;
+
 /* ═══════════════ MAIN SCREEN ═══════════════ */
-const MaterialsScreen = ({navigation}: any) => {
+const MaterialsScreen = ({navigation: _navigation}: any) => {
   const { t, i18n: i18nHook } = useTranslation();
-  refreshMaterialItems();
   const insets = useSafeAreaInsets();
+
+  const seed = MATERIALS_SCREEN_CACHE && MATERIALS_SCREEN_CACHE.language === i18nHook.language
+    ? MATERIALS_SCREEN_CACHE
+    : null;
+
+  const [ready, setReady] = useState(!!seed);
+  const [listVisible, setListVisible] = useState(!!seed);
+  const [sheetsReady, setSheetsReady] = useState(false);
+  const [materialItems, setMaterialItems] = useState<RawItem[]>(seed?.items ?? EMPTY_ITEMS);
+  const [visibleCount, setVisibleCount] = useState(
+    seed ? Math.min(seed.items.length, Platform.OS === 'android' ? 18 : seed.items.length) : 0,
+  );
   const [search, setSearch] = useState('');
-  const [selectedType, setSelectedType] = useState('all');
+  const [selectedType, _setSelectedType] = useState('all');
   const [sortAZ, setSortAZ] = useState(true);
   const [filterVisible, setFilterVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [bpCollected, setBpCollected] = useState<string[]>([]);
+  const [bpCollected, setBpCollected] = useState<string[]>(seed?.bpCollected ?? []);
   const [selectedItem, setSelectedItem] = useState<RawItem | null>(null);
   const [activeSheet, setActiveSheet] = useState<ActiveSheet>('none');
-  const [wbChecked, setWbChecked] = useState<string[]>([]);
-  const [sheetsReady, setSheetsReady] = useState(false);
+  const [wbChecked, setWbChecked] = useState<string[]>(seed?.wbChecked ?? []);
   const activeSheetRef = useRef<ActiveSheet>('none');
   const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasPromotedFullRef = useRef(false);
 
-  const SHEET_TRANSITION_DELAY = 260;
+  const SHEET_TRANSITION_DELAY = 90;
 
-  useEffect(() => {
-    activeSheetRef.current = activeSheet;
-  }, [activeSheet]);
+  const setActiveSheetSynced = useCallback((next: ActiveSheet) => {
+    activeSheetRef.current = next;
+    setActiveSheet(next);
+  }, []);
 
   const clearTransitionTimer = useCallback(() => {
     if (transitionTimerRef.current) {
@@ -79,6 +104,17 @@ const MaterialsScreen = ({navigation}: any) => {
     };
   }, [clearTransitionTimer]);
 
+  useEffect(() => {
+    let active = true;
+    const task = InteractionManager.runAfterInteractions(() => {
+      if (active) setSheetsReady(true);
+    });
+    return () => {
+      active = false;
+      task.cancel();
+    };
+  }, []);
+
   const transitionToSheet = useCallback(
     (target: ActiveSheet) => {
       const current = activeSheetRef.current;
@@ -88,45 +124,115 @@ const MaterialsScreen = ({navigation}: any) => {
       clearTransitionTimer();
 
       if (target === 'none') {
-        setActiveSheet('none');
+        setActiveSheetSynced('none');
         return;
       }
 
       if (current === 'none' && !hasPendingTransition) {
-        setActiveSheet(target);
+        setActiveSheetSynced(target);
         return;
       }
 
       // Close current sheet first, then open the next one.
-      setActiveSheet('none');
+      setActiveSheetSynced('none');
       transitionTimerRef.current = setTimeout(() => {
-        setActiveSheet(target);
+        setActiveSheetSynced(target);
         transitionTimerRef.current = null;
       }, SHEET_TRANSITION_DELAY);
     },
-    [clearTransitionTimer],
+    [clearTransitionTimer, setActiveSheetSynced],
   );
 
-  // Load blueprint + workbench state from AsyncStorage (non-blocking)
-  useEffect(() => {
-    Promise.all([
-      AsyncStorage.getItem(BP_STORAGE_KEY),
-      AsyncStorage.getItem(WB_CHECKED_KEY),
-    ])
-      .then(([bpRaw, wbRaw]) => {
-        if (bpRaw) setBpCollected(JSON.parse(bpRaw));
-        if (wbRaw) setWbChecked(JSON.parse(wbRaw));
-      })
-      .catch(() => {});
+  const showContent = ready && listVisible;
 
-    // Defer heavy sheet mounting + index warming until after first frame
-    const task = InteractionManager.runAfterInteractions(() => {
+  // Fast open: seed from cache, then hydrate data/storage after navigation settles.
+  useEffect(() => {
+    let active = true;
+    let listTask: ReturnType<typeof InteractionManager.runAfterInteractions> | null = null;
+
+    const cached = MATERIALS_SCREEN_CACHE && MATERIALS_SCREEN_CACHE.language === i18nHook.language
+      ? MATERIALS_SCREEN_CACHE
+      : null;
+
+    if (cached) {
+      setMaterialItems(cached.items);
+      setBpCollected(cached.bpCollected);
+      setWbChecked(cached.wbChecked);
+      setReady(true);
+      setListVisible(true);
+    } else {
+      setReady(false);
+      setListVisible(false);
+      setVisibleCount(0);
+      listTask = InteractionManager.runAfterInteractions(() => {
+        if (active) setListVisible(true);
+      });
+    }
+
+    const loadTask = InteractionManager.runAfterInteractions(() => {
+      refreshMaterialItems();
+      const nextItems = allItems;
+
+      Promise.all([
+        AsyncStorage.getItem(BP_STORAGE_KEY),
+        AsyncStorage.getItem(WB_CHECKED_KEY),
+      ])
+        .then(([bpRaw, wbRaw]) => {
+          const nextBp = bpRaw ? JSON.parse(bpRaw) : [];
+          const nextWb = wbRaw ? JSON.parse(wbRaw) : [];
+
+          if (!active) return;
+          setMaterialItems(nextItems);
+          setBpCollected(nextBp);
+          setWbChecked(nextWb);
+          MATERIALS_SCREEN_CACHE = {
+            language: i18nHook.language,
+            items: nextItems,
+            bpCollected: nextBp,
+            wbChecked: nextWb,
+          };
+        })
+        .catch(() => {
+          if (!active) return;
+          setMaterialItems(nextItems);
+          setBpCollected([]);
+          setWbChecked([]);
+          MATERIALS_SCREEN_CACHE = {
+            language: i18nHook.language,
+            items: nextItems,
+            bpCollected: [],
+            wbChecked: [],
+          };
+        })
+        .finally(() => {
+          if (active) setReady(true);
+        });
+    });
+
+    // Warm heavy indexes in the background to make sheet opens instant.
+    const warmTask = InteractionManager.runAfterInteractions(() => {
+      refreshMaterialItems();
       ensureItemByName();
       ensureIndexes();
-      setSheetsReady(true);
     });
-    return () => task.cancel();
-  }, []);
+
+    return () => {
+      active = false;
+      listTask?.cancel();
+      loadTask.cancel();
+      warmTask.cancel();
+    };
+  }, [i18nHook.language]);
+
+  useEffect(() => {
+    if (!ready) return;
+    MATERIALS_SCREEN_CACHE = {
+      language: i18nHook.language,
+      items: materialItems,
+      bpCollected,
+      wbChecked,
+    };
+  }, [ready, i18nHook.language, materialItems, bpCollected, wbChecked]);
 
   const wbCheckedSet = useMemo(() => new Set(wbChecked), [wbChecked]);
 
@@ -156,7 +262,9 @@ const MaterialsScreen = ({navigation}: any) => {
 
   // Filter & sort items
   const filteredItems = useMemo(() => {
-    let list = allItems;
+    if (!showContent) return EMPTY_ITEMS;
+
+    let list = materialItems;
 
     // Type filter
     if (selectedType !== 'all') {
@@ -187,7 +295,70 @@ const MaterialsScreen = ({navigation}: any) => {
     }
 
     return list;
-  }, [selectedType, selectedFilters, search, sortAZ, i18nHook.language]);
+  }, [showContent, materialItems, selectedType, selectedFilters, search, sortAZ]);
+
+  useEffect(() => {
+    if (!showContent) {
+      hasPromotedFullRef.current = false;
+      setVisibleCount(0);
+      return;
+    }
+
+    const max = filteredItems.length;
+    if (max === 0) {
+      setVisibleCount(0);
+      return;
+    }
+
+    if (Platform.OS !== 'android') {
+      setVisibleCount(max);
+      return;
+    }
+
+    const initial = 24;
+    const batch = 24;
+    const start = Math.min(initial, max);
+    hasPromotedFullRef.current = false;
+    setVisibleCount(start);
+
+    if (max <= start) return;
+
+    const interval = setInterval(() => {
+      setVisibleCount(prev => {
+        if (prev >= max) {
+          clearInterval(interval);
+          return prev;
+        }
+        const next = Math.min(max, prev + batch);
+        if (next >= max) clearInterval(interval);
+        return next;
+      });
+    }, 70);
+
+    return () => clearInterval(interval);
+  }, [showContent, filteredItems.length]);
+
+  const visibleItems = useMemo(
+    () => (showContent ? filteredItems.slice(0, visibleCount) : EMPTY_ITEMS),
+    [showContent, filteredItems, visibleCount],
+  );
+
+  const handleLoadMore = useCallback(() => {
+    if (!showContent || Platform.OS !== 'android') return;
+    setVisibleCount(prev =>
+      prev >= filteredItems.length ? prev : Math.min(filteredItems.length, prev + 36),
+    );
+  }, [showContent, filteredItems.length]);
+
+  const promoteListToFull = useCallback(() => {
+    if (!showContent || Platform.OS !== 'android') return;
+    if (hasPromotedFullRef.current) return;
+
+    hasPromotedFullRef.current = true;
+    setVisibleCount(prev =>
+      prev >= filteredItems.length ? prev : filteredItems.length,
+    );
+  }, [showContent, filteredItems.length]);
 
   const handleItemPress = useCallback((item: RawItem) => {
     setSelectedItem(item);
@@ -274,25 +445,25 @@ const MaterialsScreen = ({navigation}: any) => {
                 onPress={() => {
                   if (list.id === 'expedition') {
                     transitionToSheet('expedition');
-                } else if (list.id === 'workbench') {
+                  } else if (list.id === 'workbench') {
                     transitionToSheet('workbench');
-                } else if (list.id === 'trophy') {
+                  } else if (list.id === 'trophy') {
                     transitionToSheet('trophy');
-                }
-              }}>
-              <GradientBorder style={styles.listCard}>
-                <View style={styles.listCardInner}>
-                  <Icon name="format-list-bulleted" size={18} color={list.color} />
-                  <View style={{flex: 1}}>
-                    <Text style={styles.listCardName}>{t(list.name)}</Text>
-                    <Text style={styles.listCardDesc} numberOfLines={2}>
-                      {t(list.description)}
-                    </Text>
+                  }
+                }}>
+                <GradientBorder style={styles.listCard}>
+                  <View style={styles.listCardInner}>
+                    <Icon name={list.icon} size={18} color={list.color} />
+                    <View style={{flex: 1}}>
+                      <Text style={styles.listCardName}>{t(list.name)}</Text>
+                      <Text style={styles.listCardDesc} numberOfLines={2}>
+                        {t(list.description)}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </GradientBorder>
-            </TouchableOpacity>
-          ))}
+                </GradientBorder>
+              </TouchableOpacity>
+            ))}
         </ScrollView>
       </View>
 
@@ -332,24 +503,50 @@ const MaterialsScreen = ({navigation}: any) => {
 
       {/* Grid */}
       <FlatList
-        data={filteredItems}
+        data={visibleItems}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.grid}
         showsVerticalScrollIndicator={false}
+        initialNumToRender={Platform.OS === 'android' ? 30 : 30}
+        maxToRenderPerBatch={Platform.OS === 'android' ? 30 : 30}
+        windowSize={Platform.OS === 'android' ? 21 : 11}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 16 : 40}
+        removeClippedSubviews={false}
+        onEndReachedThreshold={0.7}
+        onEndReached={handleLoadMore}
+        onScrollBeginDrag={promoteListToFull}
+        onMomentumScrollBegin={promoteListToFull}
+        scrollEventThrottle={16}
+        keyboardShouldPersistTaps="handled"
         extraData={bpCollected}
+        ListFooterComponent={
+          showContent && visibleCount < filteredItems.length ? (
+            <View style={styles.loadingMore}>
+              <ActivityIndicator size="small" color={colors.cyan} />
+            </View>
+          ) : null
+        }
         ListEmptyComponent={
-          <View style={styles.emptyState}>
-            <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
-            <Text style={styles.emptyText}>{t('materials.noItems')}</Text>
-          </View>
+          showContent ? (
+            <View style={styles.emptyState}>
+              <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
+              <Text style={styles.emptyText}>{t('materials.noItems')}</Text>
+            </View>
+          ) : null
         }
       />
 
+      {!showContent && (
+        <View pointerEvents="none" style={styles.loadingOverlay}>
+          <ActivityIndicator size="small" color={colors.cyan} />
+        </View>
+      )}
+
       {/* Bottom sheets — deferred mount for fast first render */}
-      {sheetsReady && <>
+      {(sheetsReady || activeSheet !== 'none') && <>
         <WorkbenchUpgradeSheet
           visible={activeSheet === 'workbench'}
           onClose={handleCloseWbSheet}

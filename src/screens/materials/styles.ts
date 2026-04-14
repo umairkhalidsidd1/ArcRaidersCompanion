@@ -105,6 +105,17 @@ export const styles = StyleSheet.create({
   /* Grid */
   grid: {paddingHorizontal: PADDING, paddingBottom: 100},
   row: {gap: CARD_GAP, marginBottom: CARD_GAP},
+  loadingMore: {
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(6, 10, 17, 0.28)',
+  },
   emptyState: {alignItems: 'center', paddingTop: 60, gap: spacing.md},
   emptyText: {fontSize: fonts.sizes.md, color: colors.textMuted},
 });

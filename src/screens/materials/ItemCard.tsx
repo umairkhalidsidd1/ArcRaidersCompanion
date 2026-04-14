@@ -49,6 +49,7 @@ const ItemCard = React.memo(
     return (
       <TouchableOpacity
         activeOpacity={0.7}
+        delayPressIn={0}
         onPress={() => onPress(item)}
         style={[
           cardStyles.card,
@@ -97,7 +98,7 @@ const ItemCard = React.memo(
         {/* Image */}
         <View style={cardStyles.imageWrap}>
           {item.icon ? (
-            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" />
+            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" fadeDuration={0} />
           ) : (
             <Icon name="help-circle-outline" size={28} color={colors.textMuted} />
           )}
