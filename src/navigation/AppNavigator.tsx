@@ -8,9 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
-import { colors, fonts, spacing } from '../theme/theme';
-
-const BLUR_TYPE = Platform.OS === 'ios' ? 'ultraThinMaterialDark' : 'dark';
+import { colors } from '../theme/theme';
 const CONTENT_BG = Platform.OS === 'android' ? colors.bg : 'transparent';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -22,7 +20,6 @@ import MapListScreen from '../screens/MapListScreen';
 import MapDetailScreen from '../screens/MapDetailScreen';
 import ItemDetailScreen from '../screens/ItemDetailScreen';
 import SubmitScreen from '../screens/SubmitScreen';
-import ToolsScreen from '../screens/ToolsScreen';
 import TraderListScreen from '../screens/TraderListScreen';
 import TraderDetailScreen from '../screens/TraderDetailScreen';
 import BlueprintTrackerScreen from '../screens/BlueprintTrackerScreen';
@@ -135,7 +132,9 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
 function GlassTabBar({ state, descriptors, navigation }: any) {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
-  const bottomPad = insets.bottom > 0 ? insets.bottom - 8 : 4;
+  const bottomPad = Platform.OS === 'android'
+    ? Math.max(insets.bottom, 12)
+    : (insets.bottom > 0 ? insets.bottom - 8 : 4);
 
   const TAB_LABELS: Record<string, string> = {
     Bunker: t('tabs.bunker'),
@@ -208,13 +207,16 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
 
 /* ── Tab Navigator ── */
 function TabNavigator() {
+  const insets = useSafeAreaInsets();
+  const tabSceneBottomInset = Platform.OS === 'android' ? Math.max(insets.bottom, 12) : 0;
+
   return (
     <Tab.Navigator
       tabBar={props => <GlassTabBar {...props} />}
       screenOptions={{
         headerShown: false,
         lazy: true,
-        sceneStyle: { backgroundColor: CONTENT_BG },
+        sceneStyle: { backgroundColor: CONTENT_BG, paddingBottom: tabSceneBottomInset },
       }}>
       <Tab.Screen name="Bunker" component={BunkerStackScreen} />
       <Tab.Screen name="Trials" component={TrialsStackScreen} />
@@ -228,6 +230,8 @@ function TabNavigator() {
 /* ── Root Navigator (MapDetail lives here — completely outside tabs) ── */
 const AppNavigator = () => {
   const navBackground = Platform.OS === 'android' ? colors.bg : 'transparent';
+  const insets = useSafeAreaInsets();
+  const rootBottomInset = Platform.OS === 'android' ? Math.max(insets.bottom, 12) : 0;
 
   return (
     <NavigationContainer
@@ -254,9 +258,13 @@ const AppNavigator = () => {
           headerShown: false,
           gestureEnabled: Platform.OS !== 'android',
           animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
-          contentStyle: { backgroundColor: navBackground },
+          contentStyle: { backgroundColor: navBackground, paddingBottom: rootBottomInset },
         }}>
-          <RootStack.Screen name="MainTabs" component={TabNavigator} />
+          <RootStack.Screen
+            name="MainTabs"
+            component={TabNavigator}
+            options={{contentStyle: {backgroundColor: navBackground, paddingBottom: 0}}}
+          />
           <RootStack.Screen name="MapList" component={MapListScreen} />
           <RootStack.Screen name="MapDetail" component={MapDetailScreen} />
           <RootStack.Screen name="ItemDetail" component={ItemDetailScreen} />

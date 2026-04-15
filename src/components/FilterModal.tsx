@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
-  Modal,
+  Animated,
+  Easing,
+  FlatList,
   PanResponder,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -46,205 +47,263 @@ const FilterModal: React.FC<FilterModalProps> = ({
   const [search, setSearch] = useState('');
   const scrollOffsetRef = useRef(0);
 
-  // Swipe-to-close: dismiss modal when swiping down on handle or when scroll is at top
+  // Slide animation — always mounted, slides off-screen when not visible
+  const slideAnim = useRef(new Animated.Value(0)).current; // 0 = hidden (translated off), 1 = fully shown
+  const backdropAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (visible) {
+      setLocalSelected(selected);
+      setSearch('');
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: 1,
+          duration: 280,
+          easing: Easing.out(Easing.bezier(0.25, 0.46, 0.45, 0.94)),
+          useNativeDriver: true,
+        }),
+        Animated.timing(backdropAnim, {
+          toValue: 1,
+          duration: 220,
+          easing: Easing.out(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 220,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(backdropAnim, {
+          toValue: 0,
+          duration: 180,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }
+  }, [visible, selected, slideAnim, backdropAnim]);
+
+  // Swipe-to-close pan handler on the handle bar
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: (_, gs) => gs.dy > 10,
+      onMoveShouldSetPanResponder: (_, gs) => gs.dy > 8,
       onPanResponderRelease: (_, gs) => {
-        if (gs.dy > 80) {
+        if (gs.dy > 60) {
           onClose();
         }
       },
     }),
   ).current;
 
-  const filteredCategories = categories.filter(c =>
-    c.label.toLowerCase().includes(search.toLowerCase()),
+  const filteredCategories = useMemo(
+    () =>
+      categories.filter(c =>
+        c.label.toLowerCase().includes(search.toLowerCase()),
+      ),
+    [categories, search],
   );
 
-  const handleToggle = (key: string) => {
+  const handleToggle = useCallback((key: string) => {
     if (lockedKeys.includes(key)) {
       onClose();
-      setTimeout(() => onLockedPress?.(), 350);
+      setTimeout(() => onLockedPress?.(), 300);
       return;
     }
     setLocalSelected(prev =>
       prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key],
     );
-  };
+  }, [lockedKeys, onClose, onLockedPress]);
 
-  const handleSelectAll = () => {
+  const handleSelectAll = useCallback(() => {
     setLocalSelected(categories.filter(c => !lockedKeys.includes(c.key)).map(c => c.key));
-  };
+  }, [categories, lockedKeys]);
 
-  const handleClearAll = () => {
+  const handleClearAll = useCallback(() => {
     setLocalSelected([]);
-  };
+  }, []);
 
-  const handleApply = () => {
+  const handleApply = useCallback(() => {
     onApply(localSelected);
     onClose();
-  };
+  }, [localSelected, onApply, onClose]);
 
-  // Sync local state when modal opens
-  React.useEffect(() => {
-    if (visible) {
-      setLocalSelected(selected);
-      setSearch('');
-    }
-  }, [visible, selected]);
+  const renderCategoryItem = useCallback(
+    ({item: cat}: {item: FilterCategory}) => {
+      const isLocked = lockedKeys.includes(cat.key);
+      const isChecked = !isLocked && localSelected.includes(cat.key);
 
-  return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType={Platform.OS === 'android' ? 'fade' : 'slide'}
-      onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <Pressable style={styles.dismissArea} onPress={onClose} />
-        <View style={styles.container}>
-          {/* Cyan top line */}
-          <View style={styles.topLine} />
-
-          {/* Handle - swipe down to close */}
-          <View {...panResponder.panHandlers} style={styles.handleWrap}>
-            <View style={styles.handle} />
+      return (
+        <TouchableOpacity
+          style={[styles.categoryItem, isLocked && {opacity: 0.55}]}
+          activeOpacity={0.6}
+          onPress={() => handleToggle(cat.key)}>
+          <View style={[styles.catIconWrap, {backgroundColor: cat.color + '25'}]}>
+            <Icon name={cat.icon} size={20} color={cat.color} />
           </View>
 
-          {/* Title */}
-          <Text style={styles.title}>CATEGORIES</Text>
-
-          {/* Search */}
-          <View style={styles.searchWrap}>
-            <Icon name="magnify" size={18} color={colors.textMuted} />
-            <TextInput
-              style={styles.searchInput}
-              value={search}
-              onChangeText={setSearch}
-              placeholder="Search categories..."
-              placeholderTextColor={colors.textMuted}
-              selectionColor={colors.cyan}
-            />
+          <View style={styles.catLabelWrap}>
+            <View style={styles.catLabelRow}>
+              <Text style={styles.catLabel}>{cat.label}</Text>
+              {isLocked && (
+                <View style={{flexDirection: 'row', alignItems: 'center', gap: 4, marginLeft: 6, backgroundColor: 'rgba(0,229,255,0.10)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6}}>
+                  <Icon name="lock" size={10} color={colors.cyan} />
+                  <Text style={{fontSize: 8, fontWeight: '900', color: colors.cyan, letterSpacing: 1}}>PRO</Text>
+                </View>
+              )}
+            </View>
+            {cat.description && (
+              <Text style={styles.catDesc}>{cat.description}</Text>
+            )}
           </View>
 
-          {/* Select All / Clear All */}
-          <View style={styles.actionRow}>
-            <TouchableOpacity onPress={handleSelectAll} style={styles.actionBtn}>
-              <Text style={styles.actionText}>SELECT ALL</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleClearAll} style={styles.actionBtn}>
-              <Text style={styles.actionText}>CLEAR ALL</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Category List */}
-          <ScrollView
-            style={styles.list}
-            contentContainerStyle={{paddingBottom: 80}}
-            showsVerticalScrollIndicator={false}
-            onScroll={(e) => { scrollOffsetRef.current = e.nativeEvent.contentOffset.y; }}
-            scrollEventThrottle={16}
-            onScrollEndDrag={(e) => {
-              if (scrollOffsetRef.current <= 0 && e.nativeEvent.velocity && e.nativeEvent.velocity.y > 0.5) {
-                onClose();
-              }
-            }}>
-            {filteredCategories.map(cat => {
-              const isLocked = lockedKeys.includes(cat.key);
-              const isChecked = !isLocked && localSelected.includes(cat.key);
-              return (
-                <TouchableOpacity
-                  key={cat.key}
-                  style={[styles.categoryItem, isLocked && {opacity: 0.55}]}
-                  activeOpacity={0.6}
-                  onPress={() => handleToggle(cat.key)}>
-                  {/* Icon */}
-                  <View
-                    style={[
-                      styles.catIconWrap,
-                      { backgroundColor: cat.color + '25' },
-                    ]}>
-                    <Icon name={cat.icon} size={20} color={cat.color} />
-                  </View>
-
-                  {/* Label */}
-                  <View style={styles.catLabelWrap}>
-                    <View style={styles.catLabelRow}>
-                      <Text style={styles.catLabel}>{cat.label}</Text>
-                      {isLocked && (
-                        <View style={{flexDirection: 'row', alignItems: 'center', gap: 4, marginLeft: 6, backgroundColor: 'rgba(0,229,255,0.10)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6}}>
-                          <Icon name="lock" size={10} color={colors.cyan} />
-                          <Text style={{fontSize: 8, fontWeight: '900', color: colors.cyan, letterSpacing: 1}}>PRO</Text>
-                        </View>
-                      )}
-                    </View>
-                    {cat.description && (
-                      <Text style={styles.catDesc}>
-                        {cat.description}
-                      </Text>
-                    )}
-                  </View>
-
-                  {/* Checkbox (right side) */}
-                  {isLocked ? (
-                    <View style={[styles.checkbox, {borderColor: colors.cyan + '40'}]}>
-                      <Icon name="lock" size={14} color={colors.cyan} />
-                    </View>
-                  ) : (
-                    <View
-                      style={[
-                        styles.checkbox,
-                        isChecked && styles.checkboxActive,
-                      ]}>
-                      {isChecked && (
-                        <Icon name="check" size={14} color={colors.textInverse} />
-                      )}
-                    </View>
-                  )}
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
-
-          {/* Apply Button - floating over content */}
-          {Platform.OS === 'android' ? (
-            <View style={[styles.applyBlur, {backgroundColor: 'rgba(10,14,23,0.95)'}]}>
-              <TouchableOpacity
-                style={styles.applyBtn}
-                activeOpacity={0.8}
-                onPress={handleApply}>
-                <Text style={styles.applyText}>APPLY FILTER</Text>
-              </TouchableOpacity>
+          {isLocked ? (
+            <View style={[styles.checkbox, {borderColor: colors.cyan + '40'}]}>
+              <Icon name="lock" size={14} color={colors.cyan} />
             </View>
           ) : (
-            <BlurView
-              style={styles.applyBlur}
-              blurType="dark"
-              blurAmount={20}
-              reducedTransparencyFallbackColor="rgba(0, 150, 255, 0.75)">
-              <TouchableOpacity
-                style={styles.applyBtn}
-                activeOpacity={0.8}
-                onPress={handleApply}>
-                <Text style={styles.applyText}>APPLY FILTER</Text>
-              </TouchableOpacity>
-            </BlurView>
+            <View style={[styles.checkbox, isChecked && styles.checkboxActive]}>
+              {isChecked && <Icon name="check" size={14} color={colors.textInverse} />}
+            </View>
           )}
+        </TouchableOpacity>
+      );
+    },
+    [handleToggle, localSelected, lockedKeys],
+  );
+
+  // Keep rendering even when not visible so slide-in has content ready
+  return (
+    <View style={styles.root} pointerEvents={visible ? 'auto' : 'none'}>
+      {/* Backdrop */}
+      <Animated.View
+        style={[styles.backdrop, {opacity: backdropAnim}]}
+        pointerEvents={visible ? 'auto' : 'none'}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
+      </Animated.View>
+
+      {/* Sheet */}
+      <Animated.View
+        style={[
+          styles.container,
+          {
+            transform: [
+              {
+                translateY: slideAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [800, 0],
+                }),
+              },
+            ],
+          },
+        ]}>
+        {/* Cyan top line */}
+        <View style={styles.topLine} />
+
+        {/* Handle - swipe down to close */}
+        <View {...panResponder.panHandlers} style={styles.handleWrap}>
+          <View style={styles.handle} />
         </View>
-      </View>
-    </Modal>
+
+        {/* Title */}
+        <Text style={styles.title}>CATEGORIES</Text>
+
+        {/* Search */}
+        <View style={styles.searchWrap}>
+          <Icon name="magnify" size={18} color={colors.textMuted} />
+          <TextInput
+            style={styles.searchInput}
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Search categories..."
+            placeholderTextColor={colors.textMuted}
+            selectionColor={colors.cyan}
+          />
+        </View>
+
+        {/* Select All / Clear All */}
+        <View style={styles.actionRow}>
+          <TouchableOpacity onPress={handleSelectAll} style={styles.actionBtn}>
+            <Text style={styles.actionText}>SELECT ALL</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleClearAll} style={styles.actionBtn}>
+            <Text style={styles.actionText}>CLEAR ALL</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Category List */}
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          data={filteredCategories}
+          keyExtractor={item => item.key}
+          renderItem={renderCategoryItem}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          removeClippedSubviews={Platform.OS === 'android'}
+          initialNumToRender={12}
+          maxToRenderPerBatch={12}
+          updateCellsBatchingPeriod={16}
+          windowSize={7}
+          onScroll={e => {
+            scrollOffsetRef.current = e.nativeEvent.contentOffset.y;
+          }}
+          scrollEventThrottle={16}
+          onScrollEndDrag={e => {
+            if (
+              scrollOffsetRef.current <= 0 &&
+              e.nativeEvent.velocity &&
+              e.nativeEvent.velocity.y > 0.5
+            ) {
+              onClose();
+            }
+          }}
+          ListEmptyComponent={
+            filteredCategories.length === 0 ? (
+              <View style={styles.emptyWrap}>
+                <Text style={styles.emptyText}>No categories found.</Text>
+              </View>
+            ) : null
+          }
+        />
+
+        {/* Apply Button */}
+        {Platform.OS === 'android' ? (
+          <View style={[styles.applyBlur, {backgroundColor: 'rgba(10,14,23,0.95)'}]}>
+            <TouchableOpacity style={styles.applyBtn} activeOpacity={0.8} onPress={handleApply}>
+              <Text style={styles.applyText}>APPLY FILTER</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <BlurView
+            style={styles.applyBlur}
+            blurType="dark"
+            blurAmount={20}
+            reducedTransparencyFallbackColor="rgba(0, 150, 255, 0.75)">
+            <TouchableOpacity style={styles.applyBtn} activeOpacity={0.8} onPress={handleApply}>
+              <Text style={styles.applyText}>APPLY FILTER</Text>
+            </TouchableOpacity>
+          </BlurView>
+        )}
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'transparent',
+  root: {
+    ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
+    zIndex: 200,
+    elevation: 20,
   },
-  dismissArea: {
-    flex: 1,
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.55)',
   },
   container: {
     backgroundColor: colors.bg,
@@ -314,8 +373,19 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   list: {
-    paddingHorizontal: spacing.xl,
     maxHeight: 420,
+  },
+  listContent: {
+    paddingHorizontal: spacing.xl,
+    paddingBottom: 80,
+  },
+  emptyWrap: {
+    paddingVertical: spacing.xl,
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: fonts.sizes.sm,
+    color: colors.textMuted,
   },
   categoryItem: {
     flexDirection: 'row',

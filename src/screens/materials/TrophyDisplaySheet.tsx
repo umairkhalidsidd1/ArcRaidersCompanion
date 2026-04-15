@@ -12,6 +12,7 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing} from '../../theme/theme';
 import {resolveImage} from '../../data/imageRegistry';
@@ -44,6 +45,7 @@ const TrophyDisplaySheet = ({
   onMaterialPress?: (item: RawItem) => void;
 }) => {
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
   const currentTY = useRef(WB_TY_HIDDEN);
@@ -201,7 +203,10 @@ const TrophyDisplaySheet = ({
           <ScrollView
             ref={scrollRef}
             style={{flex: 1}}
-            contentContainerStyle={{paddingHorizontal: PADDING, paddingBottom: 60}}
+            contentContainerStyle={{
+              paddingHorizontal: PADDING,
+              paddingBottom: Math.max(insets.bottom + 24, 60),
+            }}
             showsVerticalScrollIndicator={false}
             bounces={false}
             scrollEventThrottle={16}

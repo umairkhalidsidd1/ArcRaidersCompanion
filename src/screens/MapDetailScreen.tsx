@@ -363,6 +363,10 @@ const MapDetailScreen = ({route, navigation}: any) => {
     [runJS, heatmapActive, injectHeatmap, removeHeatmap],
   );
 
+  const openFilterModal = useCallback(() => {
+    setFilterVisible(true);
+  }, []);
+
   /* ─── ON MESSAGE FROM WEBVIEW ─── */
   const handleMessage = useCallback((event: any) => {
     try {
@@ -763,7 +767,10 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
           <TouchableOpacity
             style={styles.floatingFilterBtn}
             activeOpacity={0.8}
-            onPress={() => setFilterVisible(true)}>
+            delayPressIn={0}
+            hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
+            onPressIn={openFilterModal}
+            onPress={openFilterModal}>
             <Icon name="filter-variant" size={18} color={colors.textPrimary} />
             <Text style={styles.filterBtnText}>{t('maps.filter')}</Text>
           </TouchableOpacity>
@@ -1134,6 +1141,7 @@ const styles = StyleSheet.create({
     left: 0, right: 0,
     alignItems: 'center',
     zIndex: 100,
+    elevation: 16,
   },
   floatingFilterBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
@@ -1145,6 +1153,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.12)',
     minWidth: 160,
     overflow: 'hidden',
+    elevation: 4,
   },
   filterBtnText: {
     fontSize: 13, fontWeight: '600',

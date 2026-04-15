@@ -1,8 +1,10 @@
 import React, {useMemo, useState, useCallback, useEffect, memo} from 'react';
 import {
   Alert,
+  BackHandler,
   FlatList,
   Image,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -12,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import {getQuests} from '../data/localizedData';
 import {
@@ -218,6 +220,25 @@ const QuestListScreen = ({navigation, route}: any) => {
     [navigation],
   );
 
+  const handleBackToHome = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return true;
+    }
+
+    navigation.navigate('MainTabs', {screen: 'Bunker'});
+    return true;
+  }, [navigation]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS !== 'android') return undefined;
+
+      const sub = BackHandler.addEventListener('hardwareBackPress', handleBackToHome);
+      return () => sub.remove();
+    }, [handleBackToHome]),
+  );
+
   const handleReset = useCallback(() => {
     Alert.alert(
       t('quests.resetProgress'),
@@ -288,10 +309,12 @@ const QuestListScreen = ({navigation, route}: any) => {
 
       {/* Header */}
       <View style={s.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
+        <TouchableOpacity onPress={() => { handleBackToHome(); }} style={s.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={s.headerTitleAbs}>{t('quests.title')}</Text>
+        <View pointerEvents="none" style={[StyleSheet.absoluteFill, {alignItems: 'center', justifyContent: 'center'}]}>
+          <Text style={s.headerTitleCenter}>{t('quests.title')}</Text>
+        </View>
         <TouchableOpacity onPress={handleReset} style={s.resetBtn}>
           <Text style={s.resetText}>{t('quests.reset')}</Text>
         </TouchableOpacity>
@@ -377,15 +400,12 @@ const s = StyleSheet.create({
     color: colors.textPrimary,
     textAlign: 'center',
   },
-  headerTitleAbs: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
+  headerTitleCenter: {
     fontSize: fonts.sizes.xl,
     fontWeight: '700',
     color: colors.textPrimary,
     textAlign: 'center',
-    pointerEvents: 'none',
+    lineHeight: 36,
   },
   resetBtn: {
     paddingHorizontal: spacing.md,

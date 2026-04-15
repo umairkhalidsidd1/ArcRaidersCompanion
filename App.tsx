@@ -21,7 +21,7 @@ const SmokeBackground = Platform.OS === 'android'
   ? () => <View style={{...require('react-native').StyleSheet.absoluteFillObject, backgroundColor: '#0A0E17'}} />
   : require('./src/components/SmokeBackground').default;
 import SplashScreen from './src/screens/SplashScreen';
-import {PremiumProvider, TEMP_UNLOCK_ALL_PREMIUM} from './src/context/PremiumContext';
+import {PremiumProvider} from './src/context/PremiumContext';
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
@@ -49,7 +49,7 @@ function App() {
   if (!ready) {
     return (
       <View style={{flex: 1, backgroundColor: '#0A0E17'}}>
-        <StatusBar barStyle="light-content" backgroundColor="#0D0D0D" />
+        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" />
       </View>
     );
   }
@@ -62,7 +62,7 @@ function App() {
   const handleOnboardingDone = async () => {
     setShowOnboarding(false);
     // Navigate to paywall after navigator mounts (skip on Android — not configured yet)
-    if (Platform.OS !== 'android' && !TEMP_UNLOCK_ALL_PREMIUM) {
+    if (Platform.OS !== 'android') {
       setTimeout(() => {
         if (navigationRef.isReady()) {
           (navigationRef as any).navigate('Paywall');
@@ -75,7 +75,7 @@ function App() {
     <GestureHandlerRootView style={{flex: 1}}>
       <SmokeBackground />
       <SafeAreaProvider>
-        <StatusBar barStyle="light-content" backgroundColor="#0D0D0D" />
+        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" />
         {showOnboarding ? (
           <OnboardingScreen onDone={handleOnboardingDone} />
         ) : (

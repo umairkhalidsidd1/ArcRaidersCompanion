@@ -508,7 +508,7 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
         keyExtractor={keyExtractor}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.grid}
+        contentContainerStyle={[styles.grid, {paddingBottom: 100 + Math.max(insets.bottom, 12)}]}
         showsVerticalScrollIndicator={false}
         initialNumToRender={Platform.OS === 'android' ? 30 : 30}
         maxToRenderPerBatch={Platform.OS === 'android' ? 30 : 30}
