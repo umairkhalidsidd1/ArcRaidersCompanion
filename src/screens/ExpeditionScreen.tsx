@@ -385,10 +385,8 @@ const ExpeditionScreen = ({navigation}: any) => {
               const isOpen = openStage === idx;
               const isDone = sp.pct >= 1;
               const isActive = idx === activeIdx;
-              const isLocked = activeIdx >= 0 && idx > activeIdx;
-
               return (
-                <View key={stage.id} style={isLocked ? {opacity: 0.4} : undefined}>
+                <View key={stage.id}>
                   <Pressable
                     onPress={() => {
                       anim();

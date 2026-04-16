@@ -1,12 +1,10 @@
 /**
  * In-App Review utility
- * Uses native App Store / Play Store review dialogs
+ * Uses native SKStoreReviewController (iOS) / Play In-App Review API (Android)
  *
- * Best practices:
- * - iOS allows max 3 prompts per year (system enforced)
- * - Ask after positive experiences (quest completion, etc.)
- * - Don't ask immediately on first launch
- * - Track if already prompted this session to avoid spam
+ * - iOS: system enforces max 3 prompts per 365 days
+ * - Android: quota managed by Play Store
+ * - We only add our own session/timing guards to avoid wasted calls
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,43 +13,41 @@ import InAppReview from 'react-native-in-app-review';
 const REVIEW_PROMPT_KEY = '@arcc_last_review_prompt';
 const SESSION_COUNT_KEY = '@arcc_session_count';
 const REVIEW_MILESTONE_KEY = '@arcc_review_milestones';
-const MIN_DAYS_BETWEEN_PROMPTS = 30; // Don't prompt more than once per month
+const MIN_DAYS_BETWEEN_PROMPTS = 30;
 
 let _promptedThisSession = false;
 
 /**
- * Track app session and prompt on 3rd session
- * Call this once at app startup (e.g., in App.tsx or HomeScreen)
+ * Track app session and request native review starting at 3rd session.
  */
 export async function trackSessionAndMaybeReview(): Promise<void> {
   try {
     const milestones = await getReviewMilestones();
-    if (milestones.sessionReviewDone) return; // Already did session-based review
+    if (milestones.sessionReviewDone) return;
 
     const countStr = await AsyncStorage.getItem(SESSION_COUNT_KEY);
     const count = (parseInt(countStr || '0', 10)) + 1;
     await AsyncStorage.setItem(SESSION_COUNT_KEY, count.toString());
 
-    if (count === 3) {
-      const shown = await requestAppReview(true); // force=true, no cooldown for milestone
-      if (shown) {
-        await markMilestone('sessionReviewDone');
-      }
+    if (count < 3) return;
+
+    const shown = await requestAppReview();
+    if (shown) {
+      await markMilestone('sessionReviewDone');
     }
   } catch {}
 }
 
 /**
- * Check if we should prompt after quest completion
- * Call this after a quest is marked complete
+ * Request native review after 5+ completed quests.
  */
 export async function checkQuestMilestoneReview(completedQuestCount: number): Promise<void> {
   try {
     const milestones = await getReviewMilestones();
-    if (milestones.quest5ReviewDone) return; // Already did 5-quest review
+    if (milestones.quest5ReviewDone) return;
 
-    if (completedQuestCount === 5) {
-      const shown = await requestAppReview(true); // force=true, no cooldown for milestone
+    if (completedQuestCount >= 5) {
+      const shown = await requestAppReview();
       if (shown) {
         await markMilestone('quest5ReviewDone');
       }
@@ -80,36 +76,25 @@ async function markMilestone(key: keyof ReviewMilestones): Promise<void> {
 }
 
 /**
- * Request in-app review if appropriate
- * @param force - Skip timing checks (use for explicit user actions like "Rate App" button)
+ * Request native in-app review dialog.
+ * @param force Skip session/timing guards (for explicit user actions like "Rate App").
  */
 export async function requestAppReview(force = false): Promise<boolean> {
   try {
-    // Don't prompt twice in same session unless forced
-    if (_promptedThisSession && !force) {
-      return false;
-    }
+    if (!force && _promptedThisSession) return false;
+    if (!InAppReview.isAvailable()) return false;
 
-    // Check if native review is available
-    if (!InAppReview.isAvailable()) {
-      return false;
-    }
-
-    // Check timing (unless forced)
     if (!force) {
       const lastPrompt = await AsyncStorage.getItem(REVIEW_PROMPT_KEY);
       if (lastPrompt) {
-        const daysSince = (Date.now() - parseInt(lastPrompt, 10)) / (1000 * 60 * 60 * 24);
-        if (daysSince < MIN_DAYS_BETWEEN_PROMPTS) {
-          return false;
-        }
+        const daysSince =
+          (Date.now() - parseInt(lastPrompt, 10)) / (1000 * 60 * 60 * 24);
+        if (daysSince < MIN_DAYS_BETWEEN_PROMPTS) return false;
       }
     }
 
-    // Request the review
     const result = await InAppReview.RequestInAppReview();
-    
-    // Track that we prompted
+
     _promptedThisSession = true;
     await AsyncStorage.setItem(REVIEW_PROMPT_KEY, Date.now().toString());
 
@@ -120,7 +105,7 @@ export async function requestAppReview(force = false): Promise<boolean> {
 }
 
 /**
- * Check if review prompt is available (for UI purposes)
+ * Check if native review prompt is available.
  */
 export function isReviewAvailable(): boolean {
   return InAppReview.isAvailable();

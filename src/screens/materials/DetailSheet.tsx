@@ -258,7 +258,7 @@ const DetailSheet = ({
             style={detailStyles.scrollView}
             contentContainerStyle={[
               detailStyles.scrollContent,
-              {paddingBottom: Math.max(insets.bottom + 24, 56)},
+              {paddingBottom: Math.max(insets.bottom + 90, 120)},
             ]}
             showsVerticalScrollIndicator={false}
             bounces={false}

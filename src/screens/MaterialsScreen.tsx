@@ -343,6 +343,9 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
     [showContent, filteredItems, visibleCount],
   );
 
+  const shouldShowLoadingOverlay =
+    !showContent || (filteredItems.length > 0 && visibleItems.length === 0);
+
   const handleLoadMore = useCallback(() => {
     if (!showContent || Platform.OS !== 'android') return;
     setVisibleCount(prev =>
@@ -455,7 +458,12 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
                   <View style={styles.listCardInner}>
                     <Icon name={list.icon} size={18} color={list.color} />
                     <View style={{flex: 1}}>
-                      <Text style={styles.listCardName}>{t(list.name)}</Text>
+                      <Text
+                        style={styles.listCardName}
+                        numberOfLines={Platform.OS === 'android' ? 1 : undefined}
+                        ellipsizeMode="tail">
+                        {t(list.name)}
+                      </Text>
                       <Text style={styles.listCardDesc} numberOfLines={2}>
                         {t(list.description)}
                       </Text>
@@ -522,24 +530,11 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
         scrollEventThrottle={16}
         keyboardShouldPersistTaps="handled"
         extraData={bpCollected}
-        ListFooterComponent={
-          showContent && visibleCount < filteredItems.length ? (
-            <View style={styles.loadingMore}>
-              <ActivityIndicator size="small" color={colors.cyan} />
-            </View>
-          ) : null
-        }
-        ListEmptyComponent={
-          showContent ? (
-            <View style={styles.emptyState}>
-              <Icon name="clipboard-text-search-outline" size={48} color={colors.textMuted} />
-              <Text style={styles.emptyText}>{t('materials.noItems')}</Text>
-            </View>
-          ) : null
-        }
+        ListFooterComponent={null}
+        ListEmptyComponent={null}
       />
 
-      {!showContent && (
+      {shouldShowLoadingOverlay && (
         <View pointerEvents="none" style={styles.loadingOverlay}>
           <ActivityIndicator size="small" color={colors.cyan} />
         </View>

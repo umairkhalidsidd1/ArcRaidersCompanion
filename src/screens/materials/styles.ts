@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {colors, fonts, spacing, borderRadius} from '../../theme/theme';
 import {SCREEN_W, PADDING, CARD_W, CARD_H, CARD_GAP, THUMB_W} from './constants';
 
@@ -46,7 +46,8 @@ export const styles = StyleSheet.create({
     fontSize: fonts.sizes.md,
     fontWeight: '700',
     color: colors.textPrimary,
-    marginBottom: 2,
+    marginBottom: Platform.OS === 'android' ? 0 : 2,
+    lineHeight: Platform.OS === 'android' ? 18 : undefined,
   },
   listCardDesc: {
     fontSize: fonts.sizes.xs,
