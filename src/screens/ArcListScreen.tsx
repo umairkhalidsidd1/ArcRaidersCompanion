@@ -42,6 +42,9 @@ const SCREEN_W = Dimensions.get('window').width;
 const CARD_GAP = spacing.sm;
 const PADDING = spacing.lg;
 const CARD_W = (SCREEN_W - PADDING * 2 - CARD_GAP * (NUM_COLS - 1)) / NUM_COLS;
+const INITIAL_RENDER_COUNT = Platform.OS === 'android' ? 12 : 9;
+const RENDER_BATCH_SIZE = Platform.OS === 'android' ? 12 : 9;
+const RENDER_BATCH_INTERVAL_MS = Platform.OS === 'android' ? 70 : 45;
 
 const ArcListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
@@ -55,13 +58,14 @@ const ArcListScreen = ({navigation}: any) => {
   const [listVisible, setListVisible] = useState(false);
   const [arcs, setArcs] = useState<Arc[]>(seed?.arcs ?? EMPTY_ARCS);
   const [visibleCount, setVisibleCount] = useState(
-    seed ? Math.min(seed.arcs.length, Platform.OS === 'android' ? 12 : seed.arcs.length) : 0,
+    seed ? Math.min(seed.arcs.length, INITIAL_RENDER_COUNT) : 0,
   );
 
   const showContent = ready && listVisible;
 
   useEffect(() => {
     let active = true;
+    let loadTimer: ReturnType<typeof setTimeout> | null = null;
     setListVisible(false);
     setVisibleCount(0);
 
@@ -81,34 +85,38 @@ const ArcListScreen = ({navigation}: any) => {
     }
 
     const loadTask = InteractionManager.runAfterInteractions(() => {
-      const nextArcs = getArcs() as Arc[];
-      if (!active) return;
+      // Defer heavy data read by one tick so first navigation paint happens first.
+      loadTimer = setTimeout(() => {
+        const nextArcs = getArcs() as Arc[];
+        if (!active) return;
 
-      setArcs(nextArcs);
-      ARC_LIST_CACHE = {
-        language: i18n.language,
-        arcs: nextArcs,
-      };
-      setReady(true);
+        setArcs(nextArcs);
+        ARC_LIST_CACHE = {
+          language: i18n.language,
+          arcs: nextArcs,
+        };
+        setReady(true);
+      }, 0);
     });
 
     return () => {
       active = false;
       listTask.cancel();
       loadTask.cancel();
+      if (loadTimer) clearTimeout(loadTimer);
     };
   }, [i18n.language]);
 
   useEffect(() => {
     if (!showContent) return;
 
-    const initial = Platform.OS === 'android' ? 12 : arcs.length;
-    const batch = Platform.OS === 'android' ? 12 : arcs.length;
+    const initial = INITIAL_RENDER_COUNT;
+    const batch = RENDER_BATCH_SIZE;
     const max = arcs.length;
 
     setVisibleCount(Math.min(initial, max));
 
-    if (Platform.OS !== 'android' || max <= initial) return;
+    if (max <= initial) return;
 
     const interval = setInterval(() => {
       setVisibleCount(prev => {
@@ -116,7 +124,7 @@ const ArcListScreen = ({navigation}: any) => {
         if (next >= max) clearInterval(interval);
         return next;
       });
-    }, 70);
+    }, RENDER_BATCH_INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [showContent, arcs.length]);
@@ -168,10 +176,10 @@ const ArcListScreen = ({navigation}: any) => {
         keyExtractor={item => String(item.id)}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
-        initialNumToRender={Platform.OS === 'android' ? 12 : 18}
-        maxToRenderPerBatch={Platform.OS === 'android' ? 12 : 18}
-        windowSize={Platform.OS === 'android' ? 9 : 11}
-        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 16}
+        initialNumToRender={INITIAL_RENDER_COUNT}
+        maxToRenderPerBatch={RENDER_BATCH_SIZE}
+        windowSize={Platform.OS === 'android' ? 9 : 7}
+        updateCellsBatchingPeriod={Platform.OS === 'android' ? 24 : 30}
         removeClippedSubviews={Platform.OS === 'android'}
         ListFooterComponent={showContent && visibleCount < arcs.length ? (
           <View style={styles.loadingMore}>

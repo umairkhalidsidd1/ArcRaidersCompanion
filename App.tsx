@@ -26,6 +26,8 @@ import {PremiumProvider} from './src/context/PremiumContext';
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
 
+let _isReplayingTutorial = false;
+
 function App() {
   const [ready, setReady] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
@@ -56,19 +58,21 @@ function App() {
 
   const triggerOnboarding = async () => {
     await AsyncStorage.removeItem(ONBOARDING_KEY);
+    _isReplayingTutorial = true;
     setShowOnboarding(true);
   };
 
   const handleOnboardingDone = async () => {
     setShowOnboarding(false);
-    // Navigate to paywall after navigator mounts (skip on Android — not configured yet)
-    if (Platform.OS !== 'android') {
+    // Show paywall only after the first-time onboarding, not when replaying from Settings
+    if (!_isReplayingTutorial && Platform.OS !== 'android') {
       setTimeout(() => {
         if (navigationRef.isReady()) {
           (navigationRef as any).navigate('Paywall');
         }
       }, 500);
     }
+    _isReplayingTutorial = false;
   };
 
   return (

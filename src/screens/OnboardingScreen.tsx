@@ -17,6 +17,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 'react-native-svg';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';
+import {requestPermissions} from '../utils/notifications';
 
 const {width: W, height: H} = Dimensions.get('window');
 const ONBOARDING_KEY = '@arcc_onboarding_done';
@@ -748,6 +749,13 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
     await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
     onDone();
   }, [onDone]);
+
+  /* Ask for notification permission on the 4th slide */
+  useEffect(() => {
+    if (currentPage === 3) {
+      requestPermissions();
+    }
+  }, [currentPage]);
 
   const isLast = currentPage === NUM_SLIDES - 1;
 

@@ -119,7 +119,18 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
     (target: ActiveSheet) => {
       const current = activeSheetRef.current;
       const hasPendingTransition = transitionTimerRef.current != null;
-      if (current === target && !hasPendingTransition) return;
+      if (current === target && !hasPendingTransition) {
+        if (target === 'none') return;
+
+        // Recovery for close-animation race: force a fresh reopen cycle
+        // so taps right after close are not ignored.
+        setActiveSheetSynced('none');
+        transitionTimerRef.current = setTimeout(() => {
+          setActiveSheetSynced(target);
+          transitionTimerRef.current = null;
+        }, SHEET_TRANSITION_DELAY);
+        return;
+      }
 
       clearTransitionTimer();
 
