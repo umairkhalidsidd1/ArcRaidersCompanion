@@ -23,6 +23,7 @@ import FilterModal from '../components/FilterModal';
 import {
   type RawItem,
   NUM_COLUMNS,
+  ROW_H,
   BP_STORAGE_KEY,
   WB_CHECKED_KEY,
   RARITY_FILTERS,
@@ -68,9 +69,6 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
   const [listVisible, setListVisible] = useState(!!seed);
   const [sheetsReady, setSheetsReady] = useState(false);
   const [materialItems, setMaterialItems] = useState<RawItem[]>(seed?.items ?? EMPTY_ITEMS);
-  const [visibleCount, setVisibleCount] = useState(
-    seed ? Math.min(seed.items.length, Platform.OS === 'android' ? 18 : seed.items.length) : 0,
-  );
   const [search, setSearch] = useState('');
   const [selectedType, _setSelectedType] = useState('all');
   const [sortAZ, setSortAZ] = useState(true);
@@ -82,9 +80,6 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
   const [wbChecked, setWbChecked] = useState<string[]>(seed?.wbChecked ?? []);
   const activeSheetRef = useRef<ActiveSheet>('none');
   const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hasPromotedFullRef = useRef(false);
-
-  const SHEET_TRANSITION_DELAY = 90;
 
   const setActiveSheetSynced = useCallback((next: ActiveSheet) => {
     activeSheetRef.current = next;
@@ -128,7 +123,7 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
         transitionTimerRef.current = setTimeout(() => {
           setActiveSheetSynced(target);
           transitionTimerRef.current = null;
-        }, SHEET_TRANSITION_DELAY);
+        }, 50);
         return;
       }
 
@@ -144,12 +139,9 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
         return;
       }
 
-      // Close current sheet first, then open the next one.
-      setActiveSheetSynced('none');
-      transitionTimerRef.current = setTimeout(() => {
-        setActiveSheetSynced(target);
-        transitionTimerRef.current = null;
-      }, SHEET_TRANSITION_DELAY);
+      // Direct switch – the old sheet sees visible=false (snaps hidden)
+      // while the new sheet sees visible=true (animates in) in the same frame.
+      setActiveSheetSynced(target);
     },
     [clearTransitionTimer, setActiveSheetSynced],
   );
@@ -174,7 +166,6 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
     } else {
       setReady(false);
       setListVisible(false);
-      setVisibleCount(0);
       listTask = InteractionManager.runAfterInteractions(() => {
         if (active) setListVisible(true);
       });
@@ -308,71 +299,11 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
     return list;
   }, [showContent, materialItems, selectedType, selectedFilters, search, sortAZ]);
 
-  useEffect(() => {
-    if (!showContent) {
-      hasPromotedFullRef.current = false;
-      setVisibleCount(0);
-      return;
-    }
 
-    const max = filteredItems.length;
-    if (max === 0) {
-      setVisibleCount(0);
-      return;
-    }
 
-    if (Platform.OS !== 'android') {
-      setVisibleCount(max);
-      return;
-    }
+  const visibleItems = showContent ? filteredItems : EMPTY_ITEMS;
 
-    const initial = 24;
-    const batch = 24;
-    const start = Math.min(initial, max);
-    hasPromotedFullRef.current = false;
-    setVisibleCount(start);
-
-    if (max <= start) return;
-
-    const interval = setInterval(() => {
-      setVisibleCount(prev => {
-        if (prev >= max) {
-          clearInterval(interval);
-          return prev;
-        }
-        const next = Math.min(max, prev + batch);
-        if (next >= max) clearInterval(interval);
-        return next;
-      });
-    }, 70);
-
-    return () => clearInterval(interval);
-  }, [showContent, filteredItems.length]);
-
-  const visibleItems = useMemo(
-    () => (showContent ? filteredItems.slice(0, visibleCount) : EMPTY_ITEMS),
-    [showContent, filteredItems, visibleCount],
-  );
-
-  const shouldShowLoadingOverlay =
-    !showContent || (filteredItems.length > 0 && visibleItems.length === 0);
-
-  const handleLoadMore = useCallback(() => {
-    if (!showContent || Platform.OS !== 'android') return;
-    setVisibleCount(prev =>
-      prev >= filteredItems.length ? prev : Math.min(filteredItems.length, prev + 36),
-    );
-  }, [showContent, filteredItems.length]);
-
-  const promoteListToFull = useCallback(() => {
-    if (!showContent || Platform.OS !== 'android') return;
-    if (hasPromotedFullRef.current) return;
-
-    hasPromotedFullRef.current = true;
-    setVisibleCount(prev =>
-      prev >= filteredItems.length ? prev : filteredItems.length,
-    );
-  }, [showContent, filteredItems.length]);
+  const shouldShowLoadingOverlay = !showContent;
 
   const handleItemPress = useCallback((item: RawItem) => {
     setSelectedItem(item);
@@ -432,7 +363,14 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
 
   const keyExtractor = useCallback((item: RawItem) => item.id, []);
 
-  const isSelectedItem = selectedItem ? selectedItem.item_type === 'Blueprint' : false;
+  const getItemLayout = useCallback((_data: any, index: number) => ({
+    length: ROW_H,
+    offset: ROW_H * index,
+    index,
+  }), []);
+
+  const detailItem = activeSheet === 'detail' ? selectedItem : null;
+  const isSelectedItem = detailItem ? detailItem.item_type === 'Blueprint' : false;
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
@@ -525,24 +463,19 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
         data={visibleItems}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        getItemLayout={getItemLayout}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={styles.row}
         contentContainerStyle={[styles.grid, {paddingBottom: 100 + Math.max(insets.bottom, 12)}]}
         showsVerticalScrollIndicator={false}
-        initialNumToRender={Platform.OS === 'android' ? 30 : 30}
-        maxToRenderPerBatch={Platform.OS === 'android' ? 30 : 30}
-        windowSize={Platform.OS === 'android' ? 21 : 11}
-        updateCellsBatchingPeriod={Platform.OS === 'android' ? 16 : 40}
-        removeClippedSubviews={false}
-        onEndReachedThreshold={0.7}
-        onEndReached={handleLoadMore}
-        onScrollBeginDrag={promoteListToFull}
-        onMomentumScrollBegin={promoteListToFull}
+        initialNumToRender={18}
+        maxToRenderPerBatch={18}
+        windowSize={11}
+        updateCellsBatchingPeriod={50}
+        removeClippedSubviews={Platform.OS === 'android'}
         scrollEventThrottle={16}
         keyboardShouldPersistTaps="handled"
         extraData={bpCollected}
-        ListFooterComponent={null}
-        ListEmptyComponent={null}
       />
 
       {shouldShowLoadingOverlay && (
@@ -552,7 +485,7 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
       )}
 
       {/* Bottom sheets — deferred mount for fast first render */}
-      {(sheetsReady || activeSheet !== 'none') && <>
+      {(sheetsReady || activeSheet === 'workbench') && (
         <WorkbenchUpgradeSheet
           visible={activeSheet === 'workbench'}
           onClose={handleCloseWbSheet}
@@ -560,29 +493,35 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
           onToggleStation={toggleWbStation}
           onMaterialPress={handleWbMaterialPress}
         />
+      )}
+      {(sheetsReady || activeSheet === 'expedition') && (
         <ExpeditionSheet
           visible={activeSheet === 'expedition'}
           onClose={handleCloseExpSheet}
           onMaterialPress={handleExpMaterialPress}
         />
+      )}
+      {(sheetsReady || activeSheet === 'trophy') && (
         <TrophyDisplaySheet
           visible={activeSheet === 'trophy'}
           onClose={handleCloseTdSheet}
           onMaterialPress={handleTdMaterialPress}
         />
+      )}
+      {(sheetsReady || activeSheet === 'detail') && (
         <DetailSheet
-          item={selectedItem}
+          item={detailItem}
           visible={activeSheet === 'detail'}
           onClose={handleCloseSheet}
           isBlueprint={isSelectedItem}
-          bpCollected={selectedItem ? bpSet.has(selectedItem.id) : false}
+          bpCollected={detailItem ? bpSet.has(detailItem.id) : false}
           onToggleBp={toggleBlueprint}
           onItemPress={handleSheetItemPress}
           onOpenWbSheet={() => transitionToSheet('workbench')}
           onOpenExpSheet={() => transitionToSheet('expedition')}
           onOpenTdSheet={() => transitionToSheet('trophy')}
         />
-      </>}
+      )}
       {filterVisible && (
         <FilterModal
           visible={filterVisible}

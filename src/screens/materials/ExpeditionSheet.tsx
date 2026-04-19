@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Animated,
+  Easing,
   PanResponder,
   Platform,
   ScrollView,
@@ -84,7 +85,7 @@ const ExpeditionSheet = ({
       isExpanded.current = goingFull;
       if (!goingFull) scrollRef.current?.scrollTo?.({y: 0, animated: true});
       Animated.parallel([
-        Animated.spring(translateY, {toValue: target, useNativeDriver: true, damping: 24, stiffness: 260, mass: 0.8}),
+        Animated.timing(translateY, {toValue: target, duration: 260, easing: Easing.out(Easing.cubic), useNativeDriver: true}),
         Animated.timing(backdropAnim, {toValue: 1, duration: 120, useNativeDriver: true}),
       ]).start();
     }

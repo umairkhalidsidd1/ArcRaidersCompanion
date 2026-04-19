@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,20 +19,70 @@ import {
 } from './constants';
 import {cardStyles} from './styles';
 
-/* ═══════════════ GRID BG (for blueprints) ═══════════════ */
-const GridBg = React.memo(() => (
-  <View style={StyleSheet.absoluteFill} pointerEvents="none">
-    <Svg width={CARD_W} height={CARD_H}>
+const IS_ANDROID = Platform.OS === 'android';
+
+/* ═══════════════ GRID BG (blueprint cards — lightweight on Android, SVG on iOS) ═══════════════ */
+const GridBg = React.memo(() => {
+  if (IS_ANDROID) {
+    return (
+      <View
+        style={[StyleSheet.absoluteFill, {backgroundColor: '#0A1428'}]}
+        pointerEvents="none"
+      />
+    );
+  }
+  return (
+    <Svg width={CARD_W} height={CARD_H} style={StyleSheet.absoluteFill} pointerEvents="none">
       <Defs>
-        <Pattern id="matGrid" width={GRID_CELL} height={GRID_CELL} patternUnits="userSpaceOnUse">
-          <Line x1="0" y1={GRID_CELL} x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={StyleSheet.hairlineWidth} />
-          <Line x1={GRID_CELL} y1="0" x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={StyleSheet.hairlineWidth} />
+        <Pattern id="grid" width={GRID_CELL} height={GRID_CELL} patternUnits="userSpaceOnUse">
+          <Line x1={GRID_CELL} y1="0" x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={0.5} />
+          <Line x1="0" y1={GRID_CELL} x2={GRID_CELL} y2={GRID_CELL} stroke={GRID_LINE_COLOR} strokeWidth={0.5} />
         </Pattern>
       </Defs>
-      <Rect width={CARD_W} height={CARD_H} fill="url(#matGrid)" />
+      <Rect width="100%" height="100%" fill="#0A1428" />
+      <Rect width="100%" height="100%" fill="url(#grid)" />
     </Svg>
-  </View>
-));
+  );
+});
+
+/* ═══════════════ TYPE BACKGROUND — plain View on Android, gradient on iOS ═══════════════ */
+const TypeBg = React.memo(({itemType}: {itemType: string}) => {
+  const grad = TYPE_GRADIENT[itemType] || DEFAULT_GRADIENT;
+  if (IS_ANDROID) {
+    // Use the darker end-color as a solid fill — the gradients are very subtle dark-to-dark
+    return <View style={[StyleSheet.absoluteFill, {backgroundColor: grad[1]}]} />;
+  }
+  return (
+    <LinearGradient
+      colors={grad}
+      start={{x: 0, y: 0}}
+      end={{x: 0.5, y: 1}}
+      style={StyleSheet.absoluteFill}
+    />
+  );
+});
+
+/* ═══════════════ STATUS ICON ═══════════════ */
+const StatusIcon = React.memo(({isBlueprint, bpCollected, showCraftIcon, isCraftable}: {
+  isBlueprint: boolean;
+  bpCollected: boolean;
+  showCraftIcon: boolean;
+  isCraftable: boolean;
+}) => {
+  if (isBlueprint && bpCollected) {
+    return <View style={cardStyles.statusBadge}><Icon name="check-circle" size={18} color="#4ADE80" /></View>;
+  }
+  if (isBlueprint) {
+    return <View style={cardStyles.statusBadge}><Icon name="close-circle" size={18} color="#FF9800" /></View>;
+  }
+  if (showCraftIcon) {
+    return <View style={cardStyles.statusBadge}><Icon name="cog" size={16} color="#66BB6A" /></View>;
+  }
+  if (isCraftable) {
+    return <View style={cardStyles.statusBadge}><Icon name="close-circle" size={16} color="#FF9800" /></View>;
+  }
+  return null;
+});
 
 /* ═══════════════ ITEM CARD ═══════════════ */
 const ItemCard = React.memo(
@@ -44,7 +94,9 @@ const ItemCard = React.memo(
   }) => {
     const rarityColor = getRarityColor(item.rarity);
     const isCraftable = CRAFTABLE_TYPES.has(item.item_type);
-    const showCraftIcon = !isBlueprint && item.workbench;
+    const showCraftIcon = !isBlueprint && !!item.workbench;
+
+    const borderColor = isBlueprint && bpCollected ? '#4ADE80' : rarityColor + '40';
 
     return (
       <TouchableOpacity
@@ -53,47 +105,25 @@ const ItemCard = React.memo(
         onPress={() => onPress(item)}
         style={[
           cardStyles.card,
-          {borderColor: isBlueprint && bpCollected ? '#4ADE80' : rarityColor + '40'},
+          {borderColor},
           isBlueprint && bpCollected && cardStyles.cardCollected,
         ]}>
-        {!isBlueprint && (
-          <LinearGradient
-            colors={TYPE_GRADIENT[item.item_type] || DEFAULT_GRADIENT}
-            start={{x: 0, y: 0}}
-            end={{x: 0.5, y: 1}}
-            style={StyleSheet.absoluteFill}
-          />
-        )}
-        {isBlueprint && <GridBg />}
+        {!isBlueprint ? <TypeBg itemType={item.item_type} /> : <GridBg />}
 
         {/* Value badge */}
         {item.value > 0 && (
           <View style={cardStyles.valueBadge}>
-            <Text style={cardStyles.valueBadgeText}>{'\u20BF'} {item.value.toLocaleString()}</Text>
+            <Text style={cardStyles.valueBadgeText}>{'\u20BF'} {item.value}</Text>
           </View>
         )}
 
         {/* Status icon */}
-        {isBlueprint && bpCollected && (
-          <View style={cardStyles.statusBadge}>
-            <Icon name="check-circle" size={18} color="#4ADE80" />
-          </View>
-        )}
-        {isBlueprint && !bpCollected && (
-          <View style={cardStyles.statusBadge}>
-            <Icon name="close-circle" size={18} color="#FF9800" />
-          </View>
-        )}
-        {!isBlueprint && showCraftIcon && (
-          <View style={cardStyles.statusBadge}>
-            <Icon name="cog" size={16} color="#66BB6A" />
-          </View>
-        )}
-        {!isBlueprint && !showCraftIcon && isCraftable && (
-          <View style={cardStyles.statusBadge}>
-            <Icon name="close-circle" size={16} color="#FF9800" />
-          </View>
-        )}
+        <StatusIcon
+          isBlueprint={isBlueprint}
+          bpCollected={bpCollected}
+          showCraftIcon={showCraftIcon}
+          isCraftable={isCraftable}
+        />
 
         {/* Image */}
         <View style={cardStyles.imageWrap}>

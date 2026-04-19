@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react';
 import {
   Animated,
+  Easing,
   PanResponder,
   Platform,
   ScrollView,
@@ -93,6 +94,11 @@ const DetailSheet = ({
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; });
 
+  // Keep last non-null item so content can render during close animation
+  const displayItemRef = useRef<RawItem | null>(item);
+  if (item) displayItemRef.current = item;
+  const displayItem = displayItemRef.current;
+
   useEffect(() => {
     const id = translateY.addListener(({value}) => { currentTY.current = value; });
     return () => translateY.removeListener(id);
@@ -114,12 +120,11 @@ const DetailSheet = ({
         scrollRef.current?.scrollTo?.({y: 0, animated: true});
       }
       Animated.parallel([
-        Animated.spring(translateY, {
+        Animated.timing(translateY, {
           toValue: target,
+          duration: 260,
+          easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
-          damping: 22,
-          stiffness: 180,
-          mass: 1,
         }),
         Animated.timing(backdropAnim, {toValue: 1, duration: 120, useNativeDriver: true}),
       ]).start();
@@ -205,10 +210,10 @@ const DetailSheet = ({
     scrollOffset.current = e.nativeEvent.contentOffset.y;
   }, []);
 
-  if (!item) return null;
+  if (!displayItem) return null;
 
-  const rarityColor = getRarityColor(item.rarity);
-  const parsed = item.stat_block ? (() => { try { return JSON.parse(item.stat_block!); } catch { return null; } })() : null;
+  const rarityColor = getRarityColor(displayItem.rarity);
+  const parsed = displayItem.stat_block ? (() => { try { return JSON.parse(displayItem.stat_block!); } catch { return null; } })() : null;
   const stats = parsed
     ? Object.entries(parsed).filter(
         ([k, v]) => typeof v === 'number' && (v as number) !== 0 && STAT_LABELS[k],
@@ -218,15 +223,15 @@ const DetailSheet = ({
 
   ensureItemByName();
   ensureIndexes();
-  const recyclesFrom = _recyclesFromIdx.get(item.name.toLowerCase()) || [];
-  const recycleOutputs = _recycleOutputsIdx.get(item.name) || [];
-  const craftedFrom = _craftedFromIdx.get(item.name) || [];
-  const usedInRecipes = _usedInIdx.get(item.name) || [];
-  const craftedAt = item.workbench;
-  const droppedBy = getDroppedBy(item.name);
-  const savedInLists = _savedIdx.get(item.name.toLowerCase()) || [];
-  const foundInAreas = item.loot_area
-    ? item.loot_area.split(',').map((s: string) => s.trim()).filter(Boolean)
+  const recyclesFrom = _recyclesFromIdx.get(displayItem.name.toLowerCase()) || [];
+  const recycleOutputs = _recycleOutputsIdx.get(displayItem.name) || [];
+  const craftedFrom = _craftedFromIdx.get(displayItem.name) || [];
+  const usedInRecipes = _usedInIdx.get(displayItem.name) || [];
+  const craftedAt = displayItem.workbench;
+  const droppedBy = getDroppedBy(displayItem.name);
+  const savedInLists = _savedIdx.get(displayItem.name.toLowerCase()) || [];
+  const foundInAreas = displayItem.loot_area
+    ? displayItem.loot_area.split(',').map((s: string) => s.trim()).filter(Boolean)
     : [];
 
   return (
@@ -268,8 +273,8 @@ const DetailSheet = ({
 
           {/* Header row */}
           <View style={detailStyles.headerRow}>
-            {item.icon ? (
-              <Image source={resolveImage(item.icon)} style={detailStyles.heroImage} resizeMode="contain" />
+            {displayItem.icon ? (
+              <Image source={resolveImage(displayItem.icon)} style={detailStyles.heroImage} resizeMode="contain" />
             ) : (
               <View style={detailStyles.heroPlaceholder}>
                 <Icon name="help-circle-outline" size={40} color={colors.textMuted} />
@@ -277,25 +282,25 @@ const DetailSheet = ({
             )}
             <View style={detailStyles.headerInfo}>
               <Text style={detailStyles.itemName}>
-                {isBlueprint ? item.name.replace(' Blueprint', '') : item.name}
+                {isBlueprint ? displayItem.name.replace(' Blueprint', '') : displayItem.name}
               </Text>
               <View style={detailStyles.badgeRow}>
                 <View style={[detailStyles.rarityBadge, {backgroundColor: rarityColor}]}>
                   <Text style={detailStyles.rarityText}>
-                    {t('rarity.' + (item.rarity || 'Common').toLowerCase()).toUpperCase()}
+                    {t('rarity.' + (displayItem.rarity || 'Common').toLowerCase()).toUpperCase()}
                   </Text>
                 </View>
                 <View style={detailStyles.typeBadge}>
                   <Text style={detailStyles.typeText}>
-                    {t('itemType.' + item.item_type, item.item_type).toUpperCase()}
+                    {t('itemType.' + displayItem.item_type, displayItem.item_type).toUpperCase()}
                   </Text>
                 </View>
               </View>
             </View>
           </View>
 
-          {item.description && (
-            <Text style={detailStyles.description}>{item.description}</Text>
+          {displayItem.description && (
+            <Text style={detailStyles.description}>{displayItem.description}</Text>
           )}
 
           <View style={detailStyles.divider} />
@@ -308,7 +313,7 @@ const DetailSheet = ({
                 <Text style={detailStyles.infoCardLabel}>{t('items.resellValue')}</Text>
               </View>
               <Text style={[detailStyles.infoCardValue, {color: colors.cyan}]}>
-                {(item.value || 0).toLocaleString()}
+                {(displayItem.value || 0).toLocaleString()}
               </Text>
             </View>
             <View style={detailStyles.infoCard}>
@@ -546,7 +551,7 @@ const DetailSheet = ({
                 detailStyles.bpToggleBtn,
                 bpCollected && {backgroundColor: 'rgba(74,222,128,0.15)', borderColor: '#4ADE80'},
               ]}
-              onPress={() => onToggleBp(item.id)}>
+              onPress={() => onToggleBp(displayItem.id)}>
               <Icon
                 name={bpCollected ? 'check-circle' : 'circle-outline'}
                 size={20}

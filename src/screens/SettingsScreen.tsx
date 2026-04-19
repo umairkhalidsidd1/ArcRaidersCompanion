@@ -28,7 +28,7 @@ import {
 import {usePremium} from '../context/PremiumContext';
 
 const APP_NAME = 'Arc Raiders Companion';
-const APP_VERSION = Platform.OS === 'ios' ? '1.0.1' : '1.0.0';
+const APP_VERSION = Platform.OS === 'ios' ? '1.0.1' : '1.0';
 const APP_YEAR = 2026;
 
 /* ── Supported languages ── */

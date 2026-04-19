@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react';
 import {
   Animated,
+  Easing,
   PanResponder,
   Platform,
   ScrollView,
@@ -108,12 +109,11 @@ const WorkbenchUpgradeSheet = ({
         scrollRef.current?.scrollTo?.({y: 0, animated: true});
       }
       Animated.parallel([
-        Animated.spring(translateY, {
+        Animated.timing(translateY, {
           toValue: target,
+          duration: 260,
+          easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
-          damping: 22,
-          stiffness: 180,
-          mass: 1,
         }),
         Animated.timing(backdropAnim, {toValue: 1, duration: 120, useNativeDriver: true}),
       ]).start();
