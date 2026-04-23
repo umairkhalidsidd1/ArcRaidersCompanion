@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "name": "Eşek Arılarına Hasar Ver",
+    "description": "Baskın süresi içinde Eşek Arılarına mümkün olduğunca çok hasar verin.",
+    "image": "weekly-trials/damage-hornets.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Mavi Kapı",
+      "Uzay Limanı"
+    ],
+    "tip": "Muhbirleri kışkırtarak ek Eşek Arısı doğmasını sağlayın. Mavi Kapı'daki Hacı Tepesi mükemmel yükseklik sunar."
+  },
+  {
+    "id": 2,
+    "name": "Arılara Hasar Ver",
+    "description": "Herhangi bir haritada Arılara hasar verin.",
+    "image": "weekly-trials/damage-wasps.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Arılar tüm bölgelerde yaygındır. Gruplar halinde doğmaları için Muhbir alarmlarını kullanın."
+  },
+  {
+    "id": 3,
+    "name": "Burçlara Hasar Ver",
+    "description": "Ağır zırhlı ARC düşmanları olan Burçlara hasar verin.",
+    "image": "weekly-trials/damage-bastions.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Burçlar ağır zırha sahiptir. Örs IV veya Gövde Kırıcı gibi yüksek hasarlı silahlar getirin."
+  },
+  {
+    "id": 4,
+    "name": "Roketçilere Hasar Ver",
+    "description": "Tüm seferlerde Roketçilere hasar verin.",
+    "image": "weekly-trials/damage-rocketeers.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Roketçiler patlayıcı mermiler atar — mesafenizi koruyun ve sipere girin."
+  },
+  {
+    "id": 5,
+    "name": "Sıçrayıcılara Hasar Ver",
+    "description": "Hızlı hareket eden ARC düşmanları olan Sıçrayıcılara hasar verin.",
+    "image": "weekly-trials/trial-1769368839314.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Sıçrayıcılar hızlıdır. Yakın mesafe karşılaşmaları için pompalı veya hafif makineli tüfek kullanın."
+  },
+  {
+    "id": 6,
+    "name": "Bombardımanlara Hasar Ver",
+    "description": "Büyük ARC tehditleri olan Bombardımanlara hasar verin.",
+    "image": "custom/damagebombardiers.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Bombardımanlar yanlarında her zaman iki Araştırmacı bulundurur. Önce Araştırmacıları halledin."
+  },
+  {
+    "id": 7,
+    "name": "Kraliçelere veya Aile Reislerine Hasar Ver",
+    "description": "ARC'ların en tehlikelileri olan Kraliçelere veya Aile Reislerine hasar verin.",
+    "image": "weekly-trials/damage-queens-or-matriarchs.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Bunlar patron seviyesi ARC'lardır. Tam bir birlik ve ağır ateş gücü getirin."
+  },
+  {
+    "id": 8,
+    "name": "Araştırmacılara Hasar Ver",
+    "description": "Bombardımanlarla birlikte bulunan Araştırmacılara hasar verin.",
+    "image": "weekly-trials/damage-spotters.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Bombardımanları bulun — her birinin yanında her zaman iki Araştırmacı vardır."
+  },
+  {
+    "id": 9,
+    "name": "Roketçilere, Sıçrayıcılara veya Burçlara Hasar Ver",
+    "description": "Roketçi, Sıçrayıcı veya Burçların herhangi bir kombinasyonuna hasar verin.",
+    "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Her üç ARC türü de sayılır — ilk bulduğunuza odaklanın."
+  },
+  {
+    "id": 10,
+    "name": "Kara ARC Düşmanlarına Hasar Ver",
+    "description": "Kara tabanlı ARC düşmanlarına hasar verin.",
+    "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Kara ARC'ları Keneler, Sıçrayıcılar ve Burçları içerir. Herhangi bir haritada çok kolay farm yapılır."
+  },
+  {
+    "id": 11,
+    "name": "Uçan ARC Düşmanlarına Hasar Ver",
+    "description": "Herhangi bir haritada uçan ARC düşmanlarına hasar verin.",
+    "image": "weekly-trials/damage-flying-arc-enemies.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Eşek Arıları, Arılar ve Muhbirler sayılır. Daha iyi açılar için yüksek zemine çıkın."
+  },
+  {
+    "id": 12,
+    "name": "Uzay Limanı Duvarları İçinde Uçan ARC'lara Hasar Ver",
+    "description": "Özellikle Uzay Limanı duvarları içinde uçan ARC düşmanlarına hasar verin.",
+    "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Uzay Limanı"
+    ],
+    "tip": "Uzay Limanı duvarları içinde kalın — dışarıda verilen hasar sayılmaz."
+  },
+  {
+    "id": 13,
+    "name": "Keneleri Yok Et",
+    "description": "Tüm haritalarda Kene ARC birimlerini yok edin.",
+    "image": "weekly-trials/destroy-ticks.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Keneler küçük kara ARC'lardır. Doğru yetenekle bir yakın dövüş vuruşuyla yok edilir."
+  },
+  {
+    "id": 14,
+    "name": "Keneleri, Ateş Toplarını ve Pop'ları Yok Et",
+    "description": "Kene, Ateş Topu ve Pop ARC birimlerini yok edin.",
+    "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Her üç küçük ARC türü de sayılır. Yoğun ARC bölgelerinde zincirleme olarak yok etmek kolaydır."
+  },
+  {
+    "id": 15,
+    "name": "Ateş Toplarını Yok Et",
+    "description": "Ateş Topu ARC birimlerini yok edin.",
+    "image": "weekly-trials/trial-1769368872612.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Ateş Topları temas anında patlar — atış yaparken mesafenizi koruyun."
+  },
+  {
+    "id": 16,
+    "name": "Pop'ları Yok Et",
+    "description": "Sefer bölgelerinde Pop ARC birimlerini yok edin.",
+    "image": "weekly-trials/destroy-pops.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Pop'lar küçük ve hızlıdır. Konumlarını belirlemek için ses ipuçlarını dinleyin."
+  },
+  {
+    "id": 17,
+    "name": "Bataklıkta ARC Düşmanlarını Yok Et",
+    "description": "Baraj Savaş Alanlarındaki Bataklık bölgesinde ARC düşmanlarını yok edin.",
+    "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Baraj"
+    ],
+    "tip": "Bataklık, Baraj Savaş Alanları haritasındadır. Yalnızca buradaki öldürmeler sayılır."
+  },
+  {
+    "id": 18,
+    "name": "Bitki Topla",
+    "description": "Tüm sefer haritalarında bitki toplayın.",
+    "image": "weekly-trials/harvest-plants.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
+    "category": "Toplama",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Bitkiler tüm haritalarda boldur. Maksimum verimlilik için toplama rotaları izleyin."
+  },
+  {
+    "id": 19,
+    "name": "Taşınabilir Eşyaları Teslim Et",
+    "description": "Taşınabilir eşyaları çıkarma veya depo noktalarına teslim edin.",
+    "image": "weekly-trials/deliver-carriables.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
+    "category": "Hedef",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Taşınabilir eşyalar etkinlikler ve POI yakınlarında bulunur. Çıkarma gemisine teslim edin."
+  },
+  {
+    "id": 20,
+    "name": "ARC Sondalarını Aç",
+    "description": "Haritalara dağılmış ARC Sondalarını açın.",
+    "image": "weekly-trials/open-arc-probes.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
+    "category": "Keşif",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "ARC Sondaları tüm haritalara dağılmıştır. Ayırt edici vızıltılarını dinleyin."
+  },
+  {
+    "id": 21,
+    "name": "Raider Depolarını Ara",
+    "description": "Haritalara dağılmış gizli Raider Depolarını arayın.",
+    "image": "weekly-trials/search-raider-caches.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
+    "category": "Yağmalama",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Depolar diğer oyuncuların öldüğü yerlerde gizlidir. Popüler savaş bölgelerini kontrol edin."
+  },
+  {
+    "id": 22,
+    "name": "İlk Dalga Kalıntılarını Ara",
+    "description": "Herhangi bir haritada İlk Dalga Kalıntı konteynerlerini arayın.",
+    "image": "weekly-trials/search-first-wave-husks.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
+    "category": "Yağmalama",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "İlk Dalga Kalıntıları ganimetli iskelet kalıntılardır. Binaların ve sığınakların yakınında bulunur."
+  },
+  {
+    "id": 23,
+    "name": "Kuş Yuvalarını Yağmala",
+    "description": "Yüksek konumlarda bulunan kuş yuvalarını yağmalayın.",
+    "image": "weekly-trials/loot-birds-nests.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
+    "category": "Yağmalama",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Kuş yuvaları yüksek yerlerdedir — çatılarda, kulelerde ve uçurumlarda."
+  },
+  {
+    "id": 24,
+    "name": "Tıbbi Araştırma Kanadındaki Konteynerleri Ara",
+    "description": "Stella Montis'teki Tıbbi Araştırma kanadı içindeki konteynerleri arayın.",
+    "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
+    "category": "Yağmalama",
+    "threeStarScore": 4000,
+    "maps": [
+      "Stella Montis"
+    ],
+    "tip": "Tıbbi Araştırma Stella Montis'tedir. Bölgeyi koruyan Parçalayıcılara dikkat edin."
+  },
+  {
+    "id": 25,
+    "name": "Trafik Tünellerindeki Konteynerleri Aç",
+    "description": "Mavi Kapı'daki Kilitli Kapı sırasında trafik tünelleri içindeki konteynerleri açın.",
+    "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
+    "category": "Yağmalama",
+    "threeStarScore": 4000,
+    "maps": [
+      "Mavi Kapı"
+    ],
+    "tip": "Yalnızca Mavi Kapı'daki Kilitli Kapı etkinliği sırasında kullanılabilir."
+  },
+  {
+    "id": 26,
+    "name": "Kilitli Kapı Sırasında Mayınları Etkisizleştir",
+    "description": "Mavi Kapı'daki Kilitli Kapı olayı sırasında 4 ana konumda mayınları etkisizleştirin.",
+    "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
+    "category": "Hedef",
+    "threeStarScore": 4000,
+    "maps": [
+      "Mavi Kapı"
+    ],
+    "tip": "Mayınlar Kilitli Kapı sırasında 4 ana konumda belirir. Dikkatli yaklaşın."
+  },
+  {
+    "id": 27,
+    "name": "Sığınak İçinde Bilgi İndir",
+    "description": "Gizli Sığınak içindeki terminallerden bilgi indirin.",
+    "image": "weekly-trials/download-information-inside-the-bunker.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
+    "category": "Hedef",
+    "threeStarScore": 4000,
+    "maps": [
+      "Uzay Limanı"
+    ],
+    "tip": "Yalnızca Uzay Limanı'ndaki Gizli Sığınak etkinliği sırasında kullanılabilir."
+  },
+  {
+    "id": 28,
+    "name": "Yıldırım Çarpmasına Maruz Kal",
+    "description": "Elektromanyetik fırtına olayları sırasında yıldırım çarpmasına maruz kalın.",
+    "image": "weekly-trials/get-hit-by-lightning.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
+    "category": "Özel",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tüm Haritalar"
+    ],
+    "tip": "Yalnızca Elektromanyetik olaylar sırasında. Yüksek zemin ve metal yapıların üzerinde durun."
+  },
+  {
+    "id": 29,
+    "name": "Parçalayıcılara Hasar Ver",
+    "description": "Parçalayıcı ARC düşmanlarına hasar verin.",
+    "image": "weekly-trials/deal-damage-to-shredders.webp",
+    "reward": "Kozmetik Ödüller + Rütbe Puanları",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
+    "category": "Savaş",
+    "threeStarScore": 4000,
+    "maps": [
+      "Stella Montis"
+    ],
+    "tip": "Parçalayıcılar Stella Montis'te bulunur. Ağır silahlar ve kalkanlar getirin."
+  }
+]

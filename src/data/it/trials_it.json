@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "name": "Danneggia Calabroni",
+    "description": "Infliggi più danni possibili ai Calabroni entro il limite di tempo del raid.",
+    "image": "weekly-trials/damage-hornets.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Porta blu",
+      "Spazioporto"
+    ],
+    "tip": "Provoca le Spie per forzare la comparsa di altri Calabroni. Il Picco del Pellegrino su Porta blu offre una grande elevazione."
+  },
+  {
+    "id": 2,
+    "name": "Danneggia Vespe",
+    "description": "Infliggi danni alle Vespe su qualsiasi mappa.",
+    "image": "weekly-trials/damage-wasps.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Le Vespe sono comuni in tutte le aree. Usa gli allarmi delle Spie per farle apparire in gruppi."
+  },
+  {
+    "id": 3,
+    "name": "Danneggia Bastioni",
+    "description": "Infliggi danni ai Bastioni, i nemici ARC pesantemente corazzati.",
+    "image": "weekly-trials/damage-bastions.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I Bastioni hanno un'armatura pesante. Porta armi ad alto danno come l'Incudine IV o lo Spaccascafo."
+  },
+  {
+    "id": 4,
+    "name": "Danneggia Missilisti",
+    "description": "Infliggi danni ai Missilisti in tutte le spedizioni.",
+    "image": "weekly-trials/damage-rocketeers.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I Missilisti sparano proiettili esplosivi — mantieni le distanze e usa le coperture."
+  },
+  {
+    "id": 5,
+    "name": "Danneggia Saltatori",
+    "description": "Infliggi danni ai Saltatori, nemici ARC dal movimento rapido.",
+    "image": "weekly-trials/trial-1769368839314.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I Saltatori sono veloci. Usa fucili a pompa o mitra per incontri ravvicinati."
+  },
+  {
+    "id": 6,
+    "name": "Danneggia Bombardieri",
+    "description": "Infliggi danni ai Bombardieri, le grandi minacce ARC.",
+    "image": "custom/damagebombardiers.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I Bombardieri hanno sempre due Esploratori con loro. Occupati prima degli Esploratori."
+  },
+  {
+    "id": 7,
+    "name": "Danneggia Regine o Matriarche",
+    "description": "Infliggi danni a Regine o Matriarche — gli ARC più pericolosi.",
+    "image": "weekly-trials/damage-queens-or-matriarchs.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Questi sono ARC di livello boss. Porta una squadra completa e armi pesanti."
+  },
+  {
+    "id": 8,
+    "name": "Danneggia Esploratori",
+    "description": "Infliggi danni agli Esploratori che accompagnano i Bombardieri.",
+    "image": "weekly-trials/damage-spotters.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Trova i Bombardieri — ognuno ha sempre due Esploratori."
+  },
+  {
+    "id": 9,
+    "name": "Danneggia Missilisti, Saltatori o Bastioni",
+    "description": "Infliggi danni a qualsiasi combinazione di Missilisti, Saltatori o Bastioni.",
+    "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Tutti e tre i tipi di ARC contano — concentrati su quello che trovi per primo."
+  },
+  {
+    "id": 10,
+    "name": "Danneggia nemici ARC terrestri",
+    "description": "Infliggi danni a qualsiasi nemico ARC terrestre.",
+    "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Gli ARC terrestri includono Zecche, Saltatori e Bastioni. Molto facile da farmare su qualsiasi mappa."
+  },
+  {
+    "id": 11,
+    "name": "Danneggia nemici ARC volanti",
+    "description": "Infliggi danni ai nemici ARC volanti su qualsiasi mappa.",
+    "image": "weekly-trials/damage-flying-arc-enemies.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Calabroni, Vespe e Spie contano tutti. Sali in alto per migliori angoli di tiro."
+  },
+  {
+    "id": 12,
+    "name": "Danneggia ARC volanti nello Spazioporto",
+    "description": "Infliggi danni ai nemici ARC volanti all'interno delle mura dello Spazioporto.",
+    "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Spazioporto"
+    ],
+    "tip": "Resta all'interno delle mura dello Spazioporto — i danni inflitti all'esterno non contano."
+  },
+  {
+    "id": 13,
+    "name": "Distruggi Zecche",
+    "description": "Distruggi unità ARC Zecca su tutte le mappe.",
+    "image": "weekly-trials/destroy-ticks.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Le Zecche sono piccoli ARC terrestri. Un colpo in mischia le distrugge con la giusta abilità."
+  },
+  {
+    "id": 14,
+    "name": "Distruggi Zecche, Palle di fuoco e Pop",
+    "description": "Distruggi unità ARC Zecche, Palle di fuoco e Pop.",
+    "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Tutti e tre i tipi di ARC piccoli contano. Facile da concatenare in aree dense di ARC."
+  },
+  {
+    "id": 15,
+    "name": "Distruggi Palle di fuoco",
+    "description": "Distruggi unità ARC Palla di fuoco.",
+    "image": "weekly-trials/trial-1769368872612.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Le Palle di fuoco esplodono al contatto — mantieni le distanze quando spari."
+  },
+  {
+    "id": 16,
+    "name": "Distruggi Pop",
+    "description": "Distruggi unità ARC Pop nelle aree di spedizione.",
+    "image": "weekly-trials/destroy-pops.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I Pop sono piccoli e veloci. Ascolta i loro segnali audio per localizzarli."
+  },
+  {
+    "id": 17,
+    "name": "Distruggi nemici ARC nella Palude",
+    "description": "Distruggi nemici ARC nella zona della Palude nei Campi di battaglia della diga.",
+    "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Diga"
+    ],
+    "tip": "La Palude è nella mappa Campi di battaglia della diga. Solo le uccisioni qui contano."
+  },
+  {
+    "id": 18,
+    "name": "Raccogli piante",
+    "description": "Raccogli piante su tutte le mappe di spedizione.",
+    "image": "weekly-trials/harvest-plants.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
+    "category": "Raccolta",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Le piante sono abbondanti su tutte le mappe. Segui percorsi di raccolta per la massima efficienza."
+  },
+  {
+    "id": 19,
+    "name": "Consegna oggetti trasportabili",
+    "description": "Consegna oggetti trasportabili ai punti di estrazione o deposito.",
+    "image": "weekly-trials/deliver-carriables.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
+    "category": "Obiettivo",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Gli oggetti trasportabili si trovano vicino a eventi e POI. Consegnali alla nave d'estrazione."
+  },
+  {
+    "id": 20,
+    "name": "Apri Sonde ARC",
+    "description": "Apri le Sonde ARC sparse per le mappe.",
+    "image": "weekly-trials/open-arc-probes.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
+    "category": "Esplorazione",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Le Sonde ARC sono sparse su tutte le mappe. Ascolta il loro ronzio distintivo."
+  },
+  {
+    "id": 21,
+    "name": "Cerca le riserve dei Raider",
+    "description": "Cerca le riserve dei Raider nascoste sulle mappe.",
+    "image": "weekly-trials/search-raider-caches.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
+    "category": "Saccheggio",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Le riserve sono nascoste dove altri giocatori sono morti. Controlla le aree di combattimento popolari."
+  },
+  {
+    "id": 22,
+    "name": "Cerca i resti della Prima Ondata",
+    "description": "Cerca contenitori dei resti della Prima Ondata su qualsiasi mappa.",
+    "image": "weekly-trials/search-first-wave-husks.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
+    "category": "Saccheggio",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I resti sono scheletri con bottino. Si trovano vicino a edifici e rifugi."
+  },
+  {
+    "id": 23,
+    "name": "Saccheggia nidi di uccelli",
+    "description": "Saccheggia i nidi di uccelli sulle posizioni elevate.",
+    "image": "weekly-trials/loot-birds-nests.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
+    "category": "Saccheggio",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "I nidi sono in alto — su tetti, torri e scogliere."
+  },
+  {
+    "id": 24,
+    "name": "Cerca contenitori nell'ala di ricerca medica",
+    "description": "Cerca contenitori nell'ala di ricerca medica su Stella Montis.",
+    "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
+    "category": "Saccheggio",
+    "threeStarScore": 4000,
+    "maps": [
+      "Stella Montis"
+    ],
+    "tip": "La Ricerca medica è su Stella Montis. Attenzione ai Tritatutto che sorvegliano la zona."
+  },
+  {
+    "id": 25,
+    "name": "Apri contenitori nei tunnel del traffico",
+    "description": "Apri contenitori nei tunnel del traffico durante Cancello chiuso su Porta blu.",
+    "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
+    "category": "Saccheggio",
+    "threeStarScore": 4000,
+    "maps": [
+      "Porta blu"
+    ],
+    "tip": "Disponibile solo durante l'evento Cancello chiuso su Porta blu."
+  },
+  {
+    "id": 26,
+    "name": "Disinnesca mine durante Cancello chiuso",
+    "description": "Disinnesca mine in 4 posizioni principali durante l'evento Cancello chiuso su Porta blu.",
+    "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
+    "category": "Obiettivo",
+    "threeStarScore": 4000,
+    "maps": [
+      "Porta blu"
+    ],
+    "tip": "Le mine appaiono in 4 posizioni principali durante Cancello chiuso. Avvicinati con cautela."
+  },
+  {
+    "id": 27,
+    "name": "Scarica informazioni nel Bunker",
+    "description": "Scarica informazioni dai terminali nel Bunker nascosto.",
+    "image": "weekly-trials/download-information-inside-the-bunker.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
+    "category": "Obiettivo",
+    "threeStarScore": 4000,
+    "maps": [
+      "Spazioporto"
+    ],
+    "tip": "Disponibile solo durante l'evento Bunker nascosto nello Spazioporto."
+  },
+  {
+    "id": 28,
+    "name": "Farsi colpire da un fulmine",
+    "description": "Fatti colpire da un fulmine durante eventi di tempesta elettromagnetica.",
+    "image": "weekly-trials/get-hit-by-lightning.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
+    "category": "Speciale",
+    "threeStarScore": 4000,
+    "maps": [
+      "Tutte le mappe"
+    ],
+    "tip": "Solo durante eventi elettromagnetici. Posizionati su terreni elevati e strutture metalliche."
+  },
+  {
+    "id": 29,
+    "name": "Infliggi danni ai Tritatutto",
+    "description": "Infliggi danni ai nemici ARC Tritatutto.",
+    "image": "weekly-trials/deal-damage-to-shredders.webp",
+    "reward": "Ricompense cosmetiche + Punti rango",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
+    "category": "Combattimento",
+    "threeStarScore": 4000,
+    "maps": [
+      "Stella Montis"
+    ],
+    "tip": "I Tritatutto si trovano su Stella Montis. Porta armi pesanti e scudi."
+  }
+]

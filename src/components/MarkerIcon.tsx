@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MarkerIcon;
+export default React.memo(MarkerIcon);

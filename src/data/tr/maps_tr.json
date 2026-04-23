@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Baraj Savaş Alanları",
+    "description": "ARC kuvvetleri tarafından ele geçirilmiş devasa bir hidroelektrik baraj. Savaklar ve jeneratör odaları çevresinde yoğun muharebe bölgeleri.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Orta"
+  },
+  {
+    "id": "buried-city",
+    "name": "Gömülü Şehir",
+    "description": "Bir zamanlar gelişen bir metropolün kalıntıları, şimdi kum ve moloz altında yarı gömülü. Ganimetle dolu ama tehlikeli.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Zor"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "Uzay Limanı",
+    "description": "Hangarlar, kontrol kuleleri ve dağınık ARC teknolojisi bulunan terk edilmiş bir fırlatma tesisi. Geniş açık görüş hatları.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Kolay"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Mavi Kapı",
+    "description": "Bölgeler arası tahkim edilmiş bir kontrol noktası. Dar koridorlar ve dikeylik yoğun çatışmalar yaratır.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Orta"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "Alp ormanları ve gizli sığınaklarla dolu dağlık bir bölge. Yüksek değerli kaynaklar zirvelere yayılmış.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Zor"
+  }
+]

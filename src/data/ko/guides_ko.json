@@ -1,0 +1,2566 @@
+[
+  {
+    "id": "58814510-c025-4db4-80cf-c33df2f307d5",
+    "title": "불길한 예감",
+    "slug": "a-bad-feeling",
+    "content": "<h2>1단계: 퀘스트 선택</h2><ul><li>중앙 허브에 있는 Celeste로부터 \"A Bad Feeling\"이라는 퀘스트를 선택하세요.</li><li>귀하의 목표는 ARC 프로브 또는 ARC Courier를 찾아 조사하는 것입니다.</li></ul><h2>2단계: ARC 프로브/Courier 찾기</h2><p>ARC 프로브 및 Courier는 처음에는 지도에 표시되지 않습니다. 근처에 갈 때만 나타납니다.</p><ul><li>ARC 탐사선의 확인된 지점 중 하나는 댐 전장 구역의 수경 돔 단지 근처입니다.</li></ul><ul><li>충분히 가까워지면 탐사선이 지도에 신호 표시로 표시됩니다.</li></ul><h2>3단계: 탐사선 해킹 및 잡기</h2><ul><li>ARC 탐사선으로 걸어가거나 Courier를 사용하여 \"침해\" 프로세스를 시작하세요.</li></ul><ul><li>해킹에는 짧은 시간이 필요하며 그 동안 노출될 수 있습니다. 뒤에 있는 위협에 주의하세요.</li></ul><ul><li>해킹한 후 다시 한 번 프로브를 \"검색\"하는 데 사용하세요.</li></ul><ul><li>탐색 후 일반적으로 ARC 합금 및 ARC 성능 강철과 같은 유용한 아이템을 얻을 수 있습니다.</li></ul><h2>4단계: 퀘스트 완료</h2><ul><li>프로브를 조사한 후 임무는 다음과 같이 등록됩니다. 완료되었습니다.</li></ul><ul><li>보상을 받으려면 허브에 있는 Celeste로 돌아가세요.</li></ul><ul><li>보상은 금속 부품, 강철 스프링, 덕트 테이프입니다.</li></ul>",
+    "summary": "Dam Battlegrounds 구역의 유명한 장소인 Arc Raiders에서 \"A Bad Feeling\" 퀘스트를 완료하기 위해 ARC 프로브 또는 Couriers를 찾고 조사하는 방법을 알아보세요.",
+    "thumbnail_url": "icons/metal-parts.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "ARC 프로브 또는 ARC Courier 찾기 및 검색"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "7d943cff-1e03-46b1-9099-598000ea0185",
+        "item": {
+          "id": "metal-parts",
+          "icon": "icons/metal-parts.webp",
+          "name": "Metal Parts",
+          "rarity": "일반",
+          "item_type": "기본 재료"
+        },
+        "item_id": "metal-parts",
+        "quantity": "10"
+      },
+      {
+        "id": "08d5701b-b25b-4534-ac5b-e571abebca1f",
+        "item": {
+          "id": "spring",
+          "icon": "icons/spring.webp",
+          "name": "Steel Spring",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "spring",
+        "quantity": "5"
+      },
+      {
+        "id": "57322882-bda3-4779-a8f5-180b59499529",
+        "item": {
+          "id": "duct-tape-recipe",
+          "icon": "icons/duct-tape-recipe.webp",
+          "name": "Duct Tape",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "duct-tape-recipe",
+        "quantity": "5"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "c600f65f-a8f6-4e60-b66c-457b3281b9be",
+    "title": "균형 잡힌 수확",
+    "slug": "a-balanced-harvest",
+    "content": "<p>이 가이드는 \"균형 잡힌 수확\" 퀘스트를 안내하며 작업을 완료하기 위해 Lucille Ludi의 메모를 찾는 방법을 설명합니다. 이 임무에서는 연구 및 앰프를 탐색하게 됩니다. 관리 건물로 이동하여 특정 연구 프로젝트 노트를 찾습니다.</p><h2>1단계: 연구 및 앰프로 이동합니다. 관리 건물</h2><p>지도를 열고 연구 및 앰프; 관리 건물. 그림과 같이 독특한 디자인으로 알아볼 수 있으며 컨트롤 타워 근처에 있습니다.</p><ul><li>구조물은 댐 전장 구역에 있습니다.</li><li>\"컨트롤 타워\" 랜드마크 근처에 있는 지도에서 \"연구 및 관리\"라고 표시된 건물을 찾으세요.</li></ul><h2>2단계: 건물 내부로 이동</h2><p>건물까지 걸어가 접근 가능한 진입점을 찾으세요. 가장 쉬운 경로는 일반적으로 1층의 손상된 부분이나 개구부를 통과하는 것입니다.</p><ul><li>1층의 열린 부분이나 손상된 벽을 통해 건물로 들어갑니다.</li><li>이 방법으로 들어가면 리셉션 또는 유지 관리 섹션과 같은 낮은 레벨의 영역으로 이동합니다.</li></ul><h2>3단계: 위층으로 올라가기</h2><p>들어간 후 목표는 리셉션 영역 위의 위층에 도착하는 것입니다. 환경을 이용하여 위로 올라가세요.</p><ul><li>건물 내에서 접근 가능한 엘리베이터 통로를 찾으세요.</li><li>다음 층으로 올라가려면 통로를 사용하세요.</li><li>위층으로 가면 리셉션이나 사무실처럼 보이는 공간이 나옵니다.</li><li>엘리베이터 통로에서 오른쪽으로 돌아 복도를 따라 계속 내려가세요.</li><li>실험실 1이 표시된 것을 볼 수 있습니다. 벽</li></ul><h2>4단계: Lucille Ludi의 메모 찾기</h2><p>노트가 있는 컴퓨터가 있는 책상을 찾을 때까지 실험실 섹션을 통과하여 위층으로 이동하세요.</p><ul><li>계속 복도를 따라 이동하면서 실험실을 진행하는 데 필요할 때 오른쪽으로 가십시오.</li><li>큰 창을 통해 햇빛이 비치는 오래된 터미널 옆 책상에 메모가 있습니다. windows.</li></ul><h2>5단계: 메모 집기</h2><p>책상 위에 있는 루실 루디의 메모를 발견한 후, 그쪽으로 걸어가 상호 작용하여 메모를 수집하고 임무 작업을 완료하세요.</p><ul><li>메모를 사용하여 메모를 집으세요.</li><li>노트를 집으면 \"균형 잡힌 수확\" 임무가 완료됩니다.</li></ul>",
+    "summary": "연구 및 관리 건물 내에서 Lucille Ludi의 메모를 찾고 수집하는 데 중점을 둔 Arc Raiders의 \"균형 잡힌 수확\" 퀘스트를 완료하기 위한 자세한 연습입니다.",
+    "thumbnail_url": "icons/advanced-mechanical-components.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "연구 및 행정 건물로 이동",
+      "리셉션 위층에 있는 Lab 1을 찾으세요.",
+      "농업연구사업의 흔적을 찾아보세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "1b08d6fe-2e15-4efe-9718-34c6524af6a8",
+        "item": {
+          "id": "advanced-mechanical-components",
+          "icon": "icons/advanced-mechanical-components.webp",
+          "name": "Advanced Mechanical Components",
+          "rarity": "희귀",
+          "item_type": "고급 재료"
+        },
+        "item_id": "advanced-mechanical-components",
+        "quantity": "3"
+      },
+      {
+        "id": "2de8cf5a-efd1-476d-a72b-631d27557af0",
+        "item": {
+          "id": "medium-gun-parts",
+          "icon": "icons/medium-gun-parts.webp",
+          "name": "Medium Gun Parts",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "medium-gun-parts",
+        "quantity": "3"
+      },
+      {
+        "id": "1bae976f-3f48-4daa-a114-c1fb7ad97d00",
+        "item": {
+          "id": "spring",
+          "icon": "icons/spring.webp",
+          "name": "Steel Spring",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "spring",
+        "quantity": "10"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "afbdbf52-8502-4987-8ed7-9645dd2cff38",
+    "title": "더 나은 활용",
+    "slug": "a-better-use",
+    "content": "<p>'더 나은 사용' 퀘스트를 완료하려면 지도 주변에 있는 보급 비콘과 상호작용한 다음 제공되는 자원 방울을 가져와야 합니다.</p><h2>1단계: 보급 비콘 찾기</h2><ul><li>지도를 열어 현재 임무를 확인하세요. '더 나은 사용' 퀘스트는 보급 비컨이 있는 지역으로 안내합니다.</li><li>지도에서 '보급 비콘' 아이콘을 확인하세요. 이들은 일반적으로 퀘스트를 위해 특정 지역에 배치됩니다. </li><li>언급한 바와 같이 이러한 스테이션은 마을, 보급 신호대 또는 강화된 수신 구역과 같은 여러 장소에 있습니다. </li></ul><h2>2단계: 자원 투하 요청</h2><ul><li>지도에 표시된 보급 신호 위치 중 하나로 이동합니다.</li><li>거기에 도착하면 안테나 모양의 탑을 찾으세요. 이것이 보급 신호입니다. </li><li>스테이션 방향으로 가서 액션 버튼(PC에서는 E)을 길게 누르면 '리소스 드롭 요청'이 가능합니다. </li><li>그런 다음 스테이션은 자원 드롭 요청을 실행합니다.</li></ul><h2>3단계: 드롭 잡기</h2><ul><li>리소스 드롭을 요청한 후 위의 하늘을 확인하세요. 드론이 날아와 보급 상자를 떨어뜨립니다. </li><li>자원 드롭은 요청한 정확한 지점에 도착하지 않을 수도 있습니다. 어디에 떨어지는지 잘 살펴보세요.</li><li>보급 상자가 떨어진 후 해당 위치로 계속 이동하여 상자 안에 있는 것을 가져옵니다.</li><li>드롭된 자원을 집으면 '더 나은 사용' 퀘스트가 완료됩니다.</li></ul>",
+    "summary": "Arc Raiders의 '더 나은 사용' 퀘스트를 완료하려면 보급 비컨을 찾고, 자원 투하를 요청하고, 떨어진 아이템을 수집해야 합니다.",
+    "thumbnail_url": "icons/extended-light-mag-i.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "콜 스테이션에서 보급품 투하 요청",
+      "보급품 투하 약탈"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "3ff70eef-7a88-4d5f-9d61-15d968fe85e5",
+        "item": {
+          "id": "extended-light-mag-i",
+          "icon": "icons/extended-light-mag-i.webp",
+          "name": "Extended Light Mag I",
+          "rarity": "일반",
+          "item_type": "개조"
+        },
+        "item_id": "extended-light-mag-i",
+        "quantity": "1"
+      },
+      {
+        "id": "639c5143-138a-4c62-9a1e-2f31fce0cf3b",
+        "item": {
+          "id": "stable-stock-i",
+          "icon": "icons/stable-stock-i.webp",
+          "name": "Stable Stock I",
+          "rarity": "일반",
+          "item_type": "개조"
+        },
+        "item_id": "stable-stock-i",
+        "quantity": "1"
+      },
+      {
+        "id": "7768f31f-0670-4098-b172-41de8bbbdcec",
+        "item": {
+          "id": "muzzle-brake-ii",
+          "icon": "icons/muzzle-brake-ii.webp",
+          "name": "Muzzle Brake II",
+          "rarity": "고급",
+          "item_type": "개조"
+        },
+        "item_id": "muzzle-brake-ii",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "03c78860-d257-4be0-ac79-c4fe59a4a3c8",
+    "title": "첫 번째 거점",
+    "slug": "a-first-foothold",
+    "content": "<p>이 가이드는 Arc Raiders의 '첫 번째 발판' 퀘스트를 안내하며 The Blue Gate 지도에서 네 가지 목표를 사용하는 데 필요한 정확한 위치와 단계를 보여줍니다.</p><h2>1단계: 위성 접시 회전</h2><p>첫 번째 목표에서는 Data Vault 북쪽에 있는 교회 지붕에 있는 위성 접시를 회전해야 합니다.</p><ul><li>지도를 확인하여 Data Vault 북쪽에 있는 교회를 찾으세요. </li><li>교회 건물로 걸어가세요.</li><li>교회 옆에 있는 비계를 타고 지붕에 도착하세요. </li><li>옥상에 도달한 후 위성 접시를 찾으세요.</li><li>위성 접시를 사용하여 회전시키고 이 목표를 완료하세요. </li></ul><h2>2단계: 지붕 판 못 박기</h2><p>두 번째 목표의 경우 Trapper's Glade 근처의 Raider 구조물에 지붕 판을 못으로 박아야 합니다.</p><ul><li>지도에 표시된 Trapper's Glade 근처 위치로 이동하세요. </li><li>지붕판이 헐거워진 레이더 구조물을 찾으세요.</li><li>지붕판으로 가서 활성화하여 고정하세요. </li></ul><h2>3단계: 통신 터미널 활성화</h2><p>퀘스트의 세 번째 부분은 올리브 그로브 근처에 있는 통신 터미널을 활성화하는 것입니다.</p><ul><li>올리브 그로브 근처의 정확한 위치는 지도를 확인하세요. 이 목표는 약간 숨겨져 있습니다.</li><li>부서진 트럭이나 구조물 위에서 통신 단말기를 찾으세요.</li><li>통신 단말기를 사용하여 활성화하세요. </li></ul><h2>4단계: 전망대 안정화</h2><p>최종 목표는 Ridgeline 근처 전망대를 안정화하는 것입니다.</p><ul><li>지도에 표시된 대로 Ridgeline 지역으로 가세요. </li><li>전망대 구조를 찾으세요.</li><li>노란색 마커를 활성화하여 갑판을 안정시키고 '첫 번째 거점' 퀘스트를 완료하세요. </li></ul>",
+    "summary": "Arc Raiders의 '첫 번째 발판' 퀘스트 완료에 대한 자세한 가이드입니다. 이 가이드에서는 미션 목표를 진행하고 완료하기 위해 다양한 구조물을 사용해야 하는 Blue Gate 맵의 네 가지 독특한 위치에 대해 간략하게 설명합니다.",
+    "thumbnail_url": "icons/shrapnel-grenade.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "능선 근처 전망대 안정화",
+      "올리브 그로브 근처의 통신 단말기를 활성화하세요",
+      "Data Vault 북쪽에 있는 교회 지붕의 위성 접시를 회전시키세요.",
+      "Trapper's Glade 근처 레이더 구조물의 지붕 판을 못으로 박으세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "8daea3cd-e161-4209-8e80-e4331267a1aa",
+        "item": {
+          "id": "shrapnel-grenade",
+          "icon": "icons/shrapnel-grenade.webp",
+          "name": "Shrapnel Grenade",
+          "rarity": "고급",
+          "item_type": "투척물"
+        },
+        "item_id": "shrapnel-grenade",
+        "quantity": "3"
+      },
+      {
+        "id": "0fb3273b-dfb1-403f-a661-73aa63aea70b",
+        "item": {
+          "id": "snap-blast-grenade",
+          "icon": "icons/snap-blast-grenade.webp",
+          "name": "Snap Blast Grenade",
+          "rarity": "고급",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "snap-blast-grenade",
+        "quantity": "3"
+      },
+      {
+        "id": "1726a676-be61-43d9-a582-ff90c592f7f5",
+        "item": {
+          "id": "heavy-fuze-grenade",
+          "icon": "icons/heavy-fuze-grenade.webp",
+          "name": "Heavy Fuze Grenade",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "heavy-fuze-grenade",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "5d54cbe3-f4fe-4a12-b0a1-2d88a92aa7a0",
+    "title": "지형 파악",
+    "slug": "a-lay-of-the-land",
+    "content": "<h2>개요</h2><p>Spaceport의 'A Lay of the Land' 퀘스트에서는 장수 창고에서 배송 메모를 찾은 다음 관제탑 A6에서 LIDAR 스캐너를 회수하고 추출해야 합니다.</p><h2>1단계: 장수 창고 및 앰프 찾기; 배송 메모 찾기</h2><ul><li>지도를 확인하고 우주 정거장 지역의 장수 창고를 찾으세요. </li><li>창고 뒤쪽으로 걸어가면 입구가 있습니다.</li><li>문을 통과하여 계단을 계속 올라갑니다. </li><li>계단 윗부분에서 우회전하여 감독실로 들어갑니다.</li><li>책상 위에서 배송 메모를 발견할 수 있습니다. 상호작용하여 잡아보세요. </li></ul><h2>2단계: 관제탑 A6으로 이동</h2><ul><li>노트를 잡은 후 목표는 관제탑 A6에 있는 LIDAR 스캐너를 찾도록 업데이트됩니다.</li><li>지도를 다시 한 번 당겨 관제탑 A6의 위치를 ​​찾으세요. 장수창고 남동쪽에 있습니다. </li><li>Control Tower A6으로 가세요.</li></ul><h2>3단계: LIDAR 스캐너 회수</h2><ul><li>Control Tower A6에 들어가면 계속해서 위층으로 이동하세요. 위로 올라가는 계단이 있습니다.</li><li>상층의 모퉁이를 돌면 LIDAR 스캐너가 있습니다.</li><li>인벤토리가 가득 차면 스캐너를 집기 위해 아이템을 떨어뜨려야 할 수도 있습니다. </li></ul><h2>4단계: LIDAR 스캐너로 추출</h2><ul><li>LIDAR 스캐너를 획득한 후 목표는 이를 업데이트하여 공격대에서 추출한 Stani에게 전달합니다. </li><li>추출 지점을 찾아 성공적으로 추출하여 임무를 완료하세요.</li></ul>",
+    "summary": "다음은 Arc Raiders의 'A Lay of the Land' 퀘스트를 완료하기 위한 철저한 연습으로 배송 메모와 LIDAR 스캐너를 찾는 방법, 퀘스트를 완료하기 위해 추출할 위치를 다루고 있습니다.",
+    "thumbnail_url": "icons/dam-testing-annex-key.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "장쑤성 창고에 도착",
+      "감독실에서 배송 메모를 찾으세요.",
+      "컨트롤타워 A6 윗층에 있는 스캐너를 찾으세요",
+      "샤니에게 LiDAR 스캐너 1개 전달"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "95ba5cff-fe12-494f-ae14-f7933af0e80d",
+        "item": {
+          "id": "dam-testing-annex-key",
+          "icon": "icons/dam-testing-annex-key.webp",
+          "name": "Dam Testing Annex Key",
+          "rarity": "희귀",
+          "item_type": "열쇠"
+        },
+        "item_id": "dam-testing-annex-key",
+        "quantity": "1"
+      },
+      {
+        "id": "c356de1c-bb19-4ccd-a2b7-d8d706a4e187",
+        "item": {
+          "id": "zipline",
+          "icon": "icons/zipline.webp",
+          "name": "Zipline",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "zipline",
+        "quantity": "3"
+      },
+      {
+        "id": "068d6cd6-5738-4a27-ac8b-f2b0805466e7",
+        "item": {
+          "id": "smoke-grenade",
+          "icon": "icons/smoke-grenade.webp",
+          "name": "Smoke Grenade",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "smoke-grenade",
+        "quantity": "2"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "01291ace-5c46-4e10-9577-bc2ba4d5cffc",
+    "title": "새로운 유형의 식물",
+    "slug": "a-new-type-of-plant",
+    "content": "<p>\"새로운 유형의 식물\" 퀘스트를 완료하려면 댐 전장 구역에 있는 특정 \"독성이 있는 식물\"을 찾아서 수집해야 합니다. 이 가이드는 정확한 위치와 퀘스트 아이템을 쉽게 반납하는 방법을 안내합니다.</p><h2>1단계: 퀘스트 영역으로 이동</h2><p>퀘스트는 댐 전장에서 진행됩니다. 지도를 당겨 지도 중앙 근처에 \"Old Battleground\"라고 표시된 일반 지역을 찾으세요. </p><ul><li>댐 전장 지역 내 지도에서 \"오래된 전장\" 마커를 찾으세요.</li><li>이 지역은 크고 부서진 구조물과 빽빽한 나뭇잎이 특징입니다.</li></ul><h2>2단계: 식물 생성 지점 식별</h2><p>구 전장에 들어가면 부서진 헛간이나 시설과 유사한 크고 부서진 구조물로 이동하세요. </p><ul><li>독성 식물은 일반적으로 이 거대하고 부서진 구조물의 바닥 주변에서 생성됩니다.</li><li>일반적으로 서로 매우 가까운 여러 생성 지점이 있습니다.</li><li>키 큰 풀과 잔해 가운데 밝은 주황색, 다소 뾰족한 식물을 주의 깊게 살펴보세요.</li></ul><h2>3단계: 식물 수집</h2><p>식별된 독성 식물 중 하나로 이동하여 이를 사용하여 수집합니다. </p><ul><li>식물을 \"수집\"하라는 메시지가 표시되면 상호작용 버튼(보통 'E')을 누르세요.</li><li>미션을 제출하려면 식물 하나만 있으면 됩니다.</li></ul><h2>4단계: 확보 및 제출</h2><p>식물을 수집한 후 인벤토리를 열고 \"독성이 있는 식물\"을 안전한 주머니에 넣으세요. </p><ul><li>식물을 안전한 주머니에 넣어 사망 시 분실되지 않도록 하세요.</li><li>미션을 빨리 완료하려면 추방하고 제출하세요.</li></ul>",
+    "summary": "이 튜토리얼에서는 옛 전장 근처에서 \"독성이 있는 식물\"을 찾아 모아서 제출함으로써 Arc Raiders의 \"새로운 유형의 식물\" 퀘스트를 효율적으로 완료하는 방법을 설명합니다.",
+    "thumbnail_url": "icons/vita-shot.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "옛 전장의 남작 허스크 근처에서 새로운 식물을 찾으세요.",
+      "독성이 있을 수 있는 식물을 랜스에게 전달하세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "531670a7-671c-475a-9376-4f8df82d2dde",
+        "item": {
+          "id": "vita-shot",
+          "icon": "icons/vita-shot.webp",
+          "name": "Vita Shot",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "vita-shot",
+        "quantity": "1"
+      },
+      {
+        "id": "76367668-2680-45a3-8b07-be4f42ccc11c",
+        "item": {
+          "id": "antiseptic",
+          "icon": "icons/antiseptic.webp",
+          "name": "Antiseptic",
+          "rarity": "희귀",
+          "item_type": "정제 재료"
+        },
+        "item_id": "antiseptic",
+        "quantity": "5"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "d0693ddd-1a31-4398-ba6f-ddca29f72ee4",
+    "title": "폐허의 발견",
+    "slug": "a-reveal-in-ruins",
+    "content": "<h2>개요</h2><p>'A Reveal in Ruins' 퀘스트는 Buried City의 약국에서 ESR 분석기를 찾아 랜스에게 전달하라는 요청을 받습니다. 약국은 지도에 명시적으로 표시되어 있지 않지만 일반적으로 지하철역 근처에 있습니다. 분석기가 있는 Buried City에 있는 두 약국의 정확한 위치는 다음과 같습니다.</p><h2>1단계: Lance로부터 퀘스트 받기</h2><p>Lance로부터 'A Reveal in Ruins' 퀘스트를 수락해야 합니다. 그는 Buried City의 약국에서 ESR 분석기를 찾는 임무를 맡게 됩니다.</p><ul><li>퀘스트 목표는 Buried City의 약국에서 ESR 분석기를 찾는 것입니다.</li><li>Lance는 Tactical MIL 3(치유) 증강 및 서지 쉴드 충전기를 포함한 보상을 제공합니다.</li></ul><h2>2단계: Buried City에서 약국 찾기</h2><p>Buried City에는 두 개의 주요 약국 위치가 있습니다. 지하철역과 가깝습니다. 이 건물은 외부에 녹색 십자가 기호로 구분됩니다.</p><h3>첫 번째 약국 위치</h3><p>첫 번째 약국은 지하철역 근처에 있습니다.</p><ul><li>주로 지하철 입구 근처에 녹색 십자가 기호가 있는 건물 근처를 검색하세요.</li><li>지도에서 이 약국은 지하철 입구 경유지 근처의 알로토 광장 북쪽에 있습니다. </li><li>들어가려면 문을 뚫고 들어가야 합니다. </li></ul><h3>두 번째 약국 위치</h3><p>두 번째 약국은 Buried City의 다른 부분에 있습니다.</p><ul><li>이 약국에는 'Farmacia' 표시와 외부에 녹색 십자가 기호도 있습니다.</li><li>지도에서 이 약국은 Buried City의 남쪽 부분, 로마 광장 및 메인 스트리트 지역 근처에 있습니다. </li><li>문을 부수면 이 건물에도 들어갈 수 있습니다. </li></ul><h2>3단계: ESR 분석기 찾기 및 보안</h2><p>약국에 들어가면 ESR 분석기를 찾는 것이 귀하의 임무입니다. 카운터나 선반에서 흔히 볼 수 있습니다.</p><ul><li>약국 내에서 가까운 카운터를 검색하세요. ESR 분석기는 작은 노란색 장치입니다.</li><li>장치를 사용하여 집으세요. </li><li><strong>중요:</strong> 즉시 ESR 분석기를 '안전한 주머니'에 넣으십시오. 이렇게 하면 기지로 돌아가기 전에 쓰러지거나 제거되더라도 아이템을 잃지 않게 됩니다. </li></ul><h2>4단계: ESR 분석기를 랜스에게 전달</h2><p>안전한 주머니에 ESR 분석기를 성공적으로 확보한 후에는 기지로 돌아가서 랜스에게 전달하여 임무를 완료할 수 있습니다.</p><ul><li>달리기 도중 기절하더라도 안전한 주머니에 있는 ESR 분석기는 그대로 유지됩니다. </li><li>기지에 있는 Lance에게 돌아가세요.</li><li>Lance와 대화하고 ESR 분석기를 전달하는 옵션을 선택하여 임무를 완료하고 보상을 받으세요. </li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/tactical-mk-3-healing.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 번에: Buried City의 약국에서 ESR 분석기를 검색하세요.",
+      "ESR 분석기를 Lance에게 전달"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "6469742a-4d83-4b56-bd8e-f8b1f5583e02",
+        "item": {
+          "id": "tactical-mk-3-healing",
+          "icon": "icons/tactical-mk-3-healing.webp",
+          "name": "Tactical Mk. 3 (Healing)",
+          "rarity": "영웅",
+          "item_type": "강화"
+        },
+        "item_id": "tactical-mk-3-healing",
+        "quantity": "1"
+      },
+      {
+        "id": "583062e9-424f-46f7-9097-70132bf8a84c",
+        "item": {
+          "id": "surge-shield-recharger",
+          "icon": "icons/surge-shield-recharger.webp",
+          "name": "Surge Shield Recharger",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "surge-shield-recharger",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "03dd7934-2f52-4a3a-ab2b-54a0be2a2f58",
+    "title": "통일의 상징",
+    "slug": "a-symbol-of-unification",
+    "content": "<h2>개요</h2><p>'통일의 상징' 퀘스트를 완료하려면 목표는 댐 지도의 용광로 전초기지로 가서 그 안에서 침입자 깃발을 찾은 다음 호수가 내려다보이는 지정된 깃대에 이를 게양하는 것입니다.</p><h2>1단계: 포르미카이 전초기지 찾기</h2><p>초기 작업은 댐 언덕의 가장 높은 지점에 있는 용광로 전초기지에 도달할 때까지입니다. 지도.</p><ul><li>동영상에 표시된 경로를 따라 전초 기지 건물에 도달할 때까지 지형을 올라가세요. </li></ul><h2>2단계: 레이더 깃발 회수</h2><p>전초기지에 도착하면 건물 안으로 들어가 레이더 깃발을 찾아야 합니다.</p><ul><li>전초기지 건물로 들어갑니다.</li><li>안에서 가방이 위에 올려진 책상을 찾습니다. 가방을 사용하여 검색하고 레이더 깃발을 회수하세요. </li><li>레이더 깃발을 수집하면 인벤토리에 표시됩니다. </li></ul><h2>3단계: 깃발 게양</h2><p>공격대 깃발을 손에 들고 전초 기지 끝에 있는 깃대로 계속 이동하여 임무를 완료하세요.</p><ul><li>전초 기지 건물을 통과하여 호수가 내려다보이는 작은 플랫폼으로 이동하세요. </li><li>깃대를 찾아 레이더 깃발을 게양하는 데 사용하세요. </li><li>성공적으로 깃발을 게양하면 '통일의 상징' 퀘스트가 완료됩니다. </li></ul>",
+    "summary": "Formicai 전초기지를 찾아 레이더 깃발을 회수하고 깃대에 게양하는 과정이 포함된 Arc Raiders의 '통일의 상징' 퀘스트를 완료하세요.",
+    "thumbnail_url": "icons/mod-components.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "댐 전장에서 포르미카이 전초기지에 도달하세요",
+      "Formicai 전초기지에서 깃발을 찾으세요",
+      "홍호(Red Lake)가 내려다보이는 작은 플랫폼에 깃발을 게양하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "1d5403e8-4745-4dd3-9887-71dd6259b4aa",
+        "item": {
+          "id": "mod-components",
+          "icon": "icons/mod-components.webp",
+          "name": "Mod Components",
+          "rarity": "희귀",
+          "item_type": "정제 재료"
+        },
+        "item_id": "mod-components",
+        "quantity": "3"
+      },
+      {
+        "id": "2fd6249b-b91f-4757-baa4-af37575b044d",
+        "item": {
+          "id": "duct-tape-recipe",
+          "icon": "icons/duct-tape-recipe.webp",
+          "name": "Duct Tape",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "duct-tape-recipe",
+        "quantity": "5"
+      },
+      {
+        "id": "fbe0f63d-84da-466c-97b0-04289b8aa3d0",
+        "item": {
+          "id": "aviator-outfit",
+          "icon": "icons/aviator-outfit.webp",
+          "name": "Aviator (Outfit)",
+          "rarity": "",
+          "item_type": "기타"
+        },
+        "item_id": "aviator-outfit",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "45a5c563-3d91-44f8-86a8-8f462e3a2ba3",
+    "title": "따뜻한 휴식처",
+    "slug": "a-warm-place-to-rest",
+    "content": "<h2>개요</h2><p>Arc Raiders의 '따뜻한 휴식처' 퀘스트에서는 검사할 무덤이 있는 특정 위치로 이어지는 일련의 단서를 따라가게 됩니다. 여기서는 초기 캠프 찾기부터 퀘스트 완료까지의 각 단계를 설명합니다.</p><h2>1단계: 버려진 고속도로 캠프로 이동</h2><ul><li>지도를 열고 '매장된 도시' 지역을 찾으세요.</li><li>남서부 지역의 '따뜻한 휴식처' 퀘스트 마커를 찾으세요. 특정 곳에서는 '버려진 고속도로 캠프'</li><li>이 위치로 가세요. </li><li>거기 도착하면 두 대의 손상된 버스 사이에 있는 폐허가 된 고속도로 구간에 있게 됩니다.</li></ul><h2>2단계: 빨간색 표시를 따라가세요</h2><ul><li>버스 중 하나의 앞쪽 근처에서 바닥에 배낭을 발견할 수 있습니다. 생존자의 흔적을 찾기 위해 그것과 상호작용하세요. </li><li>이렇게 하면 다음 목표인 '빨간색 표시를 따라가기'가 실행됩니다.</li><li>지도를 다시 확인하세요. 이제 새로운 빨간색 마커가 표시되어 '시청' 영역으로 연결됩니다. 당신을 안내할 웨이포인트를 배치하세요. </li><li>손상된 고속도로를 따라 이 빨간색 표시를 따라가기 시작하세요.</li><li>계속 길을 따라 가면서 다양한 잔해와 환경적 위험 요소를 지나세요.</li><li>표시는 고속도로에서 벗어나 일부 건물을 향한 모래 경사면을 따라 내려가게 합니다. </li></ul><h2>3단계: 무덤 조사</h2><ul><li>마지막 표시를 향해 걸어가면 '무덤 조사' 알림이 나타납니다.</li><li>바위와 잔해 사이에서 무덤 위치를 찾으세요. </li><li>무덤을 이용하여 '따뜻한 휴식처' 미션을 완료하세요. </li></ul>",
+    "summary": "다음은 Arc Raiders에서 'A Warm Place to Rest' 퀘스트를 완료하기 위한 철저한 연습입니다. 출발점을 찾는 방법, 빨간색 표시를 따라가는 방법, 미션을 완료할 무덤을 찾는 방법을 알아보세요.",
+    "thumbnail_url": "icons/rosary.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "버려진 고속도로 캠프를 찾아보세요",
+      "생존자의 흔적을 찾아보세요",
+      "빨간색 표시를 따라가세요",
+      "무덤을 조사해 보세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "c69b27ee-6c1e-4c29-ac9e-948c03eaef69",
+        "item": {
+          "id": "rosary",
+          "icon": "icons/rosary.webp",
+          "name": "Rosary",
+          "rarity": "희귀",
+          "item_type": "장신구"
+        },
+        "item_id": "rosary",
+        "quantity": "1"
+      },
+      {
+        "id": "445f4036-e000-45c5-b1ad-e9193c815287",
+        "item": {
+          "id": "blue-light-stick",
+          "icon": "icons/blue-light-stick.webp",
+          "name": "Blue Light Stick",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "blue-light-stick",
+        "quantity": "5"
+      },
+      {
+        "id": "f71d708c-5939-4384-9487-9764ffc9b82c",
+        "item": {
+          "id": "noisemaker",
+          "icon": "icons/noisemaker.webp",
+          "name": "Noisemaker",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "noisemaker",
+        "quantity": "3"
+      },
+      {
+        "id": "3c3802e9-d9e2-499d-9f09-63bd5f1d945d",
+        "item": {
+          "id": "goggles-radio-renegade-variant",
+          "icon": "icons/goggles-radio-renegade-variant.webp",
+          "name": "Goggles (Radio Renegade Variant)",
+          "rarity": "",
+          "item_type": "기타"
+        },
+        "item_id": "goggles-radio-renegade-variant",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "f796b242-6629-48b6-9a8a-3a80b8e58f03",
+    "title": "비 온 뒤",
+    "slug": "after-rain-comes",
+    "content": "<p>이 가이드에서는 Arc Raiders의 'After Rain Comes' 퀘스트를 성공적으로 완료하는 단계를 다룹니다. 퀘스트에는 그란디오소 아파트 근처에 있는 태양광 패널을 찾고 수리하는 작업이 포함되며, 특정 재료가 필요합니다. Y<span style=\"color: rgb(230, 255, 255);\">5개의 전선</span><span style=\"color: rgb(230, 255, 255);\"> 및 </span><strong style=\"color: rgb(230, 255), 255);\">배터리 2개</strong><span style=\"color: rgb(230, 255, 255);\"> 태양광 패널 수리용. 로드아웃과 함께 가져와야 합니다.</span></p><h2>1단계: 퀘스트 목표로 이동</h2><p>첫 번째 작업은 지도의 올바른 위치로 이동하는 것입니다.</p><ul><li>지도를 보고 Buried City 아래에서 'After Rain Comes' 퀘스트를 찾으세요.</li><li>목표는 West Village의 Grandioso Apartments에 있습니다. </li><li>정확한 지점으로 안내할 경유지를 배치하세요.</li></ul><h2>2단계: 필요한 재료 수집</h2><p>수리를 시도하기 전에 인벤토리에 필요한 구성 요소가 있는지 확인하세요.</p><ul><li>태양광 패널을 수리하려면 <strong>와이어 5개</strong>와 <strong>배터리 2개</strong>가 필요합니다. </li><li>이러한 재료는 일반적으로 설계도와 원시 자원이 있는 경우 약탈이나 제작으로 찾을 수 있습니다.</li></ul><h2>3단계: 태양 전지판 수리</h2><p>재료를 구하고 해당 위치에 도착한 후 수리를 계속하세요.</p><ul><li>퀘스트 목표 표시를 향해 이동하면 지상에 있는 태양 전지판 세트로 연결됩니다.</li><li>상호 작용 지점을 찾으세요. 패널 근처의 작은 노란색 상자와 같습니다. </li><li>수리를 완료하려면 목표를 사용하여 전선과 배터리를 사용하세요.</li><li>수리가 완료되면 '비가 온 후' 퀘스트가 완료로 표시됩니다. </li></ul>",
+    "summary": "필요한 재료가 포함된 Grandioso 아파트 지역의 태양광 패널을 찾아 수리하여 Arc Raiders에서 '비가 온 후' 퀘스트를 완료하는 방법은 다음과 같습니다.",
+    "thumbnail_url": "icons/blue-light-stick.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "그란디오소 아파트 근처의 침수된 태양광 패널 찾기",
+      "태양광 패널을 수리하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "742ccc0a-59d4-4cc6-af84-65982752ce3d",
+        "item": {
+          "id": "blue-light-stick",
+          "icon": "icons/blue-light-stick.webp",
+          "name": "Blue Light Stick",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "blue-light-stick",
+        "quantity": "5"
+      },
+      {
+        "id": "3d3984c0-a9f2-43c4-b2eb-9b76cd660311",
+        "item": {
+          "id": "antiseptic",
+          "icon": "icons/antiseptic.webp",
+          "name": "Antiseptic",
+          "rarity": "희귀",
+          "item_type": "정제 재료"
+        },
+        "item_id": "antiseptic",
+        "quantity": "3"
+      },
+      {
+        "id": "0214585b-183d-4aa1-9fba-cff304f47997",
+        "item": {
+          "id": "durable-cloth",
+          "icon": "icons/durable-cloth.webp",
+          "name": "Durable Cloth",
+          "rarity": "고급",
+          "item_type": "정제 재료"
+        },
+        "item_id": "durable-cloth",
+        "quantity": "5"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "5a85fc6a-d1b6-49af-80ce-ccfe58e4fb1f",
+    "title": "장갑 수송차",
+    "slug": "armored-transports",
+    "content": "<h2>개요</h2><p>장갑 순찰차는 무작위 생성 위치로 인해 찾기 어려울 수 있습니다. 여기에서는 교통 터널에 잠긴 순찰차에 필요한 열쇠와 잠재적인 모든 스폰 지점을 얻을 수 있는 위치가 표시되어 관련 퀘스트를 성공적으로 완료하는 데 도움이 됩니다.</p><h2>1단계: 순찰차 키 받기</h2><ul><li>Blue Gate 지도의 '체크포인트' 지역으로 이동하여 시작하세요. </li><li>체크포인트 지역 내 가장 왼쪽 경비실로 계속 가세요.</li><li>내부 테이블에서 폴더를 발견할 수 있습니다. 이를 사용하여 '순찰차 키'를 얻으세요.</li><li><strong>중요:</strong> 순찰차 키를 바로 안전한 주머니에 넣으세요. 이 열쇠를 잃어버리면 다시 찾지 않으면 퀘스트를 완료할 수 없습니다.</li></ul><h2>2단계: 순찰차를 위한 교통 터널 검색</h2><ul><li>열쇠를 얻은 후 교통 터널로 걸어가세요. 이 지역은 검문소의 주요 도로를 따라 쉽게 접근할 수 있습니다. </li><li>장갑 순찰차는 터널 전체에 무작위로 생성될 수 있습니다. 다른 지점을 확인해야 합니다.</li></ul><h3>가능한 순찰차 위치:</h3><ul><li class=\"ql-indent-1\">가능한 첫 번째 출현 장소는 바로 교통 터널 입구입니다. </li><li class=\"ql-indent-1\">만나는 각 장갑순찰차의 뒤를 확인하세요. 뒷문이 잠겨 있고 순찰차 열쇠가 필요한 경우, 퀘스트에 맞는 열쇠를 찾은 것입니다. </li><li class=\"ql-indent-1\">터널 내부 더 깊은 곳에 여러 개의 생성 지점이 있습니다. 일반 지역은 지도를 참조하세요. </li><li class=\"ql-indent-1\">길 양쪽을 확인하면서 계속해서 터널 안으로 들어가세요. 이 지역의 ARC 드론, 파이어볼 팝, 요새를 주의하세요.</li><li class=\"ql-indent-1\">또 다른 일반적인 생성 지점은 터널 내의 큰 기둥 바로 옆에 있습니다. </li><li class=\"ql-indent-1\">추가 순찰차가 생성될 수 있으므로 계속해서 터널 끝까지 가세요. </li><li><strong>참고:</strong> 모든 장갑차가 퀘스트 특정 순찰차인 것은 아닙니다. 일부는 쓰레기 차량이거나 잠금 해제된 운송 수단일 뿐입니다. 잠긴 뒷문에서 순찰차 키를 사용하려면 항상 상호작용 메시지를 찾으세요. </li></ul><h2>3단계: 순찰차 접근</h2><ul><li>뒷문이 잠겨 있는 순찰차를 발견하면 순찰차 키를 사용하여 엽니다.</li><li>내부에는 무기 상자가 있습니다. 이 상자를 잡고 녹색 또는 파란색 무기를 받고 퀘스트를 성공적으로 완료하세요. </li></ul>",
+    "summary": "이 튜토리얼은 Arc Raiders에서 Armored Patrol Car와 해당 키를 찾는 연습을 제공합니다. 퀘스트를 완료하는 데 필요한 순찰차의 열쇠와 가능한 모든 생성 지점을 찾을 수 있는 위치를 알아보세요.",
+    "thumbnail_url": "icons/smoke-grenade.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "체크포인트에 도달하세요",
+      "경비실에서 무장 순찰 키 카드를 검색하세요.",
+      "블루 게이트 검문소 근처 교통 터널에 도달하세요",
+      "장갑 순찰차의 뒷문을 찾아서 잠금 해제하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "9965658e-08c3-42da-a8fc-7df303e28081",
+        "item": {
+          "id": "smoke-grenade",
+          "icon": "icons/smoke-grenade.webp",
+          "name": "Smoke Grenade",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "smoke-grenade",
+        "quantity": "3"
+      },
+      {
+        "id": "d2805e13-1cd1-4f3a-bf4e-eb92b5d84d58",
+        "item": {
+          "id": "defibrillator",
+          "icon": "icons/defibrillator.webp",
+          "name": "Defibrillator",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "defibrillator",
+        "quantity": "3"
+      },
+      {
+        "id": "2fc60387-7cf2-4aed-a01e-f66475a179de",
+        "item": {
+          "id": "blue-yellow-aviator-color",
+          "icon": "icons/blue-yellow-aviator-color.webp",
+          "name": "Blue Yellow (Aviator Color)",
+          "rarity": "일반",
+          "item_type": "기타"
+        },
+        "item_id": "blue-yellow-aviator-color",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "8af69139-a32e-43fd-a86c-0481d640b169",
+    "title": "정상으로 복귀",
+    "slug": "back-on-top",
+    "content": "<h2>개요</h2><p>완료하려면 Buried City, Dam Battlegrounds, Blue Gate 및 Spacepoint의 세 가지 지도에서 특정 벽화나 표시된 벽을 찾아 상호 작용해야 합니다.</p><h2>1단계: Buried City 벽화</h2><p>첫 번째 목적지는 Buried City 구역입니다. 지도에 표시된 대로 북동쪽 건물로 이동하세요.</p><ul><li>Buried City 구역의 북동쪽 구역에서 건물을 찾으세요.</li><li>그런 다음 뚜렷한 벽화나 그래피티가 있는 건물 벽을 향해 걸어가세요.</li></ul><ul><li>이 벽을 사용하여 퀘스트의 첫 번째 부분을 완료하세요.</li></ul><h2>2단계: 댐 전장 벽화(패턴 House)</h2><p>다음으로 Dam Battlegrounds 맵으로 이동합니다. 목표는 지도의 최북단에 위치한 패턴 하우스입니다.</p><ul><li>상위 레벨로 가려면 약간의 등반이 필요한 패턴 하우스 건물을 찾으세요.</li></ul><ul><li>건물 안으로 들어가거나 접근 가능한 부분에 도달하면 상호작용 가능한 벽을 찾으세요.</li><li>벽을 사용하여 퀘스트의 이 섹션을 마무리하세요.</li></ul><h2>3단계: 블루 게이트 벽화(창고 단지 Tower)</h2><p>Blue Gate 지도로 계속 이동하세요. 창고 단지 옆에 있는 타워를 찾아야 합니다.</p><ul><li>이 지역은 드론으로 삼엄한 경비를 받는 경우가 많으므로 접근할 때 조심하세요.</li></ul><ul><li>탑 측면에 있는 사다리를 찾아 올라가서 상부 구역으로 이동하세요.</li></ul><ul><li>상단에서 상호 작용할 수 있는 탑 벽을 찾으세요.</li><li>작업을 진행하려면 상호 작용을 수행하세요. 퀘스트.</li></ul><h2>4단계: Spacepoint 벽화(South Trench Tower)</h2><p>마지막으로 Spacepoint 지도로 걸어가세요. 여기서 당신의 목표는 사우스 트렌치 타워입니다.</p><ul><li>근처의 눈에 띄는 구조물인 사우스 트렌치 타워로 이동하세요.</li><li>상호작용이 가능한 타워의 벽을 찾으세요.</li></ul><ul><li>이 마지막 벽을 사용하여 전체 퀘스트 라인을 성공적으로 완료하세요.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/renegade-i.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "댐 전장에서 패턴 하우스를 표시하세요.",
+      "The Blue Gate에서 Warehouse Complex 남쪽의 흰색 전망대를 표시하세요.",
+      "Spaceport에서 South Trench Tower를 표시하세요.",
+      "Buried City에서 Buried Properties의 벽화로 건물을 표시하세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "25408b95-418f-4906-af2e-b6fd58e94d44",
+        "item": {
+          "id": "renegade-i",
+          "icon": "icons/renegade-i.webp",
+          "name": "Renegade I",
+          "rarity": "희귀",
+          "item_type": "무기"
+        },
+        "item_id": "renegade-i",
+        "quantity": "1"
+      },
+      {
+        "id": "3ae77edc-abb4-4324-8fed-764ba80b8d4a",
+        "item": {
+          "id": "stable-stock-iii",
+          "icon": "icons/stable-stock-iii.webp",
+          "name": "Stable Stock III",
+          "rarity": "희귀",
+          "item_type": "개조"
+        },
+        "item_id": "stable-stock-iii",
+        "quantity": "1"
+      },
+      {
+        "id": "8c07b341-270c-4737-b85b-30b983a20be5",
+        "item": {
+          "id": "medium-ammo",
+          "icon": "icons/medium-ammo.webp",
+          "name": "Medium Ammo",
+          "rarity": "일반",
+          "item_type": "탄약"
+        },
+        "item_id": "medium-ammo",
+        "quantity": "80"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "012273b7-55c4-4652-8553-b89d4e879803",
+    "title": "벌!",
+    "slug": "bees",
+    "content": "<p>여기에서는 The Blue Gate의 Olive Grove 지역에서 필요한 꿀벌을 찾아 잡아 Arc Raiders의 'BEES' 퀘스트를 완료하는 정확한 단계를 안내합니다. 수집 후에는 항목을 반납할 필요가 없습니다.</p><h2>1단계: 지도의 퀘스트 영역으로 이동하세요.</h2><p>지도를 열어 현재 퀘스트 목표를 확인하세요. 'BEES' 퀘스트는 The Blue Gate 지역 내 특정 지역으로 안내합니다. </p><ul><li>퀘스트 로그의 'THE BLUE GATE' 섹션 아래에 있는 'BEES' 퀘스트로 이동하세요.</li><li>지도에서 강조 표시된 영역을 관찰하세요. 이는 퀘스트 목표의 대략적인 부근을 나타냅니다. 영상에는 플레이어가 이미 '올리브 그로브' 위치에 있는 모습이 나와 있습니다.</li></ul><h2>2단계: 벌 위치 찾기</h2><p>올리브 그로브 지역에 도착한 후 부분적으로 파괴된 구조물을 찾아보세요. 꿀벌은 이 건물 중 하나의 손상된 돌출부 아래에 눈에 띄지 않게 위치하고 있습니다.</p><ul><li>동영상에 표시된 특정 건물을 향해 이동하세요.</li><li>바로 위, 돌출부 아래에서 '수집'이라고 표시된 빛나는 항목을 찾으세요. </li><li>빛나는 아이템과 상호작용하여 벌을 수집하세요.</li></ul><h2>3단계: 임무 완료</h2><p>벌을 잡은 후 퀘스트가 자동으로 완료됩니다. NPC나 특정 하차 지점에 실제 품목을 반납할 필요가 없습니다.</p><ul><li>지도를 다시 한 번 확인하여 'BEES' 퀘스트가 완료로 표시되었는지 확인하세요. </li></ul>",
+    "summary": "이 튜토리얼은 Blue Gate 지역, 특히 Olive Grove 내에서 'BEES' 퀘스트에 대한 '벌'을 찾을 수 있는 정확한 위치를 제공합니다.",
+    "thumbnail_url": "icons/advanced-electrical-components.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "블루 게이트(Blue Gate)의 올리브 그로브(Olive Grove)에 도달하세요",
+      "올리브 그로브 주변의 벌통 검색"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "4c0763f6-ad0d-44ad-a187-c0ee34f295b5",
+        "item": {
+          "id": "advanced-electrical-components",
+          "icon": "icons/advanced-electrical-components.webp",
+          "name": "Advanced Electrical Components",
+          "rarity": "희귀",
+          "item_type": "정제 재료"
+        },
+        "item_id": "advanced-electrical-components",
+        "quantity": "1"
+      },
+      {
+        "id": "6ce3f864-886f-426a-be40-a738a51a009e",
+        "item": {
+          "id": "sensors-recipe",
+          "icon": "icons/sensors-recipe.webp",
+          "name": "Sensors",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "sensors-recipe",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "a854cc46-b94d-4cc3-8e4e-49982737c242",
+    "title": "바이슨 처치",
+    "slug": "bringing-down-a-bison",
+    "content": "<h2>목표</h2><ul><li>들소(도약자)를 파괴하세요. 블레이즈 수류탄 4개로 쉽게 쓰러뜨릴 수 있습니다. 이 수류탄은 발사에 매우 약합니다.</li></ul><p>34000 XP를 받으려면 이 작업을 완료하세요.</p>",
+    "summary": "XP: 34000",
+    "thumbnail_url": "icons/equalizer-i.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "들소를 파괴하세요"
+    ],
+    "xp": 34000,
+    "rewards": [
+      {
+        "id": "a725b938-93b0-4a97-9b7a-b4586437a5b0",
+        "item": {
+          "id": "equalizer-i",
+          "icon": "icons/equalizer-i.webp",
+          "name": "Equalizer I",
+          "rarity": "전설",
+          "item_type": "무기"
+        },
+        "item_id": "equalizer-i",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "c1d69b4d-ed2a-486c-b67e-98e52c66ddae",
+    "title": "부서진 기념비",
+    "slug": "broken-monument",
+    "content": "<p>'깨진 기념물' 퀘스트를 수행하려면 나침반, 비디오테이프, 오래된 현장 식량 등 세 가지 특정 항목을 찾아야 합니다. 이 아이템은 모두 Dam Battlegrounds 지도의 Scrap Yard 지역 내에서 찾을 수 있으며, 각 아이템은 작고 녹슨 금속 상자에 숨겨져 있습니다. 수집하는 순서는 중요하지 않습니다. 퀘스트 아이템 상자로 이동하면 노란색 팝업에 \"[항목 이름] 검색\"이 표시됩니다.</p><h2>1단계: 퀘스트 준비</h2><ul><li><strong>댐 전장</strong> 지도에 로드합니다.</li><li>지도를 보고 <strong>고철장</strong>을 찾으세요. 이 지도는 남쪽 끝, 거의 지도 중앙, 연구 및 앰프 아래에 있습니다. 관리 건물. </li></ul><h2>2단계: 나침반 찾기</h2><ul><li>비스듬히 쌓여 있는 두 개의 커다란 회색 금속 용기를 검색하세요. 그 앞에는 세 개의 작은 빨간색 금속 작업대 같은 구조물이 있습니다. </li><li>이 쌓인 컨테이너 가운데로 뛰어들어 보세요. </li><li>컨테이너 사이 바닥에서 녹슨 금속 상자를 발견하게 됩니다. <strong>나침반</strong>을 얻으려면 검색하세요. </li></ul><h2>3단계: 비디오 테이프로 이동</h2><ul><li>뒤집어져 나란히 누워 있는 두 개의 긴 녹색 사일로(대형 원통형 용기)를 스캔합니다. </li><li>이 사일로 중 하나의 측면에는 또 다른 녹슨 금속 상자가 있습니다. </li><li>상자를 열어 <strong>비디오 테이프</strong>를 수집하세요. </li></ul><h2>4단계: Old Field Rations로 이동</h2><ul><li>주 스크랩 처리장 지역에서 북동쪽으로 가세요. 당신은 낡고 버려진 모바일 트레일러 같은 구조를 만나게 될 것입니다. </li><li>예고편을 입력하세요. </li><li>안에서 세 번째 녹슨 금속 상자를 발견하게 됩니다. 검색하여 <strong>기존 농지 식량</strong>을 수집하세요. </li></ul><h2>5단계: 중요 완료 팁</h2><ul><li><strong>물리적 수집 필요:</strong> 다른 퀘스트와 달리 검색 후 상자에서 퀘스트 아이템을 물리적으로 가져와야 합니다. 배낭에 나타납니다. </li><li><strong>한 라운드만:</strong> 세 가지 퀘스트 아이템을 모두 한 번의 공격대 라운드 내에서 찾아서 수집해야 합니다. 퀘스트 추적기에는 \"단일 실행 내\"라고 명시적으로 명시되어 있습니다. </li><li>모든 아이템을 배낭에 넣은 후, 레이드에서 성공적으로 탈출하여 '깨진 기념물' 퀘스트를 완료하세요. </li></ul>",
+    "summary": "이 튜토리얼은 Dam Battlegrounds 지도 내에서 나침반, 비디오테이프 및 Old Field Rations를 찾아 Arc Raiders의 'Broken Monument' 퀘스트를 완료하는 방법에 대한 자세한 지침을 제공합니다. 각 항목이 숨겨진 위치와 성공적인 임무 완료를 위한 중요한 팁을 알아보세요.",
+    "thumbnail_url": "icons/arpeggio-i.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에",
+      "고철 처리장 옆의 신성한 땅에 도달하세요",
+      "고장난 차량 근처에서 나침반 찾기",
+      "원통형 용기 근처에서 비디오테이프를 찾아보세요",
+      "레이더 캠프에서 오래된 현장 식량을 검색하세요.",
+      "Tian Wen에게 첫 번째 웨이브 테이프 전달",
+      "Tian Wen에게 첫 번째 파도 나침반 전달",
+      "Tian Wen에게 첫 번째 식량 전달"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "dfce1e5b-1973-44a3-bfec-1ce00075e6d8",
+        "item": {
+          "id": "arpeggio-i",
+          "icon": "icons/arpeggio-i.webp",
+          "name": "Arpeggio I",
+          "rarity": "고급",
+          "item_type": "무기"
+        },
+        "item_id": "arpeggio-i",
+        "quantity": "1"
+      },
+      {
+        "id": "16072912-abaa-4d49-b8f1-71eecb32d419",
+        "item": {
+          "id": "medium-ammo",
+          "icon": "icons/medium-ammo.webp",
+          "name": "Medium Ammo",
+          "rarity": "일반",
+          "item_type": "탄약"
+        },
+        "item_id": "medium-ammo",
+        "quantity": "80"
+      },
+      {
+        "id": "333be3e4-7593-471d-ac6d-04e6ea6deaa9",
+        "item": {
+          "id": "compensator-ii",
+          "icon": "icons/compensator-ii.webp",
+          "name": "Compensator II",
+          "rarity": "고급",
+          "item_type": "개조"
+        },
+        "item_id": "compensator-ii",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "431e4e1c-ff83-4c45-87b5-e00bdefc39dd",
+    "title": "도서관 만들기",
+    "slug": "building-a-library",
+    "content": "<h2>개요: 도서관 짓기 퀘스트</h2><p>'도서관 짓기' 퀘스트에서는 특정 책 세 권(Tomebook, Detectivebook, Adventurebook)을 찾으라고 요청합니다. 세 곳 모두 Buried City의 도서관 건물 내에 있습니다.</p><h2>1단계: Buried City의 도서관으로 이동</h2><p>먼저 지도를 위로 당겨 Buried City 구역 내에서 도서관 아이콘을 찾으세요. 표시를 했다면 건물로 가세요. 안으로 들어가면 크고 다소 낡은 도서관 구조를 발견할 수 있습니다.</p><h2>2단계: Tomebook 찾기</h2><ul><li>첫 번째 책인 Tomebook은 1층에 있습니다. 중앙 도서관 구역에 들어간 후, 흩어져 있는 큰 책 더미 근처에서 떨어진 책장을 찾으세요. </li><li>책장으로 가서 Tomebook을 수집하세요. [SCREENSHOT:00:13] 퀘스트를 진행하려면 반드시 집어들어야 합니다.</li></ul><h2>3단계: 탐정서에 도달하세요</h2><ul><li>첫 번째 책이 있는 위치에서 1층으로 더 들어가 잔해 주변을 탐색하세요. 벽을 따라 책장이 늘어선 또 다른 구역이 보일 것입니다.</li><li>두 번째 책인 『탐정책』은 평범한 벽에 기대어 있는 책장 근처 바닥에 있습니다. </li><li>탐정서를 수집하여 인벤토리에 추가하세요. [SCREENSHOT:00:25]</li></ul><h2>4단계: 모험의 책 찾기</h2><ul><li>세 번째 책인 모험의 책을 보려면 도서관의 2층으로 올라가야 합니다. 위쪽으로 이어지는 계단이나 경사로를 찾으세요.</li><li>상층에 오면 난간 너머를 살펴보세요. Adventurebook은 당신이 보고 있는 난간 바로 아래 작은 선반에 있습니다. 위치 때문에 종종 놓치는 경우가 있습니다.</li><li>낮은 층으로 내려가거나 모험의 책과 상호 작용하고 수집할 수 있는 안전한 방법을 찾으세요. [SCREENSHOT:00:34]</li></ul><h2>5단계: 책 전달</h2><p>세 권의 책을 모두 수집하면 퀘스트 목표가 '아폴로로 여행 전달'로 업데이트됩니다. 이제 계속해서 Apollo를 사용하여 '도서관 구축' 퀘스트를 완료할 수 있습니다.</p>",
+    "summary": "이 가이드는 Buried City 내에 위치한 Arc Raiders의 '도서관 짓기' 퀘스트를 완료하는 데 필요한 세 권의 책을 모두 찾는 방법을 설명합니다.",
+    "thumbnail_url": "icons/jolt-mine.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서: 도심에서 도서관을 찾으세요.",
+      "로맨스 책 1권 찾기",
+      "탐정서 1권 찾기",
+      "모험의 책 1권 찾기",
+      "아폴로에게 책 3권 전달하기"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "93adcdc2-b38c-4095-ac8c-b074c1a810f3",
+        "item": {
+          "id": "jolt-mine",
+          "icon": "icons/jolt-mine.webp",
+          "name": "Jolt Mine",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "jolt-mine",
+        "quantity": "1"
+      },
+      {
+        "id": "db349d2a-9bac-4acb-90b8-071f4b7a93a5",
+        "item": {
+          "id": "heavy-fuze-grenade",
+          "icon": "icons/heavy-fuze-grenade.webp",
+          "name": "Heavy Fuze Grenade",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "heavy-fuze-grenade",
+        "quantity": "1"
+      },
+      {
+        "id": "2edeaa06-0d87-401c-b404-9babef385fd5",
+        "item": {
+          "id": "explosive-mine",
+          "icon": "icons/explosive-mine.webp",
+          "name": "Explosive Mine",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "explosive-mine",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "9ddf705d-09fe-4ee4-b699-f16002d4f0ff",
+    "title": "셀레스트의 일지",
+    "slug": "celestes-journals",
+    "content": "<p>'하늘의 눈' 퀘스트를 완료하려면 댐 전장 구역의 특정 전초기지에 있는 두 가지 퀘스트 아이템을 찾아야 합니다. 이 가이드에서는 임무 완료를 위해 두 항목을 모두 찾고 확보하는 방법을 다룹니다.</p><h2>1단계: 첫 번째 퀘스트 항목(South Swamp 전초기지)</h2><p>첫 번째 작업은 South Swamp 전초기지로 이동하는 것입니다. 지도를 당겨서 위치를 찾으세요.</p><ul><li>지도의 남쪽 부분에 있는 South Swamp 전초기지의 경유지를 배치하세요. </li><li>전초기지로 향하면 낡은 탑처럼 생긴 건물을 찾으세요. </li><li>이 잔해 건물로 들어가세요. 어두운 조명의 실내를 통과해 보세요. </li><li>'퀘스트 목표'라고 불리는 퀘스트 아이템은 이 건물 내부의 침대 위에서 발견됩니다. </li><li>사망 시 잃어버리지 않도록 아이템을 꼭 챙겨 안전한 주머니에 넣어두세요.</li></ul><h2>2단계: 두 번째 퀘스트 아이템(동쪽 레이더 전초기지)</h2><p>두 번째 아이템의 목표는 지도 북쪽 지역에 위치한 레이더 전초기지 동쪽으로 걸어가는 것입니다.</p><ul><li>지도를 다시 확인하여 동쪽 레이더 전초기지를 찾으세요. </li><li>좀 더 건조하고 바위가 많은 풍경 속에 자리잡은 이 곳으로 이동하세요. </li><li>이 전초기지에서 건물 안으로 이동하여 들어가세요.</li><li>건물 내 두 번째 '퀘스트 목표' 아이템은 침대 위에 있습니다. </li><li>두 번째 '퀘스트 목표' 아이템을 획득했는지 확인하세요. </li><li>이 항목을 안전한 주머니에 넣는 것을 잊지 마세요.</li></ul><h3>3단계: 퀘스트 완료</h3><ul><li>두 퀘스트 항목이 모두 안전한 주머니에 안전하게 저장되면 'Celestes Journal' 퀘스트를 성공적으로 완료한 것입니다.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/magnetic-accelerator.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "남쪽 늪지 전초기지에서 셀레스트의 일지를 회수하세요",
+      "붉은 호수가 내려다보이는 북쪽 전초기지에서 셀레스트의 일지를 회수하세요.",
+      "셀레스트에게 일지 2개 전달"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "8930d8eb-ea23-4154-b789-e5c352fada7b",
+        "item": {
+          "id": "magnetic-accelerator",
+          "icon": "icons/magnetic-accelerator.webp",
+          "name": "Magnetic Accelerator",
+          "rarity": "영웅",
+          "item_type": "정제 재료"
+        },
+        "item_id": "magnetic-accelerator",
+        "quantity": "1"
+      },
+      {
+        "id": "2185e9d5-e3ae-4614-a2cf-74d5b26e5baf",
+        "item": {
+          "id": "heavy-gun-parts",
+          "icon": "icons/heavy-gun-parts.webp",
+          "name": "Heavy Gun Parts",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "heavy-gun-parts",
+        "quantity": "3"
+      },
+      {
+        "id": "7d82a652-35e3-4f7e-9f36-6b1aee56e861",
+        "item": {
+          "id": "exodus-modules",
+          "icon": "icons/exodus-modules.webp",
+          "name": "Exodus Modules",
+          "rarity": "영웅",
+          "item_type": "지표 재료"
+        },
+        "item_id": "exodus-modules",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "74febe04-2aa6-4c0d-80e0-a0ebb09661c7",
+    "title": "맑아지는 하늘",
+    "slug": "clearer-skies",
+    "content": "<h2>개요</h2><p>\"Clearer Skies\" 퀘스트에서는 3명의 ARC 적을 파괴하고 3개의 ARC 합금을 수집하여 Shani에게 전달해야 합니다. 이 가이드는 이 임무를 효율적으로 완료하기 위한 단계를 설명합니다.</p><h2>1단계: \"Clearer Skies\" 퀘스트 수락</h2><ul><li>퀘스트 탭에 액세스하여 \"Clearer Skies\"를 찾으세요.</li><li>목표 검토: 3명의 ARC 적을 파괴하고 Shani를 위한 3개의 ARC 합금을 얻으세요.</li><li>시작하려면 퀘스트를 시작하세요.</li></ul><h2>2단계: 찾기 ARC 적 파괴</h2><p>ARC 적(일반적으로 이 퀘스트의 드론)은 지도 전체에서 찾을 수 있습니다. 적극적으로 찾거나 특정 지점에 나타날 때까지 기다릴 수 있습니다.</p><ul><li>주변에서 ARC 드론을 식별하세요.</li><li>신뢰할 수 있는 무기를 사용하여 드론을 격추하세요. 집중적으로 사격하여 빠르게 파괴하세요.</li></ul><ul><li>드론이 파괴되었는지 확인하세요.</li></ul><h2>3단계: ARC 합금 수집</h2><p>ARC 적이 파괴되면 그 잔해를 약탈하여 필요한 ARC 합금을 수집해야 합니다.</p><ul><li>추락한 ARC 적에게 다가가서 상호 작용하여 검색하세요.</li></ul><ul><li>\"ARC를 찾으세요. Powercell\"(또는 ARC 합금) 항목을 전리품 컨테이너에 넣으세요.</li><li>최소 1개의 ARC 합금을 안전한 주머니에 넣으세요. 총 3개의 ARC 합금이 생길 때까지 이 단계를 반복하세요.</li></ul><h2>4단계: 추가 적에 대해 추출 엘리베이터 사용</h2><p>ARC 드론을 발견하는 신뢰할 수 있는 방법은 추출 엘리베이터를 활성화하는 것입니다. 추출 엘리베이터는 거의 항상 드론을 사용자 위치로 끌어당깁니다.</p><ul><li>지도에서 추출 엘리베이터를 찾으세요.</li><li>추출을 시작하려면 엘리베이터를 활성화하세요. 순서.</li></ul><ul><li>ARC 드론이 엘리베이터 근처에서 생성되어 교전할 가능성이 높습니다.</li><li>이 드론을 파괴하고 필요한 경우 추가 ARC 합금을 약탈합니다.</li></ul><h2>5단계: 임무 추출 및 완료</h2><p>3 ARC 합금을 성공적으로 수집한 후 임무를 완료하려면 추출 엘리베이터를 사용하여 Shani로 돌아가야 합니다.</p><ul><li>돌아가려면 추출 엘리베이터를 사용하세요. 기지로.</li><li>수집한 ARC 합금을 Shani에게 넘겨 \"Clearer Skies\" 퀘스트를 마무리하세요.</li></ul><ul><li>성공적으로 완료한 후 보상을 받으세요.</li></ul>",
+    "summary": "Arc Raiders의 \"Clearer Skies\" 퀘스트를 완료하기 위한 포괄적인 가이드로, ARC 적을 찾아서 파괴하고 ARC 합금을 회수하는 방법을 설명합니다.",
+    "thumbnail_url": "icons/light-shield.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "ARC 적 3명을 파괴하세요",
+      "샤니를 위한 ARC 합금 3개 획득"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "0dc9c923-7399-4141-b75d-56b271e29dfa",
+        "item": {
+          "id": "light-shield",
+          "icon": "icons/light-shield.webp",
+          "name": "Light Shield",
+          "rarity": "고급",
+          "item_type": "방패"
+        },
+        "item_id": "light-shield",
+        "quantity": "1"
+      },
+      {
+        "id": "e7c13457-e20d-4be7-9216-62e426868bad",
+        "item": {
+          "id": "sterilized-bandage",
+          "icon": "icons/sterilized-bandage.webp",
+          "name": "Sterilized Bandage",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "sterilized-bandage",
+        "quantity": "3"
+      },
+      {
+        "id": "28e6f634-6b8c-4893-9bee-3a6b2313fba0",
+        "item": {
+          "id": "black-hiker-colour",
+          "icon": "icons/black-hiker-colour.webp",
+          "name": "Black (Hiker Colour)",
+          "rarity": "일반",
+          "item_type": "기타"
+        },
+        "item_id": "black-hiker-colour",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "8fd31a6c-44d5-4034-b55c-051d84a1cfcf",
+    "title": "냉동 창고",
+    "slug": "cold-storage",
+    "content": "<h2>개요</h2><p>'냉장고' 퀘스트는 스텔라 몬티스 지도의 로비 구역 지하에 있는 특정 컨테이너에서 '복지 블록'을 찾고 회수하는 것입니다. 이 튜토리얼은 항목의 위치에 대한 자세한 경로를 제공합니다.</p><h2>1단계: 로비 영역으로 이동</h2><p>Stella Montis 지도에서 로비 영역으로 이동하여 시작하세요. 이곳은 '냉장고' 퀘스트의 시작점으로 지도에 강조표시되어 있습니다.</p><h2>2단계: 동쪽 지하철 입구로 이동</h2><ul><li>초기 로비에서 '메트로 입구 동쪽' 표지판을 향한 경로를 따르세요.</li></ul><h2>3단계: 지하층으로 내려갑니다</h2><ul><li>첫 번째 에스컬레이터로 향합니다.</li><li>계속 진행하세요. 어두운 복도.</li><li>두 번째 에스컬레이터를 타고 지하 지하층에 도달할 때까지 내려가세요.</li></ul><h2>4단계: 퀘스트 컨테이너로 향하세요</h2><ul><li>지하층에 도착하면 'Lobby Metro' 기차 출구에 도달할 때까지 해당 지역을 탐색하세요.</li><li>사용해야 하는 컨테이너는 기차 출구 바로 맞은편에 있습니다.</li></ul><h2>5단계: 희귀 아이템 검색 책</h2><ul><li>컨테이너를 사용하여 엽니다.</li><li>'희귀 책' 퀘스트 아이템을 집으세요.</li><li>추출 및 전달을 위해 희귀 책을 안전한 주머니에 넣어 안전하게 보관하십시오.</li></ul><h2>6단계: 샤니에게 전달</h2><ul><li>귀한 책을 안전한 주머니에 넣은 후 지도에서 성공적으로 추출하세요.</li><li>전달 복지 블록은 샤니에게 '냉장고' 퀘스트를 완료합니다.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/raider-hatch-key.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에",
+      "J Kozma Ventures 컨테이너 검색"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "5c52d95e-a610-4519-a4f4-ffa19b14d425",
+        "item": {
+          "id": "raider-hatch-key",
+          "icon": "icons/raider-hatch-key.webp",
+          "name": "Raider Hatch Key",
+          "rarity": "희귀",
+          "item_type": "열쇠"
+        },
+        "item_id": "raider-hatch-key",
+        "quantity": "1"
+      },
+      {
+        "id": "f0ef6dc0-0d34-41ab-880c-dcc042d3b184",
+        "item": {
+          "id": "gas-mine",
+          "icon": "icons/gas-mine.webp",
+          "name": "Gas Mine",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "gas-mine",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-15T16:07:48.803905+00:00"
+  },
+  {
+    "id": "3d458c61-1b92-4174-b171-212cfc419995",
+    "title": "통신 은신처",
+    "slug": "communication-hideout",
+    "content": "<p>이 가이드에서는 '소통 아지트' 퀘스트에 대해 설명합니다. 사라진 배터리 셀을 찾아서 발전기에 설치하고 발전기에 전원을 공급한 다음 안테나 단자를 증폭시켜야 합니다.</p><h2>1단계: 배터리 셀 찾기 및 회수</h2><p>레드 타워 근처의 올드 타운에서 퀘스트를 시작하세요. 통신 은신처 목표가 지도에 강조 표시됩니다.</p><ul><li>지도에 지정된 위치, 즉 레드 타워 근처 구시가지 주변으로 이동하세요.</li><li>벽 근처 모래 지역에 자리잡은 작고 낡은 구조물을 둘러보세요.</li><li>이 구조물 옆에 있는 컨테이너로 이동하세요.</li><li>컨테이너를 사용하여 사라진 배터리 셀을 회수하세요.</li></ul><h2>2단계: 전원 발전기</h2><p>배터리 셀을 얻은 후 다음 목표는 근처 발전기에 설치하고 전원을 켜는 것입니다.</p><ul><li>배터리를 발견한 곳 근처의 조약돌 경로에 깜박이는 빨간색 표시등이 있는 트럭 모양의 물체인 발전기를 찾으세요.</li><li>발전기로 걸어가서 배터리 셀을 설치하는 데 사용하세요.</li></ul><ul><li>배터리를 설치한 후 발전기를 다시 사용하여 전원을 켜세요.</li></ul><h2>3단계: 안테나 터미널 활성화</h2><p>전원이 복구되면 마지막 작업은 레드 타워의 안테나 터미널에 도착하여 증폭하는 것입니다.</p><ul><li>발전기 옆 건물로 걸어가세요. 상위 레벨에 도달할 때까지 들어가야 합니다.</li><li>지상 레벨에서 열려 있는 창문을 근처에서 검색하여 통과하세요.</li></ul><ul><li>들어간 후 건물을 탐색하고 계단을 올라 올라가세요.</li><li>옥상 영역에 도달하여 사다리를 찾으세요.</li><li>옥탑의 더 높은 부분에 도달할 때까지 사다리를 올라가세요.</li></ul><ul><li> 외부 안테나 단자를 찾습니다.</li><li>단말기를 사용하여 증폭시켜 '통신 은신처' 퀘스트를 완료합니다.</li></ul>",
+    "summary": "배터리 회수, 발전기 활성화 및 안테나 단자 증폭을 다루는 Arc Raiders의 '통신 은신처' 퀘스트를 완료하기 위한 자세한 연습입니다.",
+    "thumbnail_url": "icons/crimson-racer-aviator-colour.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서: 구시가지의 레드 타워에 도달하세요.",
+      "사라진 배터리 셀 찾기",
+      "발전기에 배터리를 설치하십시오.",
+      "발전기의 전원을 활성화합니다",
+      "레드 타워 근처의 안테나 터미널을 부팅하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "354d836c-67f4-4051-99d9-1ab9ce53f93f",
+        "item": {
+          "id": "crimson-racer-aviator-colour",
+          "icon": "icons/crimson-racer-aviator-colour.webp",
+          "name": "Crimson Racer (Aviator Colour)",
+          "rarity": "일반",
+          "item_type": "기타"
+        },
+        "item_id": "crimson-racer-aviator-colour",
+        "quantity": "1"
+      },
+      {
+        "id": "b3f97ff8-c0f7-4426-b35a-1ba283c266a0",
+        "item": {
+          "id": "anvil-iii",
+          "icon": "icons/anvil-iii.webp",
+          "name": "Anvil III",
+          "rarity": "고급",
+          "item_type": "무기"
+        },
+        "item_id": "anvil-iii",
+        "quantity": "1"
+      },
+      {
+        "id": "95fde4eb-7900-4b22-9d70-7ab09c91c32a",
+        "item": {
+          "id": "heavy-ammo",
+          "icon": "icons/heavy-ammo.webp",
+          "name": "Heavy Ammo",
+          "rarity": "일반",
+          "item_type": "탄약"
+        },
+        "item_id": "heavy-ammo",
+        "quantity": "40"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "fcf6009e-7d57-46e0-9bf7-25e79cf04990",
+    "title": "통제된 폭파",
+    "slug": "controlled-demolition",
+    "content": "<p>\"폭파 제어\" 퀘스트를 완료하면 아폴로용 폭발성 혼합물 두 개를 찾을 수 있습니다. 여기서는 이러한 품목을 효율적으로 수집하기 위한 최적의 위치와 단계를 확인할 수 있습니다.</p><h2>1단계: 산업 위치 식별</h2><p>폭발성 혼합물은 산업 지역에서 흔히 발견됩니다. 가장 쉽게 찾을 수 있는 위치는 다음과 같습니다:</p><ul><li><strong>수처리 관리:</strong> 이 위치는 일반적으로 경쟁이 덜하고 지도에 표시됩니다. </li><li><strong>수경 돔 단지:</strong> 이는 대체 산업 지역이지만 종종 다른 플레이어와의 경쟁이 심하므로 주의하십시오.</li><li>이 위치를 찾으려면 범례에서 산업 아이콘이 있는 지도의 지역을 찾으세요. </li></ul><h2>2단계: 폭발성 혼합물 수집</h2><p>산업 지역에 있을 때 폭발성 혼합물에 대한 용기 및 상호작용 가능한 물체 검색을 시작하세요.</p><ul><li>상자, 선반 및 기타 환경 용기를 적극적으로 검색하세요. </li><li>폭발성 혼합물을 찾으면 인벤토리에 표시됩니다. 기억하세요. 한 번에 두 가지를 모두 얻을 필요는 없습니다. 언제든지 다른 습격으로 돌아올 수 있습니다.</li><li>중요하게, 추출하기 전에 발견한 폭발성 혼합물을 안전한 용기에 넣어서 퀘스트에 안전하게 보호되도록 해야 합니다.</li></ul><h2>3단계: \"폭발 통제\" 퀘스트를 완료하세요.</h2><p>두 개의 폭발성 혼합물을 성공적으로 획득하고 확보한 후 아폴로로 돌아가 임무를 완료하세요.</p><ul><li>로 이동하세요. Apollo의 공급업체 화면 아래에 있는 \"퀘스트\" 탭.</li><li>\"제어된 철거\" 퀘스트를 완료하여 보상을 받으세요. </li></ul>",
+    "summary": "경험치: 5000",
+    "thumbnail_url": "icons/jump-mine.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [],
+    "xp": 5000,
+    "rewards": [
+      {
+        "id": "e0b22277-2602-49ef-9503-15656475b967",
+        "item": {
+          "id": "jump-mine",
+          "icon": "icons/jump-mine.webp",
+          "name": "Jump Mine",
+          "rarity": "고급",
+          "item_type": "폭발물"
+        },
+        "item_id": "jump-mine",
+        "quantity": "2"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "3a390a85-3400-4811-8e37-9bf077125dc0",
+    "title": "비밀 파헤치기",
+    "slug": "digging-up-dirt",
+    "content": "<p>'흙 파기' 퀘스트를 완료하고 데드 드롭을 찾으려면 다음 단계에 따라 올드 타운의 올바른 건물로 가서 숨겨진 드롭 지점을 찾으세요.</p><h2>1단계: 올드 타운에서 산타 마리아 주택 찾기</h2><p>지도를 꺼내 올드 타운 지역으로 걸어가세요. 'Santa Maria Houses'라고 표시된 섹션을 찾으세요. 이곳은 당신이 있어야 할 대략적인 주변 지역입니다.</p><ul><li>'구시가지' 섹션을 명확하게 보려면 지도를 확대하세요.</li><li>지도에서 '산타마리아 주택' 위치를 정확히 찾아보세요.</li></ul><h2>2단계: 지붕을 통해 건물 내부로 이동</h2><p>지도에 표시된 건물 옥상에 있을 때, 안으로 들어갈 수 있는 열린 접근 지점이나 구멍을 찾으세요. 진입 지점은 구체적으로 'Santa Maria Houses' 구조물 꼭대기에 있습니다.</p><ul><li>Santa Maria Houses 건물 꼭대기까지 걸어가세요.</li><li>아래로 내려갈 수 있는 지붕의 열린 부분을 확인하세요.</li></ul><h2>3단계: 안뜰로 내려갑니다.</h2><p>첫 번째 낙하 후에는 건물의 상부 구역에 있게 됩니다. 바닥에서 또 다른 개구부를 찾아 메인 안뜰 지역으로 더 아래로 내려갑니다. 낙하 피해를 피하기 위해 조심스럽게 내려갑니다.</p><ul><li>첫 번째 지붕 개구부를 통해 아래로 내려갑니다.</li><li>바닥에서 두 번째 개구부를 찾아 안뜰로 내려갑니다.</li></ul><h2>4단계: 데드 드롭 찾기 및 활성화</h2><p>안뜰의 1층에 도달한 후 뚜렷한 기둥 모양의 물체를 찾습니다. 미션 목표를 완료하기 위해 상호작용해야 하는 데드 드롭입니다.</p><ul><li>마당 중앙으로 걸어가세요.</li><li>기둥을 사용하여 데드 드롭을 조사하고 미션을 제출하세요.</li></ul>",
+    "summary": "다음은 Old Town의 Santa Maria Houses에서 발견되는 Arc Raiders의 'Digging Up Dirt' 퀘스트에 대한 Dead Drop을 찾는 철저한 연습입니다.",
+    "thumbnail_url": "icons/advanced-electrical-components.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "구시가지에서 산타 마리아 주택을 찾아보세요",
+      "구시가지의 산타 마리아 주택 내부에서 데드 드롭을 찾으세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "ad905b93-7480-46bf-917d-20bc80c7de64",
+        "item": {
+          "id": "advanced-electrical-components",
+          "icon": "icons/advanced-electrical-components.webp",
+          "name": "Advanced Electrical Components",
+          "rarity": "희귀",
+          "item_type": "정제 재료"
+        },
+        "item_id": "advanced-electrical-components",
+        "quantity": "2"
+      },
+      {
+        "id": "f78e7ac7-bfc0-4eb0-b5ee-8adcd8c47433",
+        "item": {
+          "id": "speaker-component",
+          "icon": "icons/speaker-component.webp",
+          "name": "Speaker Component",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "speaker-component",
+        "quantity": "4"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "2005e9d4-d4fb-4890-952f-c831063145ad",
+    "title": "의사의 처방",
+    "slug": "doctors-orders",
+    "content": "<h2>개요</h2><p>다음은 Arc Raiders에서 생존과 제작에 필요한 방부제, 주사기, Great Mullin 허브를 찾을 수 있는 가장 쉬운 위치입니다.</p><h2>1단계: 방부제 및 앰프 찾기; 주사기</h2><ul><li>방부제와 주사기를 찾는 가장 쉬운 방법은 Buried City 구역에 위치한 약국을 방문하는 것입니다.</li><li>Buried City 구역 내의 약국에 웨이포인트를 고정하세요.</li><li>약국 입구 문을 뚫어야 합니다. 문을 사용하여 침입 순서를 시작하세요.</li><li>들어가면 선반과 카운터에 방부제와 주사기가 포함된 다양한 의료 용품을 발견할 수 있습니다.</li><li>또한 '폐허에서의 공개'라는 향후 퀘스트와 관련된 퀘스트 항목에 대한 메인 카운터를 확인하세요.</li></ul><h2>2단계: 훌륭한 멀린 허브 찾기</h2><ul><li>풍부한 그레이트 멀린 허브를 찾으려면 댐 지도.</li><li>특히 테스트 별관 건물로 이동하세요. 지도에서 전기 타워 근처의 위치를 확인할 수 있습니다.</li><li>시험장에 도착하면 낮은 층으로 이어지는 입구를 찾으세요.</li><li>낮은 층은 물로 덮여 있으며, 홍수가 난 지역에서 수확할 준비가 된 수많은 그레이트 멀린 허브를 발견할 수 있습니다.</li><li>이 허브는 화학 물질로 재활용될 수 있어 유용한 제작 자원이 됩니다.</li><li>수중 복도를 통해 이동하세요. 필요한 만큼 그레이트 멀린 약초를 수집하기 위해 별관을 테스트합니다.</li></ul>",
+    "summary": "Arc Raiders의 Great Mullin과 같은 약초 제작뿐만 아니라 방부제 및 주사기와 같은 필수 의료 용품을 효율적으로 찾는 방법에 대한 간결한 가이드입니다.",
+    "thumbnail_url": "icons/adrenaline-shot.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "주사기 1개 획득",
+      "방부제 2개 획득",
+      "튼튼한 천 1개 획득",
+      "그레이트 멀린 1개 획득"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "4385ad22-6352-4695-92c0-45b8919aaad7",
+        "item": {
+          "id": "adrenaline-shot",
+          "icon": "icons/adrenaline-shot.webp",
+          "name": "Adrenaline Shot",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "adrenaline-shot",
+        "quantity": "3"
+      },
+      {
+        "id": "4fc28d36-1363-4377-818f-322d075ad3dd",
+        "item": {
+          "id": "sterilized-bandage",
+          "icon": "icons/sterilized-bandage.webp",
+          "name": "Sterilized Bandage",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "sterilized-bandage",
+        "quantity": "3"
+      },
+      {
+        "id": "a8b9ebfe-8d47-4303-9d99-6413a7abc39a",
+        "item": {
+          "id": "surge-shield-recharger",
+          "icon": "icons/surge-shield-recharger.webp",
+          "name": "Surge Shield Recharger",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "surge-shield-recharger",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "0685006a-22c9-4a75-afd3-4f3dbed7b735",
+    "title": "잠자는 바론",
+    "slug": "dormant-barons",
+    "content": "<h2>개요</h2><p>'휴면 남작' 퀘스트를 완료하려면 헛간 허스크라고 알려진 특정 유형의 구조물을 찾아 상호작용해야 합니다. 이 튜토리얼은 정확한 위치와 성공적으로 약탈하기 위한 단계를 제공합니다.</p><h2>1단계: 헛간 껍질에 도달</h2><ul><li>먼저 지도를 당겨 일반적인 지역을 찾으세요. 헛간 껍질은 댐 전장의 틈에 앉아 있습니다. 여기 지도에서 위치를 확인할 수 있습니다. </li><li>댐으로 향할 때 부분적으로 덩굴로 덮여 있는 뒤집혀진 커다란 금속 구조물을 둘러보세요. 이것은 당신의 헛간 껍질입니다. 이 유리한 지점에서 명확하게 볼 수 있습니다: </li></ul><h2>2단계: 위반 시작</h2><ul><li>헛간 껍질 중앙을 향해 걸어가세요.</li><li>'위반'하라는 상호작용 프롬프트(보통 'E')를 발견하게 됩니다. 위반을 활성화합니다. </li></ul><h2>3단계: 활성화 대기</h2><ul><li>침해가 시작된 후 Barn Husk는 시끄럽고 불타오르는 활성화 순서를 시작합니다. 연기를 내뿜고 불에 타서 너무 가까이 있으면 피해를 줍니다. </li><li>안전한 거리를 유지하고 전체 시퀀스가 ​​완료될 때까지 기다리세요. 시간이 좀 걸릴 수 있으므로 인내심을 가지세요.</li></ul><h2>4단계: 껍질 잡기</h2><ul><li>모든 연기와 연소가 멈추고 중앙 칸막이가 완전히 열리면 껍질을 향해 다시 걸어가세요. </li><li>이제 열려진 헛간 껍질 안의 내용물을 안전하게 얻을 수 있으며, 그러면 퀘스트가 완료됩니다.</li></ul>",
+    "summary": "이 튜토리얼에서는 Arc Raiders에서 'Dormant Barons' 퀘스트를 완료하기 위해 Barn Husk를 찾아 약탈하는 방법을 설명합니다.",
+    "thumbnail_url": "icons/door-blocker.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "남작 허스크를 찾아 약탈하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "7ae1c899-ff6c-437e-8420-977201005cb4",
+        "item": {
+          "id": "door-blocker",
+          "icon": "icons/door-blocker.webp",
+          "name": "Door Blocker",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "door-blocker",
+        "quantity": "3"
+      },
+      {
+        "id": "f6486ad8-9e92-477c-bf29-ef62e7554792",
+        "item": {
+          "id": "lil-smoke-grenade",
+          "icon": "icons/lil-smoke-grenade.webp",
+          "name": "Li'l Smoke Grenade",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "lil-smoke-grenade",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "1989f530-8b78-4e1b-a648-3b2b1d95c0d2",
+    "title": "현실적으로",
+    "slug": "down-to-earth",
+    "content": "<h2>개요: Down to Earth 퀘스트</h2><p>'Down to Earth' 퀘스트의 내용:</p><ul><li>야전 창고 방문</li><li>야전 창고에 야전 상자 전달</li><li>보상 수집</li></ul><p>완료 시 Combat Mk 1 개조 및 중형 방패가 제공됩니다.</p><h2>1단계: Field Depot</h2><p>이 퀘스트는 댐 전장 구역에서 가장 쉽게 완료할 수 있습니다. 지도 선택 화면에서 '댐 전장'을 선택하고 '확인'을 클릭하세요.</p><p>댐 전장 구역에 들어가면 야전 기지를 찾으세요. Field Depot의 신뢰할 수 있는 위치는 '전기 변전소' 및 '급수탑' 지역 근처입니다. 상단에 위성 접시가 있는 건물을 찾으게 됩니다.</p><p>이 위치에 경유지를 배치하고 그곳으로 가세요.</p><h2>2단계: Field Depot으로 이동</h2><p>지정된 위치를 향해 걸어가면 상단에 Field Depot임을 나타내는 대형 위성 접시가 있는 건물이 있습니다.</p><p>기지 입구는 지상에 있습니다. 건물 안으로 들어가세요.</p><h2>3단계: 현장 상자를 찾아 배달하세요.</h2><p>현장 창고 내에서 배달 터미널을 발견할 수 있습니다. 이곳이 필드 상자(Field Crate)를 전달하는 곳입니다. 이 퀘스트에서 가장 어려운 부분은 Field Depot 근처에서 매번 생성 위치가 무작위로 지정되므로 Field Crate 자체를 찾는 것입니다.</p><ul><li>Field Depot에서 나와 주변 지역을 주의 깊게 조사하세요. 필드 상자는 근처의 작은 건물 내부나 야외에 있습니다.</li><li>필드 상자를 찾은 후 상호작용하여 가져오세요. 이 예에서는 보급소 옆 원형 건물에서 발견되었습니다.</li></ul><ul><li>필드 상자를 손에 들고 필드 보급소로 돌아갑니다.</li><li>기지 내부 배달 터미널로 이동하여 '필드 상자 전달'에 사용하세요.</li></ul><h2>4단계: 보상 받기</h2><p>필드 상자를 성공적으로 전달하면 퀘스트 목표는 다음과 같습니다. 업데이트. 동일한 단말기를 다시 사용하여 '검색'하세요.</p><p>이렇게 하면 인벤토리가 열리고 퀘스트를 제출할 때 Combat Mk 1 Augment 및 Medium Shield와 컨테이너에서 발견된 기타 전리품과 같은 보상을 받을 수 있습니다.</p>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/combat-mk-1.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드의 모든 목표",
+      "현장 창고 방문",
+      "보급소에 필드 상자 전달",
+      "보상을 수집하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "1cd0e671-a04b-42ea-8105-e494539fc6e0",
+        "item": {
+          "id": "combat-mk-1",
+          "icon": "icons/combat-mk-1.webp",
+          "name": "Combat Mk. 1",
+          "rarity": "고급",
+          "item_type": "강화"
+        },
+        "item_id": "combat-mk-1",
+        "quantity": "1"
+      },
+      {
+        "id": "319420b7-c9ba-463d-af9f-4b151fe83018",
+        "item": {
+          "id": "medium-shield",
+          "icon": "icons/medium-shield.webp",
+          "name": "Medium Shield",
+          "rarity": "희귀",
+          "item_type": "방패"
+        },
+        "item_id": "medium-shield",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "c1aa0e2e-7aca-4e28-b823-75429084d7b3",
+    "title": "빅토리 릿지의 메아리",
+    "slug": "echoes-of-victory-ridge",
+    "content": "<h2>개요</h2><p>이 가이드는 '승리의 능선의 메아리' 퀘스트를 안내하여 필요한 항목을 찾을 수 있는 정확한 위치와 효율적으로 추출하는 방법을 보여줍니다. 퀘스트를 계산하려면 임무 아이템을 가지고 탈출해야 한다는 점을 기억하십시오. 따라서 목표를 얻은 후에는 이 목표에 집중하세요.</p><h2>1단계: 목표 지역으로 이동</h2><ul><li>댐 전장 지도로 이동합니다.</li><li>목표는 지도 맨 위에 있는 'West Broken Bridge' 경유지입니다.</li></ul><h2>2단계: 임무 찾기 아이템</h2><ul><li>서쪽 단교에 가까워지면 북쪽을 향하세요. 왼쪽에 부서진 자동차 몇 대가 있는 부서진 고속도로 구간이 보일 것입니다.</li></ul><ul><li>180도 회전하세요. 빨간색 자동차 두 대와 파란색 자동차 한 대를 발견할 수 있습니다. 위쪽으로 기울어진 고속도로의 부서진 커다란 조각도 있습니다.</li><li>이 기울어진 고속도로 구간 아래로 가세요.</li><li>그 아래에서 'Major Aivas Patch' 퀘스트 아이템이 담긴 녹슨 금속 상자를 발견할 수 있습니다. 상자를 사용하여 수집하세요.</li></ul><h2>3단계: 아이템 추출</h2><ul><li>'Major Aivas Patch'를 획득하면 인벤토리에 나타납니다.</li></ul><ul><li>이제 우선순위는 추출입니다. 가장 가까운 리프트 추출 지점으로 곧장 이동하세요.</li><li>가까운 경우 화물 엘리베이터(최북단 복합 엘리베이터)를 이용하거나 다른 이용 가능한 리프트를 이용하는 것이 좋습니다.</li></ul><ul><li>엘리베이터를 활성화하고 성공적으로 탈출하여 임무를 완료하세요.</li></ul>",
+    "summary": "Arc Raiders의 'Echoes of Victory Ridge' 퀘스트를 완료하기 위한 간결한 연습입니다. 미션 아이템의 정확한 위치와 빠르게 추출하는 최선의 방법을 알아보세요.",
+    "thumbnail_url": "icons/crude-explosives.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "승리의 능선에 도달하세요.",
+      "부서진 고속도로 아래의 은신처에서 전투 계획을 회수하세요.",
+      "아이바 소령의 패치를 셀레스트에게 전달하세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "11507217-58d0-4623-9fad-86590c9fef7f",
+        "item": {
+          "id": "crude-explosives",
+          "icon": "icons/crude-explosives.webp",
+          "name": "Crude Explosives",
+          "rarity": "고급",
+          "item_type": "정제 재료"
+        },
+        "item_id": "crude-explosives",
+        "quantity": "6"
+      },
+      {
+        "id": "a98ad36f-2c0d-4e33-bd29-f6f82b733161",
+        "item": {
+          "id": "processor",
+          "icon": "icons/processor.webp",
+          "name": "Processor",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "processor",
+        "quantity": "2"
+      },
+      {
+        "id": "156c4619-dfa8-4235-bc58-56c6d4026a08",
+        "item": {
+          "id": "music-box",
+          "icon": "icons/music-box.webp",
+          "name": "Music Box",
+          "rarity": "희귀",
+          "item_type": "장신구"
+        },
+        "item_id": "music-box",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "da8c6777-b06c-4358-9a14-05e97310bc39",
+    "title": "에스프레소",
+    "slug": "espresso",
+    "content": "<h2>개요</h2><p>'에스프레소' 퀘스트를 수행하려면 예비 부품을 회수할 에스프레소 머신을 찾아야 합니다. 여기서는 Buried City에서 정확히 어디로 가는 방법과 부품을 성공적으로 수집하는 방법을 확인할 수 있습니다.</p><h2>1단계: 에스프레소 머신까지 걸어가기</h2><ul><li>지도를 펴고 Buried City 지역으로 걸어가세요.</li><li>Buried City의 남쪽 끝에 있는 Plaza Rosa 섹션을 찾으세요. 에스프레소 머신이 있는 곳입니다. </li><li>플라자 로사(Plaza Rosa) 지역의 지도에 표시된 건물 방향으로 이동하세요. 입구 위에 'CAFFE' 표시가 있습니다. [SCREENSHOT:00:09]</li><li>정문을 통해 건물로 들어갑니다.</li></ul><h2>2단계: 부품 픽업</h2><ul><li>들어간 후 약간 앞으로 오른쪽으로 가세요.</li><li>몇몇 선반 옆 카운터에서 '에스프레소 머신 부품'을 발견할 수 있습니다. </li><li>머신을 사용하여 부품을 집습니다.</li></ul><h2>3단계: 추출을 위해 안전하게</h2><ul><li>'에스프레소 머신 부품'을 집은 후 인벤토리를 엽니다.</li><li>배낭에서 에스프레소 머신 부품을 '안전한 주머니'로 끌어서 패배하더라도 안전하게 추출할 수 있는지 확인하세요. </li><li>이제 퀘스트에 필요한 에스프레소 머신 부품을 성공적으로 찾아 확보했습니다. 임무를 완료하려면 해당 구역에서 계속해서 탈출하세요.</li></ul>",
+    "summary": "다음 단계에서는 Buried City에서 '에스프레소' 퀘스트를 완료하는 데 필요한 에스프레소 기계 부품을 찾는 방법을 설명합니다. 성공적인 추출을 위해 정확한 위치와 물품을 확보하는 방법을 알아보세요.",
+    "thumbnail_url": "icons/adrenaline-shot.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "예비 부품을 회수할 에스프레소 머신 찾기",
+      "Apollo용 에스프레소 머신 부품 구입"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "ea505684-825d-465c-9fdc-a5b12511f3aa",
+        "item": {
+          "id": "adrenaline-shot",
+          "icon": "icons/adrenaline-shot.webp",
+          "name": "Adrenaline Shot",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "adrenaline-shot",
+        "quantity": "3"
+      },
+      {
+        "id": "80522c09-4c79-403d-829c-1d2621359de8",
+        "item": {
+          "id": "coffee-pot",
+          "icon": "icons/coffee-pot.webp",
+          "name": "Coffee Pot",
+          "rarity": "일반",
+          "item_type": "장신구"
+        },
+        "item_id": "coffee-pot",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "e3f57f6e-638d-4c70-9c60-be9629cf5de9",
+    "title": "하늘의 눈",
+    "slug": "eyes-in-the-sky",
+    "content": "<h2>개요</h2><p>'Eyes in the Sky' 퀘스트에서는 Buried City, Dam Battlegrounds 및 Spaceport 등 지도의 다양한 영역에 3개의 Lidar 스캐너를 설치하도록 요청합니다. 이 가이드는 각 위치와 스캐너 배치 과정을 설명합니다.</p><h2>1단계: Buried City Galleria Lidar 스캐너</h2><p>Lidar 스캐너를 설치하는 첫 번째 위치입니다. 참고로 짚라인을 가져와야 합니다. 이것을 제작하거나 구매할 수도 있고, 무료 로드아웃에서 행운을 얻을 수도 있습니다.</p><ul><li>지도를 보고 Buried City에 있는 갤러리아 건물을 찾으세요. 상업용 건물로 표시되어 있습니다. </li><li>갤러리아 꼭대기에 가려면 집라인을 이용해야 합니다. 집라인 발사 장치를 조심스럽게 배치하여 건물의 더 높은 층으로 올라가세요. </li><li>상단 플랫폼에 도착하면 스캐너 배치를 위해 표시된 지정된 지점으로 이동하세요.</li><li>Lidar 스캐너를 배치하려면 상호작용하세요. </li></ul><h2>2단계: 댐 전장 컨트롤 타워 Lidar 스캐너</h2><p>두 번째 스캐너는 댐 전장의 컨트롤 타워에 설치해야 합니다.</p><ul><li>지도에 액세스하여 댐 전장에서 컨트롤 타워 위치를 찾으세요. </li><li>관제탑으로 향하세요. 포탑을 염두에 두고 엘리베이터 통로를 이용해 꼭대기로 올라가야 합니다.</li><li>지붕에 올라가면 '깡패'(무거운 적)가 등장하는 적의 저항을 제거하세요.</li><li>계속해서 옥상 구석으로 가서 스캐너 배치 지점을 찾으세요.</li><li>Lidar 스캐너를 설치하세요. </li></ul><h2>3단계: 우주공항 통신 타워 Lidar 스캐너</h2><p>마지막 스캐너는 우주공항 통신 타워에 있습니다.</p><ul><li>지도를 확인하여 우주공항 지역 내 극동쪽에 있는 통신 타워를 찾으세요. </li><li>타워 바닥에 도달하여 상승을 시작하세요.</li><li>사다리를 타고 커뮤니케이션 타워의 꼭대기 플랫폼에 도달하세요. [SCREENSHOT:01:08]</li><li>상단에서 스캐너 설치를 위해 표시된 지점을 찾으세요.</li><li>임무를 완료하려면 마지막 Lidar 스캐너를 배치하세요. </li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/tagging-grenade.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "댐 전장에서 관제탑 상단에 LiDAR 스캐너를 설치하세요.",
+      "Spaceport의 통신 타워에 LiDAR 스캐너를 설치하세요.",
+      "Buried City에서 갤러리아 간판 위에 LiDAR 스캐너를 설치하세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "2bdbe123-91a7-4de0-9c92-fb950aee25f8",
+        "item": {
+          "id": "tagging-grenade",
+          "icon": "icons/tagging-grenade.webp",
+          "name": "Tagging Grenade",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "tagging-grenade",
+        "quantity": "3"
+      },
+      {
+        "id": "06fb10a4-82a6-4f94-947d-e97c80a2b45f",
+        "item": {
+          "id": "vita-spray",
+          "icon": "icons/vita-spray.webp",
+          "name": "Vita Spray",
+          "rarity": "영웅",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "vita-spray",
+        "quantity": "1"
+      },
+      {
+        "id": "df74bcfb-47a8-49c3-b2e8-aefae20b4c68",
+        "item": {
+          "id": "yellow-light-stick",
+          "icon": "icons/yellow-light-stick.webp",
+          "name": "Yellow Light Stick",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "yellow-light-stick",
+        "quantity": "5"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "12b48bfb-1237-48f2-9c2f-dda94e01c12c",
+    "title": "상을 향한 눈",
+    "slug": "eyes-on-the-prize",
+    "content": "<p>이 튜토리얼은 Arc Raiders의 'Eyes on the Price' 퀘스트를 빠르게 완료하는 데 도움이 됩니다. 여기에는 특정 위치 찾기, 3개의 와이어 수집, 추진기 패널 수리가 포함됩니다.</p><h2>1단계: 한적한 옥상 테라스로 이동</h2><ul><li>먼저 지도를 열고 'Eyes on the Price' 퀘스트가 활성화되어 있는지 확인하세요. 당신의 목표는 Southern Station 남서쪽의 한적한 옥상 테라스를 찾는 것입니다.</li><li>Buried City의 Southern Station 지역으로 향하세요. 지도에서 도달해야 할 정확한 건물을 표시하는 웨이포인트를 찾으세요. 이 지역은 일반적으로 플라자 로사 지역 주변에서 발견됩니다.</li><li><br></li><li>남부역에 가까워지면 옥상으로 계속 올라가세요. 진행하려면 특정 '한적한 옥상 테라스'에 도달해야 합니다.</li></ul><h2>2단계: 3개의 전선 확보</h2><ul><li>한적한 옥상 테라스에 도착하면 목표가 '3개의 전선을 사용하여 추진기 패널 수리'로 업데이트됩니다.</li><li>주변에서 루팅할 수 있는 아이템을 조사하세요. 전선은 근처의 컨테이너나 쓰레기 더미에서 흔히 발견될 수 있습니다. 동영상 예시에서는 플레이어가 전선을 얻기 위해 테라스에서 잔해 더미를 약탈하는 모습을 보여줍니다.</li><li><br></li><li>진행하기 전에 인벤토리에 전선이 3개 이상 있는지 확인하세요.</li></ul><h2>3단계: 추진기 패널 수리</h2><ul><li>한적한 옥상 테라스에서 추진기 패널을 찾으세요. 일반적으로 전기 상자나 장치처럼 보입니다.</li><li>패널을 사용하여 수리를 시작합니다. 수집한 전선 3개를 사용하게 됩니다.</li><li><br></li><li>수리되면 '가격에 주목' 퀘스트가 완료로 표시됩니다.</li></ul>",
+    "summary": "다음은 Arc Raiders의 'Eyes on the Price' 퀘스트를 완료하기 위한 철저한 연습으로, 필요한 영역 찾기, 전선 획득, 추진기 패널 수리 등을 포함합니다.",
+    "thumbnail_url": "icons/extended-shotgun-mag-ii.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "남부 역 남서쪽의 한적한 옥상 테라스를 찾아보고 파란색 방수포를 찾으세요.",
+      "3개의 전선을 사용하여 태양광 패널을 다시 배선합니다."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "919d8923-9409-4555-804f-de477246a515",
+        "item": {
+          "id": "extended-shotgun-mag-ii",
+          "icon": "icons/extended-shotgun-mag-ii.webp",
+          "name": "Extended Shotgun Mag II",
+          "rarity": "고급",
+          "item_type": "개조"
+        },
+        "item_id": "extended-shotgun-mag-ii",
+        "quantity": "1"
+      },
+      {
+        "id": "32c5f38d-672b-4790-96bb-672b22008f48",
+        "item": {
+          "id": "extended-medium-mag-ii",
+          "icon": "icons/extended-medium-mag-ii.webp",
+          "name": "Extended Medium Mag II",
+          "rarity": "고급",
+          "item_type": "개조"
+        },
+        "item_id": "extended-medium-mag-ii",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "96985556-cf9c-41e9-9f44-e036af26f86c",
+    "title": "불에는 불로",
+    "slug": "fight-fire-with-fire",
+    "content": "<h2>목표</h2><ul><li>페로로 파이어볼을 파괴하세요</li></ul><p>5000 XP를 받으려면 이 작업을 완료하세요.</p>",
+    "summary": "경험치: 5000",
+    "thumbnail_url": "icons/blaze-grenade.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "Ferro로 파이어볼을 파괴하세요"
+    ],
+    "xp": 5000,
+    "rewards": [
+      {
+        "id": "eb13fc54-3c20-4906-91a9-e42b588b12de",
+        "item": {
+          "id": "blaze-grenade",
+          "icon": "icons/blaze-grenade.webp",
+          "name": "Blaze Grenade",
+          "rarity": "희귀",
+          "item_type": "투척물"
+        },
+        "item_id": "blaze-grenade",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "3d2adb99-3172-4c54-9aeb-16e1093a3eeb",
+    "title": "먼저 찾은 사람이 임자",
+    "slug": "finders-keepers",
+    "content": "<h2>개요</h2><p>'Finders Keepers' 퀘스트를 수행하면 Raider 캠프에서 컨테이너 3개를 약탈하게 됩니다. 레이더 캠프는 지도에 명시적으로 표시되어 있지 않지만 이 목표를 쉽게 완료하기 위해 방문할 수 있는 특정 위치가 있습니다.</p><h2>1단계: 댐 레이더 캠프 찾기</h2><p>레이더 캠프 컨테이너를 찾을 수 있는 가장 신뢰할 수 있는 위치 중 하나는 댐입니다. 지도에서 이 위치를 찾을 수 있습니다.</p><ul><li>지도를 보고 댐 위치로 걸어가세요.</li><li>댐이나 발전소를 닮은 크고 폐허가 된 구조물 쪽으로 가세요.</li></ul><h2>2단계: 댐에서 전리품 컨테이너</h2><p>댐으로 향하면 시설에 들어가세요. 곳곳에 여러 개의 컨테이너가 흩어져 있습니다. 컨테이너가 이미 약탈된 것처럼 보이더라도 컨테이너와 다시 상호 작용하면 퀘스트 진행 상황에 반영됩니다.</p><ul><li>댐 시설에 들어가 인근 지역을 조사하세요. 테이블이나 바닥에 있는 컨테이너를 발견하게 됩니다.</li><li>'E'를 눌러 컨테이너와 상호작용하여 조사하세요.</li></ul><ul><li>계속 시설을 순회하면서 추가 컨테이너를 약탈하세요. 가까운 거리 내에 여러 개가 있습니다.</li></ul><ul><li>3개의 컨테이너를 약탈한 후 퀘스트 목표인 '모든 레이더 캠프에서 3개의 컨테이너를 약탈하세요'가 완료됩니다.</li></ul><h2>3단계: 대안: 수경 돔 단지</h2><p>대체 위치를 선호하거나 더 많은 컨테이너가 필요한 경우 Field Depot이라고도 알려진 수경 돔 단지가 또 다른 훌륭한 곳입니다. 지점.</p><ul><li>지도에서 수경 돔 단지/필드 창고를 찾으세요. 이 지역은 일반적으로 보급품이 모이는 곳입니다.</li><li>이 위치로 가서 구조물 내부의 컨테이너를 찾으세요.</li></ul><ul><li>여기에서 찾은 컨테이너를 사용하세요. 댐과 마찬가지로 이미 개봉한 컨테이너를 다시 약탈하면 퀘스트에 포함됩니다.</li></ul>",
+    "summary": "Arc Raiders 세계 전역의 Raider Camp에서 컨테이너를 찾고 약탈하여 'Finders Keepers' 퀘스트를 완료하기 위한 간결한 연습입니다. 이 가이드에서는 두 가지 주요 위치와 퀘스트 진행에 대한 중요한 요령을 강조합니다.",
+    "thumbnail_url": "icons/heavy-fuze-grenade.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "레이더 캠프에서 컨테이너 3개를 전리품으로 획득하세요."
+    ],
+    "xp": 8000,
+    "rewards": [
+      {
+        "id": "f521e0eb-6ad6-468a-800f-24750f3064e7",
+        "item": {
+          "id": "heavy-fuze-grenade",
+          "icon": "icons/heavy-fuze-grenade.webp",
+          "name": "Heavy Fuze Grenade",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "heavy-fuze-grenade",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "6272b4f3-b3e5-4c54-b223-1f90c8b1c1dc",
+    "title": "깜박이는 위협",
+    "slug": "flickering-threat",
+    "content": "<p>여기에서는 목표를 찾고 효율적으로 완료하는 방법을 보여주는 '깜박이는 위협' 퀘스트를 안내합니다.</p><h2>1단계: 퀘스트 지역에 도달</h2><ul><li>지도를 열고 댐 전장 구역에 있는 '깜박이는 위협' 퀘스트를 선택하세요. </li><li>퀘스트 목표는 수경 재배 통신 단지 내, 특히 '북쪽 단지: 엘리베이터' 추출 지점 근처에 있습니다.</li><li>북쪽 단지: 엘리베이터 추출 지점에 도달한 후 계단을 사용하여 내려가거나 아래 영역으로 바로 내려갈 수 있습니다. </li></ul><h2>2단계: 발전기 수리</h2><ul><li>주 시설에 들어가면 대형 발전기가 있습니다.</li><li>이 발전기를 수리하려면 정확히 4개의 전선이 필요합니다. 수리를 시도하기 전에 인벤토리에 이러한 품목이 있는지 확인하십시오. </li><li>발전기를 사용하여 수리하세요. 이제 발전기가 작동 중임을 확인하는 메시지가 표시됩니다.</li></ul><h2>3단계: 환기 샤프트 전원 스위치 찾기 및 활성화</h2><ul><li>발전기를 수리한 후 다음 목표는 환기 샤프트를 찾는 것입니다.</li><li>발전기를 지나는 길을 따라 시설을 통과합니다.</li><li>문을 발견하게 됩니다. 계속하려면 활성화하세요. </li><li>계속 새로 열린 문을 통과하여 계단을 올라가세요.</li><li>계단 윗부분에서 다른 문을 활성화하여 경로를 계속 진행하세요.</li><li>복도를 따라 모퉁이를 돌아서 가세요.</li><li>잔해가 흩어져 있는 좀 더 크고 다소 열린 공간으로 들어가게 됩니다.</li><li>가까이에서 벽에 있는 노란색 전기 상자를 찾으세요. 환기 샤프트의 전원 스위치입니다. </li><li>스위치를 사용하여 전원을 활성화합니다. 스위치의 표시등이 녹색으로 바뀌어 성공을 나타냅니다.</li><li>이제 '깜박이는 위협' 퀘스트가 완료되어야 합니다. </li></ul>",
+    "summary": "다음은 Arc Raiders에서 'Flickering Threat' 퀘스트를 완료하기 위한 철저한 연습입니다. 발전기실 찾기, 발전기 수리, 환기 샤프트 찾기, 전원 스위치 활성화 등이 포함됩니다.",
+    "thumbnail_url": "icons/medium-gun-parts.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "댐 옆 발전 단지에 들어가세요",
+      "발전기실 찾기",
+      "발전기 수리",
+      "환기구 찾기",
+      "계단 아래에 있는 전원 스위치를 통해 전원을 켜세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "e2cc05f4-f803-47b3-8e13-e656bb026ba6",
+        "item": {
+          "id": "medium-gun-parts",
+          "icon": "icons/medium-gun-parts.webp",
+          "name": "Medium Gun Parts",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "medium-gun-parts",
+        "quantity": "5"
+      },
+      {
+        "id": "d9808a5d-f565-45d9-9e40-46b9592e1056",
+        "item": {
+          "id": "advanced-mechanical-components",
+          "icon": "icons/advanced-mechanical-components.webp",
+          "name": "Advanced Mechanical Components",
+          "rarity": "희귀",
+          "item_type": "고급 재료"
+        },
+        "item_id": "advanced-mechanical-components",
+        "quantity": "3"
+      },
+      {
+        "id": "009e78b4-0ec1-4dcc-8623-1a57967a66fe",
+        "item": {
+          "id": "helmet-radio-renegade-variant",
+          "icon": "icons/helmet-radio-renegade-variant.webp",
+          "name": "Helmet (Radio Renegade Variant)",
+          "rarity": "일반",
+          "item_type": "기타"
+        },
+        "item_id": "helmet-radio-renegade-variant",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "d4c102cd-9217-442a-b838-95627353e5b2",
+    "title": "먼 거리에서",
+    "slug": "from-a-distance",
+    "content": "<h2>개요</h2><p>'원거리에서' 퀘스트를 수행하면 상당한 거리에서 요새와 로켓병에게 핑을 보낼 수 있습니다. Spaceport 지도는 이 퀘스트를 간단하고 빠르게 완료할 수 있는 매우 높은 유리한 지점을 제공합니다.</p><h2>1단계: Spaceport 지도 선택</h2><ul><li>이 임무의 목적지로 'Spaceport'를 선택합니다. Buried City와 같은 다른 지도에도 이러한 적들이 있지만 The Spaceport는 이상적인 고지대 위치를 제공합니다.</li></ul><h2>2단계: 높은 유리한 지점을 향해 향하세요</h2><ul><li>The Spaceport 지도를 로드한 후 지도를 확인하여 지도 중앙에 있는 '발사 타워' 및 '로켓 조립' 영역을 찾으세요. 이 일반 지역은 표적이 있는 곳입니다.</li></ul><ul><li>'발사탑' 근처의 고지대 쪽으로 가세요. 영상에 표시된 경로를 따라 멀리 있는 높은 구조물을 향해 이동하세요.</li></ul><ul><li>근처에서 키가 크고 녹슨 구조물에 연결된 사다리를 찾으세요. 이 사다리를 타고 높이 올라가세요.</li></ul><ul><li>계속 위쪽으로 올라가 구조물 내부를 탐색하세요.</li><li>밖으로 나오면 금속 통로를 따라가며 주변 지역을 선명하게 볼 수 있는 가장자리로 가세요.</li></ul><h2>3단계: 목표물 핑</h2><ul><li>'통제 감시' 또는 '배송'으로 표시된 위치 근처의 통로 끝에 도달하세요. 창고'를 지도에 표시하세요(지도 오버레이에 표시됨). 이 높은 위치는 퀘스트 목표에 대한 명확한 시야를 제공합니다.</li></ul><ul><li>이 유리한 지점에서 멀리 있는 들소와 로켓 조종사를 모두 발견할 수 있어야 합니다. 들소를 조준하고 핑 명령을 사용하세요.</li><li>다음으로 로켓티어(종종 비행하거나 순찰하는)를 찾아 핑을 보내세요.</li></ul><ul><li>이 거리에서 두 적 모두에게 성공적으로 핑을 보내면 '원거리에서' 퀘스트가 완료됩니다.</li></ul>",
+    "summary": "이 튜토리얼은 Arc Raiders의 '원거리에서' 퀘스트를 완료하기 위한 효율적인 전략을 제공하며, Spaceport 지도의 높은 유리한 지점을 사용하여 Bison과 Rocketeer 모두를 성공적으로 핑하는 데 중점을 둡니다.",
+    "thumbnail_url": "icons/photoelectric-cloak.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "핑 1x 로켓티어",
+      "핑 1x 들소"
+    ],
+    "xp": 10000,
+    "rewards": [
+      {
+        "id": "3e0957ba-d367-497a-ae98-512849c183d1",
+        "item": {
+          "id": "photoelectric-cloak",
+          "icon": "icons/photoelectric-cloak.webp",
+          "name": "Photoelectric Cloak",
+          "rarity": "영웅",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "photoelectric-cloak",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "f90c79c5-ee0a-4671-8245-d37ccc103a50",
+    "title": "뇌물",
+    "slug": "greasing-her-palms",
+    "content": "<h2>손바닥에 기름칠하기 퀘스트 개요</h2><p>'손바닥에 기름칠하기' 퀘스트에서는 Dam Battlegrounds, Buried City 및 Spaceport라는 세 가지 지도의 특정 위치를 방문하게 됩니다. 마지막으로 로켓 추진기를 찾아내기 전에 한 위치에서는 키를 사용하고 다른 위치에서는 바리케이드를 뚫어야 합니다. 이 퀘스트를 완료하면 유용한 보상을 얻을 수 있습니다.</p><h2>1단계: 댐 전장 목표</h2><p>퀘스트의 이 부분에는 댐 전장 구역에 있는 수처리 제어 건물의 잠긴 방을 방문하는 것이 포함됩니다.</p><ul><li>먼저 메뉴에서 퀘스트 세부정보를 확인하여 목표와 받은 아이템을 확인하세요. </li><li>퀘스트의 이 부분에 대한 특정 열쇠인 댐 감시 열쇠가 부여됩니다. </li><li>공격대를 시작하기 전에 보관함에서 댐 감시 키를 안전한 주머니에 넣어서 사망 시 잃어버리지 않도록 하세요. </li><li>지도에서 수처리 관리소 건물을 찾으세요. 라벨이 붙은 건물입니다. </li><li>남서쪽에서 건물 방향으로 이동하세요. 계단이 있는 건물 사이에 틈이 있는지 살펴보세요. </li><li>첫 번째 계단을 올라가 오른쪽 문으로 들어갑니다. </li><li>안에 들어가면 빨간색 키카드 슬롯이 있고 잠긴 문이 있습니다. 댐 감시 키를 사용하여 엽니다. [SCREENSHOT:01:06]</li><li>열린 방에 입장하세요. 내부에는 좋은 전리품이 있는 경우가 많으므로 인벤토리 공간이 있는지 확인하세요. </li></ul><h2>2단계: Buried City 목표</h2><p>Buried City 목표를 달성하려면 우주 여행 건물 6층에 있는 바리케이드가 있는 방을 방문해야 합니다.</p><ul><li>지도를 확인하고 Buried City에 있는 우주 여행 건물을 찾으세요. 표시된 랜드마크입니다. </li><li>공격대 상단에 도달한 후 경유지를 배치하고 건물까지 걸어가세요.</li><li>접근 가능한 입구를 통해 건물로 들어가서 6층으로 이동하세요. [SCREENSHOT:01:39]</li><li>6층에서 바리케이드가 있는 문을 검색하세요. 다른 플레이어가 이미 거기에 있었다면 문은 이미 뚫려 있을 수 있습니다.</li><li>문이 바리케이드된 경우 이 목표를 마무리하려면 문을 뚫어야 합니다. </li></ul><h2>3단계: 우주공항 목표</h2><p>퀘스트의 마지막 부분은 우주공항 지도에서 로켓 조립 건물 밖에 있는 로켓 추진기를 찾아내는 것입니다.</p><ul><li>우주공항 지도로 이동하세요. 지도에서 로켓 조립 건물을 찾으세요. 표시된 위치입니다. </li><li>지도에서 로켓 조립 건물 방향으로 이동하세요.</li><li>건물 바로 뒤쪽 측면에 놓여 있는 대형 로켓 추진기를 찾으세요. </li><li>추진기 근처에 접근하고 서 있기만 하면 이 목표가 완료됩니다.</li></ul><h2>임무 완료</h2><p>세 가지 목표가 모두 완료되면 메인 메뉴로 돌아가서 '손바닥에 기름칠하기' 퀘스트에 대한 보상을 받을 수 있습니다.</p>",
+    "summary": "이 튜토리얼은 주요 위치와 필요한 아이템을 포함하여 Dam Battlegrounds, Buried City 및 Spaceport 지도 전반에 걸쳐 Arc Raiders의 'Grazing Her Palms' 퀘스트를 완료하기 위한 자세한 지침을 제공합니다.",
+    "thumbnail_url": "icons/lure-grenade-recipe.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "댐 전장에서는 수처리 제어 건물의 잠김실을 방문하세요.",
+      "Spaceport에서 로켓 조립체 외부의 로켓 추진기를 살펴보세요.",
+      "베리드 시티(Buried City)에서는 우주 여행 빌딩 6층에 있는 바리케이드 구역을 방문하세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "082c70c3-0fc7-40f1-8c08-73a65e239c40",
+        "item": {
+          "id": "lure-grenade-recipe",
+          "icon": "icons/lure-grenade-recipe.webp",
+          "name": "Lure Grenade Blueprint",
+          "rarity": "전설",
+          "item_type": "설계도"
+        },
+        "item_id": "lure-grenade-recipe",
+        "quantity": "1"
+      },
+      {
+        "id": "c317a063-f91f-4500-860b-bd52785db909",
+        "item": {
+          "id": "speaker-component",
+          "icon": "icons/speaker-component.webp",
+          "name": "Speaker Component",
+          "rarity": "희귀",
+          "item_type": "지표 재료"
+        },
+        "item_id": "speaker-component",
+        "quantity": "3"
+      },
+      {
+        "id": "49e6a4dd-7d42-4a02-aac3-98e7d6d95fde",
+        "item": {
+          "id": "electrical-components",
+          "icon": "icons/electrical-components.webp",
+          "name": "Electrical Components",
+          "rarity": "고급",
+          "item_type": "정제 재료"
+        },
+        "item_id": "electrical-components",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "fac2f005-7a78-4453-9fd0-9d0508782e5d",
+    "title": "인수인계",
+    "slug": "handover",
+    "content": "<h2>개요: 인도 퀘스트</h2><p>이 퀘스트는 댐 지역에 있는 패턴 하우스를 방문하여 표시하게 됩니다. 건물 안으로 들어갈 필요는 없습니다. 상호 작용 지점은 외부에 있습니다.</p><h2>1단계: 패턴 하우스로 이동</h2><ul><li>지도를 보고 패턴 하우스를 찾으세요. The Dam 지도의 북쪽에 위치해 있습니다.</li><li>Pattern House는 지도에서 크고 뭉툭한 아파트 같은 건물로 나타납니다.</li></ul><h2>2단계: 건물 외부를 향해 걸어갑니다.</h2><ul><li>지도에 표시된 대로 Pattern House를 향해 이동합니다.</li><li>가까이 가면 'Victory Ridge Pattern House' 목표 표시가 나타납니다. 화면.</li></ul><h2>3단계: 패턴 찾기 및 표시</h2><ul><li>패턴 하우스 건물 외부를 둘러보세요.</li><li>벽 중 하나에서 작은 노란색 원 상호 작용 지점을 찾으세요.</li><li>패턴 표시가 나타나면 '스프레이 벽' 프롬프트와 상호작용하고 임무를 완료하세요.</li></ul>",
+    "summary": "이 튜토리얼은 Arc Raiders에서 Pattern House를 찾고 표시하는 'Handover' 퀘스트를 완료하기 위한 빠르고 쉬운 연습을 제공합니다.",
+    "thumbnail_url": "icons/jolt-mine.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드: 댐에 있는 패턴 하우스 방문",
+      "패턴 전초기지 표시"
+    ],
+    "xp": 17000,
+    "rewards": [
+      {
+        "id": "8e9064ba-de59-4e7d-b21f-e717004c2351",
+        "item": {
+          "id": "jolt-mine",
+          "icon": "icons/jolt-mine.webp",
+          "name": "Jolt Mine",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "jolt-mine",
+        "quantity": "2"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "acd1265e-bd36-4c11-b5a1-3cbd78c95244",
+    "title": "해치 수리",
+    "slug": "hatch-repairs",
+    "content": "<h2>개요</h2><p>'해치 수리' 퀘스트에서는 레이더 해치 근처에서 새는 유압 파이프를 수리한 다음 이를 열어 레이더 해치 키를 회수해야 합니다. 여기에서 이 목표를 빠르게 완료하는 방법을 확인할 수 있습니다.</p><h2>1단계: 레이더 해치 찾기</h2><p>레이더 해치는 이 퀘스트에 매우 중요합니다. 다양한 지도에 흩어져 있는 것을 찾을 수 있습니다. 예를 들어, 댐 전장 구역에서는 여러 레이더 해치를 사용할 수 있습니다.</p><ul><li>지도를 확인하여 레이더 해치의 위치를 ​​인식하세요. 특정 아이콘으로 표시되어 있습니다.</li><li>수리 과정을 시작하려면 표시된 위치 중 하나로 걸어가세요.</li></ul><h2>2단계: 해치 수리</h2><p>레이더 해치 근처에 도달한 후에는 새는 유압 파이프를 수리해야 합니다. 근처에서 해치 측면에 있는 노란색 메시지를 검색하세요.</p><ul><li>해치쪽으로 걸어가서 'REPAIR' 프롬프트(보통 측면에 있음)를 찾으세요.</li><li>수리를 시작하려면 상호작용 버튼(예: PC의 경우 'E')을 길게 누르세요. 진행률 표시줄이 나타납니다.</li><li>수리가 완료될 때까지 계속 기다리세요.</li></ul><h2>3단계: 해치를 열고 열쇠를 수집하세요</h2><p>해치를 성공적으로 수리하면 새로운 메시지가 나타나서 해치를 열고 보상을 받을 수 있습니다.</p><ul><li>수리 직후 새로운 'OPEN' 메시지가 해치에서 표시됩니다.</li><li>이 메시지와 상호작용하세요 해치를 열려면.</li><li>열리면 자동으로 '레이더 해치 키'를 획득하게 됩니다. 이 키는 지도에서 다른 레이더 해치를 잠금 해제하는 데 필수적입니다.</li></ul><ul><li>로드아웃 화면을 열어 해당 키가 인벤토리에 있는지 확인할 수 있습니다.</li><li>레이더 해치 키는 즉시 탈출할 수 있는 다른 레이더 해치를 잠금 해제하는 핵심 아이템입니다.</li></ul>",
+    "summary": "다음은 Raider 해치를 찾고, 수리하고, Raider Hatch Key를 얻는 방법을 포함하는 Arc Raiders의 '해치 수리' 퀘스트를 완료하기 위한 전체 연습입니다.",
+    "thumbnail_url": "icons/raider-hatch-key.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "레이더 해치 근처에서 새는 유압 파이프를 수리하세요.",
+      "ARC 허스크를 약탈하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "341dd0d3-c644-432a-acee-21e5821a37f2",
+        "item": {
+          "id": "raider-hatch-key",
+          "icon": "icons/raider-hatch-key.webp",
+          "name": "Raider Hatch Key",
+          "rarity": "희귀",
+          "item_type": "열쇠"
+        },
+        "item_id": "raider-hatch-key",
+        "quantity": "1"
+      },
+      {
+        "id": "274aef5b-880e-43f5-9ea4-3516b3142b3e",
+        "item": {
+          "id": "binoculars",
+          "icon": "icons/binoculars.webp",
+          "name": "Binoculars",
+          "rarity": "일반",
+          "item_type": "가젯"
+        },
+        "item_id": "binoculars",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "6411fa1d-6099-4289-bb3c-5385a60db1da",
+    "title": "나의 모습으로",
+    "slug": "in-my-image",
+    "content": "<h2>목표</h2><ul><li>Stella Montis에 배포</li><li>안드로이드 3대 찾기 및 검색</li></ul><p>이 퀘스트는 매우 간단합니다. 지도에 들어가서 약탈할 수 있는 사이보그 시체를 검색하세요. 다양한 장소에 흩어져 있는 것을 발견할 수 있으므로 세 개를 찾을 때까지 계속 탐색하세요.</p>",
+    "summary": "\"In My Image\" 퀘스트 완료를 위한 빠른 가이드 — Stella Montis에서 Android 시체 3개를 찾아 약탈하세요.",
+    "thumbnail_url": "icons/looting-mk-2.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "Stella Montis에 배포",
+      "안드로이드 3대를 찾아 검색하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "594e3f22-b8e4-45d7-a1a3-c49763b50995",
+        "item": {
+          "id": "looting-mk-2",
+          "icon": "icons/looting-mk-2.webp",
+          "name": "Looting Mk. 2",
+          "rarity": "희귀",
+          "item_type": "강화"
+        },
+        "item_id": "looting-mk-2",
+        "quantity": "1"
+      },
+      {
+        "id": "f7342d08-9ee4-45bd-88c3-9bf743364a12",
+        "item": {
+          "id": "green-light-stick",
+          "icon": "icons/green-light-stick.webp",
+          "name": "Green Light Stick",
+          "rarity": "일반",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "green-light-stick",
+        "quantity": "5"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-15T16:07:48.803905+00:00"
+  },
+  {
+    "id": "a637ca4d-d295-4fe7-b969-6d8200cd0be7",
+    "title": "산업 스파이",
+    "slug": "industrial-espionage",
+    "content": "<h2>개요</h2><p>'산업 스파이' 퀘스트에서는 Buried City의 주유소 근처에 있는 무기 보관함을 찾아 거기에 벌레를 심습니다. 이 튜토리얼은 목표를 빠르게 찾고 작업을 효율적으로 완료하는 데 도움이 됩니다.</p><h2>1단계: 지도에서 퀘스트 지역으로 이동</h2><p>'산업 스파이'에 대한 퀘스트 목표는 Buried City 북쪽 끝에 있는 주유소에 있습니다.</p><ul><li>Buried City 북쪽 끝에 있는 '주유소' 경유지를 식별하세요.</li><li>주유소에 경유지를 고정하여 경로.</li></ul><h2>2단계: 무기 보관함에 도달</h2><p>주유소로 향하세요. 앞으로 다가가면 주유소 표지판 근처에 버려지고 전복된 차량이나 대형 금속 용기가 보일 것입니다. 이것이 상호작용해야 하는 무기 캐시입니다.</p><h2>3단계: 바리에타 버리기(선택 사항이지만 권장됨)</h2><p>지금 바리에타를 들고 있다면, 바리에타를 잃지 않도록 무기 캐시와 상호작용하기 전에 바리에타를 버리는 것이 좋습니다. 임무를 마친 후 다시 주울 수 있습니다.</p><ul><li>인벤토리에 바리에타가 있는 경우 인벤토리를 열고 땅에 떨어뜨리세요.</li><li>이렇게 하면 캐시와 상호작용할 때 무기를 잃지 않게 됩니다.</li></ul><h2>4단계: 버그 심기</h2><p>무기 캐시에 들어가면 '상호작용' 프롬프트가 나타납니다. 버그를 심고 임무 단계를 완료하려면 이 프롬프트를 활성화하세요.</p><ul><li>'상호작용' 프롬프트가 나타날 때까지 무기 캐시로 이동하세요.</li><li>버그를 심으려면 상호작용 키(예: 'E')를 누르세요.</li><li>버그가 성공적으로 심어졌다는 알림이 표시됩니다.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/burltetta-recipe.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "외곽 주유소 근처에서 티안웬의 무기 보관함을 찾으세요.",
+      "Burletta를 라이벌 무기 보관소에 전달하세요.",
+      "무기 캐시에 버그를 심습니다."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "5cff03f3-dcd6-4b51-89dc-9cfdd8c555c0",
+        "item": {
+          "id": "burltetta-recipe",
+          "icon": "icons/burltetta-recipe.webp",
+          "name": "Burletta Blueprint",
+          "rarity": "전설",
+          "item_type": "설계도"
+        },
+        "item_id": "burltetta-recipe",
+        "quantity": "1"
+      },
+      {
+        "id": "d5c86156-98e2-4d78-9af4-05d6b7539ce8",
+        "item": {
+          "id": "mechanical-components",
+          "icon": "icons/mechanical-components.webp",
+          "name": "Mechanical Components",
+          "rarity": "고급",
+          "item_type": "정제 재료"
+        },
+        "item_id": "mechanical-components",
+        "quantity": "3"
+      },
+      {
+        "id": "a1261f1b-f35a-481a-959c-6af4ac5d4001",
+        "item": {
+          "id": "simple-gun-parts",
+          "icon": "icons/simple-gun-parts.webp",
+          "name": "Simple Gun Parts",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "simple-gun-parts",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "b601da26-a12d-4a58-9dcf-3839bc2c0ed9",
+    "title": "전투 속으로",
+    "slug": "into-the-fray",
+    "content": "<h2>개요</h2><p>울프팩 수류탄은 리퍼를 죽이는 빠른 방법이지만 약탈이 필요합니다. 이 튜토리얼은 Spaceport 지역의 특정 병목 지점을 활용하는 대체 전략을 제공하여 특정 장비에 대한 의존도를 줄이면서 일관된 Leaper 처치를 허용하고 임무 완료를 돕습니다.</p><h2>1단계: South Trench Tower로 이동</h2><ul><li>지도에서 Spaceport 지역으로 이동합니다.</li><li>'The Trench' 랜드마크에 가까운 <strong>South Trench Tower</strong>를 찾으세요. 이 타워에는 입구와 진입점 역할을 하는 깨진 창문이 여러 개 있습니다.</li></ul><h2>2단계: 집라인을 통해 타워에 접근</h2><ul><li>탑에 들어가는 가장 효율적인 방법은 집라인을 사용하는 것입니다.</li><li>지하층에서 타워 쪽으로 가서 깨진 창문 중 하나로 이어지는 활성 집라인을 찾으세요.</li><li>집라인을 사용하여 빠르게 올라가 깨진 창문을 통해 타워에 들어갈 수 있습니다. 이 진입 방법은 조기 경보 시스템을 제공하고 전략적으로 위치를 정합니다.</li></ul><h2>3단계: 초크 포인트 설정</h2><ul><li>진입 후, 진입한 깨진 창문을 바라보는 자세를 취하세요. 이 창문은 주요 관문 역할을 합니다.</li><li><strong>선택 사항:</strong> 지뢰를 지붕 위 집라인 진입점 근처에 설치하세요. 이렇게 하면 다른 플레이어가 동일한 집라인을 사용하려고 할 때 쉽게 측면 공격을 하는 것을 방지할 수 있습니다.</li><li>Leaper가 이 지점에 접근할 수 있는 유일한 다른 방법은 열쇠를 사용하는 것입니다. 이는 AI와 잠재적으로 다른 플레이어 모두에 대해 매우 방어적인 위치가 됩니다.</li></ul><h2>4단계: Leaper 참여</h2><ul><li>Leaper는 결국 타워를 향해 걸어가서 부서진 틈을 통해 진입하려고 시도합니다. 창문.</li><li>틈을 비집고 들어가려고 하면 쉬운 표적이 됩니다. 눈에 보이는 약점에 사격을 집중하세요.</li><li>필요한 경우 벽을 엄폐물로 사용하여 위치를 유지하고 Leaper가 파괴될 때까지 계속 사격하세요.</li></ul><h2>5단계: Leaper 부품 및 앰프 수집; 퀘스트 완료</h2><ul><li>Leaper를 성공적으로 파괴한 후 유해를 수집하세요.</li><li>Arc Raiders의 다양한 퀘스트에 필수적인 유용한 <strong>Leaper 부품</strong>을 종종 찾을 수 있습니다.</li><li>이 방법은 이 위치에서 전투의 예측 가능한 특성으로 인해 'Destroy a Leaper'와 같은 퀘스트를 빠르게 완료하는 데 정말 좋습니다.</li></ul>",
+    "summary": "이 튜토리얼에서는 특정 초크 포인트 위치를 중심으로 Arc Raiders에서 Leapers를 제거하는 쉽고 반복 가능한 방법을 다룹니다. 이 전략은 Wolfpack 수류탄에 의존하지 않고 퀘스트를 위해 Leaper 부품을 재배하는 데 적합합니다.",
+    "thumbnail_url": "icons/radio-renegade-outfit.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "리퍼를 파괴하세요",
+      "리프퍼 펄스 유닛 획득"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "b907281a-f19a-4d2d-8a9b-ae0a28ad617b",
+        "item": {
+          "id": "radio-renegade-outfit",
+          "icon": "icons/radio-renegade-outfit.webp",
+          "name": "Radio Renegade (Outfit)",
+          "rarity": "",
+          "item_type": "기타"
+        },
+        "item_id": "radio-renegade-outfit",
+        "quantity": "1"
+      },
+      {
+        "id": "292a99e1-65d5-4ad7-b55c-bcab653f064d",
+        "item": {
+          "id": "burgerboy-backpack-charm",
+          "icon": "icons/burgerboy-backpack-charm.webp",
+          "name": "Burgerboy (Backpack Charm)",
+          "rarity": "",
+          "item_type": "기타"
+        },
+        "item_id": "burgerboy-backpack-charm",
+        "quantity": "1"
+      },
+      {
+        "id": "040d2570-8c99-4898-9d58-79b043dad742",
+        "item": {
+          "id": "vulcano-iii",
+          "icon": "icons/vulcano-iii.webp",
+          "name": "Vulcano III",
+          "rarity": "영웅",
+          "item_type": "무기"
+        },
+        "item_id": "vulcano-iii",
+        "quantity": "1"
+      },
+      {
+        "id": "e51db70e-91bb-43a8-be87-1ac4427605ed",
+        "item": {
+          "id": "shotgun-ammo",
+          "icon": "icons/shotgun-ammo.webp",
+          "name": "Shotgun ammo",
+          "rarity": "일반",
+          "item_type": "탄약"
+        },
+        "item_id": "shotgun-ammo",
+        "quantity": "40"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "1cc23af0-64b6-463f-879d-070c6e030d7f",
+    "title": "기억 지키기",
+    "slug": "keeping-the-memory",
+    "content": "<p>이 가이드에서는 Arc Raiders의 \"기억 유지\" 퀘스트 완료에 대해 다룹니다. 퀘스트 영역을 찾을 수 있는 위치와 사라진 헬멧을 찾아 기념관에 놓을 수 있습니다.</p><h2>1단계: 퀘스트 영역으로 이동</h2><ul><li>지도를 펴고 \"댐 전장\" 영역으로 이동합니다.</li><li>확대하여 \"Rackedge\"라고 표시된 위치를 찾으세요. 이곳에서 잃어버린 헬멧을 찾는 일이 시작됩니다. </li></ul><h2>2단계: 사라진 헬멧 찾기</h2><ul><li>\"잔해\" 지역에 도착하면 검은색 케이블 더미와 떨어진 잔해 근처에 있는 빽빽한 덤불을 찾으세요. </li><li>수풀을 이용해 헬멧을 찾으세요. 발견되면 튀어나와야 합니다.</li></ul><h2>3단계: 헬멧을 기념관에 반납</h2><ul><li>헬멧을 찾은 후 더 많은 검은색 케이블로 둘러싸인 근처의 기념 스탠드를 찾으세요. </li><li>스탠드를 사용하여 헬멧을 배치하고 \"기억 유지\" 퀘스트를 완료하세요.</li></ul>",
+    "summary": "여기서는 Arc Raiders의 '기억 유지' 퀘스트에 대해 설명하고, 사라진 헬멧을 찾아 기념관에 반환하는 방법을 설명합니다.",
+    "thumbnail_url": "icons/simple-gun-parts.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에서:",
+      "Formicai Hills의 잔해에 도달하세요",
+      "사라진 헬멧을 찾아보세요",
+      "헬멧을 기념관에 반납하세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "dd713a4f-389f-49fd-8fea-794dd4ff4e74",
+        "item": {
+          "id": "simple-gun-parts",
+          "icon": "icons/simple-gun-parts.webp",
+          "name": "Simple Gun Parts",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "simple-gun-parts",
+        "quantity": "5"
+      },
+      {
+        "id": "2fbf4be0-9418-45bd-87f7-acd82c6e827b",
+        "item": {
+          "id": "duct-tape-recipe",
+          "icon": "icons/duct-tape-recipe.webp",
+          "name": "Duct Tape",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "duct-tape-recipe",
+        "quantity": "5"
+      },
+      {
+        "id": "24c6e324-09ca-4400-ab8a-db218d1811c9",
+        "item": {
+          "id": "magnet",
+          "icon": "icons/magnet.webp",
+          "name": "Magnet",
+          "rarity": "고급",
+          "item_type": "지표 재료"
+        },
+        "item_id": "magnet",
+        "quantity": "5"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "fe259423-45b6-49e7-87c3-e7f175e0ff78",
+    "title": "랜스의 다과회",
+    "slug": "lances-tea-party",
+    "content": "<h2>개요</h2><p>이 튜토리얼은 'The Bandage Run' 및 'Lance's Tea Party'와 같은 Lance의 퀘스트에 필요한 고무 오리 2개와 빛바랜 사진 2개를 찾는 데 도움이 됩니다. 이러한 아이템은 주로 주거 지역을 약탈하여 찾을 수 있습니다.</p><h2>1단계: 일반 아이템 정보</h2><ul><li>빛바랜 사진은 매우 흔하고 찾기 쉽습니다.</li><li>러버덕은 훨씬 희귀하여 얻기가 더 어렵습니다.</li><li>두 아이템 유형 모두 일반적으로 지도에서 주거 지역을 약탈하여 찾을 수 있습니다.</li></ul><h2>2단계: 빛 바랜 찾기 사진</h2><p>빛바랜 사진은 모든 주거 지역에 나타날 수 있지만 댐 지도의 추천 장소는 다음과 같습니다.</p><ul><li><strong>창백한 아파트</strong> 및 <strong>루비 거주지</strong> 지역을 검색해 보세요. </li><li>또 다른 좋은 위치는 지도 북쪽에 위치한 <strong>패턴 하우스</strong>입니다. </li><li>이 지역에서 발견한 모든 서랍과 컨테이너를 적극적으로 약탈하여 기회를 극대화하세요. </li><li>빛바랜 사진을 수집하면 인벤토리에 나타납니다. </li></ul><h2>3단계: 고무 오리 찾기</h2><p>고무 오리는 더 드물지만 특정 주거 지역에서는 더 나은 결과를 얻을 수 있습니다. Buried City 구역에서는 여기에 검색을 집중하세요:</p><ul><li>Old Town에 위치한 <strong>Santa Maria Houses</strong>로 이동하세요. </li><li>이 집 안에 있는 모든 서랍과 선반을 철저히 약탈하세요. 스폰은 무작위이므로 지속성이 중요합니다. </li><li>일단 고무 오리가 발견되면 인벤토리에 추가됩니다. </li></ul>",
+    "summary": "Arc Raiders에서 Lance의 퀘스트를 위한 고무 오리와 빛바랜 사진을 찾는 방법에 대한 빠른 가이드로, 추천 약탈 위치와 팁을 제공합니다.",
+    "thumbnail_url": "icons/defibrillator.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "랜스를 위한 고무 오리 2개 획득",
+      "Lance를 위해 빛바랜 사진 2장을 획득하세요"
+    ],
+    "xp": 18000,
+    "rewards": [
+      {
+        "id": "74d7f9c3-dd49-4da3-af2e-2077c7b43205",
+        "item": {
+          "id": "defibrillator",
+          "icon": "icons/defibrillator.webp",
+          "name": "Defibrillator",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "defibrillator",
+        "quantity": "2"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "10ed4b7e-92b5-45bb-8f2e-9fdc99f71405",
+    "title": "약사의 삶",
+    "slug": "life-of-a-pharmacist",
+    "content": "<h2>개요: 약사의 삶 퀘스트</h2><p>'약사의 삶' 퀘스트는 Buried City의 특정 약국 건물 내에 있는 여러 품목을 문서화하도록 요청합니다. 여기서는 임무를 효율적으로 완료하기 위해 각 항목의 정확한 위치를 설명합니다.</p><h2>1단계: 약국으로 이동</h2><ul><li>지도를 보고 Buried City로 이동합니다.</li><li>퀘스트 대상인 'Farmacia'라고 표시된 약국 건물은 아르부스토 광장 근처에 있습니다. </li><li>큰 'Farmcia' 간판이 있는 건물로 향하세요. </li></ul><h2>2단계: 약국 입장 및 통과</h2><ul><li>정문 표지판 왼쪽에 있는 문을 통해 약국으로 들어갑니다. </li><li>들어간 후 메인 카운터를 지나 정면에 있는 문으로 들어갑니다.</li><li>두 번째 방에 들어간 후 빠르게 계단을 올라갑니다.</li></ul><h2>3단계: 약사의 가족을 기록합니다.</h2><ul><li>계단 윗부분, 바로 앞에 벽에 사진이 걸려 있습니다.</li><li>사진을 사용하여 약사의 가족을 기록합니다. </li></ul><h2>4단계: 약사의 기술 문서화</h2><ul><li>사진에서 우회전하여 인접한 방으로 들어갑니다.</li><li>이 방에서 피아노를 찾으세요.</li><li>피아노를 사용하여 약사의 기술을 문서화하세요. </li></ul><h2>5단계: 약사의 취미 기록</h2><ul><li>피아노에서 돌아서 출입구를 통해 다음 방으로 들어갑니다.</li><li>벽에는 화분이 있는 선반이 있습니다.</li><li>이 식물을 사용하여 약사의 취미를 기록하세요. </li></ul><h2>6단계: 약사의 취향 기록</h2><ul><li>식물에서 돌아서 계단 방향으로 돌아갑니다.</li><li>계단 아래에 있는 테이블을 찾아보세요.</li><li>이 테이블과 상호작용하여 약사의 취향을 기록합니다. </li><li>네 가지 항목을 모두 문서화한 후 '약사의 삶' 퀘스트가 완료되어야 합니다.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/defibrillator.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "Arbuso Farmacia를 찾은 후 위의 아파트를 검색하세요.",
+      "약사의 취미를 기록하세요",
+      "약사의 가족을 문서화하세요.",
+      "약사의 취향을 기록하세요.",
+      "약사의 기술을 문서화하세요."
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "c742f203-5ee9-48c7-824d-6717ba06e2c6",
+        "item": {
+          "id": "defibrillator",
+          "icon": "icons/defibrillator.webp",
+          "name": "Defibrillator",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "defibrillator",
+        "quantity": "1"
+      },
+      {
+        "id": "e86f3d8e-b831-46ef-bc5b-a9d649cd1272",
+        "item": {
+          "id": "surge-shield-recharger",
+          "icon": "icons/surge-shield-recharger.webp",
+          "name": "Surge Shield Recharger",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "surge-shield-recharger",
+        "quantity": "1"
+      },
+      {
+        "id": "e0212088-2fad-4952-97a6-fda084d3304b",
+        "item": {
+          "id": "sterilized-bandage",
+          "icon": "icons/sterilized-bandage.webp",
+          "name": "Sterilized Bandage",
+          "rarity": "희귀",
+          "item_type": "빠른 사용"
+        },
+        "item_id": "sterilized-bandage",
+        "quantity": "3"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-04T04:48:13.921073+00:00"
+  },
+  {
+    "id": "e9b42884-76a2-4d97-947c-92c44b6fb66b",
+    "title": "죽음의 표적",
+    "slug": "marked-for-death",
+    "content": "<p>여기에서는 ARC Raiders에서 \"Marked for Death\" 퀘스트를 완료하는 방법을 안내하여 하차 지점을 찾고 단서를 따라 임무를 완료하도록 돕습니다.</p><h2>1단계: 하차 지점 찾기</h2><ul><li>퀘스트 메뉴를 열고 \"Marked for Death\" 퀘스트를 선택하여 시작하세요.</li><li>Buried City의 북서쪽에 위치한 Su Durante 창고로 향하세요. </li><li><br></li><li>창고에 도착한 후 건물 남서쪽 뒤쪽으로 이동하세요.</li><li>벽 근처에서 작은 상자를 찾으세요.</li><li>상자를 사용하여 \"조사\"하세요. 이로써 임무의 첫 번째 부분이 완료됩니다.</li></ul><h2>2단계: 단서 따르기</h2><ul><li>상자를 조사한 후 단서를 따라야 합니다.</li><li>상자에서 서쪽으로 이어지는 일련의 발자국을 찾으세요. 다음 발자국을 따라 울타리를 통과하여 덤불 무리로 들어갑니다.</li><li><br></li><li>수풀 속에서 \"검사\"할 또 다른 아이템을 찾을 수 있습니다.</li><li><br></li><li>이 아이템과 상호작용하면 임무가 완료됩니다.</li><li>나머지 단계는 탈출하여 임무를 완료하고 보상을 받는 것입니다.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/shotgun-choke-ii.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "Buried City 외곽에 있는 Su Durante 창고에 도달하세요.",
+      "창고 근처에서 Tian Wen의 캐시를 검색하세요.",
+      "단서를 따라가세요"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "760b3066-7795-4f99-8a2c-dbc4130ae8ab",
+        "item": {
+          "id": "shotgun-choke-ii",
+          "icon": "icons/shotgun-choke-ii.webp",
+          "name": "Shotgun Choke II",
+          "rarity": "고급",
+          "item_type": "개조"
+        },
+        "item_id": "shotgun-choke-ii",
+        "quantity": "1"
+      },
+      {
+        "id": "245493c5-ad67-483b-854b-45038ace5b2f",
+        "item": {
+          "id": "angled-grip-ii",
+          "icon": "icons/angled-grip-ii.webp",
+          "name": "Angled Grip II",
+          "rarity": "고급",
+          "item_type": "개조"
+        },
+        "item_id": "angled-grip-ii",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-15T16:07:48.803905+00:00"
+  },
+  {
+    "id": "fd9dc8d4-298c-4786-a652-afdb302fbd7a",
+    "title": "시장 보정",
+    "slug": "market-correction",
+    "content": "<h2>개요</h2><p>ARC Raiders의 '시장 교정' 퀘스트를 통해 Buried City 구역의 Marano 역 근처에 있는 캐시를 찾아 파괴해야 합니다. 이 가이드는 이 목표를 마무리하기 위한 단계를 안내합니다.</p><h2>1단계: 마라노 역 방향</h2><ul><li>게임 내 지도를 열고 '매장된 도시'를 찾으세요.</li><li>지도에서 '마라노 역'을 찾으세요. 일반적으로 외곽 지역에서 찾을 수 있습니다.</li><li>마라노 역으로 이동하는 경로를 안내해 주세요. 시간을 절약하려면 지도의 북서쪽에서 생성하는 것이 좋습니다.</li></ul><h2>2단계: 캐시(사보타주 지점)에 도달</h2><ul><li>마라노 역에 도착하면 역 건물 뒤쪽으로 이동하세요.</li><li>벽 옆에 있는 쓰레기통 두 개를 발견하게 됩니다. 여기에 캐시가 숨겨져 있습니다.</li></ul><h2>3단계: 캐시 파괴</h2><ul><li>뒤적거리는 상자와 상호작용합니다('조사'를 누르세요).</li><li>조사 후에는 캐시를 '파괴'할 수 있는 옵션이 제공됩니다. 이 작업을 확인하세요.</li></ul><h2>4단계: 지역 탈출</h2><ul><li>캐시가 파괴된 후 퀘스트 목표가 업데이트되어 파괴가 성공했음을 나타냅니다.</li><li>나머지 단계는 해당 지역을 추출하여 임무를 완전히 완료하는 것입니다.</li></ul>",
+    "summary": "경험치: 0",
+    "thumbnail_url": "icons/silencer-ii.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [
+      "한 라운드에 -",
+      "마라노역 근처 캐시를 찾으세요.",
+      "캐시 파괴"
+    ],
+    "xp": 0,
+    "rewards": [
+      {
+        "id": "17343ff9-605d-4c41-a0a9-d7a09bcd1d13",
+        "item": {
+          "id": "silencer-ii",
+          "icon": "icons/silencer-ii.webp",
+          "name": "Silencer II",
+          "rarity": "희귀",
+          "item_type": "개조"
+        },
+        "item_id": "silencer-ii",
+        "quantity": "1"
+      },
+      {
+        "id": "97e88bc9-cfca-4657-83b6-fdc726329d30",
+        "item": {
+          "id": "extended-light-mag-i",
+          "icon": "icons/extended-light-mag-i.webp",
+          "name": "Extended Light Mag I",
+          "rarity": "일반",
+          "item_type": "개조"
+        },
+        "item_id": "extended-light-mag-i",
+        "quantity": "1"
+      },
+      {
+        "id": "0b524831-2558-4e7f-a547-7bed8d088fe0",
+        "item": {
+          "id": "compensator-i",
+          "icon": "icons/compensator-i.webp",
+          "name": "Compensator I",
+          "rarity": "일반",
+          "item_type": "개조"
+        },
+        "item_id": "compensator-i",
+        "quantity": "1"
+      }
+    ],
+    "video_url": null,
+    "created_at": "2025-11-15T16:07:48.803905+00:00"
+  },
+  {
+    "id": "519805e3-5f19-46f4-bbce-f9f5dfae65c1",
+    "title": "촬영과 회수",
+    "slug": "snap-and-salvage",
+    "content": "<h2>개요</h2><p>여기에서는 서류 찾기, 탐사선 사진 촬영, 마그네트론 및 흐름 컨트롤러 획득이라는 세 가지 주요 목표를 모두 다루는 '스냅 및 회수' 퀘스트에 대해 설명합니다.</p><h2>1단계: 서류 조사</h2><ul><li>Stella Montis의 로비로 향하는 것부터 시작하세요. 지도에서 위치를 확인할 수 있습니다.</li><li>로비와 직접 연결된 보안 검색대 방으로 가세요.</li><li>이 방 안에서 접수 데스크를 찾으세요.</li><li>접수 데스크에서 서류 더미를 발견할 수 있습니다. 이들과 상호작용하여 이 목표를 마무리하세요. </li></ul><h2>2단계: 탐사선 사진 찍기</h2><ul><li>다음 목표는 샌드박스에 있는 탐사선의 사진을 찍는 것입니다.</li><li>Stella Montis의 Loading Bay 지역으로 가세요.</li><li>Loading Bay에 도착하면 지도를 보고 두 개의 작은 사각형 아이콘을 찾으세요. 이 아이콘은 Sandbox 지역으로 내려가는 엘리베이터를 나타냅니다. </li><li>이 엘리베이터 통로 중 하나로 계속 이동하세요. 샌드박스로 향하려면 집라인을 타고 내려가야 합니다. </li><li>샌드박스에 들어가면 눈 덮인 복도를 통과하여 탐사선을 발견할 수 있습니다.</li><li>로버에게 다가가서 노란색 원형 프롬프트를 활성화하여 사진을 찍으세요. </li><li>샌드박스 전체에는 여러 개의 로버가 흩어져 있으므로(예: 로봇식 샌드박스 A, B, C) 그중 하나를 선택할 수 있습니다. </li></ul><h2>3단계: 마그네트론 및 흐름 컨트롤러 얻기</h2><ul><li>임무의 마지막 부분에서는 마그네트론과 흐름 컨트롤러를 찾으라고 요청합니다.</li><li>이러한 항목은 '재활용 가능 장비'로 설명되며 엑소더스 지역 내에 있습니다. 파워로드와 마찬가지로 희귀한 아이템입니다. </li><li>한 가지 잠재적인(신뢰성은 떨어지지만) 방법은 Stella Montis에서 발견된 소형 차량을 약탈하는 것입니다. 이 차량의 앞칸을 활성화하면 흐름 컨트롤러를 찾을 수 있는 기회가 있습니다. </li><li>이러한 희귀 아이템을 얻는 더 안정적인 방법은 서버를 뚫는 것입니다.</li><li>다양한 기술 분야에는 서버를 뚫을 수 있는 방법이 있습니다. 예시 위치는 댐 전장 구역의 발전 단지입니다. </li><li>이러한 서버실 내에서는 여러 서버를 발견할 수 있습니다. 이를 '위반'하려면 활성화하세요. </li><li>서버에 침입하면 파워 로드, 그리고 결정적으로 퀘스트에 필요한 흐름 컨트롤러와 마그네트론이 모두 떨어질 수 있습니다.</li></ul>",
+    "summary": "이 튜토리얼은 서류 검색, 탐사선 사진 촬영, The Cycle: Frontier의 마그네트론 및 흐름 컨트롤러와 같은 희귀 아이템 찾기 등 'Snap and Salvage' 퀘스트 목표를 완료하기 위한 자세한 지침을 제공합니다.",
+    "thumbnail_url": "icons/snap-hook.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-15T16:42:55.628569+00:00"
+  },
+  {
+    "id": "9d5ee438-2b11-4758-ae18-ea33f26e5050",
+    "title": "기록 정정 퀘스트",
+    "slug": "straight-record-quest",
+    "content": "<h1>직접 기록 퀘스트 가이드</h1><p>여기에서는 댐 전장 구역에서 \"직접 기록\" 퀘스트를 완료하는 방법을 설명합니다. 여러분의 목표는 특정 순서로 3개의 특정 전원 스위치와 상호 작용하여 오래된 EMP 트랩을 찾아 차단하는 것입니다. 그리고 마지막으로 주 EMP 극을 비활성화합니다.</p><h2>1단계: 퀘스트 지역으로 이동</h2><ul><li>먼저 댐 전장 지역의 북쪽인 Victory Ridge로 알려진 지역으로 향합니다.</li><li>퀘스트의 특정 위치가 지도에 표시됩니다. </li></ul><h2>2단계: 퀘스트 시작</h2><ul><li>Victory Ridge에 도착한 후 대형 발전기 옆에 있는 높은 EMP 기둥을 찾으세요. 독특한 노란색 미션 빛을 발하게 됩니다.</li><li>이것이 퀘스트의 시작점입니다. 시작하려면 EMP 극을 활성화하세요. </li><li>발전기형 상자 3개를 찾아 꺼야 합니다. 잘못된 상자와 먼저 상호 작용하면 더 이상 진행되지 않으므로 특정 순서로 수행하는 것이 중요합니다.</li></ul><h2>3단계: 첫 번째 전원 스위치 비활성화</h2><ul><li>초기 EMP 극에서 곧바로 북쪽으로 능선 위로 올라갑니다.</li><li>첫 번째 발전기 상자로 이어지는 전원 케이블이 뻗어 있는 것을 볼 수 있습니다.</li><li>이 케이블을 따라 상자를 사용하여 전원을 끕니다. </li></ul><h2>4단계: 두 번째 전원 스위치 비활성화</h2><ul><li>주 EMP 기둥 쪽으로 돌아서세요.</li><li>왼쪽을 보면 반쯤 부서진 시멘트 집이 있습니다.</li><li>이 집의 2층으로 올라갑니다.</li><li>2층에서 남쪽을 보면 복도였던 곳 끝에 두 번째 발전기 상자가 있습니다. 스위치를 끄는 데 사용하십시오. </li></ul><h2>5단계: 세 번째 전원 스위치 비활성화</h2><ul><li>두 번째 발전기 위치에서 다시 주 EMP 전주 남쪽으로 가세요.</li><li>긴 검정색 전원 케이블이 매달려 있는 또 다른 전신주 모양의 구조물을 찾아보세요.</li><li>이 케이블을 따라가면 세 번째이자 마지막 발전기 상자에 도달합니다. 마지막 스위치를 끄는 데 사용하십시오. </li></ul><h2>6단계: EMP 트랩 종료</h2><ul><li>세 개의 전원 스위치가 모두 꺼지면 퀘스트를 시작한 원래 EMP 폴로 돌아가세요.</li><li>메인 EMP 폴을 사용하여 트랩을 비활성화하고 \"직접 기록\" 퀘스트를 완료하세요. </li></ul>",
+    "summary": "세 개의 전원 스위치를 올바른 순서로 활성화하여 오래된 EMP 트랩을 찾아서 차단하는 Dam Battlegrounds 구역의 \"Straight Record\" 퀘스트를 완료하기 위한 자세한 연습입니다.",
+    "thumbnail_url": "icons/recorded.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-30T13:17:46.289923+00:00"
+  },
+  {
+    "id": "d3a300d2-0fa5-492e-a20a-249f37494e0a",
+    "title": "흔적과 함께",
+    "slug": "with-a-trace",
+    "content": "<h2>개요</h2><p>'With A Trace' 임무에는 Blue Gate 지도의 두 가지 주요 목표가 포함됩니다. 바로 Barren Clearing에 도달하고 ARC 기계를 무너뜨린 사람의 흔적을 찾는 것입니다. 이 단계를 완료하면 지도 내의 주요 위치와 상호 작용을 통해 안내됩니다.</p><h2>1단계: 임무 시작 및 증폭; 준비하세요</h2><ul><li>퀘스트 로그에서 'With A Trace' 퀘스트를 수락하세요.</li><li>'Blue Gate' 지도 대기열에 등록하세요. 낮 시간이나 진행 중인 이벤트(낮, 밤 또는 전자기 폭풍)는 이 임무에 영향을 미치지 않습니다. </li><li>이 지도는 PvP가 상당히 많을 수 있으므로 무료 로드아웃을 사용하는 것이 좋습니다.</li></ul><h2>2단계: 불모의 초원에 도달하세요</h2><ul><li>'불모의 초원' 지역으로 이동하세요. </li><li>불모의 공터의 지정된 지역 안으로 들어가면 첫 번째 목표가 완료됩니다. </li></ul><h2>3단계: ARC 기계 철거 징후 찾기</h2><ul><li>불모의 공터 내에서 부서진 대형 기계의 남서쪽으로 향하세요. 일반적으로 작은 레이더 모양의 안테나 근처에 있는 흰색 구형 물체를 지상에서 발견하게 됩니다. </li><li>이 흰색 공을 사용하여 목표를 조사하고 완료하세요. </li></ul><h2>4단계: 장식된 잔해 검사</h2><ul><li>지도에서 '장식된 잔해'를 찾으세요. 이 지역은 Barren Clearing의 남쪽에 위치하고 있습니다. </li><li>'장식된 잔해' 지역으로 계속 이동하세요. </li><li>큰 잔해를 향해 걸어가면 이를 조사하는 목표가 자동으로 완료됩니다. </li></ul><h2>5단계: 통신 장치 검사</h2><ul><li>장식된 잔해를 검사한 후 주요 잔해 구조물의 남동쪽으로 이동합니다. </li><li>옆에 컴퓨터 터미널이 있고 빨간색으로 충돌한 작은 구역을 근처에서 검색하세요. </li><li>이 컴퓨터 터미널을 사용하여 통신 장치를 검사하고 임무의 마지막 부분을 완료하세요.</li></ul>",
+    "summary": "Arc Raiders의 Blue Gate 지도에서 Barren Clearing에 도달하고 주요 잔해 요소를 검사하는 'With A Trace' 임무를 완료하려면 따라가세요.",
+    "thumbnail_url": "icons/binoculars.webp",
+    "author": "ARC Companion 팀",
+    "type": "quest",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-12-09T14:49:49.284677+00:00"
+  },
+  {
+    "id": "24945363-aea4-45a7-a24b-fa16251547f8",
+    "title": "Aphelion 분석",
+    "slug": "aphelion-weapon-guide",
+    "content": "<h2>개요</h2><p>Aphelion은 독특한 '고속 에너지 탄'으로 유명한 ARC Raiders에 최근 추가된 전설적인 전투 소총입니다. 일부 플레이어는 처음에는 이 무기가 압도적이라고 인식했지만, 특히 ARC 적에 대해 인상적인 저지력을 제공하며 올바르게 사용하면 PvP에서 매우 강력할 수 있습니다. 이 가이드에서는 Aphelion의 능력치와 최고의 부착물부터 다양한 전투 시나리오에서의 강점과 약점, 제작 방법까지 Aphelion에 대한 모든 주요 세부 정보를 살펴봅니다.</p><h2>Aphelion 개요 및 amp; 획득</h2><ul><li>아펠리온은 고속 에너지 탄을 발사하는 전설적인 전투 소총입니다.</li><li>처음에는 매우 희귀한 드롭이었지만 청사진 드롭률이 훨씬 증가했습니다.</li><li>여족장을 물리칠 때 코어를 수집하면 아펠리온 청사진을 얻을 수 있습니다. </li></ul><h2>무기 역학 및 앰프; 통계</h2><ul><li>Aphelion은 2점사 모드로 발사됩니다. </li><li>탄창 크기는 10발이며, 이는 탄창당 5점사를 의미합니다.</li><li>발사 시 '클릭'(1회 점사)당 2개의 탄약이 소모됩니다. </li><li>무기를 재장전하면 에너지 클립 하나가 소모되고 탄창이 완전히 재충전됩니다. </li><li>이 무기는 '강한' ARC 방어구 관통력과 특별한 '실험적' 특성을 갖추고 있습니다. </li><li>고속 탄환으로 저지력이 높아 적을 움츠러들고 뒤집기까지 합니다. </li></ul><h2>최적의 부착물</h2><ul><li>Aphelion은 주로 수직 방향으로 눈에 띄는 반동을 가지고 있습니다. 첫 번째 사격은 조준된 위치에 떨어지고 두 번째 사격은 약간 위쪽 왼쪽으로 이동하는 경향이 있습니다. </li><li>**수직 그립:** 수직 반동을 완화하려면 수직 그립을 적극 권장합니다. 예를 들어, 수직 그립 III은 수직 반동을 44%까지 줄여줍니다. </li><li>**안정적인 개머리판:** 안정적인 개머리판(예: 안정적인 개머리판 II)은 분산 및 반동 회복 시간을 향상시켜 더 빠른 후속 사격을 가능하게 합니다. </li><li>무기의 정확도와 제어력을 향상하려면 부착물에 투자할 가치가 있습니다. </li></ul><h2>PvP 효율성 및 증폭; 플레이스타일</h2><ul><li>아펠리온은 PvP, 특히 중거리에서 매우 효과적입니다. </li><li>**근거리:** 직접적인 근거리 교전은 폭발 사격 및 반동으로 인해 문제가 발생할 수 있으므로 피하세요.</li><li>**장거리:** 반동을 더 줄이기 위해 몸을 숙이면 장거리에서 효과적일 수 있습니다. </li><li>**중급 스위트 스팟:** Aphelion이 진정으로 빛나는 곳입니다. 엄폐물 주위를 돌아다니며 2라운드 폭발을 터뜨린 다음 후퇴하여 반동이 재설정되도록 하세요. </li><li>**Time to Kill(바디 샷):**</li><li class=\"ql-indent-1\">**Light Shield:** 3번 클릭(총 6번 적중). </li><li class=\"ql-indent-1\">**Medium Shield:** 3클릭(총 6회). </li><li class=\"ql-indent-1\">**Heavy Shield:** 4클릭(총 8회). 무거운 방패는 상당한 저항력을 제공합니다. </li><li>모루와 같은 산탄총을 사용하는 것과 유사하게 버스트 지연을 활용하면 효과적인 엿보기 전술을 사용할 수 있습니다. </li><li>Aphelion을 근거리 무기(예: Venator, Vulcano, Stitcher)와 결합하면 근접 전투 약점을 보완할 수 있습니다. </li></ul><h2>PvE 효율성(ARC 약점 및 강점)</h2><ul><li>**최고(강점):**</li><li class=\"ql-indent-1\">**장갑 제거:** Aphelion은 ARC 적, 특히 비행 유형과 대형 지상 유닛의 특정 구성 요소로부터 장갑을 제거하는 데 탁월합니다. </li><li class=\"ql-indent-1\">**저지력:** 고속 탄환은 날아다니는 적(말벌, 말벌, 스니치)을 움찔하고 뒤집어 공격을 방해하고 노출되게 만듭니다. </li><li class=\"ql-indent-1\">**로켓병:** 로켓 발사를 방해하는 능력으로 인해 로켓병을 상대할 때 가장 좋은 무기 중 하나로 간주됩니다. </li><li class=\"ql-indent-1\">**터빈:** 터빈의 장갑을 효과적으로 벗겨 다른 무기 유형으로 후속 피해를 줄 수 있습니다. 핵심을 직접 타겟팅할 수도 있습니다. </li><li class=\"ql-indent-1\">**리퍼:** 리퍼 다리를 부러뜨리고 핵심 눈을 분해하여 기능하지 않게 만들 수 있습니다. </li><li>**낮음(약점):**</li><li class=\"ql-indent-1\">**원시 피해량:** Aphelion은 방어구를 벗겨내는 데 탁월하지만 다른 에너지 무기에 비해 벗겨진 적을 빠르게 마무리할 수 있는 원시 피해량이 부족합니다. 종종 치명적인 일격을 위해 다른 무기로 전환해야 합니다. </li><li class=\"ql-indent-1\">**요새 및 앰프; 봄바디어:** 가장 어려운 목표입니다. 관절이나 배터리를 부러뜨리려면 Aphelion에 너무 많은 노력이 필요합니다. 갑옷이 벗겨진 후에는 다른 구경의 무기가 이러한 대상에 권장됩니다. </li><li>일반적인 ARC 처치의 경우 Aphelion은 갑옷이 벗겨지고 기절한 적을 처치할 수 있는 다른 총과 함께 사용하는 것이 가장 좋습니다. </li></ul><h2>아펠리온 제작</h2><ul><li>아펠리온을 제작하려면 먼저 Matriarch의 코어에서 청사진을 얻어야 합니다. </li><li>또한 총제작자 레벨 3이 필요합니다.</li><li>필요한 리소스는 다음과 같습니다:</li><li class=\"ql-indent-1\">자기 가속기 3개</li><li class=\"ql-indent-1\">복잡한 총 부품 3개</li><li class=\"ql-indent-1\">1개의 Matriarch Reactor </li><li>현재 Matriarch Reactor를 획득하는 것은 제작에서 가장 어려운 부분입니다 이 무기는 희귀성 때문입니다.</li></ul>",
+    "summary": "다음은 ARC Raiders의 Aphelion Legendary Battle Rifle에 대한 종합적인 분석으로, 그 능력치, 다양한 적 유형(ARC 및 PvP)에 대한 효율성, 이상적인 플레이 스타일, 최고의 부착물 및 제작 요구 사항을 다루고 있습니다.",
+    "thumbnail_url": "icons/aphelion-rifle.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-21T04:21:53.106975+00:00"
+  },
+  {
+    "id": "c1409478-cf99-4490-9348-3164d69f253c",
+    "title": "Arc 생존 가이드",
+    "slug": "arc-survival-guide",
+    "content": "<h2>개요</h2><p>ARC Raiders의 PVE 위협은 다양하며 준비되지 않은 경우 치명적일 수 있습니다. 이 가이드는 쉽고 자원 효율적인 방법을 중심으로 각 유형의 ARC 적을 처리하는 가장 좋은 방법을 설명합니다. 여왕은 전용 가이드를 받을 자격이 있기 때문에 호넷, 리퍼, 로켓병, ARC 측량사, 봄바르디어에 대해 다루겠습니다.</p><h2>1단계: 호넷</h2><ul><li><strong>위협 수준:</strong> 높음</li><li><strong>방어판:</strong> 반도금</li><li><strong>기본 공격:</strong> 전기 충격</li><li><strong>특수 능력:</strong> 기절</li><li><strong>약점:</strong> 후방 추진기</li><li><strong>체력:</strong> 200</li></ul><p>호넷을 죽이는 것은 말벌을 쓰러뜨리는 것과 같습니다. 로터를 조준하세요. 앞쪽 두 개의 로터는 장갑판으로 되어 있어 중화기가 더 효과적입니다. 경탄을 사용하는 경우 후방 로터 2개에 집중하세요. 각도 때문에 까다로울 수 있습니다.</p><h3>회피 공격:</h3><ul><li>세 개의 노란색 타겟팅 레이저가 하나로 결합될 때까지 기다립니다.</li><li>발사 직전에 빨간색으로 깜박이는데, 이는 회피 롤을 수행한다는 신호입니다.</li><li>타이밍이 핵심입니다. 스팸 회피 굴림은 보상하기 때문에 효과가 없습니다.</li><li>근거리 공격은 회피하기 어렵기 때문에 약간의 거리가 도움이 될 수 있습니다.</li></ul><h2>2단계: 리퍼</h2><ul><li><strong>위협 수준:</strong> 치명적</li><li><strong>방어판:</strong> 완전 도금</li><li><strong>기본 공격:</strong> 도약 당신</li><li><strong>특수 능력:</strong> 운동 에너지 방출</li><li><strong>약점:</strong> 관절과 눈</li><li><strong>체력:</strong> 1500</li></ul><p>리퍼는 좁은 공간과 불에 노출됩니다. 블레이즈 수류탄과 파이어볼 버너는 실행 가능한 선택입니다.</p><h3>방법 1: 수류탄 및 위치 지정</h3><ul><li>블레이즈 수류탄 또는 파이어볼 버너를 3개 정도 가져옵니다.</li><li>리퍼가 실내에서 작은 출입구를 통과하거나 도달하기 위해 애쓰는 건물이나 벙커에 위치를 지정합니다. 예를 들어, 우주 정거장에서 벙커를 사용하는 것은 항상 권장됩니다.</li><li><br></li><li>Leaper의 중앙 접안렌즈에 수류탄을 발사하여 세 팔다리 모두에 불을 퍼뜨리는 것을 목표로 하세요.</li></ul><h3>방법 2(선호): 블레이즈 수류탄 함정 및 앰프; 충격 지뢰</h3><ul><li>이 방법은 더 쉽고 자원 효율적입니다.</li><li>블레이즈 수류탄 함정 한 개로 리퍼의 갑옷을 박살낼 수 있습니다.</li><li><br></li><li>블레이즈 수류탄 함정을 설치하고 리퍼가 공중으로 발사될 때까지 쏘고 몇 걸음 뒤로 물러납니다.</li><li>선택적으로 충격 지뢰와 결합하여 추가 위험을 방지할 수 있습니다. Leaper를 기절시키고 불 속에 가둬두세요.</li><li><br></li><li>Leaper Pulse Units는 별로 유용하지 않으므로 고급 기계 부품용으로 재활용할 수 있습니다.</li></ul><h2>3단계: Rocketeers</h2><ul><li><strong>위협 수준:</strong> Critical</li><li><strong>Armor Plate:</strong> Full 장갑</li><li><strong>주 공격:</strong> 미사일 포격</li><li><strong>약점:</strong> 추진기(갑판으로 덮여 있음)</li><li><strong>체력:</strong> 1100</li></ul><p>로켓병은 무섭지만 올바른 전략을 사용하면 쉽게 패배시킬 수 있습니다.</p><h3>권장 무기: 모루</h3><ul><li>모루(핸드 캐논)는 빠른 발사 속도를 지닌 쉽게 구할 수 있는 중화기 무기입니다.</li><li><br></li><li>대략 40발의 중화기 탄약이면 충분합니다.</li><li>모루를 업그레이드하여 발사 속도를 높이세요.</li></ul><h3>전략: 거리 및 추진기 집중</h3><ul><li>교전하기 전에 건물 내부나 입구 근처에 충분한 엄폐물이 있는지 확인하세요.</li><li><br></li><li>최대한 멀리서 공격을 시작하세요.</li><li>단일 스러스터를 목표로 하세요. 스러스터 두 개를 제거하면 로켓티어가 땅에 떨어지며 충분히 높으면 즉시 죽이는 경우가 많습니다.</li><li><br></li><li>로켓티어는 날아다니는 ARC에 비해 느리기 때문에 거리에 가까워지기 전에 로켓티어를 죽일 수 있습니다.</li><li>울프팩은 정말 좋지만 일반적으로 퀸 전투에 적합합니다.</li></ul><h2>4단계: ARC 측량사</h2><ul><li><strong>위협 수준:</strong> 낮음</li><li><strong>갑옷 판:</strong> 완전 도금</li><li><strong>주 공격:</strong> 도발 시 레이더에 충전</li><li><strong>약점:</strong> 전송 시 핵심이 노출됨</li><li><strong>상태:</strong> 알 수 없음</li></ul><p>감시자 쫓기에는 답답하다. 이 방법은 매번 솔로킬을 보장합니다.</p><h3>추천 아이템: 쇼스토퍼와 앰프; 발동 '네이드'</h3><ul><li>1개의 Showstopper 수류탄(제작 가능)과 3개의 Trigger 'Nades(제작 가능)가 필요합니다.</li></ul><h3>전략: 기절 및 폭파</h3><ul><li>첫 번째 공격으로 Showstopper 수류탄을 발사할 수 있을 만큼 가까이 다가가세요.</li><li><br></li><li>측량사가 도착하자마자 기절하면 Trigger 'Nades로 전환하여 두껍게 놓으십시오. 기절한 동안 수류탄을 모두 사용하세요.</li><li>트리거 '네이드 3개를 모두 터뜨리세요. 이 정도면 파괴할 수 있을 것입니다.</li><li>사용할 수 있는 Showstopper가 없는 경우에도 Trigger 'Nades가 도망가기 전에 두어 발을 발사한 다음 사격으로 마무리할 수 있습니다.</li><li>Showstoppers 없이 진행하는 경우 최고의 효과를 얻으려면 모루와 같은 무거운 탄약 무기를 가져오세요.</li><li><br></li><li>유용한 ARC 개념이 포함될 수 있으므로 조사원에서 떨어지는 조각을 약탈하세요. 코어.</li></ul><h2>5단계: 보루</h2><ul><li><strong>위협 수준:</strong> 치명적</li><li><strong>방어판:</strong> 완전 도금</li><li><strong>1차 공격:</strong> 투사체</li><li><strong>약점:</strong> 후면 패널, 관절</li><li><strong>건강:</strong> ~2000</li></ul><p>Bastion을 위한 가장 쉬운 방법은 팀워크가 필요합니다.</p><h3>방법 1(선호 - 팀): Torrente 및 amp; 탄약</h3><ul><li>친구(또는 견딜 수 있는 사람), Torrente 경기관총, 많은 중형 탄약이 필요합니다.</li><li><br></li><li><strong>설정:</strong> 당신과 당신의 파트너는 Bastion의 양쪽에 있어야 하며, 충분한 엄폐물이 있어야 하며, 바람직하게는 높은 지대에 있어야 합니다.</li><li><br></li><li><strong>실행:</strong> 친구 Bastion의 주의를 끌기 위해 첫 번째 사격을 가합니다. 그런 다음 몸을 숙여 정확도를 높이고 후면 장갑판에 있는 작은 노란색 캐니스터를 조준하세요.</li><li>탄창이 회전하는 동안 탄창을 뒷면에 비우세요. 이 지점은 무장되어 있지 않습니다.</li><li><br></li><li>뒤로 물러서서 재장전하고 친구가 다시 관심을 끌 때까지 기다린 다음 반복하십시오.</li><li>Torrente를 3번 재장전하면 죽여야 합니다.</li></ul><h3>방법 2(솔로): 폭발물</h3><ul><li>혼자라면 5~6개의 Trigger 'Nades, Snap Blasts 또는 Heavy를 가져오세요. 수류탄을 융합하세요.</li><li>조준이 재설정될 때마다 Bastion 자체에 부착하세요.</li><li><br></li><li>기본 무기로 Bastion의 무릎 관절을 쏘아 단독으로 쓰러뜨리는 것은 매우 위험하고 시간 소모적이며 적대적인 레이더를 끌어들일 가능성이 높습니다. 폭발물에 투자하는 것이 더 좋습니다.</li></ul><h2>6단계: 봄바르디어</h2><ul><li><strong>위협 수준:</strong> 치명적</li><li><strong>방어판:</strong> 없음</li><li><strong>주 공격:</strong> 박격포탄</li><li><strong>특수 능력:</strong> 키네틱 출시 에너지</li><li><strong>약점:</strong> 후면 패널, 관절</li><li><strong>건강:</strong> 알 수 없음</li></ul><p>Bombardier는 본체에 장갑판이 없어 치명적이지만 박격포 사격은 파괴적입니다.</p><h3>방법 1(선호 - 솔로): 'Nades 및 앰프; 대피소</h3><ul><li>트리거 네이드는 5~6개가 필요합니다.</li><li>머리 위에 지붕이 있는 동안 이 수류탄을 던질 수 있는 위치를 찾으세요. 이렇게 하면 Bombardier가 사격을 하기가 더 어려워집니다.</li><li>공격이 시작되기 전에 가능한 한 많은 수류탄을 붙이십시오.</li><li><br></li><li>머리 위 대피소가 있는 경우 Spotter 드론을 무시할 수 있습니다.</li><li>선택적으로 Trigger 'Nades로 더 쉽게 공격할 수 있도록 Showstopper 수류탄을 가져와 제자리에 고정할 수 있습니다.</li><li><br></li><li>폭발물에 투자하는 것은 빠른 솔로 킬을 위해 적극 권장됩니다.</li></ul><h3>방법 2(팀): 주의 분산 및 앰프; 피해</h3><ul><li>Bastion 전략과 유사하게, 관심을 끌 친구가 필요합니다.</li><li>친구가 주의를 딴 데로 돌리는 동안 장갑이 없는 후방 캐니스터에 피해를 집중하세요.</li><li>이 작업을 수행하려면 두 플레이어 모두 Bombardier 양쪽에 보호된 건물이 필요하며 이는 매우 확실하고 실행하기 어려울 수 있습니다.</li><li>[SCREENSHOT:10:47]</li></ul>",
+    "summary": "이 튜토리얼은 게임에서 다양한 ARC 적을 물리칠 수 있는 자세한 전략과 통찰력을 제공합니다. 생존과 성공을 보장하기 위해 각 적의 약점, 권장 무기, 전술적 접근 방식에 대해 알아보세요.",
+    "thumbnail_url": "custom/lush.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-10T09:00:55.384479+00:00"
+  },
+  {
+    "id": "3942e4c4-c536-4f53-a0a6-53b28807a2c8",
+    "title": "ARC 약점",
+    "slug": "arc-weaknessess",
+    "content": "<h2>개요</h2><p>각 ARC 적 유형의 고유한 약점을 이해하면 전투 효율성을 크게 향상시킬 수 있습니다. 여기서는 Leaper, Rocketeers, Bombadiers, Bastions, Wasps 및 Hornets를 무력화하기 위한 구체적인 전략과 선호하는 도구를 살펴보겠습니다.</p><h2>1단계: Leaper - 화염 약점</h2><p>Leaper는 화염 피해에 매우 취약하므로 빠르게 비활성화할 수 있습니다.</p><ul><li>Leaper와 마주칠 경우 화염 기반 소모품을 사용할 준비를 하십시오. </li><li>인벤토리에서 블레이즈 수류탄이나 블레이즈 막대를 선택하세요. </li><li>리퍼에게 화염 폭발물을 던집니다. 화재는 심각한 피해를 입히고 종종 Leaper가 땅에 떨어지게 만듭니다. </li><li>불 속에 너무 오래 서 있으면 일시적으로 비활성화되고 결국 파괴됩니다. </li></ul><p><strong>권장:</strong> 블레이즈 수류탄이나 블레이즈 막대는 리퍼에게 매우 효과적입니다. </p><h2>2단계: Rocketeer - 충격 및 증폭; 표적 또는 중화기</h2><p>로켓 조종사는 공중 기동성 때문에 까다로울 수 있지만 뚜렷한 취약점을 가지고 있습니다.</p><ul><li>로켓 조종사가 나타나면 호넷 드라이버나 쇼스토퍼 수류탄과 같은 놀라운 폭발물을 준비하세요. </li><li>로켓티어에게 놀라운 폭발물을 던져 땅에 쓰러뜨리세요. </li><li>기절한 후 10초 안에 로켓티어 위로 올라가 추진기를 발사하여 최대 피해를 입힐 수 있습니다. </li><li>또는 빠르고 조용히 제압하려면 Wolfpack이나 Holecracker 사격과 같은 피해가 높은 무기를 사용하세요. </li></ul><p><strong>권장:</strong> Hornet Driver, Showstopper Grenade(기절용) 또는 Wolfpack, Ferro 로터에 대한 사격(직접 손상용). </p><h2>3단계: Bombadier 및 amp; 바스티온 - 점착 폭발물 또는 무릎 무력화</h2><p>봄바디어와 바스티온은 모두 비슷한 약점을 공유하며, 특히 점착 폭발물과 특정 전술적 타겟팅에 있어서 그렇습니다.</p><ul><li>등의 약점을 노리세요. 공격받지 않고 충분히 가까이 다가갈 수 있다면 점착 수류탄이 이상적입니다. </li><li>적에게 달라붙어 폭발적인 피해를 주는 스냅 폭발 수류탄이나 트리거 네이드를 사용하세요. </li><li>또 다른 전략은 무릎을 손상시키는 것입니다. 무릎이 터질 때까지 계속해서 총을 쏜다. 일시적으로 비활성화됩니다. </li><li>비활성 상태에서는 무기로 최대한 많은 피해를 입혀보세요. 그들은 이 짧은 기간 동안 당신을 공격하지 않을 것입니다.</li><li>여러 ARC 유형이 있는 시나리오에서는 유인 수류탄을 사용하여 봄바디어나 바스티온이 다른 ARC 적에게 미사일을 발사하게 하여 서로 싸울 수 있게 만드세요. </li></ul><p><strong>권장:</strong> 스냅 폭발 수류탄, 방아쇠 수류탄, 유인 수류탄.</p><h2>4단계: 말벌 - 직접 사격</h2><p>말벌은 덜 위협적이지만 공격적이고 성가실 수 있습니다. 종종 직접 이동하는 것이 가장 좋습니다.</p><ul><li>공중에서 말벌을 발견하고 공격하려고 한다면 말벌의 본체를 겨냥하세요. </li><li>본체를 빠르게 쓰러뜨리는 가장 효과적인 방법은 본체를 쏘는 것입니다(예: 일반적으로 모루를 세 번 쏘는 것으로 충분합니다). </li><li>스러스터를 쏘지 마십시오. 이렇게 하면 불안정해지고 예측할 수 없이 날아다니게 되어 계속 공격하는 동안 공격하기가 더 어려워집니다. </li></ul><h2>5단계: 호넷 - 전면 장갑 공격</h2><p>호넷은 장갑 장갑 중앙에 집중하여 효율적으로 쓰러뜨릴 수 있습니다.</p><ul><li>호넷과 교전할 때는 더 작은 후방 스러스터를 공격하는 대신 전면 장갑을 사격하는 데 집중하세요. </li><li>전면 장갑판이 격추되면 바로 뒤에 있는 스러스터가 노출됩니다. 이 구멍을 통해 계속 발사하세요. </li><li>이 방법을 사용하면 지속 사격으로 한쪽에 있는 두 개의 스러스터를 공격하여 호넷을 훨씬 더 빨리 쓰러뜨릴 수 있습니다.</li></ul><p>게임에서 사용할 수 있는 무기와 다양한 도구를 모두 활용하여 ARC 적을 처리하는 효과적인 방법이 많이 있습니다. Horned Drivers 또는 Wasp Drivers를 사용하는 다양한 전략을 실험하여 다양한 전투 시나리오에서 가장 적합한 전략을 찾으십시오. </p><p>제작되었거나 발견된 이러한 특수 도구는 ARC에 강력할 수 있으며 표준 무기 발사 이상의 창의적인 솔루션을 제공할 수 있습니다. </p>",
+    "summary": "이 가이드는 게임에서 발견되는 다양한 ARC 적에 대한 효과적인 전략과 구체적인 약점을 간략하게 설명하여 효율적으로 쓰러뜨리는 데 도움을 줍니다.",
+    "thumbnail_url": "icons/combat-mk-2.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-06T14:01:19.407877+00:00"
+  },
+  {
+    "id": "aa55694a-b071-427a-8ead-0400cfec9e38",
+    "title": "블루 게이트 퍼즐과 전리품",
+    "slug": "blue-gate-puzzles-loot",
+    "content": "<h2>개요</h2><p>이 가이드에서는 표면과 터널 위치를 모두 포함하여 Blue Gate 영역의 모든 퍼즐을 다룹니다. 각 퍼즐에는 유용한 전리품을 잠금 해제하려면 배터리를 삽입하거나 버튼을 연속적으로 누르는 등의 특정 작업이 필요합니다. 이러한 어려운 목표를 찾으려면 지도 표시와 환경 단서를 주의 깊게 살펴보세요.</p><h2>1단계: 고대 요새 퍼즐</h2><p>첫 번째 퍼즐 세트는 고대 요새에 있습니다. 전리품을 활성화하려면 배터리 3개를 찾아 발전소에 삽입해야 합니다. 배터리는 일반적으로 폐허 주변의 상자에서 생성됩니다.</p><ul><li>지도에서 고대 요새를 찾으세요. </li><li>요새 유적의 왼쪽 하단에서 시작하세요. </li><li>보통 상자에서 발견되는 첫 번째 배터리를 집습니다. </li><li>필요한 경우 검정색 선을 따라 첫 번째 발전소로 걸어가세요. </li><li>배터리를 발전소 안에 넣으세요. </li><li>두 번째 폐허 건물로 이동합니다. [스크린샷:01:45]</li><li>이 폐허 안에 있는 상자에서 두 번째 배터리를 찾으세요. </li><li>검은색 선을 따라 벽을 따라 위치한 두 번째 발전소로 이동하세요. </li><li>두 번째 배터리를 삽입하세요. </li><li>보통 꼭대기 층에 있는 세 번째 발전소로 가세요. [SCREENSHOT:03:07]</li><li>보통 어두운 방에서 상자 위의 세 번째 배터리를 찾으세요. </li><li>세 번째 배터리를 발전소에 삽입합니다. </li><li>세 개의 배터리를 모두 삽입하면 표시등이 녹색으로 바뀌어 지하실에서 전리품에 접근할 수 있음을 나타냅니다. </li><li>지하로 내려가서 일반적으로 테이블이나 선반에 있는 전리품을 수집하세요. </li></ul><h2>2단계: Raider's Refuge Puzzles</h2><p>이 위치는 플레이어 트래픽이 많아 '핫 드롭'으로 알려져 있습니다. 주의하세요. 지하실 전리품을 잠금 해제하려면 숨겨진 버튼 4개를 눌러야 합니다.</p><ul><li>지도에서 'The Forest' 지역 근처에 있는 Raider's Refuge를 찾으세요. </li><li>지하 입구 왼쪽, 에어컨 옆에 있는 첫 번째 버튼을 찾으세요. </li><li>첫 번째 조명을 활성화하려면 버튼을 누르세요. [스크린샷:04:27]</li><li>두 번째 버튼을 찾으세요. 대개 지하실 입구 오른쪽에 있는 나무 판자나 잔해 뒤에 있습니다. </li><li>두 번째 버튼을 누르세요. [SCREENSHOT:04:52]</li><li>주 건물 내부로 들어가서 사다리를 타고 올라가세요. </li><li>상단에 도달하면 왼쪽에서 세 번째 버튼을 찾으세요. </li><li>세 번째 버튼을 누르세요. </li><li>네 번째 버튼은 건물 옥상 반대편 통신탑 근처에 있습니다. [SCREENSHOT:06:00]</li><li>네 번째 버튼을 누르세요. [SCREENSHOT:06:12]</li><li>4개의 버튼을 모두 누르면 지하 입구의 조명이 녹색으로 변합니다. </li><li>지하실(비밀 지하실)로 내려가 귀중한 전리품을 수집하세요. </li></ul><h2>3단계: MANTIKOR(ARC Husk) 퍼즐</h2><p>지도에는 두 개의 MANTIKOR 위치가 있으며, 둘 다 전력 셀과 관련된 유사한 퍼즐이 있습니다. 이 가이드에서는 한 가지 버전을 보여줍니다. 두 개의 전력 셀을 찾아 거대한 ARC 허스크에 설치해야 합니다.</p><ul><li>지도에서 '체크포인트' 근처에 있는 MANTIKOR 허스크를 찾으세요. </li><li>일반적으로 땅에 있는 죽은 ARC 껍질 주변에 흩어져 있는 전력 셀을 찾으세요. </li><li>최소 2개의 파워 셀을 수집하세요. [SCREENSHOT:07:00]</li><li>껍질 측면을 타고 내부로 올라갑니다. </li><li>첫 번째 파워 셀 슬롯을 찾아 상호작용하여 셀을 삽입하세요. 그러면 화재와 시끄러운 소음이 발생하여 다른 플레이어에게 경고합니다.</li><li>두 번째 파워 셀 슬롯을 찾으려면 반대편으로 점프하거나 올라가세요. </li><li>두 번째 전원 셀을 삽입합니다. [스크린샷:07:38]</li><li>이렇게 하면 파워 셀 슬롯 근처에 전리품 컨테이너가 열리면서 퍼즐이 완성됩니다. </li></ul><h2>4단계: 강화된 수신 터널 퍼즐</h2><p>이 퍼즐은 터널 내에 위치하며 색상 선을 따라 배터리를 삽입해야 합니다. 때때로 배터리에 결함이 있을 수 있으므로 인내심을 가지세요.</p><ul><li>지도에서 강화된 수신 구역을 찾으세요. </li><li>시설에 들어가서 메인 퍼즐 콘솔을 찾으세요. </li><li>콘솔을 사용하세요. 바닥의 ​​선에 해당하는 색상(빨간색, 파란색 또는 노란색)이 표시됩니다. </li><li>표시된 색상 선을 따라 특정 문으로 이동하세요. [SCREENSHOT:09:00]</li><li>따라온 문 근처에 있는 배터리를 찾으세요. </li><li>배터리를 문 근처의 해당 슬롯 안에 넣습니다. </li><li>계속해서 색칠된 선을 따라가며 이 과정을 반복하세요. 일반적으로 배터리 3개를 찾을 수 있습니다.</li><li>때때로 배터리에 약간의 결함이 있거나 숨겨져 있을 수 있습니다. 모서리, 계단, 작은 골방을 확인하세요. </li><li>배터리를 모두 삽입한 후 메인 콘솔 영역으로 돌아갑니다. 문이 잠금 해제되어 전리품 방으로 연결됩니다. </li><li>무기 상자와 기타 귀중품이 포함된 전리품을 수집하세요. </li></ul><h2>5단계: 교통 터널 퍼즐</h2><p>강화 수신과 유사하지만 잠재적으로 전투가 더 많은 또 다른 터널 퍼즐입니다.</p><ul><li>지도에서 종종 보급 신호로 표시되는 '교통 터널'을 찾으세요. </li><li>이전 터널 퍼즐과 유사하게 바닥에 있는 색상 선(빨간색, 파란색, 노란색)을 따라가세요. [SCREENSHOT:11:30]</li><li>콘솔을 사용하여 색상 순서를 확인하세요. </li><li>짚라인 아래로 노란색 선을 따라 가세요. </li><li>배터리를 찾아서 경로를 따라 지정된 슬롯에 삽입하세요. </li><li>이 지역은 시끄럽고 주의를 끌 수 있으므로 적과 마주칠 가능성이 있으니 주의하세요. [스크린샷:11:55]</li><li>모든 배터리가 제자리에 있으면 전리품 보관소로 가는 길이 열립니다. [스크린샷:12:05]</li><li>무기 상자와 기타 컨테이너에서 보상을 수집하세요. </li></ul>",
+    "summary": "이 튜토리얼에서는 표면 폐허와 지하 터널을 특징으로 하는 Arc Raiders의 Blue Gate 영역에서 모든 퍼즐 위치와 퍼즐을 해결하여 전리품을 최대화하는 방법을 다룹니다.",
+    "thumbnail_url": "icons/blue-gate-cellar-key.webp",
+    "author": "",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-06T14:26:05.862123+00:00"
+  },
+  {
+    "id": "0616d22c-f4db-4131-9f1d-19fed06e7230",
+    "title": "원정 골드 파밍 가이드",
+    "slug": "cash-farming-guide-for-expedition",
+    "content": "<h2>개요: 탐험 요구 사항</h2><p>다가오는 탐험(마감일 12월 22일)에서 다음 레이더의 스킬 포인트를 최대화하려면 보관함 가치로 500만 달러를 축적해야 합니다. 이 튜토리얼에서는 손실을 최소화하고 이익을 최대화하여 해당 목표를 빠르게 달성할 수 있는 전략을 제공합니다.</p><h2>손실 최소화</h2><p>돈 버는 데 중점을 두기 전에 손실을 멈추는 방법을 이해하는 것이 중요합니다. 레이드에서 사용되거나 분실된 모든 아이템은 전체 보관함 가치의 감소를 나타냅니다.</p><h3>레이드에 대한 과도한 지출을 피하세요</h3><ul><li>발사되는 모든 총알, 사용된 모든 붕대, 깨진 방패에는 모두 비용이 듭니다. 값비싼 장비를 가지고 레이드에 참가하면 죽거나 보급품을 다 써버릴 경우 더 큰 손실을 입을 수 있습니다.</li><li class=\"ql-indent-1\"><strong>최소 로드아웃으로 실행:</strong> 기본 또는 '무료' 로드아웃으로 시작하세요. 성공적으로 추출하면 유용한 보관함을 위험에 빠뜨리지 않고 자원을 얻을 수 있습니다. 죽더라도 손실은 미미합니다.</li></ul><h3>무기 제작 및 앰프 제작을 다시 생각해 보세요. 업그레이드</h3><ul><li>무기를 제작하고 부착물을 장착하면 실제로 원시 제작 재료에 비해 전체적인 가치가 감소합니다.</li><li class=\"ql-indent-1\"><strong>제작 재료 직접 판매:</strong> 무기와 부착물을 제작하는 데 필요한 기본 재료는 완성된 아이템보다 더 가치가 있는 경우가 많습니다. 특별히 실행에 필요한 아이템이 아니라면 제작을 피하세요.</li></ul><h3>자원 싱크를 조심하세요</h3><ul><li>특정 활동과 적들은 최소한의 보상으로 자원을 엄청나게 소모할 수 있습니다.</li><li class=\"ql-indent-1\"><strong>여왕과 여주인공을 피하세요:</strong> 이러한 적을 물리치려면 상당한 양의 탄약과 의료 보급품이 필요합니다. 그들이 떨어뜨리는 물건은 소비된 리소스를 정당화하지 못합니다.</li><li class=\"ql-indent-1\"><strong>전략적으로 PvP로 이동:</strong> 값비싼 로드아웃으로 플레이어 대 플레이어 전투에 참여하면 큰 가치를 잃을 위험이 있습니다. 잠재적인 손실을 최소화하려면 PvP 실행에 대해 저렴한 로드아웃을 실행하는 것을 고려하세요.</li></ul><h2>이득 극대화</h2><p>손실을 최소화하면 효율적인 돈 버는 전략에 집중할 수 있습니다.</p><h3>Stella Montis Runs</h3><ul><li>Stella Montis는 지속적인 가용성과 고가치 전리품 컨테이너로 인해 지속적인 수익을 얻을 수 있는 탁월한 선택입니다.</li><li class=\"ql-indent-1\"><strong>특정 영역 타겟팅:</strong> 조립 워크샵, 의학 연구 및 로비 영역에 중점을 둡니다.</li><li class=\"ql-indent-1\"><strong>전리품 컨테이너:</strong> 이 고밀도 전리품 구역에 있는 모든 컨테이너를 검색하세요. 몇 분 안에 50~80,000의 가치를 빠르게 모을 수 있습니다.</li><li class=\"ql-indent-1\"><strong>최소 진입:</strong> 위험을 최소화하려면 안전한 주머니에 해치 키만 넣고 들어가세요. 당신이 죽는다면 당신은 단지 몇 분의 시간만 낭비하게 될 뿐입니다. 추출하면 판매할 아이템으로 가득 찬 배낭이 생깁니다.</li></ul><h3>무성한 꽃 이벤트</h3><ul><li>이 이벤트는 지도 주위에 과일 바구니를 생성하여 인벤토리에 쌓을 수 있는 상당한 가치를 제공합니다.</li><li class=\"ql-indent-1\"><strong>위치 찾기:</strong> Metaforge와 같은 온라인 지도를 사용하여 특히 Spaceport와 같은 더 큰 지도에서 과일 바구니 생성 위치를 인식할 수 있습니다.</li><li class=\"ql-indent-1\"><strong>과일 수집:</strong> 과일 아이템을 쌓아서 한 번에 많은 양의 가치를 지닐 수 있습니다.</li><li class=\"ql-indent-1\"><strong>주의하세요:</strong> Lush Blooms는 다른 플레이어의 관심을 끌 수 있으므로 Stella Montis보다 더 위험한 플레이가 됩니다.</li></ul><h3>Queen Harvester(특정 전략)</h3><ul><li>여왕과 직접 싸우는 것은 일반적으로 비효율적이지만 특정 전략을 사용하면 이익을 얻을 수 있습니다.</li><li class=\"ql-indent-1\"><strong>낮은 로드아웃 방향:</strong> 위험을 최소화하려면 저렴한 로드아웃으로 진행하세요.</li><li class=\"ql-indent-1\"><strong>수확기 퍼즐 목표:</strong> 여왕 수확기 퍼즐을 완성하고 안에 있는 깨지기 쉬운 컨테이너를 집으세요. 여기에는 ARC 부품과 에너지 탄약이 포함되는 경우가 많습니다.</li><li class=\"ql-indent-1\"><strong>다리를 쏘고 탈출:</strong> 시간이 있고 여왕이 심하게 경쟁하지 않는 경우 추가 전리품을 위해 여왕의 다리를 쏜 다음 그녀가 공격을 풀고 근처 레이더 해치를 통해 탈출할 때까지 기다릴 수 있습니다(댐 전장이 이에 적합한 장소입니다).</li></ul><h3>고밀도 전리품 위치(주간) 습격)</h3><ul><li>다양한 지도의 특정 건물은 컨테이너로 가득 차 있어 일관된 가치를 제공합니다.</li><li class=\"ql-indent-1\"><strong>댐 전장:</strong> 연구 및 증폭에 집중; 많은 전리품 컨테이너 관리.</li><li class=\"ql-indent-1\"><strong>우주공항:</strong> 출발 건물과 도착 건물에는 빠른 약탈을 위한 컨테이너로 가득 찬 여러 층이 있습니다.</li><li class=\"ql-indent-1\"><strong>매장된 도시:</strong> 플라자 로사 지역, 그란디오소 아파트, 우주 여행 및 연구 건물은 풍부한 전리품을 찾는 데 탁월합니다.</li><li class=\"ql-indent-1\"><strong>주간 습격 사용:</strong> 낮에 이 지도를 실행하면 희귀한 청사진을 찾기 위해 야간 습격에 집중하는 다른 플레이어와의 경쟁이 덜해지는 경우가 많습니다.</li></ul><h3>전자기 폭풍 이벤트</h3><ul><li>전기 폭풍 중에 ARC 허스크와 탐사선이 나타나 적은 플레이어 경쟁으로 상당한 전리품을 제공합니다.</li><li class=\"ql-indent-1\"><strong>ARC 허스크 및 프로브 약탈:</strong> ARC 부품 및 기타 유용한 구성 요소를 얻을 수 있습니다.</li><li class=\"ql-indent-1\"><strong>Spaceport의 장점:</strong> Spaceport는 일반적으로 이러한 생성이 발생하는 크고 개방된 영역으로 인해 이상적입니다.</li><li class=\"ql-indent-1\"><strong>Metaphorge 지도:</strong> Metaphorge 지도와 같은 온라인 도구를 사용하세요. ARC Husk의 생성 위치를 인식합니다.</li><li class=\"ql-indent-1\"><strong>일관적인 이익:</strong> 운에 따라 실행당 80-100,000을 벌 수 있으며 Rocketeer Drivers와 같은 희귀한 드롭을 얻을 경우 잠재적으로 시간당 200-300,000을 벌 수 있습니다.</li></ul>",
+    "summary": "이 튜토리얼에서는 다가오는 탐험에 필수적인 이익을 극대화하고 손실을 최소화하는 데 중점을 두고 Arc Raiders에서 부를 축적하는 효율적인 방법을 다룹니다.",
+    "thumbnail_url": "icons/looting-mk-2.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-12-07T09:11:59.981251+00:00"
+  },
+  {
+    "id": "67ac0908-00a0-45fd-866a-b691cf6578f0",
+    "title": "Cold Snap 패치 노트",
+    "slug": "cold-snap-patch-notes",
+    "content": "<p>이 업데이트에 대한 자세한 내용은 공식 Cold Snap 패치 노트를 확인하세요.</p>",
+    "summary": "공식 Cold Snap 업데이트 패치 노트.",
+    "thumbnail_url": "custom/coldsnap.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-12-16T11:38:21.246017+00:00"
+  },
+  {
+    "id": "7a7a5bda-ac1d-4a13-84b5-bca6922a4230",
+    "title": "스포터로 쉬운 코인 파밍",
+    "slug": "easy-coin-farm-using-spotters",
+    "content": "<p>여기에 코인을 많이 모으는 간단한 방법이 있습니다. Bombardier가 감시자를 생성하게 하십시오. Bombardier를 죽이지 않는 한 감시자는 계속해서 생성됩니다. 각 Spotter 릴레이는 5,000코인의 가치가 있으므로 이를 파밍하여 빠르게 현금을 모을 수 있습니다.</p>",
+    "summary": "무한히 생성되는 Bombardier Spotter를 이용한 빠른 코인 파밍 방법입니다.",
+    "thumbnail_url": "icons/spotter.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-04T12:46:09.113617+00:00"
+  },
+  {
+    "id": "38bce844-e4a1-4f52-939e-3b67d98ca119",
+    "title": "퀸 즉사 글리치",
+    "slug": "glitched-queen-insta-kill",
+    "content": "<h2>개요</h2><p>여기에서는 킬당 48,000 XP를 얻을 수 있는 '여왕' 보스를 물리치는 가장 빠른 방법을 살펴보겠습니다. 이 전략은 블레이즈 수류탄 함정의 정확한 배치와 쉽게 발사할 수 있는 모루 무기에 의존합니다. 혼자서도 가능하지만 팀원과 함께 제3자로부터 보호하는 것이 더 안전합니다.</p><h2>1단계: 준비</h2><ul><li>이 방법을 사용하려면 두 개의 블레이즈 수류탄 함정이 필요합니다. 일반 '수류탄'이 아닌 '함정'인지 확인하세요.</li><li>블레이즈 수류탄 함정은 무료 로드아웃 실행 중에 발견하거나 얻을 때까지 반복적으로 항복하여 찾을 수 있습니다.</li><li>추출에 도움이 되므로 침입자의 열쇠를 가져가는 것이 좋습니다.</li><li>2인 또는 3인으로 플레이하는 것은 솔로 실행이 쉽기 때문에 다른 플레이어로부터 보호하는 것이 좋습니다. 제3자.</li></ul><h2>2단계: 여왕 찾기</h2><p>여왕은 어느 지도에나 앉아 있지만 이 가이드에서는 Blue Gate 지도에서의 과정을 보여줍니다. 습격 초기에 여왕의 위치를 ​​파악하는 것이 중요합니다.</p><ul><li>지도를 확인하여 여왕의 일반 지역을 찾으세요. 지도에서 'Harvester'를 찾아보세요. </li><li>주변 환경과 잠재적인 적 플레이어를 염두에 두고 여왕이 있는 곳으로 걸어가세요.</li><li>가면서 여왕의 움직임을 관찰하세요. 일반적으로 원형 패턴으로 회전합니다.</li><li>여왕 주변의 주요 위협은 '로켓병'인 경우가 많으므로 경로에 직접 있거나 멀어지지 않도록 주의하세요.</li></ul><h2>3단계: 함정 접근 및 배치</h2><p>이 전략의 핵심은 여왕을 공격하지 않고 여왕을 향해 걸어가서 함정을 올바르게 배치하는 것입니다.</p><ul><li>뒤에서 여왕에게 다가가세요. 또는 당신을 감지하지 못하는 쪽. 회전하기 때문에 일반적으로 시야에서 벗어날 수 있습니다. </li><li>은신 상태를 손상시킬 수 있는 근처의 말벌(날아다니는 드론)을 제거하세요. 억제된 무기를 권장합니다. </li><li>여왕의 몸 아래쪽에서 특정한 약점을 찾아보세요. 트랩을 이 영역에 직접 배치하는 것이 좋습니다.</li><li>쉽게 접근할 수 있도록 블레이즈 수류탄 트랩을 빠른 사용 슬롯에 넣으세요. 죽을 경우를 대비해 '안전한 주머니'에 넣어 보관하는 것을 고려해 보세요.</li><li>조심스럽게 여왕의 시신 위로 올라가세요. </li><li>첫 번째 블레이즈 수류탄 함정을 설치하여 땅에 떨어지지 않고 여왕의 몸 안에 박히도록 합니다. </li><li>같은 방식으로 두 번째 블레이즈 수류탄 함정을 설치합니다. 이렇게 하면 최대 피해와 단발 처치가 보장됩니다.</li></ul><h2>4단계: 처치 실행</h2><p>트랩을 설치한 후 단 한 발의 사격으로 트랩을 폭파하고 처치를 시작합니다.</p><ul><li>두 트랩이 모두 제자리에 있으면 모루 무기를 트랩에 조준하고 발사합니다. </li><li>함정이 점화되어 여왕에게 막대한 피해를 입힙니다. 큰 화재와 폭발 효과가 있습니다.</li><li>화면 왼쪽에서 XP 알림을 확인하여 48,000 XP를 받았음을 확인하세요. </li></ul><h2>5단계: 약탈 및 추출</h2><p>여왕을 성공적으로 쓰러뜨렸다면 이제 보상을 수집하고 안전하게 추출할 시간입니다.</p><ul><li>타락한 여왕을 향해 가서 핵심에서 유용한 아이템을 모두 약탈하세요. 추가 XP를 얻기 위해 모든 것을 약탈하세요.</li><li>여왕의 서거 소리가 다른 플레이어의 관심을 끌 수 있으므로 약탈하는 동안 매우 주의하십시오.</li><li>팀의 주요 상태에 따라 체크포인트나 침입자의 해치와 같은 근처 탈출 지점으로 이동하세요.</li><li>가이드는 재집결하고 탈출을 준비하기 위해 근처 주유소로 향하는 방법을 보여줍니다.</li><li> 추출 구역 주변에 숨어 있습니다.</li><li>공격대에서 성공적으로 탈출하여 XP와 유용한 전리품을 확보하세요. </li></ul>",
+    "summary": "이 가이드에서는 Blaze Grenade Traps를 사용하여 'Queen' 보스를 빠르고 쉽게 물리치고 단 몇 분 만에 48,000 XP를 얻는 방법을 보여줍니다. 어그로를 피하고 전리품을 확보하기 위한 이상적인 배치와 전략을 알아보세요.",
+    "thumbnail_url": "icons/queen.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-12T12:16:39.643633+00:00"
+  },
+  {
+    "id": "f887696f-e255-48de-83b1-fe8e4b6834e2",
+    "title": "우주항 숨겨진 벙커 이벤트 위치",
+    "slug": "hidden-bunker-event-location-spaceport",
+    "content": "<h2>개요: 숨겨진 벙커 이벤트</h2><p>Spaceport의 숨겨진 벙커 이벤트는 비밀 벙커를 열려면 지도 전체에 걸쳐 여러 안테나를 활성화해야 하는 진행 중인 퍼즐입니다. 내부에서 플레이어는 협력 활성화와 관련된 더 깊은 퍼즐을 통해 XP용 콘솔에서 데이터를 다운로드할 수 있습니다.</p><h2>1단계: 안테나 활성화</h2><p>숨겨진 벙커 이벤트의 첫 번째 단계에서는 우주공항 지도 전체에 위치한 4개의 안테나를 활성화하는 작업이 포함됩니다. 벙커를 성공적으로 열려면 각 안테나를 활성화해야 합니다.</p><ul><li>일반적으로 지도의 설정된 위치에서 벙커 입구를 찾으세요.</li><li>숨겨진 벙커 이벤트로 경기가 로드되면 지도 주위에 4개의 안테나가 나타납니다. </li><li>지도의 가장 먼 모서리에 있는 안테나를 활성화하는 것부터 시작하여 점차적으로 벙커 입구에 가장 가까운 안테나를 향해 작업하는 것이 좋습니다.</li><li>안테나를 활성화하려면 옥상으로 올라가야 합니다. 집라인 없이는 많은 안테나에 접근할 수 없습니다. </li><li>집라인을 제작하려면 다용도 벤치를 레벨 2로 업그레이드하세요. 이를 위해서는 로프가 필요합니다.</li><li>옥상에 도달한 후 데이터 콘솔을 찾아서 활성화하세요. [스크린샷:01:23]</li><li>콘솔을 활성화한 후 ARC 적(말벌, 말벌, 로켓 조종사)의 물결이 생성됩니다. Wolfpacks와 같은 힐링 아이템을 준비하세요. </li><li>데이터 다운로드가 완료되도록 허용한 다음 콘솔을 다시 사용하여 프로세스를 마무리합니다.</li><li>지도 전체에 걸쳐 4개의 안테나 모두에 대해 이 프로세스를 반복합니다. 마지막 안테나가 활성화되면 '숨겨진 벙커가 오픈되었습니다'라는 메시지가 나타납니다. </li></ul><h2>2단계: 숨겨진 벙커 접근</h2><p>네 개의 안테나가 모두 활성화되면 숨겨진 벙커 입구에 접근할 수 있습니다. 출발 건물 왼쪽. 다른 플레이어도 그곳으로 향할 수 있으므로 벙커로 돌진해야 합니다.</p><ul><li>최대한 빨리 벙커 입구를 향해 이동하세요. </li><li>여러 플레이어가 벙커로 돌진할 가능성이 높으므로 잠재적인 PvP 공격에 주의하세요.</li><li>벙커 입구 주변 지역은 폭격수나 요새와 같은 적들이 지키고 있을 수 있습니다. 특정 Bastion이 벽을 뚫고 총격을 가하는 것이 관찰되었는데, 이는 버그일 수 있습니다. 가능하면 직접 참여하지 않도록 하세요. </li></ul><h2>3단계: 데이터 다운로드 및 잠재적인 비밀</h2><p>벙커 내부에는 여러 개의 데이터 콘솔이 있는 원형 레이아웃이 있습니다. 각 콘솔은 데이터 다운로드에 대한 XP 보상을 제공하지만 더 깊은 퍼즐에 대한 지속적인 커뮤니티 이론이 있습니다.</p><ul><li>벙커의 원형 복도를 통과하세요. </li><li>벙커 내부에는 약 7~8개의 데이터 콘솔이 있습니다.</li><li>데이터 다운로드를 시작하려면 콘솔을 사용하세요. '다운로드를 계속하려면 가까이 있어야 합니다.' 다른 곳으로 이동하면 다운로드가 실패합니다. </li><li>성공적으로 완료되면 콘솔에 잠시 녹색 불이 켜지고 500 XP가 지급됩니다. </li><li>다운로드가 완료되기 전에 콘솔을 종료하면 빨간색 표시등이 켜지고 재설정되어 다시 시도할 수 있습니다. </li><li>**커뮤니티 이론:** 여러 플레이어와 동시에 모든 데이터 콘솔을 활성화하면 비밀 영역이 잠금 해제되거나 특별 이벤트가 트리거될 수 있다는 이론이 있습니다. </li><li>이상적으로는 7~8명의 플레이어가 각각 콘솔 옆에 서서 정확히 동시에(예: 특정 카운트다운 타이머 표시에서) 활성화하는 등 상당한 조정이 필요합니다. 잠재적인 결함이나 타이밍 문제로 인해 실행하기 어려울 수 있습니다.</li></ul><h2>중요한 고려 사항 및 팁</h2><ul><li>**집라인 사용법:** 추락을 방지하려면 항상 건물 꼭대기에 집라인을 배치하세요. </li><li>**집라인 충돌:** 충돌로 인해 제거될 수 있으므로 다른 플레이어가 이미 집라인에 타고 있는 경우에는 타지 마십시오.</li><li>**벙커 전리품:** 벙커에는 무기와 탄약 상자가 들어 있는 약탈 가능한 컨테이너가 많이 있습니다.</li></ul>",
+    "summary": "다음은 안테나 활성화, 벙커 접근 및 내부 데이터 다운로드 콘솔 이해를 특징으로 하는 Spaceport에서 숨겨진 벙커 이벤트를 활성화하기 위한 철저한 연습입니다. 또한 적을 상대하고 환경을 탐색하는 방법에 대한 팁도 다룹니다.",
+    "thumbnail_url": "custom/hiddenbunker.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-09T06:39:16.024779+00:00"
+  },
+  {
+    "id": "26230950-b410-4bc7-b204-66d918cc9b5b",
+    "title": "대모 공략법 - 신규 보스",
+    "slug": "how-to-beat-the-matriarch-new-boss",
+    "content": "<h2>개요</h2><p>Matriarch는 Ark Hunters의 최신 보스입니다. 퀸보다 공격 패턴이 많은 공격적인 보스지만, 의외로 체력이 낮은 것 같아 준비만 하면 적은 탄약으로도 쓰러뜨릴 수 있습니다. 여기에서는 이를 무너뜨리기 위한 최고의 전략과 로드아웃에 대해 설명합니다.</p><h2>1단계: 권장 로드아웃</h2><ul><li><strong>주 무기:</strong> 헐크래커는 피해 효율성 때문에 적극 권장됩니다. </li><li><strong>탄약:</strong> 헐크래커 탄약을 약 140개 가져옵니다.</li><li><strong>방패:</strong> 무거운 방패를 사용합니다. 이렇게 하면 전리품 공간이 줄어들지만 생존에 매우 중요합니다.</li><li><strong>구급 키트:</strong> Matriarch의 공격은 매우 피해를 줄 수 있으므로 탄약보다 더 많은 구급 키트를 가져오는 데 우선순위를 두세요. </li><li><strong>팀:</strong> 분대와 함께 싸우는 것은 언제나 쉽습니다.</li></ul><h2>2단계: Matriarch 공격 패턴 이해</h2><h3>호밍 미사일</h3><ul><li>이것은 가장 위험한 공격입니다. Matriarch는 빠르게 움직이는 유도 미사일을 지속적으로 발사합니다. </li><li><strong>전략:</strong> 견고한 엄폐물 뒤에 서세요. 일부 AoE 피해와 미사일이 때때로 모퉁이를 따라 휘어질 수 있다는 점에 유의하세요. 피해를 입지 않으려면 현명하게 엄폐물을 선택하세요.</li></ul><h3>가스 지뢰</h3><ul><li>여주가 가스 지뢰를 포격합니다. </li><li>가스 안에 있으면 캐릭터가 걷잡을 수 없이 기침을 하게 되어 발사 능력이 비활성화됩니다. [스크린샷:01:54]</li><li><strong>전략:</strong> 무슨 수를 써서라도 가스를 피하세요. 직접적인 피해를 주는 것처럼 보이지는 않지만 디버프는 전투에 해롭습니다.</li></ul><h3>섬광탄</h3><ul><li>Matriarch는 섬광탄 같은 발사체를 발사할 수 있습니다. </li><li>이 근처에 서 있으면 일시적으로 눈이 멀게 되므로 전투에는 적합하지 않습니다. </li><li><strong>전략:</strong> 눈에 띄면 눈이 멀게 하는 효과를 피하기 위해 도망가세요.</li></ul><h3>소환된 ARC</h3><ul><li>여주가 다른 ARC 유닛의 파도를 불러올 것입니다.</li><li><strong>로켓티어:</strong> 이것은 종종 소환된 유닛 사이의 주요 위협이며 상당한 피해를 줄 수 있습니다. </li><li><strong>요새:</strong> 요새는 당신을 묶어 여족장이 패배한 후 약탈하는 것을 방지할 수 있습니다. </li><li><strong>전략:</strong> 압도당하거나 전리품을 잃지 않도록 소환된 ARC 유닛, 특히 Rocketeers 및 Bastions를 우선적으로 제거하는 데 중점을 둡니다.</li></ul><h3>침투 불가능한 방패</h3><ul><li>Matriarch는 주기적으로 뚫을 수 없는 커다란 파란색 방패를 배치합니다. </li><li><strong>전략:</strong> 이 보호막이 활성화되어 있는 동안에는 여주인에게 피해를 줄 수 없습니다. 공격을 재개하기 전에 보호막이 사라질 때까지 기다리십시오.</li></ul><h2>3단계: 전투 전략</h2><ul><li><strong>엄폐 활용:</strong> 미사일 공격 및 기타 공격을 피하기 위해 항상 엄폐의 우선순위를 지정하세요. AoE 손상과 휘어지는 발사체를 차단하는 두꺼운 엄폐물을 찾으세요.</li><li><strong>타겟 약점:</strong> Matriarch의 가장 큰 약점은 머리에 있는 빨간색 코어입니다. 지속적으로 머리를 쏘면 이 코어가 노출됩니다.</li><li>갑옷이 있는 다리를 목표로 삼을 수도 있지만 다리가 부러지면 빠르게 피해를 입습니다.</li><li><strong>맵 선택:</strong> 댐 전장은 일반적으로 충분한 엄폐물과 전략적 위치로 인해 이 보스와 싸우기에 가장 좋은 맵으로 간주됩니다. Blue Gate는 엄폐물이 충분하지 않기 때문에 권장되지 않습니다.</li></ul><h2>4단계: 전리품 및 앰프; 보상</h2><ul><li>Matriarch가 떨어뜨린 주요 전리품은 Matriarch Reactor입니다. </li><li>이 전설적인 아이템은 새로운 에너지 버스트 소총(전투 소총)을 제작하는 데 사용됩니다.</li><li>배스천과 같은 남아 있는 적 유닛은 여전히 위협을 가하고 수집을 방해할 수 있으므로 대모를 물리친 후 신속하게 전리품을 확보해야 합니다.</li><li><br></li><li><br></li></ul><p>제공: <a 이 가이드에 사용된 스크린샷은 href=\"https://www.youtube.com/watch?v=sxr8NWSrrE4\" rel=\"noopener noreferrer\" target=\"_blank\">게임 판매자</a>에서 확인하세요.</p>",
+    "summary": "이 튜토리얼은 권장 로드아웃, 공격 패턴 이해, 약점 식별, 효율적인 전투 및 전리품 수집을 위한 팁을 포함하여 Matriarch 보스를 물리치기 위한 포괄적인 전략을 제공합니다.",
+    "thumbnail_url": "custom/matriarch.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-14T12:56:07.433476+00:00"
+  },
+  {
+    "id": "22c0dfff-91c5-46c4-af45-615b2c898565",
+    "title": "중요 재료와 획득 위치",
+    "slug": "important-materials-and-their-locations",
+    "content": "<h2>개요</h2><p>이 종합 가이드는 Arc Raiders의 작업대 업그레이드 및 탐험 진행에 필요한 모든 중요한 아이템의 위치와 제작 방법을 자세히 설명합니다. 우리는 Scrappy 아이템, Gunsmith 재료, Gear Bench 부품, Medical Lab 소모품, Refiner 자원, 유틸리티 스테이션 부품 및 Expedition 특정 아이템을 다룰 것입니다. arcraidersmap.app/materials에 치트 시트 목록이 있습니다. 이 동영상을 함께 제작한 <a href=\"https://www.youtube.com/watch?v=MgjnW1WF-oQ\" rel=\"noopener noreferrer\" target=\"_blank\">The Gaming Merchant</a>의 도움을 받으세요.</p><h2>1단계: 불량품</h2><h3>개 목걸이</h3><ul><li>이것들은 옷장과 같은 주거용 컨테이너에 보관할 수 있습니다. 서랍.</li><li> 주거용 컨테이너를 검색하여 찾을 수 있는 좋은 기회를 얻으세요.</li></ul><h3>레몬과 앰프; 살구</h3><ul><li>레몬과 살구를 찾는 가장 좋은 방법은 블루 게이트 지도 지역입니다.</li><li> 블루 게이트 지도에서 올리브 그로브 위치로 걸어가세요.</li><li> 레몬 나무를 사용하여 레몬을 땅에 발로 차서 수집하세요.</li><li> 지도에서 올리브 그로브 위치를 볼 수 있습니다.</li><li> 살구나무는 지도에 표시된 대로 동일한 올리브 그로브 지역에서도 발견됩니다. 지도.</li><li> 살구나무와 상호작용하여 과일을 수집합니다.</li><li>또는 Buried City, Morano Park에서 살구나무도 찾을 수 있습니다.</li><li>Bastion이나 Bombardier가 이곳에서 자주 스폰되므로 주의하세요.</li></ul><h3>버섯</h3><ul><li>버섯은 댐 전장의 여러 위치에 있습니다. 지도.</li><li> 수처리 제어 건물 근처의 파이프에서 자라는 것을 찾아보세요.</li><li> 수경 돔 단지 내부에서도 자랍니다.</li><li> 고철 처리장과 잔해 지역의 나무에서 자라는 것을 볼 수 있습니다.</li><li>가장 일관된 버섯 재배를 위해서는 우주 공항 지도로 이동하세요.</li><li> 동쪽 컨테이너 야적장과 로켓 조립 근처의 특정 지점을 찾으세요.</li><li> 이 지역에는 보장된 나무가 있습니다. 버섯이 산란하므로 농사에 이상적입니다.</li></ul><h3>가시나무</h3><ul><li>이 선인장 열매는 선인장과 함께 땅에서 발견됩니다.</li><li> 댐 전장 지역의 좋은 장소는 패턴 하우스 주변입니다.</li><li> 선인장 사이에서 과일을 수확할 수 있는지 자세히 살펴보세요.</li><li>또는 Buried에서 가시배를 발견할 수 있습니다. 도시.</li><li> 그들은 종종 Plaza Riva 지역에 흩어져 있습니다.</li></ul><h3>매우 편안한 베개와 앰프; 고양이 침대</h3><ul><li>이 두 항목 모두 주거용 전리품으로 간주됩니다.</li><li> 주거 지역의 옷장, 서랍 및 다양한 컨테이너를 검색하세요.</li><li> 모든 주거용 컨테이너를 계속 검색하세요. 처음에는 드물게 보일 수 있지만 풍부합니다.</li><li> 예를 들어 Buried City에서는 Plaza Rosa 지역의 모든 건물을 약탈합니다.</li></ul><h2>2단계: 총제작 아이템</h2><h3>녹슨 도구 및 앰프; 고급 기계 부품</h3><ul><li>이러한 품목은 차량 침입으로 자주 발견됩니다.</li><li> 블루 게이트 지도의 검문소 및 고속도로 붕괴 지역으로 이동하세요.</li><li> 이 위치에 있는 버려진 차량을 모두 파괴하세요. 녹슨 도구는 흔하며 녹슨 장비는 드랍될 확률이 적습니다.</li><li> 고급 기계 부품의 경우 모든 맵의 거의 모든 건물에 있는 서버 캐비닛을 뚫는 것이 가장 좋습니다.</li><li> 녹슨 도구의 경우 산업 지역에서 녹슨 도구 상자와 빨간색 사물함을 찾으세요.</li></ul><h3>말벌 운전사</h3><ul><li>말벌 운전사를 얻으려면 말벌을 제거해야 합니다.</li><li> 말벌을 물리친 후 그의 몸을 잡으세요.</li></ul><h3>센티넬 발사 코어</h3><ul><li>센티넬(거미 모양의 포탑)이 이것을 떨어뜨립니다.</li><li> 야간 공격 중 댐 전장 구역에는 연구실과 앰프에 센티넬이 있습니다. 관리 구역, 건물 바깥쪽 파란색 계단.</li><li> 또 다른 파수꾼이 The Breach에 있습니다.</li><li> 여기에도 종종 하나가 있습니다. 댐 전장의 야간 습격은 이러한 드롭을 얻을 수 있는 가장 좋은 기회를 제공합니다.</li></ul><h2>3단계: 장비 벤치 아이템</h2><h3>전기 부품</h3><ul><li>청사진이 있으면 리파이너를 사용하여 전기 부품을 제작할 수 있습니다.</li><li> 제작은 플라스틱 부품과 고무 부품이 필요한 가장 쉬운 방법인 경우가 많습니다.</li><li>대체로 산업 및 전기 구역의 모든 맵에 풍부한 서버 캐비닛을 검색하세요.</li><li> 이러한 컨테이너에서 전기 부품이 나오는 경우가 많습니다.</li></ul><h3>호넷 드라이버</h3><ul><li>제거 호넷 드라이버를 얻으려면 호넷을 사용하세요.</li><li> 격파한 후 본체를 약탈하세요.</li></ul><h3>전원 케이블</h3><ul><li>전원 케이블은 다양한 전리품 컨테이너에 들어 있습니다.</li><li> 산업용 건물에서 발견되는 것과 같은 빨간색 사물함은 좋은 공급원입니다.</li><li> 이러한 컨테이너를 수집하면 전원 케이블이 자주 생성됩니다.</li></ul><h3>산업 배터리</h3><ul><li>산업용 배터리는 산업 지역에서 생성될 확률이 높습니다.</li><li> 댐 전장 구역의 수경 돔 단지는 훌륭한 위치입니다.</li><li> 배터리는 이 단지 내의 선반에서 구체적으로 찾아보세요.</li><li> 또한 블루 게이트 지도의 본부에서 뚫을 수 있는 지하 방에 있는 선반에서도 찾을 수 있습니다.</li><li> 배터리 3개를 삽입하여 큰 문을 뚫으세요. 방에 접근하려면 콘솔로 들어가세요.</li></ul><h3>고급 전기 부품</h3><ul><li>이러한 고급 부품은 찾거나 제작할 수 있습니다.</li><li> 한 가지 방법은 Blue Gate 지도에서 고대 요새 퍼즐 퀘스트를 해결하여 지하에서 찾을 수 있도록 하는 것입니다.</li><li>또는 Blue Gate 지도의 Reinforced Reception 영역으로 걸어가세요.</li><li> 배터리 3개를 삽입하여 지하 퍼즐을 해결하세요 큰 문을 열려면.</li><li> 내부에는 컴퓨터에 있는 많은 고급 전기 부품이 있는 제어실이 있습니다.</li></ul><h3>Bastion Cell</h3><ul><li>Bastion Cell은 Bastions에서 나오며, 처치당 2~4개를 얻을 수 있습니다. 모든 적을 쓰러뜨리는 더 많은 전략을 설명하는 전체 아크 제거 가이드가 <a href=\"https://arcraidersmap.app/guides/arc-survival-guide\" rel=\"noopener noreferrer\" target=\"_blank\">여기</a>에 있습니다.</li></ul><h2>4단계: 의료 실험실 항목</h2><h3>ARC 합금</h3><ul><li>ARC 합금은 패배한 ARC에 의해 떨어집니다. 적.</li><li>ARC를 모두 제거하고 잔해를 가져가세요.</li></ul><h3>깨진 바이오스캐너</h3><ul><li>깨진 바이오스캐너는 의료 시설에서 흔히 발견됩니다.</li><li> Buried City의 병원이 가장 좋은 위치입니다.</li><li> 컨테이너 내부가 아닌 병원 침대 위에서 자주 생성되는 것을 찾으세요.</li></ul><h3>내구성 천</h3><ul><li>튼튼한 천은 Arc Raiders의 모든 용기에 들어있습니다.</li><li> 천의 정제기를 사용하여 쉽게 제작할 수도 있습니다.</li></ul><h3>녹슨 폐쇄 의료 키트</h3><ul><li>이 키트는 거의 모든 용기에 들어 있습니다.</li><li> 더 높은 확률을 얻으려면 Buried City에 있는 병원을 조사하세요.</li><li> 병원은 일반적으로 유용한 정보원입니다. 의료 용품.</li></ul><h3>방부제</h3><ul><li>방부제는 다양한 용기, 특히 의료용 용기에 들어 있습니다.</li><li> 일관되게 좋은 장소는 Buried City의 Plaza Rosa에 있는 약국 건물입니다.</li><li> 높은 수율을 위해 이 부서지기 쉬운 건물의 1층에 있는 상점 선반을 조사하세요.</li></ul><h3>조사 금고</h3><ul><li> Surveyor Vault, 당신은 Surveyor를 추적하고 물리쳐야 합니다.</li><li> 경기가 시작될 때 하늘에서 커다란 파란색 광선을 둘러보세요. 이는 측량사의 위치를 ​​나타냅니다.</li><li> 측량사는 굴러가는 경향이 있으므로 Wolfpack이나 Showstopper와 같은 강력한 무기를 가져오세요. 파괴 후 약탈하세요.</li></ul><h2>5단계: 아이템 정제</h2><h3>ARC 파워 셀</h3><ul><li>모든 ARC 적이 패배 시 ARC 파워 셀을 떨어뜨립니다.</li><li>이것을 수집하려면 ARC를 제거하고 약탈하세요.</li></ul><h3>토스터</h3><ul><li>토스터는 일반적으로 주거지에서 발견됩니다. 지역.</li><li> Buried City와 같은 위치에서 옷장, 서랍과 같은 주거용 컨테이너를 검색합니다.</li></ul><h3>ARC Motion Cores</h3><ul><li>이 코어는 특정 ARC 적에 의해서만 드롭됩니다.</li><li> Leaper, Queen, Rocketeer, Bastion 또는 Surveyor에게서 드롭될 수 있습니다.</li><li> ARC 허스크를 약탈하여 얻을 수도 있습니다.</li><li> Dam Battlegrounds 구역의 Old Battleground 지역은 ARC 허스크를 많이 찾을 수 있는 좋은 장소입니다. 위반.</li></ul><h3>Bombardier Cell</h3><ul><li>Bombardier Cell을 얻으려면 Bombardier를 처치하세요.</li><li> 제거한 후 부품을 약탈하세요.</li></ul><h2>6단계: 유틸리티 스테이션 항목</h2><h3>손상된 방열판</h3><ul><li>손상된 방열판은 서버 캐비닛에서 찾을 수 있습니다.</li><li> 캐비닛은 대부분의 건물의 모든 맵에 흩어져 있습니다.</li><li> 댐 전장 구역의 발전 단지 지하 섹션은 주목할만한 장소입니다.</li></ul><h3>전기 부품</h3><ul><li>전기 부품은 고무 부품과 플라스틱 부품을 사용하여 정제소에서 제작할 수 있습니다.</li><li> 또는 말벌이나 호넷 드라이버를 재활용하여 얻을 수 있습니다.</li></ul><h3>스니치 스캐너</h3><ul><li>스니치 스캐너를 얻으려면 스니치를 물리쳐야 합니다.</li><li> 스니치는 큰 검색 광선을 방출하는 ARC 적입니다. 모루로 세 번 쏴서 파괴한 다음 약탈하세요.</li></ul><h3>튀긴 마더보드</h3><ul><li>튀긴 마더보드는 전기 용기에서 발견됩니다.</li><li> 서버 캐비닛이 일반적인 출처입니다.</li><li> 또한 Blue Gate 지도의 Reinforced Reception 내 지하 파괴 가능 방에 있는 선반에서도 찾을 수 있습니다.</li></ul><h3>Leaper Pulse 유닛</h3><ul><li>리퍼 펄스 유닛을 얻으려면 리퍼 적을 제거하세요.</li><li> 리퍼를 쓰러뜨린 후 시체를 잡으세요.</li></ul><h2>7단계: 탐험 아이템</h2><h3>합성 연료</h3><ul><li>합성 연료는 자동차와 주거용 전리품 컨테이너에 들어 있습니다.</li><li> 더 쉬운 방법을 보려면 다음을 방문하세요. Traders에서 Celeste를 구매하고 각종 씨앗을 사용하여 구입하세요.</li></ul><h3>원유 폭발물 및 앰프; 팝 트리거</h3><ul><li>이러한 아이템은 폭발물 관련 지역에서 함께 발견되는 경우가 많습니다.</li><li> 모든 지도에서 지하에서 발견되는 팝(불덩어리 적)과 파이어볼 버너를 제거하세요.</li><li> 또는 블루 게이트 지도에서 지하의 강화된 수용 구역으로 이동하세요.</li><li> 여기의 검은색 컨테이너와 선반에서 조잡한 폭발물과 팝 트리거를 조사하세요.</li></ul><h3>실험실 시약</h3><ul><li>실험실 시약은 희귀한 제작 아이템입니다.</li><li> 매장지(Buried City) 플라자 로사(Plaza Rosa)에 있는 약국 건물 1층 선반에서 쉽게 찾을 수 있습니다.</li></ul><h3>폭발성 화합물</h3><ul><li>폭발성 화합물은 폭발 밀도가 높은 지역에서 흔히 발견됩니다.</li><li>[SCREENSHOT:10:34] 지하 구역으로 걸어가세요 Blue Gate 지도에서 강화된 수신 장치.</li><li> 찾을 수 있는 좋은 기회를 위해 이 지역 내의 검은 컨테이너와 선반을 조사하십시오.</li></ul><h3>로켓 조종사</h3><ul><li>로켓 조종사를 제거하여 로켓 조종사를 얻으십시오.</li><li> 또한 댐 전장의 옛 전장 지역에 있는 ARC 허스크를 뚫고 이를 찾을 수도 있습니다. 구역.</li></ul><h3>강철 스프링</h3><ul><li>정련기를 사용하여 많은 아이템을 강철 스프링으로 재활용할 수 있습니다.</li><li> 직접적인 출처를 찾으려면 댐 전장 구역에 있는 수경 돔 단지를 조사하세요. 이곳의 스프링은 종종 3개의 스택으로 생성됩니다.</li></ul><h3>냉각 팬</h3><ul><li>냉각 팬은 일반적으로 서버 캐비닛에서 발견됩니다.</li><li> 이를 찾으려면 서버 캐비닛을 깨뜨려야 합니다.</li><li>또한 전선(Scrappy에서), 전기 부품(Refiner 또는 재활용에서) 및 내구성 있는 천(Refiner에서)이 필요합니다.</li></ul><h3>Exodus 모듈</h3><ul><li>엑소더스 모듈은 우주공항 지도에 확실합니다.</li><li> 로켓 조립 구역으로 이동하여 모든 산업용 컨테이너, 특히 빨간색 사물함을 약탈하세요.</li><li> 이 빨간색 사물함에는 엑소더스 모듈이 포함될 가능성이 높습니다.</li></ul><h3>전구</h3><ul><li>전구는 거의 모든 전리품 컨테이너에 있습니다.</li><li> 그냥 모든 것을 약탈하세요. 만나면 쌓이게 됩니다.</li></ul><h3>센서</h3><ul><li>센서는 서버 캐비닛에서 발견됩니다.</li><li> 맵 전체에 걸쳐 서버 캐비닛에 침입하세요. 센서로 재활용할 수 있는 아이템은 게임 내 치트 시트를 참조하세요.</li></ul><h3>배터리</h3><ul><li>배터리는 매우 일반적이며 대부분의 용기에 들어 있습니다.</li><li> 배터리를 찾으려면 어느 지역에서든 일반 용기를 약탈하세요.</li></ul><h3>자기 가속기</h3><ul><li>이 고급 아이템은 특정 산업 위치에 있습니다.</li><li> 이동 Spaceport 지도의 로켓 조립 구역에서 컨테이너를 검색하세요.</li><li> 또는 리파이너가 레벨 3인 경우 고급 기계 부품 및 ARC 모션 코어를 사용하여 제작할 수 있습니다.</li></ul><h3>가습기</h3><ul><li>가습기는 무작위 전리품 아이템입니다.</li><li> 모든 지도에서 다양한 컨테이너를 검색하세요. 모든 컨테이너 유형에서 스폰될 수 있습니다.</li></ul><h3>모터</h3><ul><li>모터는 주로 차량을 파괴하는 데서 발견됩니다.</li><li> 녹슨 장비와 유사하게 확률이 매우 낮지만 고속도로 붕괴와 같은 지역에서는 차량을 파괴하는 데 지속됩니다.</li><li> 차량을 계속 파괴하면 결국 발견하게 됩니다.</li></ul>",
+    "summary": "여기에서는 Arc Raiders의 모든 작업대 업그레이드 및 원정 요구 사항에 대한 필수 항목 위치와 제작 레시피를 설명하여 무엇을 보관하고 어디서 찾을 수 있는지 알 수 있도록 합니다.",
+    "thumbnail_url": "icons/advanced-mechanical-components.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-10T05:50:36.867961+00:00"
+  },
+  {
+    "id": "e47edb2e-503b-46d5-a09d-0659895b1bea",
+    "title": "보안 침해 스킬, 가치가 있을까?",
+    "slug": "is-the-security-breach-skill-worth-it",
+    "content": "<h1>⚔️ 포인트가 가치가 있나요? ARC Raiders 보안 위반 기술 및 엄청난 전리품 위치에 대한 심층 분석</h1><p><em>ARC Raiders</em>의 스킬 트리는 플레이어에게 어려운 선택을 제공하지만 <strong>Security Locker Breach Skill</strong>만큼 신비롭고 잠재적으로 보람을 느끼는 기술은 거의 없습니다. 제한된 기술 포인트에 대한 상당한 투자가 필요하므로 많은 사람들이 궁금해합니다. 체력 증가나 이동 속도 향상과 같은 다른 중요한 업그레이드를 희생할 가치가 있습니까?</p><p>The Gaming Merchant에 따르면 짧은 대답은 <strong>예</strong>입니다. 이 기술은 최종 게임 무기를 얻는 가장 빠른 경로 중 하나로서 매우 가치가 있습니다.</p><p>다음은 필요한 헌신, 기대할 수 있는 강력한 전리품 및 주요 보안 보관함 위치를 안내합니다.</p><h3>스킬 트리 투자 딜레마</h3><p>보안 보관함 위반 기술을 획득하려면 초기에 스킬 포인트의 상당 부분을 투자해야 합니다.</p><ul><li><strong>비용:</strong> 단일 스킬 트리를 최대로 활용하려면 <strong>36포인트</strong>(또는 36레벨)가 필요합니다. 사용할 수 있는 최대 스킬 포인트는 75개에 불과하므로 위반 스킬을 조기에 잠금 해제한다는 것은 일정 기간 동안 더 나은 체력 및 더 빠른 움직임과 같은 다른 기본 기술을 포기해야 함을 의미합니다.</li><li><strong>경고:</strong> 이 스킬에 너무 일찍 투자하면 기본적인 움직임에 어려움을 겪게 되며 부족한 체력 스킬을 보상하기 위해 공격대마다 10~15개의 아드레날린 주사기를 가져와야 할 수도 있습니다.</li><li><strong> 장기 계획:</strong> 이상적인 경로는 다른 트리를 완전히 최대화하려고 하기보다는 보안 위반 기술을 잠금 해제한 다음 남은 포인트를 사용하여 다른 트리의 맨 아래에 있는 필수 체력 기술을 습득하는 것입니다.</li></ul><h3>내용은 무엇인가요? 에픽 전리품 분석</h3><p>스킬 가치의 핵심은 보안 컨테이너 내에서 발견되는 높은 등급의 일관된 전리품입니다. 이는 본질적으로 높은 레벨의 장비 제작 필요성을 크게 줄이는 무기 보관함입니다.</p><p>보안 보관함은 다음과 같이 지속적으로 채워져 있습니다:</p><ul><li><strong>보장된 높은 등급 무기:</strong> 발견된 무기는 <em>항상</em> 레벨 2이며 일반 무기는 <strong>절대</strong> 찾을 수 없습니다.</li><li><strong>에픽 등급 무기:</strong> 매우 바람직한 에픽 무기를 찾을 수 있습니다. 정기적으로 다음 등급의 무기를 제공합니다:</li><li class=\"ql-indent-1\">Bobcat</li><li class=\"ql-indent-1\">Patina(게임에서 최고의 총이라고 단언할 수 있음)</li><li class=\"ql-indent-1\">Tempest</li><li class=\"ql-indent-1\">Volcano 산탄총</li><li class=\"ql-indent-1\">Ventor와 같은 기타 무기, Anvil, El Toro 및 Torren</li><li><strong>필수 제작 구성 요소:</strong> 보관함에는 다음과 같이 무기 업그레이드에 중요한 부품이 포함되는 경우가 많습니다.</li><li class=\"ql-indent-1\">중총 부품</li><li class=\"ql-indent-1\">경총 부품</li><li class=\"ql-indent-1\">복잡한 총 부품</li><li><strong>기타 장비:</strong> 수류탄, 탄약, 유용한 청사진도 전리품 풀의 일부입니다.</li></ul><p><strong>결정적으로 전리품 풀은 모든 맵에서 일관되게 나타납니다</strong>. 즉, 보안 보관함은 어디에 있든 큰 전리품을 얻을 수 있는 동일한 기회를 제공합니다. 또한 이러한 보안 사물함에서 나오는 전리품은 열쇠가 필요한 잠긴 문 뒤에 있는 전리품보다 <strong>훨씬 더</strong> 좋은 것으로 관찰되었습니다.</p><h3>🗺️ 보안 사물함 위치 가이드</h3><p>이 동영상에서는 다양한 지도에서 보안 사물함을 일관되게 찾을 수 있는 여러 위치를 강조했습니다.</p><h4>댐</h4><ul><li><strong>침입된 방 위치:</strong> 댐 지역에서 뚫린 문을 찾으세요(이것은 야간이 아닌 일반적인 습격에서 이루어졌습니다). 이 지점은 보안 사물함 게임에서 최고의 장소 중 하나로 간주됩니다. 경로에는 수문 지역의 최상층을 따라 달리고 우회전하고 전망대로 이어지는 문을 찾아 아래로 미끄러져 건너가는 도개교를 여는 과정이 포함됩니다.</li><li><strong>전력 단지:</strong> 지하 발전 단지에서는 탁 트인 사물함을 볼 수 있습니다. 이 위치는 공용 플레이어 구역이고 엄폐를 위해 문을 부술 필요가 없기 때문에 더 위험합니다.</li></ul><h4>Bluegate</h4><ul><li><strong>교회 아래:</strong> 방을 열려면 버튼 4개를 입력해야 하는 보안 사물함이 있습니다.</li><li><strong>지하 구역:</strong> 또 다른 구역은 Bluegate 지하 구역에 있으며, 잠겨 있는 Bluegate보다 한 층 위입니다. 문.</li></ul><h4>우주공항</h4><ul><li><strong>잠긴 벙커:</strong> 사물함은 우주공항 건너편의 작은 벙커에 펼쳐져 있습니다. 일반적으로 바깥쪽에는 뚫을 수 있는 문이 있습니다.</li><li><strong>팁:</strong> 벙커의 열린 창문을 통해 사물함이 내부에 있는지 확인할 수 있어 문을 뚫는 시간을 절약할 수 있습니다.</li></ul><h4>Buried City</h4><ul><li><strong>잠긴 방:</strong> Buried 내의 잠긴 방에서 최소 하나의 보안 사물함이 발견되었습니다. 도시.</li></ul><p>보안 침해 기술은 투자이지만 레벨 2 영웅 무기를 지속적으로 확보할 수 있는 능력은 게임 최종 진행에 초점을 맞춘 로드아웃의 핵심 구성 요소가 됩니다.</p>",
+    "summary": "\"..스킬 트리는 플레이어에게 어려운 선택을 제시하지만 Security Locker Breach Skill만큼 신비롭고 잠재적으로 보람 있는 스킬은 거의 없습니다.\"",
+    "thumbnail_url": "icons/stella-montis-security-checkpoint-key.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-04T10:13:09.277888+00:00"
+  },
+  {
+    "id": "40df0f05-5f67-48ae-b5c3-9c270014c261",
+    "title": "길 닦기 퀘스트",
+    "slug": "paving-the-way-quest",
+    "content": "<p>이 가이드는 The Cycle: Frontier의 'Paving the Way' 퀘스트를 설명하며 임무를 완료하는 데 필요한 위치와 상호 작용의 개요를 설명합니다.</p><h2>1단계: 댐 전장에서 ENELICA 건물 찾기</h2><ul><li>댐 전장 지도에 배치하여 퀘스트를 시작합니다.</li><li>ENELICA 시설인 수처리 제어 건물로 이동합니다.</li><li>에서 건물 방향으로 이동합니다. 남서쪽.</li><li>입구 근처 벽에서 ENELICA 로고를 찾으세요. </li></ul><h2>2단계: 연구원 게시판 이용</h2><ul><li>ENELICA 로고 옆 벽에 게시판이 있습니다.</li><li>연구원의 메모를 수집하려면 게시판과 상호작용하세요. 이것으로 퀘스트의 첫 번째 부분이 완료됩니다.</li></ul><h2>3단계: Buried City의 최상층에 액세스</h2><ul><li>다음으로 Buried City 구역에 배치합니다.</li><li>Piazza Roma에서 Convenio를 찾으세요. 지도상으로는 서부역 근처 남쪽 건물로 확인됩니다. </li><li>더 구체적으로 말하면 Grandioso Apartments의 북동쪽이자 Western Station 바로 옆에 있는 인접한 두 건물의 남쪽을 찾으게 됩니다. </li><li>이 건물에 들어가서 집라인을 찾으세요.</li><li>집라인을 이용하면 최상층(6층)으로 올라갈 수 있습니다. </li><li>짚라인을 빠져나오면 아파트 건물 A1 6층에 있습니다. </li></ul><h2>4단계: 연구원 아파트 찾기 및 조사</h2><ul><li>최상층에 도착하면 불이 타오르고 ARC 개체가 파괴된 방으로 들어갑니다. 이렇게 하면 연구 데이터를 찾는 다음 퀘스트 목표가 시작됩니다.</li><li>연구원 아파트 역할을 하는 인접한 방으로 계속 이동하세요.</li><li>여러 대의 컴퓨터 모니터가 있는 책상을 찾으세요. </li><li>컴퓨터를 사용하여 연구 데이터를 찾습니다. 이렇게 하면 최종 목표가 완료됩니다.</li></ul><h2>5단계: 보상 받기</h2><ul><li>연구 데이터와 상호작용한 후 '길을 닦다' 퀘스트가 완료됩니다.</li><li>퀘스트 메뉴로 돌아가서 보상을 받으세요. </li></ul>",
+    "summary": "다음은 Dam Battlegrounds와 Buried City의 모든 목표를 다루는 The Cycle: Frontier의 'Paving the Way' 퀘스트를 완료하기 위한 철저한 연습입니다.",
+    "thumbnail_url": "icons/combat-mk-1.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2026-01-16T22:22:30.029888+00:00"
+  },
+  {
+    "id": "9bade7e7-c611-48f3-9671-92c6c285e9bb",
+    "title": "스텔라 몬티스 열쇠 - 사용 위치",
+    "slug": "stella-montis-keys-where-to-use",
+    "content": "<p>Stella Montis의 다양한 키를 어디에 사용할 수 있나요? 어셈블리 관리 키, 의료 보관 키, 기록 보관소 키, 보안 체크포인트 키</p><h2>어셈블리 관리 키 도어</h2><ul><li>어셈블리 워숍 노란색 계층 영역 바로 아래. </li><li>문을 사용하여 Stella Montis 어셈블리 관리자 키를 사용하고 잠금을 해제하세요. </li></ul><h2><br></h2><h2><br></h2><h2>의료 보관함 열쇠 문</h2><p>로켓처럼 생긴 대형 구조물이 보이는 출발지에서 돌아서 복도를 통과합니다. 'Medical Research North Wing' 입구에 도달할 때까지 길을 따라가세요.</p><p>계단을 내려가면 다양한 장비와 작업대가 가득한 열린 공간을 탐색하게 됩니다. 문이 보일 때까지 계속 길을 따라 가십시오.</p><p>이 문에서 Stella Montis 의료 보관 열쇠를 사용하여 잠금을 해제하라는 메시지가 표시됩니다.</p><h2>아카이브 열쇠 문</h2><ul><li>씨앗 저장소의 부활절 구역으로 향하세요.</li><li>목적지는 씨앗 저장소의 동쪽 터널 지역 내에 있습니다. </li><li>여러 파이프를 만나게 될 것입니다. 계속하려면 그 위로 올라가세요. </li><li>파이프를 타고 우회전한 후 복도를 따라 끝까지 내려가면 오른쪽에 문이 있습니다</li><li>'스텔라 맨티스 보관소 열쇠'가 필요한 'STORAGE ROOM' 문입니다. </li></ul><h2><br></h2><h2>보안 검문소 열쇠 문</h2><ul><li>지도를 꺼내 Stella Montis의 '로비' 섹션에서 위치를 확인하세요.</li><li>로비에서 초기 검문소 구조물을 지나 이동하세요.</li><li>메인 검문소 데스크를 지나 바로 우회전하세요.</li><li>보안 리셉션 뒤에 있는 작은 방으로 들어가세요. 지역.</li><li><br></li></ul><ul><li>이 방을 계속 직진한 후 다시 우회전하세요.</li><li>끝까지 도달할 때까지 좁은 복도를 따라 가세요.</li><li>좌회전한 후 다시 빨리 우회전하세요.</li><li>오른쪽 첫 번째 문은 Stella Montis 보안 검색대입니다. 여기에서 키를 사용하게 됩니다.</li></ul>",
+    "summary": "이 가이드는 Stella Montis의 다양한 키를 사용하는 위치를 보여줍니다. 조립 관리자 키, 의료용 보관 키, 기록 보관소 키, 보안 체크포인트 키",
+    "thumbnail_url": "icons/stella-montis-archives-key.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-16T12:42:55.001922+00:00"
+  },
+  {
+    "id": "ffb90cfd-dc37-450e-827f-f1f603ed4d9a",
+    "title": "스텔라 몬티스 개요 및 루팅 가이드",
+    "slug": "stella-montis-overview-and-looting-guide",
+    "content": "<h2>개요: Stella Montis 지도</h2><p>Stella Montis는 Arc Raiders의 새로운 고위험, 고보상 지도입니다.</p><h2>의학 연구(레드 계층)</h2><p>의학 연구 지역은 상당한 전리품을 제공하지만 높은 PvP 액션도 제공하는 레드 계층 영역입니다. 플레이어를 자주 찾고 적에게 도전할 것을 기대하세요.</p><ul><li><strong>높은 PvP 공격:</strong> 공격적인 플레이어를 만나게 됩니다. 항상 전투 준비를 하세요. </li><li><strong>새로운 ARC: 슈레더:</strong> 이 영역에는 슈레더라고 불리는 새로운 ARC 적들이 등장합니다. 위험하며 건강을 빠르게 고갈시킬 수 있습니다. 치명적인 피해를 입히려면 파란색 추진기를 조준하세요. </li><li><strong>유용한 물건 약탈:</strong> 쓰레기통과 기타 용기를 찾으세요. 여기에는 묻힌 도시 마을 회관 열쇠와 같은 고가치 제작 재료와 열쇠가 들어 있는 경우가 많습니다. </li><li><strong>항상 조심하세요:</strong> 플레이어가 우호적이라고 부르더라도 조심하세요. 많은 사람들이 경고 없이 공격할 것입니다. </li><li><strong>전리품 가치:</strong> 3번의 성공적인 실행 후 총 전리품 가치는 약 208,000크레딧이었습니다. </li></ul><h2>집합 작업장(노란색 계층)</h2><p>집합 작업장은 노란색 계층 지역임에도 불구하고 놀라울 정도로 높은 품질의 전리품을 제공하므로 수익성이 매우 높지만 경쟁도 치열합니다.</p><ul><li><strong>에픽 희귀 전리품:</strong> 에픽 희귀 제작 재료와 좋은 무기를 많이 찾을 수 있습니다. </li><li><strong>강렬한 PvP:</strong> 이 지역은 플레이어 대 플레이어 전투가 벌어지는 핫스팟입니다. 지속적인 참여를 준비하세요. </li><li><strong>실행 속도 향상:</strong> 레이더 해치 키를 가져오면 특정 영역에 빠르게 접근하고 더 빠르게 추출할 수 있습니다.</li><li><strong>전리품 가치:</strong> 2번의 성공적인 실행 후(불행한 죽음 전) 전리품 가치는 172K 크레딧이었습니다. </li></ul><h2>씨앗 금고(레드 티어)</h2><p>씨앗 금고는 레드 티어 지역이지만 제공되는 것과 플레이 스타일이 독특합니다.</p><ul><li><strong>씨앗만:</strong> 이 지역은 주로 씨앗 상인을 위한 제작 재료인 씨앗을 수집하는 데 사용됩니다.</li><li><strong>시간 소모:</strong> 500개 이상의 컨테이너가 있으며 각각은 컨테이너만 생산합니다. 씨앗 몇 개. 느리고 지루한 과정입니다. </li><li><strong>낮은 PvP:</strong> 가치가 낮고 노력이 많이 드는 전리품으로 인해 플레이어는 일반적으로 이곳에서 더 친근해져서 더 차분한 경험을 할 수 있습니다. [스크린샷:11:00]</li><li><strong>전체 평가:</strong> 빠른 돈 벌기에는 권장되지 않습니다. 특정 제작 요구 사항이나 편안한 분위기에 더 적합합니다. </li></ul><h2>문화 기록 보관소(레드 티어)</h2><p>문화 기록 보관소는 또 다른 레드 티어 지역이지만 전리품 프로필은 의학 연구와 다릅니다.</p><ul><li><strong>장신구 및 청사진:</strong> 이 지역은 주로 장신구를 제공하며 청사진을 얻을 수 있는 작은 기회가 있습니다. </li><li><strong>낮은 가치 전리품:</strong> 대부분의 컨테이너는 직물과 플라스틱 부품만 생산하므로 다른 Red Tier 영역보다 수익성이 낮습니다.</li><li><strong>친절한 만남:</strong> Seed Vault와 마찬가지로 가치가 낮은 전리품은 경쟁이 적다는 것을 의미하며 종종 우호적인 플레이어 상호 작용으로 이어집니다. </li></ul><h2>로비(노란색 계층)</h2><p>로비는 어디를 봐야 할지 알면 놀라울 정도로 수익성이 좋을 수 있는 노란색 계층 지역입니다.</p><ul><li><strong>만티코르 방:</strong> 3층에서 '만티코르'라고 표시된 방은 종종 높은 등급의 전리품과 연료통으로 가득 차 있습니다. </li><li><strong>전략적 연료통 사용:</strong> 연료통을 던져 폭발을 일으킬 수 있으며, 이는 적군 집단에 유용합니다. </li><li><strong>전체 평가:</strong> 클리어하지 않은 경우 유용한 전리품을 얻기 위해 들르기 좋은 곳으로 높은 위험과 높은 보상을 제공합니다. </li></ul><h2>Stella Montis 일반 전략</h2><p>Stella Montis에서 성공하려면 단순히 전리품 위치를 아는 것 이상이 필요합니다. 전술적 인식과 적응성이 필요합니다.</p><ul><li><strong>PvP 인식이 핵심입니다:</strong> 이 지도는 PvP 축제입니다. 플레이어가 우호적으로 보이더라도 항상 전투 준비를 하십시오.</li><li><strong>공격자 제거:</strong> 레이드 초반에 공격적인 PvP 플레이어를 제거하면 더 적은 수의 새로운 플레이어가 생성되어 잠재적으로 더 차분한 약탈 경험을 할 수 있습니다.</li><li><strong>출발 지점 전략:</strong> 다른 지도와 달리 플레이어는 Stella Montis의 관심 지점(POI)에 직접 생성됩니다. 즉, 다른 플레이어가 스폰 지점에 접근하기 전에 먼저 스폰 지점에 가장 가까운 것을 약탈해야 합니다. </li><li><strong>높은 위험, 높은 보상:</strong> 최고의 전리품은 가장 위험한 지역에 있는 경우가 많습니다. 잠재적인 보상이 위험을 감수할 가치가 있는지 결정하세요.</li></ul>",
+    "summary": "이 가이드는 Arc Raiders의 Stella Montis 지도에서 가장 수익성이 높은 약탈 구역과 생존 및 부 축적을 위한 주요 전략을 식별합니다.",
+    "thumbnail_url": "icons/stella-montis-assembly-admin-key.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-15T04:17:56.549319+00:00"
+  },
+  {
+    "id": "5a252ca4-9f64-45b5-8f58-cfd11ab7def7",
+    "title": "부패의 악취 퀘스트",
+    "slug": "stench-of-corruption-quest",
+    "content": "<h2>개요</h2><p>이 가이드는 \"부패의 악취\" 퀘스트를 완료하는 단계를 안내합니다. 이 퀘스트는 우주 정거장 지도를 통과하여 특정 열쇠를 찾아 지하 터널에서 사용하게 됩니다.</p><h2>1단계: 출발 건물에 도달</h2><p>첫 번째 작업은 출발 건물의 남서쪽 로비로 이동하는 것입니다. 이 건물은 지도에 있는 커다란 빨간색 구조물입니다.</p><ul><li>지도에 출발 건물에 경유지를 고정하세요.</li><li>출발 건물로 이동하세요. 상당한 거리를 이동해야 하므로 한파 급습보다는 일반 급습 중에 이 작업을 수행하는 것을 고려하세요.</li></ul><h2>2단계: 직원 라커룸 찾기</h2><p>출발동으로 향할 때는 그곳으로 들어가서 직원 라커룸을 찾아야 합니다.</p><ul><li>출발동 뒤쪽으로 이동하세요. 여기에는 여러 개의 입구가 있습니다.</li><li>건물 뒤쪽에 있는 구멍 중 하나를 통해 들어가세요.</li><li>내부에서 이 뒷부분의 북서쪽으로 이동하세요.</li></ul><ul><li>직원 라커룸으로 이어지는 계단 아래에 있는 작은 문을 찾으세요.</li></ul><h2>3단계: 플러싱 터미널 키 받기</h2><p>퀘스트의 다음 단계에 필요한 열쇠는 직원 라커룸.</p><ul><li>라커룸에 단서를 조사하세요. 여기에는 다양한 전리품 아이템이 있습니다.</li></ul><ul><li>방 중앙 선반에 걸려 있는 흰색 방호복을 찾으세요. 이를 사용하여 플러싱 터미널 키를 떨어뜨립니다.</li></ul><h2>4단계: 터널 접근 및 키 사용</h2><p>플러싱 터미널 키를 손에 넣은 상태에서 마지막 작업은 지하 터널에 도달하여 특정 터미널에서 키를 사용할 때까지입니다.</p><ul><li>지하 터널을 향해 이동합니다. 발사대 근처의 입구를 사용할 수 있습니다.</li><li>터널로 들어간 후 북서쪽으로 계속 이동하세요.</li><li>터미널이 있는 제어실을 찾으세요.</li><li>우회 프로세스를 무시하려면 플러싱 터미널 키를 사용하여 터미널을 활성화하세요. 미션이 완료됩니다.</li></ul><h2>미션 완료</h2><p>단말기에서 열쇠를 성공적으로 사용하면 미션 완료로 등록되며 보상을 받을 수 있습니다.</p>",
+    "summary": "ARC Raiders의 Spaceport에서 \"부패의 악취\" 퀘스트를 완료하는 방법은 다음과 같습니다. 주요 위치와 플러싱 터미널 키를 찾아 사용하는 단계를 다룹니다.",
+    "thumbnail_url": "custom/husk-graveyard.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2026-01-16T21:59:32.467451+00:00"
+  },
+  {
+    "id": "904c1e02-4021-41a7-b372-b07fc0cbb35c",
+    "title": "시련 3성 가이드",
+    "slug": "trials-3-star-guide",
+    "content": "<h1>주간 시험 개요</h1><p>여기에서는 광범위한 준비나 특정 청사진 없이 단 두 번의 매치에서 모든 주간 시험을 별 3개로 만드는 방법을 보여줍니다. 로켓병에게 눈덩이 던지기, 날아다니는 ARC 적에게 피해 주기, ARC 탐사선 열기, 불덩어리 파괴(모두 Cold Snap에서), 슈레더에 피해 주기(Stella Montes Night Raid에서) 등을 다룰 것입니다.</p><h2>1단계: 로켓병에게 눈덩이 던지기</h2><p>별 3개 시험을 위해서는 로켓병에게 눈덩이 16개를 던져야 합니다. 눈덩이는 모든 맵의 대부분의 건물 주변에 덩어리로 생성됩니다. 눈덩이 1개를 모으고 2초 정도 기다린 후 똑같은 지점에서 또 다른 눈덩이를 모아 효율적으로 쌓을 수 있습니다.</p><ul><li>가능하다면 교전하기 전에 눈덩이 20~25개를 수집하세요. </li><li>눈덩이는 잠시 후에 다시 생성되므로 한 지점에서 여러 개를 집을 수 있습니다. </li></ul><h3>로켓 조종사 쓰러뜨리기</h3><p>로켓 조종사는 날아다니는 적이므로 그들을 접지시키기 위한 전략이 필요합니다.</p><ul><li>**신뢰성이 떨어지는 방법:** 쇼스토퍼나 호넷 드라이버를 사용하여 기절시키고 등을 맞히기를 바랍니다. 이 방법은 운과 타이밍에 크게 의존합니다. </li><li>**일관된 방법:** 로켓티어의 같은 쪽에 두 개의 추진기를 발사합니다. 이렇게 하면 비행이 비활성화되고 지상으로 내려오게 됩니다. </li><li class=\"ql-indent-1\">스러스터에만 집중하세요. 다른 부품을 손상시키면 두 추진기가 모두 꺼지기 전에 파괴되어 다시 날아갈 수 있습니다. </li></ul><p>일단 접지되면 시험 요구 사항이 충족될 때까지 로켓 조종사에게 눈덩이를 던집니다. 각 눈덩이는 1의 피해를 줍니다. </p><h2>2단계: 날아다니는 ARC 적에게 피해를 주세요</h2><p>이 시험에서는 스니치, 말벌, 말벌과 같은 날아다니는 ARC 적에게 피해를 주어야 합니다.</p><ul><li>더 나은 가시성과 교전을 위해 Grandioso 아파트 건물과 같은 고지대를 찾으세요. </li><li>스니치를 쏘세요; 그들은 종종 ARC 적을 비행하는 말벌과 말벌의 파도를 생성합니다. </li><li>경기 후반에 또 다른 Rocketeer를 만나게 됩니다. 주변에 다른 플레이어가 있으면 죽이지 않고 추진기를 손상시켜 그들도 시험을 완료할 수 있도록 하는 것을 목표로 하세요.</li></ul><h2>3단계: ARC 프로브 열기</h2><p>이 시험을 완료하려면 3개의 ARC 프로브를 열고 약탈해야 합니다.</p><ul><li>지도를 가로질러 공중으로 솟아오르는 연기 기둥을 찾아보세요. 이는 충돌한 ARC 프로브를 나타냅니다. </li><li>가까워지면 미니맵에 탐사선이 표시됩니다. 해당 지역을 횡단할 때 정기적으로 지도를 당겨서 찾아보세요. </li><li>다른 플레이어가 이미 뚫고 연 프로브를 약탈할 수 있습니다. </li></ul><h2>4단계: 불덩어리 파괴</h2><p>이 시험에서는 6개의 불덩어리를 파괴해야 합니다.</p><ul><li>Buried City(Cold Snap)에서 불덩어리를 위한 가장 좋은 장소는 지하 지하철 지역입니다. Cold Snap 이벤트에서는 지하철이 열려 모든 접근이 허용됩니다. </li><li>지하철 한쪽에서 불 덩어리를 제거한 후 기차를 호출하여 건너편에서 더 많은 것을 찾으십시오. </li><li>불덩이는 병원, 우주 여행, 연구 및 앰프와 같은 다른 건물에서도 생성됩니다. 관리, 갤러리아. </li></ul><h2>5단계: 파쇄기에 피해 주기</h2><p>이 시도는 Stella Montes Night Raid에서 가장 잘 수행됩니다. 여기서는 파쇄기 3개만 제거하면 됩니다(평소 공격대에서는 6개 대신).</p><ul><li>**무기 및 폭발물:**</li><li class=\"ql-indent-1\">두 개의 스냅 블래스트 수류탄 또는 충격 수류탄 5개를 던집니다. 슈레더의 바닥이 파괴될 수 있습니다. </li><li class=\"ql-indent-1\">합성 연료는 효과적인 임시 폭발물 역할도 하며 로비에서 흔히 볼 수 있습니다. </li><li class=\"ql-indent-1\">Anvil 또는 Il Toro 산탄총은 효과적인 무기입니다. 슈레더에 있는 세 개의 추진기를 조준하여 슈레더를 빠르게 파괴하세요. </li><li>**전술:** 엄폐물을 사용하여 안팎을 엿보고 슈레더를 쏘세요. 발사 직전이면 엄폐물 뒤로 후퇴하세요. </li><li>**약탈:** 탐험의 새로운 요구 사항인 슈레더 자이로를 항상 약탈하세요. </li><li>**스폰 위치:** 파쇄기는 로비, 샌드박스 지역, 로딩 베이 지하철, 문화 기록 보관소, 종자 저장소 지하철/탈출 지역, 조립 작업장과 의학 연구 사이에 있습니다. </li></ul>",
+    "summary": "",
+    "thumbnail_url": "icons/mastery-medal-backpack-charm.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": "https://www.youtube.com/watch?v=fQGKSA4T9l0",
+    "created_at": "2025-12-30T09:00:43.42299+00:00"
+  },
+  {
+    "id": "a7762921-088c-41f7-87f1-822a0fef1de8",
+    "title": "11월 10일주 시련 고득점 가이드",
+    "slug": "trials-high-scoring-guide-for-week-of-nov-10th",
+    "content": "<h2>개요</h2><p>여기에서는 모든 주간 평가판에서 별 3개를 획득하여 무료 보상과 청사진을 얻는 방법을 보여줍니다. 최적의 경로, 적의 약점, 다른 플레이어를 상대하기 위한 팁을 포함하여 각 시험에 대한 최고의 전략을 다룰 것입니다. 팁은 <a href=\"https://www.youtube.com/watch?v=-_uWD-XcJ3U\" rel=\"noopener noreferrer\" target=\"_blank\">The Gaming Merchant</a>에서 확인하세요!</p><h2>1단계: 피해 요새</h2><p>피해 요새 체험판에서는 특정 위치에 있는 요새를 파괴해야 합니다. 당신의 목표는 다른 플레이어가 당신보다 먼저 도착하지 못하도록 가능한 한 빨리 이러한 위치 중 하나에 도달하는 것입니다. 사용하기 가장 쉬운 방법은 수경 돔 단지입니다.</p><ul><li>**요새 생성 지점 찾기:** 잠재적인 요새 생성 지점으로 지도에서 수경 돔 복합체 또는 발전 단지를 식별합니다.</li><li>**위치로 돌진:** 요새 생성 지점 중 하나로 직접 이동합니다. 수경재배 돔 단지는 치즈 전략으로 인해 가장 쉬운 경우가 많습니다.</li><li>**문 엿보기 사용:** 수경재배 돔 문 중 하나에 위치하세요. 문쪽으로 요새를 미끼로 삼으세요. 머리가 모퉁이를 돌기에는 너무 커서 무릎뼈를 엿보고 안전하게 쏠 수 있습니다.</li></ul><ul><li>**무릎뼈 표적:** 노란색 무릎뼈에 집중하세요. 이를 파괴하면 일시적으로 요새가 비활성화됩니다.</li></ul><ul><li>**비활성화 중 손상:** 요새가 비활성화되면 자유롭게 공격하고 Snapblast 수류탄이나 Triggernades를 사용하여 최대 손상을 입히십시오.</li><li>**인벤토리 확인:** 인벤토리에 있는 탄약 및 기타 항목을 주시하십시오.</li><li>**요새 파괴:** 요새가 파괴될 때까지 이 과정을 계속하세요. 파괴되었습니다.</li></ul><ul><li>**플레이어 인식:** 다른 플레이어가 PvP를 시도하는 것을 조심하세요. 바스티온과 교전하는 동안 등을 보호하기 위해 바리케이드를 가져오는 것을 고려해보세요.</li></ul><ul><li>**파이프라인 타워에서 반복:** 첫 번째 바스티온을 파괴한 후 빠르게 두 번째 바스티온을 위해 파이프라인 타워로 이동합니다.</li></ul><ul><li>**파이프라인 타워에서의 최적 전략:** 그림과 같이 파이프라인 타워 입구에서 유사한 엿보기 전략을 사용합니다. 수경재배만큼 완벽하지는 않지만 문은 여전히 ​​상당한 엄폐물을 제공합니다.</li></ul><ul><li>**리스폰 파밍:** 요새는 주기적으로 같은 위치에 리스폰됩니다. 수경 돔 요새를 충분히 빠르게 파괴하면 다음 웨이브에서 다시 생성되므로 더 많은 포인트를 얻기 위해 과정을 반복할 수 있습니다.</li><li>**효율적인 약탈:** 요새를 파괴한 후 약탈하는 데 짧은 시간만 투자하세요. 시간은 매우 중요하며 근처에 다른 플레이어가 있을 수 있습니다.</li><li>**생성 최대화:** 솔로 플레이어로서 두 번의 요새 파괴를 목표로 하면 별 3개를 얻을 수 있습니다. 더 멀리 밀고 싶다면 처음 두 개를 빠르게 실행한 다음 다음 스폰 웨이브가 한두 개 더 싸울 때까지 기다리세요.</li><li>**시간 관리:** 항상 최종 추출 시간을 모니터링하세요. 경험에 따르면 탈출 지점까지 100미터마다 1분씩 걸어가야 합니다.</li></ul><p>이러한 단계를 따르면 Damage Bastions 시험에서 높은 점수를 얻을 수 있습니다.</p><h2>2단계: Damage Wasps</h2><p>Damage Wasps 시험은 특히 2배의 탈출 기회를 제공하는 Spaceport Hidden Bunker 이벤트에서 높은 점수를 축적할 수 있는 좋은 기회입니다. 포인트.</p><ul><li>**우주공항 숨겨진 벙커 선택:** 이 이벤트는 보너스 포인트와 지상 기반 ARC가 적기 때문에 말벌 농사에 이상적입니다.</li><li>**스니치 스캐너 준비:** 공격대에 들어가기 전에 스니치 스캐너를 비축하세요. 5마리를 데려오면 별 3개 등급의 말벌 10마리를 죽일 수 있습니다.</li></ul><ul><li>**말벌을 안전하게 교전하세요:** 도착하면 스니치 스캐너를 하나씩 사용하여 말벌을 공격하세요. 압도당하지 않도록 개별적으로 싸워보세요.</li></ul><ul><li>**엄폐물 사용:** 말벌을 엿보고 쏘기 위해 건물 내부와 같은 안전한 위치를 찾으세요.</li></ul><ul><li>**스캐너 모니터링:** 인벤토리에 있는 스니치 스캐너를 추적하세요.</li></ul><ul><li>**발사 타워 전략:** 초기 스니치 스캐너를 사용한 후 발사 타워로 걸어가세요. 유리한 위치를 위해 사다리를 오르세요.</li></ul><ul><li>**높은 위치:** 발사탑은 당신이 말벌을 양식하는 동안 다른 플레이어가 당신을 밀기 어렵게 만드는 매우 유리한 지점을 제공합니다.</li></ul><ul><li>**숨겨진 벙커 열기:** 숨겨진 벙커가 열리면 대부분의 플레이어가 그곳으로 달려가서 자유롭게 말벌을 양식할 수 있습니다.</li></ul><ul><li>**어그로 더 보기 말벌:** 스니치 스캐너가 부족한 경우 근처에 있는 수동 스니치를 발사하여 말벌과 말벌을 공격할 수 있습니다.</li></ul><ul><li>**말벌 조준 팁:** 말벌은 조준할 때 조준을 피하도록 코딩되어 있습니다. 대신, Wasp가 움직이지 않을 때까지 기다린 다음(보통 발사 직전) 머리 약간 위쪽을 조준하여 Hullcracker로 한방에 처치하세요.</li></ul><ul><li>**Hornet 전략:** 동일한 조준 팁이 Hornets에도 적용됩니다.</li></ul><ul><li>**말벌 전체를 파괴하세요:** 최대 점수를 얻으려면 날개뿐만 아니라 Wasp를 완전히 파괴해야 합니다. 모루로 몸을 세 발 쏘면 죽습니다.</li></ul><h2>3단계: 화염구 파괴</h2><p>화염덩어리를 파괴하기 위한 가장 좋은 지도는 밤에 댐 전장, 특히 시험 부속서 지역입니다.</p><ul><li>**최적 위치:** 댐 전장(야간 습격)에 있는 시험 부속서로 이동하세요.</li><li>**불덩어리 생성:** 이 지역은 다음과 같은 것들이 풍부합니다. 불덩어리는 특히 지하 구역과 건물에서 생성됩니다.</li></ul><ul><li>**최적 경로:** 수처리 제어에서 시작하여 지하를 통과하여 1차 시설, 제어 타워, 마지막으로 연구 및 증폭; 관리. 이 지역에는 불덩이가 많이 있습니다.</li></ul><ul><li>**불덩이 쏘기:** 불덩이가 나타나는 대로 쏘는 데 집중하세요. 그들은 종종 그룹으로 옵니다.</li></ul><ul><li>**효율적인 경로 지정:** 지정된 경로를 통해 계속 이동하여 생성되는 불덩이를 파괴합니다. 한 지역에서 불덩어리를 제거한 후 다음으로 이동하세요.</li></ul><ul><li>**계속 움직이세요:** 현재 위치에 더 이상 불덩이가 생성되지 않으면 발전단지나 기타 표시된 지역으로 계속 이동하세요. 항상 최종 추출을 주시하세요.</li></ul><h2>4단계: 히든 벙커에서 데이터 다운로드</h2><p>이 체험판에서는 일반적으로 히든 벙커에 있는 PC에서 데이터를 다운로드해야 합니다. 우주공항 지도.</p><ul><li>**숨겨진 벙커에 접근하세요:** 숨겨진 벙커 이벤트가 이용 가능해질 때까지 기다리세요. 위성을 활성화하여 벙커 입구를 엽니다.</li></ul><ul><li>**PC 찾기:** 입장 후 숨겨진 벙커에 있는 PC를 찾으세요. 일반적으로 데이터 다운로드에 사용할 수 있는 PC는 8대입니다.</li><li>**다운로드 시작:** PC와 상호 작용하여 데이터 다운로드를 시작합니다. 다운로드를 계속하려면 PC 가까이 있어야 합니다.</li></ul><ul><li>**완료 대기:** 다운로드가 완료될 때까지 PC 근처에 있어야 합니다. 이 프로세스는 다소 시간이 걸립니다.</li><li>**모든 PC에 대해 반복:** 점수를 최대화하려면 8대의 PC 모두에서 데이터를 다운로드합니다(최대 6,400점).</li></ul><ul><li>**쿨다운 기간:** 최근에 다른 플레이어가 PC에서 다운로드한 경우 액세스할 수 있기 전에 짧은 쿨다운(1~2분)이 발생합니다.</li></ul><ul><li>**솔로 대 스쿼드:** 이 작업을 수행하는 방법 솔로는 지루할 수 있지만 점수를 얻는 쉬운 방법입니다. 솔로일 때 다른 플레이어는 종종 우호적이며 PC를 공유합니다.</li></ul><h2>5단계: 운반물 전달</h2><p>운반물 전달 임무의 경우 운반물 전달 임무에서 운반물을 수집하고 전달하는 가장 효율적인 방법은 현장 창고를 활용하는 것입니다.</p><ul><li>**야전 창고 위치:** 현장 창고는 Dam Battlegrounds, Buried City 및 Buried City에서 사용할 수 있습니다. 우주공항.</li></ul><ul><li>**휴대품 수집:** 휴대품(예: 배터리, 데이터 드라이브)을 찾아 수집합니다. Field Depots 주변에서는 여러 개의 운반물을 흔히 찾을 수 있습니다.</li></ul><ul><li>**Deliver to Depot:** 수집한 운반물을 Field Depots에 놓습니다. 각 창고에 하나 이상의 운반물을 맡길 수 있습니다.</li></ul><ul><li>**배송 극대화:** 이번 시험에서 별 3개를 모두 획득하려면 Night Raid에서 배터리 4개를 배송하는 것을 목표로 하세요.</li></ul>",
+    "summary": "이 튜토리얼에서는 Bastions, Wasps, Fireballs 및 데이터 다운로드에 대한 포인트 최대화를 중심으로 게임의 모든 주간 시험에서 별 3개 등급을 달성할 수 있는 전문가 전략과 이상적인 경로를 제공합니다.",
+    "thumbnail_url": "icons/mastery-medal-backpack-charm.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-11T11:36:30.016881+00:00"
+  },
+  {
+    "id": "3dee99df-885c-43c1-9d88-fd059897d206",
+    "title": "시련 5주차",
+    "slug": "trials-week-5",
+    "content": "<h2>개요: 평가판 포인트 극대화</h2><p>모든 평가판 챌린지는 UI에 2배의 보너스를 제공하는 야간 습격, 전자기 폭풍 또는 숨겨진 벙커 이벤트와 같은 주요 지도 상황에서 완료하는 것을 목표로 하세요. 시간을 최대화하려면 항상 새로운 지도를 로드하고 화면의 가장 높은 지점에 있는 타이머를 확인하세요. 30~40분 정도에 참여하면 포인트가 최대화됩니다. 혼자 플레이할 때는 마지막 순간까지 라운드에 머물다가 대부분의 플레이어가 떠난 후에 추출하는 것이 더 안전할 수 있습니다. 획득한 포인트를 유지하려면 성공적으로 추출해야 한다는 점을 기억하세요.</p><h2>시험 1: Rocketeers 피해</h2><p>이 챌린지는 솔로 플레이어와 팀 모두 단일 공격에서 Rocketeers에게 최대한 많은 피해를 가하도록 유도합니다. 귀하 또는 귀하의 팀이 Rocketeer가 무너질 때까지 유일한 손상을 입히는 경우 전체 점수가 부여됩니다. 효율성을 극대화하려면 Wolfpack, Hullcrackers, Jupiters 및 Heavy Ammo 기반 무기를 조합하여 사용하는 것을 고려해 보십시오.</p><ul><li>Rocketeer를 완전히 처치하면 약 2600포인트의 가치가 있습니다. 별 3개 기준점에 도달하려면 두 번 처치해야 합니다. </li><li><strong>농업 위치 1: 우주공항 발사대</strong></li><li>주요 지도 상황에서 우주공항 발사대 중간에 정박하세요. 이상적으로는 추가 농사 시간을 위해 숨겨진 벙커에 고정하세요. 여기에서 진입점에 지뢰를 설치하고 멋진 시야를 활용하여 지도에 있는 모든 로켓병을 당신 쪽으로 끌어당길 수 있습니다. 이곳은 교통량이 많은 지역이므로 플레이어가 PvP에 참여하려고 시도할 수도 있습니다.</li><li><strong>농업 위치 2: 블루 게이트 순례자의 피크 타워</strong></li><li>또 다른 훌륭한 위치는 블루 게이트의 순례자의 피크에 있는 타워입니다. 저격수와 Wolfpack을 가져와 지도에 있는 모든 Rocketeer를 쉽게 끌어내세요. 이 위치에는 로켓티어가 두 번 생성되는 특징도 있습니다. 즉, 저항이 적은 두 번의 빠른 처치를 의미합니다. </li><li><strong>로켓병 타겟팅:</strong> 중화기 또는 에너지 탄약 무기로 중앙 눈 위의 장갑판을 목표로 삼으세요. 이 패널을 부수면 치명타 지점이 노출되어 일반적인 총격으로 빠르게 제압할 수 있습니다. </li></ul><h2>2단계: 히든 벙커 동안 데이터 다운로드</h2><p>이 체험판을 사용하려면 히든 벙커 내부의 터미널에서 데이터를 다운로드해야 합니다. 로비의 특성상 단독으로 진행하는 것을 적극 권장하지만, 완료하는 데 상당한 시간이 소요됩니다. </p><ul><li>히든 벙커 내부에는 단 8개의 터미널이 있으며, 각 터미널은 다운로드당 800포인트를 제공합니다. 별 3개 순위에 도달하려면 5개의 터미널이 필요합니다. </li><li><strong>벙커 활성화:</strong> 숨겨진 벙커 지도를 로드할 때 벙커가 열리려면 안테나 4개를 활성화해야 합니다. 이 안테나는 지도 시작 부분에 무작위로 배치됩니다. </li><li><strong>벙커 진입:</strong> 모든 안테나가 활성화되면 벙커 입구로 이동합니다. </li><li><strong>데이터 다운로드:</strong> 내부에서 8개의 컴퓨터 단말기를 찾으세요. 데이터 다운로드를 시작하려면 터미널을 활성화하세요. 노란색 표시등이 깜박이고 녹색 진행 표시줄이 나타납니다. 막대가 완료되면 표시등이 녹색으로 바뀌고 데이터를 수집할 수 있습니다.</li><li><strong>전략적 데이터 수집:</strong> 어느 콘솔이 거의 완료되었는지 주의를 기울이고 가능하면 데이터를 수집하세요. 다른 플레이어가 있는 경우 새 콘솔을 직접 활성화하는 대신 다음 활성화된 콘솔로 이동하세요. 다운로드하는 동안 거기에 머물게 되기 때문입니다. 플레이어가 조급해하고 수류탄을 사용하려고 시도할 수 있으므로 주의하세요. </li><li>8개의 단말기를 모두 다운로드하고 추출에 성공하면 6400포인트를 확보하게 됩니다. </li></ul><h2>3단계: 첫 번째 파도 껍질 검색</h2><p>첫 번째 파도 껍질 검색은 농업 잠재력이 높은 간단한 도전입니다. 각 껍질은 약 800점을 부여합니다.</p><ul><li>환경 전체에서 파괴하고 약탈할 수 있는 죽은 ARC 시체(로켓터 허스크, 남작 허스크, 호넷 허스크)를 찾으세요. 당신은 그것을 위반하는 사람이 될 수도 있고 다른 플레이어가 이미 위반한 것과 상호 작용할 수도 있습니다. </li><li><strong>최적의 위치: 우주공항</strong></li><li>우주공항은 일반적인 위험 지역에서 멀리 떨어진 지도 외곽에 생성되는 허스크의 수가 많기 때문에 아마도 최선의 선택일 것입니다. 이 지역에서는 PvP 활동이 거의 발생하지 않습니다. </li><li>이 챌린지는 무료 로드아웃 친화적이지만 지도를 보다 효율적으로 달리려면 아드레날린이 솟구치는 것을 가져오는 것이 좋습니다. </li></ul><h2>4단계: 데미지 스니치</h2><p>데미징 스니치는 죽으면 빠르게 부활하기 때문에 엄청난 포인트 획득 잠재력을 제공합니다.</p><ul><li>각 스니치는 600점을 부여하므로 일주일 동안 별 3개 순위를 달성하려면 7점만 있으면 됩니다. </li><li><strong>고차원적인 전략:</strong> 자신이나 팀을 지도의 중앙에 있는 높은 위치로 이동하세요. 저격수나 주피터를 이용해 모든 스니치를 끌어당기세요. </li><li><strong>지도 조건:</strong> 히든 벙커는 추가 시간을 제공하므로 최적의 위치입니다. Night Raid 및 모든 맵의 기타 2x 조건도 작동합니다. 핵심은 고도, 다른 팀으로부터 그 고도를 방어하는 능력, 그리고 ARC 적을 빠르게 끌어내릴 수 있는 적절한 장비입니다.  </li></ul><h2>5단계: 지상 기반 ARC 적에게 피해를 줍니다.</h2><p>이 챌린지는 높은 파밍 잠재력을 가지고 있지만 경쟁하는 적 때문에 높은 점수를 달성하는 것이 가장 어려운 경우가 많습니다. 킬로 얻은 총 XP의 80%만 포인트로 받게 됩니다. 즉, 픽, 팝, 파이어볼과 같은 작은 적들은 포인트를 거의 얻지 못합니다. </p><ul><li><strong>더 큰 적에 집중:</strong> Bastions, Bombardiers, Leapers와 같은 더 큰 적을 목표로 삼으십시오. 이들은 파밍 포인트에 이상적입니다. </li><li><strong>최적의 위치: 숨겨진 벙커</strong></li><li>숨겨진 벙커는 여전히 이 도전을 마무리하기에 가장 좋은 장소입니다. 리퍼, 바스티온, 봄바디어는 중앙 집중식 위치의 숨겨진 벙커 위에 생성되며, 파밍하는 데 10분의 추가 시간이 주어집니다. 주의하세요. 이곳은 PvP 핫존이 될 것입니다. </li><li><strong>대체 위치: 댐 전장(전자기 폭풍)</strong></li><li>전자기 폭풍이 발생하는 댐 전장은 또 다른 이상적인 지도입니다. 두 개의 Bastion 스폰, Bombardier 스폰, 3~5개의 Leaper 스폰이 특징입니다. 이는 솔로 플레이어에게 PvP를 피할 수 있는 더 많은 옵션을 제공하고 그룹을 나누어 파밍 노력을 극대화할 수 있습니다. </li></ul>",
+    "summary": "이 튜토리얼에서는 모든 5주차 경쟁 시험 과제에 대한 심층 분석을 제공하고 전략, 권장 장비 및 효율적으로 최대 포인트를 획득하고 순위표에 오를 수 있는 이상적인 위치를 제공합니다.",
+    "thumbnail_url": "icons/mastery-medal-backpack-charm.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-26T14:44:16.833556+00:00"
+  },
+  {
+    "id": "74f6022e-c43f-48a8-895e-4dd87a8c9388",
+    "title": "시련 6주차 고득점 가이드",
+    "slug": "trials-week-6-high-scoring-guide",
+    "content": "<h2>개요: 주간 평가판 및 앰프; 일반 팁</h2><p>이번 주의 시험은 150,000~200,000점에 도달할 가능성이 있어 높은 점수를 얻을 가능성이 매우 높습니다. 가이드에서는 별 3개를 달성하기 위한 솔로 완료 전략을 자세히 설명하고, 최고의 포인트 파밍 기회를 식별하고, 무료 로드아웃 친화적인 옵션을 제안합니다.</p><ul><li><strong>전체 포인트를 위한 주요 지도 조건:</strong> 숨겨진 벙커, 야간 습격, 전자기 폭풍과 같은 특정 조건만 전체 포인트를 얻을 수 있습니다. Harvesters 또는 Matriarchs와 같은 사소한 조건은 0.5점만 부여합니다.</li><li><strong>최적의 플레이 스타일:</strong> 별 3개를 달성하려면 플레이어 상호 작용이 적기 때문에 솔로 플레이가 더 쉬운 경우가 많습니다. 하지만 최대 순위표 포인트를 얻으려면 3명이 그룹으로 플레이하는 것이 좋습니다. [SCREENSHOT:01:15]</li><li><strong>숨겨진 벙커 지도:</strong> 이번 주에는 덜 의존적이지만 숨겨진 벙커 조건은 여전히 ​​여러 시험에 가장 적합한 환경을 제공합니다.</li></ul><h2>1단계: 호넷 손상</h2><ul><li><strong>포인트:</strong> 스러스터 처치당 365점, 본체 처치당 760점. 농장 잠재력은 높지만 무료 로드아웃에는 적합하지 않습니다.</li><li><strong>권장 농장 위치:</strong> Spaceport, 특히 Trench Towers(남쪽 또는 북쪽). </li><li><strong>전략:</strong></li><li class=\"ql-indent-1\">숨겨진 벙커 지도 조건에 투하하세요.</li><li class=\"ql-indent-1\">아드레날린 사격을 사용하여 트렌치 타워 중 하나에 빠르게 도달하세요. </li><li class=\"ql-indent-1\">집라인을 타워 위로 이동하세요.</li><li class=\"ql-indent-1\">위치 주변에 바리케이드와 함정을 설치하세요. </li><li class=\"ql-indent-1\">무기가 잘 수리되었는지 확인하고 탄약을 충분히 가져오세요.</li><li class=\"ql-indent-1\">이 고지 위치는 다른 플레이어로부터 탁월한 안전을 제공하고 일관된 호넷 생성을 제공합니다. </li><li class=\"ql-indent-1\"><strong>재생성 최적화:</strong> 순찰 중 말벌과 말벌을 모두 죽여 새로운 순찰이 더 빠르게 부활하도록 하세요. 말벌만 죽인 경우 말벌이 남아 있으면 새로운 산란이 지연될 수 있습니다.</li><li class=\"ql-indent-1\"><strong>포인트 극대화:</strong> 더 높은 점수를 얻으려면 스러스터(365포인트) 대신 호넷 본체(760포인트)를 목표로 하세요. </li><li>이 방법을 따르면 플레이어는 이번 시험에서 현실적으로 48,000점 이상을 획득할 수 있습니다. </li></ul><h2>2단계: 휴대품 배송</h2><ul><li><br></li><li><br></li><li class=\"ql-indent-1\"><strong>포인트:</strong> 배송된 휴대품당 1000포인트. 농장 잠재력은 좋지 않지만 무료 로드아웃에는 적합합니다.</li><li class=\"ql-indent-1\"><strong>추천 지도:</strong> 필드 상자 생성 가능성이 가장 높은 우주 공항 또는 댐 전장. </li><li><strong>전략:</strong></li><li class=\"ql-indent-2\">온라인 대화형 지도를 사용하여 잠재적인 필드 상자 생성을 추적하세요. </li><li class=\"ql-indent-2\">기껏해야 게임당 약 10개의 필드 상자를 예상할 수 있습니다.</li><li class=\"ql-indent-2\">다른 플레이어도 이 챌린지를 수행하면 스폰을 지울 수 있으므로 주의하세요. [SCREENSHOT:05:35]</li><li class=\"ql-indent-2\">별 3개를 혼자서 완료하는 것은 관리하기 쉽지만, 리더보드 파밍의 경우 경쟁으로 인해 많은 시도와 좋은 RNG가 필요합니다.</li><li class=\"ql-indent-2\">별 3개를 획득하는 데 집중하고 다른 플레이어가 활동 중인 경우 과도하게 투자하지 마세요. </li></ul><h2>3단계: 로켓병, 도약병 또는 요새에 피해를 줍니다</h2><ul><li><br></li><li class=\"ql-indent-2\"><strong>포인트:</strong> 킬당 약 2,200포인트(리퍼 및 로켓티어에서 테스트). 농장 잠재력은 크지만 무료 로드아웃에는 적합하지 않습니다.</li><li class=\"ql-indent-2\"><strong>권장 위치:</strong> 우주 공항, 특정 발사 타워 바닥. </li><li><strong>전략:</strong></li><li class=\"ql-indent-3\">이것은 공격적인 위치이므로 PvP에 직면할 준비를 하세요. </li><li class=\"ql-indent-3\">발사탑에서는 2~3개의 리퍼 생성, 3개의 로켓병 생성, 심지어 바스티온 생성까지 발견할 수 있습니다. </li><li class=\"ql-indent-3\"><strong>숨겨진 벙커 대안:</strong> 숨겨진 벙커 지도도 추가 시간을 위해 작동하지만 Bastions와 같은 지역에 있는 Bombardiers를 조심하십시오. 이는 문제가 될 수 있습니다. </li></ul><h2>4단계: 팝 파괴</h2><ul><li><br></li><li class=\"ql-indent-3\"><strong>포인트:</strong> 킬당 880포인트. 훌륭한 농장 잠재력, 무료 로드아웃에 적합합니다(탄약 전리품만 필요함).</li><li class=\"ql-indent-3\"><strong>추천 위치:</strong> Stella Montis, 확실히 Night Raid 지도 조건 중입니다. </li><li><strong>전략:</strong></li><li class=\"ql-indent-4\">Stella Montis 대기열 - Night Raid가 마지막 몇 분 또는 몇 초에 가까워졌을 때. 이로 인해 새로운 플레이어가 다시 생성되지 않는 게임이 발생하여 솔로 파밍을 위한 조용한 로비가 만들어질 수 있습니다. </li><li class=\"ql-indent-4\">다른 플레이어가 싸우거나 탈출할 수 있도록 처음 몇 분 동안 조용히 유지하여 로비를 축소하세요.</li><li class=\"ql-indent-4\">로비가 작아진 후에는 두 샌드박스 영역, 제어 영역 및 지하철 역 탈출 지점 사이를 순환하세요. 이 영역에서 팝이 빠르게 다시 생성됩니다. </li><li class=\"ql-indent-4\"><strong>대안:</strong> Stella Montis가 이상적이지 않다면 Buried City가 차선책입니다. 연구, 우주 여행, 주차장, 병원 및 추출 지점에 중점을 둡니다. </li></ul><h2>5단계: ARC 프로브 열기</h2><ul><li><br></li><li class=\"ql-indent-4\"><strong>포인트:</strong> 검색당 1,334포인트. 매우 무료 로드아웃이 가능하고 농장 잠재력이 뛰어납니다.</li><li class=\"ql-indent-4\"><strong>추천 지도:</strong> 전자기 폭풍 위의 댐 전장. [SCREENSHOT:09:59]</li><li><strong>전략:</strong></li><li class=\"ql-indent-5\">아드레날린 주사를 많이 가져와 지도를 빠르게 덮으세요.</li><li class=\"ql-indent-5\">전자기 폭풍에서는 탐사선이 2~3개 무리로 생성되는 경우가 많습니다. [SCREENSHOT:10:07]</li><li class=\"ql-indent-5\">대화형 지도는 필요하지 않습니다. 위반된 ARC에서 나오는 검은 연기에 주의를 기울이고 지도를 지속적으로 확인하세요.</li><li class=\"ql-indent-5\">ARC 프로브는 멀리 떨어져 있더라도 확대하면 지도에 표시됩니다. </li><li class=\"ql-indent-1\"><strong>중요:</strong> 프로브를 '위반'하는 것이 아니라 '검색'하는 것입니다. 다른 플레이어가 이미 프로브를 위반한 경우에도 여전히 포인트를 검색할 수 있습니다. </li></ul>",
+    "summary": "여기에서는 현재 주간 시험을 효율적으로 완료하는 방법과 각 챌린지에 대한 특정 파밍 방법을 설명하여 획득한 포인트를 극대화합니다.",
+    "thumbnail_url": "icons/mastery-medal-backpack-charm.webp",
+    "author": "ARC Companion 팀",
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-12-03T06:50:01.661776+00:00"
+  },
+  {
+    "id": "d43eb4c0-61c4-4b58-ae5f-ca44aef8c668",
+    "title": "시련 7주차",
+    "slug": "trials-week-7",
+    "content": "<h2>개요: 주간 평가판 7주차</h2><p>이번 주는 시즌 1 평가판의 마지막 주로 화요일까지 연장되며 플레이어에게 목표를 완료할 수 있는 하루를 더 제공합니다. 많은 사람들의 주요 초점은 현재 순위를 유지하는 것이지만 더 높은 순위를 추구하는 것은 여전히 ​​가능합니다. 최대 점수를 얻으려면 Night Raids 또는 Electro Magnetic Storms와 같은 주요 지도 조건 내에서 시험의 우선 순위를 지정하여 두 배의 점수를 부여합니다. 하지만 Queen/Matriarch 시험은 특정 하위 지도 조건(Harvester 또는 Matriarch 이벤트)에서 해결해야 합니다.</p><h2>진드기, 불덩어리 및 팝을 파괴하세요.</h2><p><span style=\"Background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></p><ul><li>사살할 때마다 470점을 얻습니다.</li><li>이 챌린지에 가장 적합한 맵은 Stella Montis입니다. 특히 Night Raid 이벤트 중입니다.</li><li>Stella Montis는 Ticks, Pops 및 Fireballs로 밀집되어 있습니다.</li><li><strong>전략적 대기열:</strong> Stella Montis의 Night Raid 대기열은 다음과 같습니다. 마지막 몇 초 또는 몇 분이 가까워지고 있습니다. 이로 인해 공격대 중간에 플레이어가 리스폰되지 않고 로비가 비어 있게 되어 PvP 간섭 없이 ARC를 단독으로 클리어할 수 있습니다. <span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li><li><strong>권장 위치:</strong></li><li class=\"ql-indent-1\">Seed Vault에는 약 6-8틱이 있습니다. <span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\"></span></li><li class=\"ql-indent-1\"><span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\"> Archives에는 확실히 천장에 팝, 파이어볼, 미니 진드기가 풍부합니다. </span></li><li class=\"ql-indent-1\"><span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\">제어실은 팝과 파이어볼을 위한 훌륭한 장소이기도 합니다. </span></li><li><strong>PvP 회피:</strong> 로비, 의학 연구, 로딩 베이와 같이 PvP가 높은 지역을 피하세요. 총소리가 들리면 방향을 바꾸세요. <span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span> 로비가 정리되기 시작하면 검색 범위를 확장할 수 있습니다. <span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li></ul><h2>검색 자원 드롭</h2><ul><li>검색된 각 보급품 포드는 1,600포인트를 부여합니다.</li><li>이 평가판은 RNG에 크게 의존합니다. 확실한 최고의 지도는 하나도 없습니다. Spaceport는 역사적으로 일관적이었지만 비디오는 댐 전쟁터에서의 실행을 보여줍니다.</li><li><strong>보급 스테이션 식별:</strong> 스테이션 상단에 빛나는 흰색 전구를 찾아 아직 사용되지 않았음을 나타냅니다. <span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li><li><strong>포인트 획득:</strong> 포인트를 얻으려면 보급품 포드를 '탭'(약탈)하기만 하면 됩니다. 직접 호출할 필요는 없습니다. <span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\"></span></li><li><span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\">우리의 대화형 지도는 말벌의 잠재적인 생성 위치를 표시할 수 있습니다</span></li></ul><h2>손상 말벌</h2><p><span style=\"Background-color: rgba(255, 255, 255, 0.03) color: rgb(231, 233, 234);\"></span></p><ul><li>각 말벌 본체 사살은 최대 440점을 부여합니다.</li><li>이상적인 위치는 활성화되었을 때 말벌을 생성하는 숨겨진 벙커입니다.</li><li>또는 야간 습격이나 전자기 폭풍 이벤트 중 우주 공항은 발사대 또는 관제탑 지역을 중심으로 하는 강력한 선택입니다. <span style=\" background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li><li><strong>스니치 스캐너 전략:</strong> 여러 스니치 스캐너를 비축한 다음 Spaceport의 타워 꼭대기와 같은 높은 유리한 지점에 위치하세요. 입구에 함정을 배치하고 스캐너를 사용하여 말벌이 나타나는 대로 탐지하고 제거하세요. 이는 포인트에 있어 매우 일관적입니다.</li><li><strong>스캐너 없는 전략:</strong> 높은 지대(예: 타워)를 차지하고 함정을 사용하여 자신을 보호하고 스니치를 유인하세요. 스니치는 지원군당 두 마리의 말벌을 추가로 불러와 별 3개에 ​​필요한 최대 10마리의 말벌을 충족하는 데 도움을 줍니다. <span style=\"Background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li></ul><h2>피해 보루</h2><p><span style=\"Background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></p><ul><li>각 Bastion 킬은 ~4510점을 부여합니다.</li><li>Hidden Bunker가 활성화되면 두 개의 Bastion이 바로 위에 생성되어 지속적인 파밍이 가능하므로 이상적입니다. <span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\"></span></li><li><span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\">Spaceport도 탁월한 선택입니다. 6개의 확실한 생성 위치가 있으며 일반적으로 게임당 2개의 Bastion이 보장됩니다. 교대로 처치하고 다시 생성되도록 할 수 있습니다.</span></li><li><strong>쉬운 3성 방법:</strong> Wolfpack 2~3개를 가져오세요. Bastion에 던지면 즉시 제거되어 빠른 추출이 가능합니다. <span style=\" background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li><li><strong>농업 전략(우주 공항):</strong> 지속적인 포인트 농사를 위해서는 트렌치 타워 꼭대기에 앉아 그 아래에 있는 요새를 죽이거나 컨테이너 보관소에 벙커를 쌓으세요. <span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span> 헐크래커와 같은 중화기가 주목을 끌기 때문에 PvP에 주의하세요.</li><li>최소 최대치 없이 별 3개를 목표로 한다면 Bastion 2회 처치로 8,000명 이상을 처치할 수 있습니다. 포인트.</li></ul><h2>데미지 퀸즈 또는 메이트리아크</h2><p><span style=\"Background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></p><ul><li>입힌 피해량은 0.7:1 비율로 포인트로 환산됩니다. 3성 기준점에 도달하려면 5715의 데미지(XP 아님)가 필요합니다. <span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\"></span></li><li><span style=\"배경 색상: rgba(255, 255, 255, 0.03); 색상: rgb(231, 233, 234);\">이것은 솔로 플레이어에게 가장 어렵고 비용이 많이 드는 시험입니다.</span></li><li><strong>방법 1(높은 비용, 낮은 노력):</strong> 약 8개의 Wolfpack을 사용합니다. 각 Wolfpack은 약 750의 피해를 입히며 총 피해량은 ~6000으로 별 3개 요구 사항을 쉽게 초과합니다. 이는 비용이 많이 들지만 효과적입니다. <span style=\"ground-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li><li><strong>방법 2(위험함):</strong> Queen/Matriarch 위에 올라 Deadline 지뢰를 설치하세요. 이는 상당한 피해를 입힐 수 있지만 매우 위험합니다. <span style=\" background-color: rgba(255, 255, 255, 0.03); color: rgb(231, 233, 234);\"></span></li><li><strong>방법 3(권장):</strong> Hullcracker 대신 Jupiter를 사용합니다. Jupiter는 발사당 훨씬 더 많은 피해를 입히고 탄약 제작/구매 비용이 더 저렴합니다. 이 방법을 사용하면 피해를 더 빨리 축적할 수 있습니다.</li><li><strong>안전한 위치 지정:</strong> 여왕/여군주와 교전할 때 고지나 엄폐물을 찾으세요.</li><li><strong>그룹 플레이:</strong> 이 시도는 3인조로 완료하는 것이 가장 좋습니다. 다른 팀이 전투에 참여하면 피해 포인트를 훔쳐 별 3개 기준점에 도달하기가 더 어려워집니다. 팀과 협력하여 피해를 입히고 스스로 처치를 확보하세요.</li></ul>",
+    "summary": "",
+    "thumbnail_url": "icons/mastery-medal-backpack-charm.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-12-08T11:11:08.315745+00:00"
+  },
+  {
+    "id": "52e0a5df-6965-4e02-9a9b-8222f3611a2a",
+    "title": "역전",
+    "slug": "turnabout",
+    "content": "<h2>개요</h2><p>'Turnabout' 퀘스트는 Spaceport Trench Tower Key를 획득하고 North Trench Tower로 가서 Celeste에 협박 파일을 찾아 업로드한 다음 해당 지역에서 성공적으로 탈출하도록 요구합니다.</p><h2>1단계: 로드아웃 준비</h2><ul><li>로드아웃에 안전 주머니가 하나 이상 포함된 증강 장치를 장착했는지 확인하세요. [SCREENSHOT:00:15]</li><li>'우주공항 참호 타워 열쇠'(퀘스트에서 제공)를 안전한 주머니에 넣어 보관하세요. </li><li>참고: 열쇠를 분실한 경우 지도 전체에 걸쳐 서랍, 찬장, 사물함과 같은 컨테이너를 약탈하여 교체할 수 있습니다.</li></ul><h2>2단계: 북쪽 참호 타워로 향하세요</h2><ul><li>Spaceport에 생성되면 지도를 확인하고 지도의 북동쪽 부분에 있는 'North Trench Tower'를 찾으세요.</li><li>퀘스트 열쇠는 둘 중 하나를 열 수 있습니다. 북쪽 또는 남쪽 트렌치 타워인 경우, 당신의 목표는 확실히 북쪽 트렌치 타워에 들어가야 합니다.</li></ul><h2>3단계: 타워에 입장하세요</h2><ul><li>'The Trench' 지역에서 북쪽 트렌치 타워로 이동합니다.</li><li>지하층 입구로 이어지는 외부 계단을 찾으세요. 이 계단을 올라가세요.</li><li>지하 구역을 통과하여 내부 계단을 올라가 타워의 표면 높이에 도달하세요.</li><li>표면에서 두 개의 정문 중 하나를 찾으세요. 상호작용하여 잠금을 해제하고 엽니다. </li></ul><h2>4단계: 협박 파일 업로드</h2><ul><li>타워에 들어간 후 1층을 탐색합니다. 여기에는 주요 목표가 없지만 위반 상자를 검색하여 전리품을 얻을 수 있습니다.</li><li>2층으로 이어지는 계단을 찾아 올라갈 수 있습니다. </li><li>2층 중앙, 방 북동쪽에 위치한 컴퓨터 스테이션을 찾으세요.</li><li>컴퓨터를 사용하여 협박 파일을 업로드하세요.</li></ul><h2>5단계: 보상 추출 및 청구</h2><ul><li>파일을 업로드한 후 남은 것은 임무 영역에서 성공적으로 탈출하는 것뿐입니다.</li><li>퀘스트와 청구를 위해 기지에 있는 Celeste로 돌아가세요. 보상을 받으세요.</li></ul>",
+    "summary": "",
+    "thumbnail_url": "icons/camera-lens.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2026-01-16T22:19:55.89209+00:00"
+  },
+  {
+    "id": "245331a0-83a6-4925-8a6c-37a4d2c1cd2b",
+    "title": "주간 시련 11월 17일",
+    "slug": "weekly-trials-nov-17th",
+    "content": "<h2>개요</h2><p>이 가이드에서는 식물 수확, ARC 프로브 열기, 날아다니는 ARC 적에게 피해, 도약하는 사람에게 피해를 주는 등 특정 목표를 중심으로 11월 17일부터 23일까지 진행되는 주간 시험에서 뛰어난 성과를 거두기 위한 팁을 설명합니다. 점수를 최대화하려면 주요 지도 조건에 주의하여 점수를 최대화하세요.</p><p>이 가이드를 만들기 위해 Ebontis의 <a href=\"https://www.youtube.com/watch?v=-YAQ09HcUno\" rel=\"noopener noreferrer\" target=\"_blank\">이 동영상</a>을 사용했습니다.</p><h2>1단계: 식물 수확</h2><p>'식물 수확' 실험을 위해서는 수확을 해야 합니다. 일반 픽업이 아닌 버섯, 그레이트 멀레인 또는 충전 막대가 있는 이끼와 같은 특정 식물 유형.</p><ul><li>버섯은 일반적으로 찾기가 어렵습니다.</li><li>일부 이끼는 댐 전장의 수경 돔 단지에 있습니다.</li><li>**가장 좋은 위치:** 매장된 도시, 야간 습격 조건의 특정 갤러리아에서. </li><li>화분자와 로비에서 많은 Great Mullein 식물을 찾을 수 있으며 각각 약 500개의 포인트(실행당 약 26-30개)를 제공합니다.</li></ul><h2>2단계: ARC 프로브 열기</h2><p>'개방형 ARC 프로브' 시험의 경우 열기 위해 상호 작용이 필요한 링이 있는 프로브를 타겟팅하는 것이 좋습니다. ARC Couriers는 일반적으로 포함되지 않습니다.</p><ul><li>더 많은 시간을 확보하려면 Hidden Bunker와 같이 포인트가 2배인 더 큰 지도를 선택하세요(30분 대신 40분). </li><li>각 탐사선은 약 1334포인트의 가치가 있으므로 Night Raid에서 3개를 열면 일반적으로 4000포인트가 확보됩니다.</li><li>전자기 폭풍 동안 Breach on Dam Battlegrounds 근처에 3개의 탐사선이 있는 예와 같이 여러 탐사선이 서로 가까이 생성되는 경우 운이 좋을 수 있습니다.</li><li>탐사선을 열려면 탐사선을 뚫고 열어서 컨테이너를 조사해야 합니다.</li></ul><h2>3단계: 손상 비행 ARC 적</h2><p>이 광범위한 시험에는 말벌, 정찰병, 밀고자, 호넷, 로켓티어와 같은 다양한 비행 적들이 포함됩니다.</p><ul><li>효율성을 위해 매우 강력한 ARC 갑옷 관통력을 갖춘 **Hullcracker**(발사기 무기) 사용을 고려해보세요. </li><li>헐크래커의 가격은 30,000 화폐이며 24시간마다 한 번씩 구매할 수 있습니다. 발사기 탄약을 비축하세요.</li><li>로켓티어를 목표로 삼을 때 한쪽에 집중하여 두 개의 엔진을 신속하게 비활성화하여 쓰러뜨리세요.</li><li>**스니치 스캐너**를 사용하여 날아다니는 적을 포함하는 더 많은 적을 불러내 피해 출력과 점수를 높이세요. </li><li>Hullcracker는 종종 말벌과 말벌을 단발로 공격할 수 있습니다.</li></ul><h2>4단계: 리퍼 피해</h2><p>리퍼는 화염 피해에 노출됩니다.</p><ul><li>리퍼가 여러분에게 점프하거나 정지해 있을 때 **블레이즈 수류탄**을 사용하여 땅에 불을 붙입니다. </li><li>**파이어볼 버너**(파이어볼에서 나온)도 효과적일 수 있습니다.</li><li>**스냅 블래스트 수류탄**은 적에게 달라붙어 일관된 피해를 주기가 더 쉽기 때문에 권장됩니다. </li><li>**중형 신관 수류탄**은 대안이지만 리퍼의 움직임으로 인해 신뢰성이 떨어집니다. </li><li>**데드라인 지뢰**는 리퍼에 부착하여 상당한 피해를 입힐 수 있다면 정말 좋습니다. </li><li>Leapers가 더 흔한 것으로 보이므로 전자기 폭풍 조건에서 임무를 실행해 보세요.</li><li>Hidden Bunker 임무는 Leapers를 찾아 처치하는 데 더 긴 시간(40분)을 제공합니다.</li></ul><h2>5단계: Queens 또는 Matriarchs 피해</h2><p>이 시도에서는 일반적으로 특정 지도로 표시되는 Queens 또는 Matriarchs에 피해를 입힙니다. 조건.</p><ul><li>현재 Queen 또는 Matriarch 임무는 활성화되어 있지 않지만 Spaceport 또는 Hidden Bunker와 같은 지역에서는 주의를 기울이십시오. </li></ul>",
+    "summary": "",
+    "thumbnail_url": "icons/mastery-medal-backpack-charm.webp",
+    "author": null,
+    "type": "general",
+    "objectives": [],
+    "xp": 0,
+    "rewards": [],
+    "video_url": null,
+    "created_at": "2025-11-17T13:20:43.823007+00:00"
+  }
+]

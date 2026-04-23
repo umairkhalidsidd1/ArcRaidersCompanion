@@ -1,0 +1,201 @@
+{
+  "description": "遠征は任意のプレステージ/ソフトリセットシステムです。レベル20で利用可能になり、プレイヤーは永続的な報酬と引き換えに進行状況をリセットします。プロジェクトには難度が上がる6つのステージがあります。",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "基盤",
+      "description": "キャラバンの建造を開始するための基本的な建設資材を集めよ。",
+      "objectives": [
+        {
+          "item": "金属部品",
+          "quantity": 150
+        },
+        {
+          "item": "化学物質",
+          "quantity": 100
+        },
+        {
+          "item": "ARCアロイ",
+          "quantity": 80
+        },
+        {
+          "item": "鋼バネ",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "コアシステム",
+      "description": "キャラバンの電気・機械コアシステムを設置せよ。",
+      "objectives": [
+        {
+          "item": "耐久布",
+          "quantity": 30
+        },
+        {
+          "item": "ワイヤー",
+          "quantity": 25
+        },
+        {
+          "item": "電子部品",
+          "quantity": 20
+        },
+        {
+          "item": "産業用充電器",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "フレームワーク",
+      "description": "構造フレームと特殊部品を組み立てよ。",
+      "objectives": [
+        {
+          "item": "コーヒーポット",
+          "quantity": 1
+        },
+        {
+          "item": "バッテリー",
+          "quantity": 25
+        },
+        {
+          "item": "ファイアボールバーナー",
+          "quantity": 5
+        },
+        {
+          "item": "エクソダスモジュール",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "装備",
+      "description": "先進技術と希少なARC部品でキャラバンを装備せよ。",
+      "objectives": [
+        {
+          "item": "破損した誘導システム",
+          "quantity": 1
+        },
+        {
+          "item": "高度な電子部品",
+          "quantity": 10
+        },
+        {
+          "item": "絶景スノーグローブ",
+          "quantity": 3
+        },
+        {
+          "item": "ボンバルディアセル",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "積載ステージ",
+      "description": "コイン価値別に分類された補給品をキャラバンに積め。",
+      "objectives": [
+        {
+          "item": "素材（コイン価値別）",
+          "quantity": 300000
+        },
+        {
+          "item": "戦闘アイテム（コイン価値別）",
+          "quantity": 200000
+        },
+        {
+          "item": "サバイバルアイテム（コイン価値別）",
+          "quantity": 100000
+        },
+        {
+          "item": "糧食（コイン価値別）",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "出発",
+      "description": "出発ウィンドウ中にレイダーを登録せよ。残りの全保管アイテムが遠征価値に加算される。",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "ボーナススキルポイント",
+        "description": "最大5ボーナススキルポイント（コイン価値100万ごとに1）",
+        "icon": "star"
+      },
+      {
+        "name": "+12保管スペース",
+        "description": "次のレイダーのための追加保管スペース",
+        "icon": "archive"
+      },
+      {
+        "name": "つぎはぎレイダー衣装",
+        "description": "独占進化コスメティック",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "スクラッピーコスメティック",
+        "description": "ユニークな頭飾り（例：スクラッピージャニターキャップ）",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "遠征インジケーター",
+        "description": "遠征回数を示すバッジ",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "修理価値ブースト",
+        "description": "+60-70%修理価値（最大3重複）",
+        "icon": "tools"
+      },
+      {
+        "name": "XPブースト",
+        "description": "+5-10%XP獲得（最大3重複）",
+        "icon": "trending-up"
+      },
+      {
+        "name": "スクラッピー素材",
+        "description": "+6%スクラッピーからの素材（最大3重複）",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "解放済みマップ",
+    "コスメティック",
+    "レイダーデッキ",
+    "レイダートークン",
+    "クレド",
+    "コーデックスエントリー",
+    "ワークショップステーション",
+    "試練",
+    "アクティブリーダーボード",
+    "個人イベント進行",
+    "ボーナススキルポイント（以前の）"
+  ],
+  "loses": [
+    "設計図",
+    "インベントリと保管",
+    "プレイヤーレベル",
+    "コイン",
+    "ワークショップアップグレード",
+    "クエスト進行",
+    "スキルポイント（初期）"
+  ]
+}

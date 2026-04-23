@@ -1,14 +1,14 @@
 /**
- * Arc Raiders Companion — "Cassette Futurism" Dark Theme
+ * Arc Raiders Companion — Dark Sci-Fi Theme (Raiders Map Inspired)
  */
 
 export const colors = {
   // Backgrounds
-  bg: '#0D0D0D',
-  bgSecondary: '#1A1A1A',
-  bgCard: 'rgba(255, 255, 255, 0.06)',
-  bgCardHover: 'rgba(255, 255, 255, 0.10)',
-  bgElevated: '#222222',
+  bg: '#0A0E17',
+  bgSecondary: '#111827',
+  bgCard: 'rgba(255, 255, 255, 0.05)',
+  bgCardHover: 'rgba(255, 255, 255, 0.08)',
+  bgElevated: '#1A2332',
 
   // Accents
   orange: '#FF6B2C',
@@ -18,16 +18,18 @@ export const colors = {
   red: '#FF4444',
   purple: '#A855F7',
   yellow: '#FFD600',
+  accent: '#00E5FF',
 
   // Text
-  textPrimary: '#F0F0F0',
-  textSecondary: '#999999',
-  textMuted: '#666666',
-  textInverse: '#0D0D0D',
+  textPrimary: '#EAEAEA',
+  textSecondary: '#8B9DB5',
+  textMuted: '#4A5568',
+  textInverse: '#0A0E17',
 
   // Borders
-  border: 'rgba(255, 255, 255, 0.08)',
-  borderLight: 'rgba(255, 255, 255, 0.15)',
+  border: 'rgba(255, 255, 255, 0.07)',
+  borderLight: 'rgba(255, 255, 255, 0.12)',
+  borderAccent: 'rgba(0, 229, 255, 0.25)',
 
   // Overlays
   overlay: 'rgba(0, 0, 0, 0.7)',

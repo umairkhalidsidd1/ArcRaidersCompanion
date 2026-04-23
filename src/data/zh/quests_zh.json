@@ -1,0 +1,2663 @@
+{
+  "quest_data": {
+    "description": "ARC Raiders Quest Data with Prerequisites and Unlock Order",
+    "last_updated": "2026-03-24",
+    "source": "https://arcraiders.wiki/wiki/Quests"
+  },
+  "unlock_requirements": {
+    "dam_battlegrounds": "起始区域",
+    "blue_gate": "已进行18轮",
+    "stella_montis": "已进行24轮"
+  },
+  "quests": [
+    {
+      "id": 1,
+      "name": "拾起碎片",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "访问地图上有战利品分类图标的任意区域",
+        "搜刮3个容器"
+      ],
+      "rewards": [
+        {
+          "item_id": "rattler-iii",
+          "name": "响尾蛇 III",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-ammo",
+          "name": "中型弹药",
+          "quantity": 80
+        }
+      ],
+      "prerequisites": [],
+      "unlock_requirement": "水坝战场已解锁",
+      "tree_position": "root"
+    },
+    {
+      "id": 2,
+      "name": "更晴朗的天空",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "消灭3个ARC敌人",
+        "为沙妮获取3个ARC合金"
+      ],
+      "rewards": [
+        {
+          "item_id": "black-hiker-colour",
+          "name": "徒步者背包（黑色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "sterilized-bandage",
+          "name": "消毒绷带",
+          "quantity": 3
+        },
+        {
+          "item_id": "light-shield",
+          "name": "轻型护盾",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Picking Up The Pieces"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 3,
+      "name": "变废为宝",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "获取6根电线",
+        "获取1个电池"
+      ],
+      "rewards": [
+        {
+          "item_id": "tactical-mk-1",
+          "name": "战术型 Mk.1",
+          "quantity": 1
+        },
+        {
+          "item_id": "adrenaline-shot",
+          "name": "肾上腺素注射",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Picking Up The Pieces"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 4,
+      "name": "脱离雷达",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "单轮内：参观野战仓库",
+        "修理野战仓库屋顶的天线"
+      ],
+      "rewards": [
+        {
+          "item_id": "defibrillator",
+          "name": "除颤器",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Clearer Skies",
+        "Trash Into Treasure"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 5,
+      "name": "不好的预感",
+      "quest_giver": "Celeste",
+      "location": "任意",
+      "objectives": [
+        "找到并搜索任意ARC探测器或ARC信使"
+      ],
+      "rewards": [
+        {
+          "item_id": "metal-parts",
+          "name": "金属零件",
+          "quantity": 10
+        },
+        {
+          "item_id": "spring",
+          "name": "钢弹簧",
+          "quantity": 5
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "管道胶带",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Off The Radar"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 6,
+      "name": "安全通道",
+      "quest_giver": "Apollo",
+      "location": "任意",
+      "objectives": [
+        "使用任何爆炸手雷摧毁2个ARC敌人"
+      ],
+      "rewards": [
+        {
+          "item_id": "lil-smoke-grenade",
+          "name": "小型烟雾弹",
+          "quantity": 5
+        },
+        {
+          "item_id": "shrapnel-grenade",
+          "name": "弹片手雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "barricade-kit",
+          "name": "路障工具",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A Bad Feeling"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a"
+    },
+    {
+      "id": 7,
+      "name": "因果循环",
+      "quest_giver": "Apollo",
+      "location": "任意",
+      "objectives": [
+        "使用火球燃烧器摧毁任何ARC"
+      ],
+      "rewards": [
+        {
+          "item_id": "cans-backpack-attachment",
+          "name": "背包挂件（罐子）",
+          "quantity": 1
+        },
+        {
+          "item_id": "blaze-grenade",
+          "name": "燃烧弹",
+          "quantity": 3
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "噪音发生器",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Safe Passage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a"
+    },
+    {
+      "id": 8,
+      "name": "火花飞溅",
+      "quest_giver": "Apollo",
+      "location": "任意",
+      "objectives": [
+        "使用遥控雷或速爆手雷摧毁一个大黄蜂"
+      ],
+      "rewards": [
+        {
+          "item_id": "crude-explosives",
+          "name": "粗制炸药",
+          "quantity": 4
+        },
+        {
+          "item_id": "processor",
+          "name": "处理器",
+          "quantity": 2
+        },
+        {
+          "item_id": "trigger-nade-recipe",
+          "name": "遥控雷蓝图",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "What Goes Around"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a"
+    },
+    {
+      "id": 9,
+      "name": "正确的工具",
+      "quest_giver": "Tian Wen",
+      "location": "任意",
+      "objectives": [
+        "摧毁一个火球",
+        "摧毁一个大黄蜂",
+        "摧毁一个炮塔"
+      ],
+      "rewards": [
+        {
+          "item_id": "cheer-emote",
+          "name": "欢呼表情",
+          "quantity": 1
+        },
+        {
+          "item_id": "stitcher-ii",
+          "name": "缝合者 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-light-mag-i",
+          "name": "扩展轻型弹匣 I",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Bad Feeling"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2b"
+    },
+    {
+      "id": 10,
+      "name": "更好的用途",
+      "quest_giver": "Tian Wen",
+      "location": "任意",
+      "objectives": [
+        "从呼叫站请求补给空投",
+        "搜刮一个补给空投"
+      ],
+      "rewards": [
+        {
+          "item_id": "extended-light-mag-i",
+          "name": "扩展轻型弹匣 I",
+          "quantity": 1
+        },
+        {
+          "item_id": "compensator-i",
+          "name": "补偿器 I",
+          "quantity": 1
+        },
+        {
+          "item_id": "stable-stock-i",
+          "name": "稳定枪托 I",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "The Right Tool"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2b"
+    },
+    {
+      "id": 11,
+      "name": "打点关系",
+      "quest_giver": "Celeste",
+      "location": "航天港, 大坝战场, 埋葬之城",
+      "objectives": [
+        "在航天港，勘查火箭组装区外的火箭推进器",
+        "在大坝战场，参观水处理控制大楼中的锁定房间",
+        "在埋葬之城，参观太空旅行大楼6层的路障区域"
+      ],
+      "rewards": [
+        {
+          "item_id": "lure-grenade-recipe",
+          "name": "诱饵手雷蓝图",
+          "quantity": 1
+        },
+        {
+          "item_id": "speaker-component",
+          "name": "扬声器元件",
+          "quantity": 1
+        },
+        {
+          "item_id": "electrical-components",
+          "name": "电气元件",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Better Use"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2b"
+    },
+    {
+      "id": 12,
+      "name": "舱口修理",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "修理掠夺者舱口附近漏水的液压管道",
+        "在掠夺者舱口附近搜寻舱口钥匙"
+      ],
+      "rewards": [
+        {
+          "item_id": "raider-hatch-key",
+          "name": "掠夺者舱口钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "binoculars",
+          "name": "望远镜",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Bad Feeling"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2c"
+    },
+    {
+      "id": 13,
+      "name": "脚踏实地",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "单轮内：参观野战仓库",
+        "将野战箱交付到补给站",
+        "领取奖励"
+      ],
+      "rewards": [
+        {
+          "item_id": "combat-mk-1",
+          "name": "战斗型 Mk.1",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-shield",
+          "name": "中型护盾",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Hatch Repairs"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2c"
+    },
+    {
+      "id": 14,
+      "name": "三连胜",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "摧毁一个黄蜂",
+        "为Shani获取黄蜂驱动器",
+        "摧毁一个大黄蜂",
+        "为Shani获取大黄蜂驱动器",
+        "摧毁一个告密者",
+        "为Shani获取告密扫描仪"
+      ],
+      "rewards": [
+        {
+          "item_id": "orange-camo-origin-outfit",
+          "name": "原始服装（橙色迷彩颜色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "掠夺者舱口钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "defibrillator",
+          "name": "除颤器",
+          "quantity": 2
+        },
+        {
+          "item_id": "dam-control-center-tower-key",
+          "name": "大坝控制塔钥匙",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Down To Earth"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2c"
+    },
+    {
+      "id": 15,
+      "name": "医嘱",
+      "quest_giver": "Lance",
+      "location": "任意",
+      "objectives": [
+        "获取1个注射器",
+        "获取2个消毒剂",
+        "获取1块耐用布料",
+        "获取1株毛蕊花"
+      ],
+      "rewards": [
+        {
+          "item_id": "adrenaline-shot",
+          "name": "肾上腺素注射",
+          "quantity": 3
+        },
+        {
+          "item_id": "sterilized-bandage",
+          "name": "消毒绷带",
+          "quantity": 3
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "激涌护盾充能器",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Greasing Her Palms"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 16,
+      "name": "医疗商品",
+      "quest_giver": "Lance",
+      "location": "航天港, 埋葬之城, 大坝战场",
+      "objectives": [
+        "在航天港，在出发大楼检查室搜索2个容器",
+        "在埋葬之城医院搜索3个容器",
+        "在大坝战场，在研究与管理大楼的医疗室搜索2个容器"
+      ],
+      "rewards": [
+        {
+          "item_id": "banana-backpack-charm",
+          "name": "背包挂件（香蕉）",
+          "quantity": 1
+        },
+        {
+          "item_id": "defibrillator",
+          "name": "除颤器",
+          "quantity": 3
+        },
+        {
+          "item_id": "vita-shot",
+          "name": "维生素注射",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Doctor's Orders"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 17,
+      "name": "废墟中的发现",
+      "quest_giver": "Lance",
+      "location": "掩埋之城",
+      "objectives": [
+        "单轮内：在埋葬之城的任何药房搜寻ESR分析仪",
+        "向Lance交付ESR分析仪"
+      ],
+      "rewards": [
+        {
+          "item_id": "tactical-mk-3-healing",
+          "name": "战术型 Mk.3（治疗）",
+          "quantity": 1
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "激涌护盾充能器",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Medical Merchandise"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 18,
+      "name": "地形勘察",
+      "quest_giver": "Shani",
+      "location": "航天港",
+      "objectives": [
+        "单轮内：到达江苏仓库",
+        "在工头办公室找到运输单据",
+        "在A6控制塔上层找到扫描仪",
+        "向Shani交付1个激光雷达扫描仪"
+      ],
+      "rewards": [
+        {
+          "item_id": "dam-testing-annex-key",
+          "name": "大坝测试附楼钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "zipline",
+          "name": "滑索",
+          "quantity": 3
+        },
+        {
+          "item_id": "smoke-grenade",
+          "name": "烟雾弹",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "A Reveal In Ruins"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 19,
+      "name": "天空之眼",
+      "quest_giver": "Shani",
+      "location": "大坝战场, 埋葬之城, 航天港",
+      "objectives": [
+        "在大坝战场，在控制塔顶部安装激光雷达扫描仪",
+        "在航天港，在通信塔安装激光雷达扫描仪",
+        "在埋葬之城，将激光雷达扫描仪安装在Galleria标志顶部"
+      ],
+      "rewards": [
+        {
+          "item_id": "tagging-grenade",
+          "name": "标记手雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "vita-spray",
+          "name": "维生素喷雾",
+          "quantity": 1
+        },
+        {
+          "item_id": "yellow-light-stick",
+          "name": "黄色荧光棒",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "A Lay Of The Land"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 20,
+      "name": "雨后天晴",
+      "quest_giver": "Celeste",
+      "location": "掩埋之城",
+      "objectives": [
+        "在Grandioso公寓附近找到被淹的太阳能板",
+        "使用5根电线和2个电池修理太阳能板"
+      ],
+      "rewards": [
+        {
+          "item_id": "blue-light-stick",
+          "name": "蓝色荧光棒",
+          "quantity": 5
+        },
+        {
+          "item_id": "antiseptic",
+          "name": "消毒剂",
+          "quantity": 3
+        },
+        {
+          "item_id": "durable-cloth",
+          "name": "耐用布料",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Eyes In The Sky"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 21,
+      "name": "平衡的收获",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：前往研究与管理大楼",
+        "在前台上方楼层找到1号实验室",
+        "搜寻任何农业研究项目的痕迹"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "高级机械元件",
+          "quantity": 3
+        },
+        {
+          "item_id": "medium-gun-parts",
+          "name": "中型枪械零件",
+          "quantity": 3
+        },
+        {
+          "item_id": "spring",
+          "name": "钢弹簧",
+          "quantity": 10
+        }
+      ],
+      "prerequisites": [
+        "Eyes In The Sky"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 22,
+      "name": "无人照料的花园",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：前往水培穹顶综合设施",
+        "访问其中一个穹顶中的数据档案",
+        "将数据上传到任何野战仓库的电脑终端"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "高级机械元件",
+          "quantity": 3
+        },
+        {
+          "item_id": "heavy-gun-parts",
+          "name": "重型枪械零件",
+          "quantity": 3
+        },
+        {
+          "item_id": "canister",
+          "name": "罐",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "A Balanced Harvest"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 23,
+      "name": "根源之谜",
+      "quest_giver": "Celeste",
+      "location": "掩埋之城",
+      "objectives": [
+        "单轮内：前往研究大楼",
+        "在'风景优美的房间'中搜寻种子库",
+        "向Celeste交付实验种子样本"
+      ],
+      "rewards": [
+        {
+          "item_id": "succulent-backpack-charm",
+          "name": "背包挂件（多肉植物）",
+          "quantity": 1
+        },
+        {
+          "item_id": "credits",
+          "name": "信用点",
+          "quantity": 1000
+        }
+      ],
+      "prerequisites": [
+        "Untended Garden"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_3"
+    },
+    {
+      "id": 24,
+      "name": "水源问题",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：找到红湖阳台下方的防洪通道",
+        "找到区域供水系统的进水口"
+      ],
+      "rewards": [
+        {
+          "item_id": "mechanical-components",
+          "name": "机械元件",
+          "quantity": 3
+        },
+        {
+          "item_id": "simple-gun-parts",
+          "name": "简易枪械零件",
+          "quantity": 3
+        },
+        {
+          "item_id": "spring",
+          "name": "钢弹簧",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "The Root Of The Matter",
+        "After Rain Comes"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 25,
+      "name": "污染源头",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "到达大坝的水处理大楼",
+        "在沼泽附近搜寻防洪进水口",
+        "调查任何可疑物品"
+      ],
+      "rewards": [
+        {
+          "item_id": "spring",
+          "name": "钢弹簧",
+          "quantity": 5
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "管道胶带",
+          "quantity": 5
+        },
+        {
+          "item_id": "mod-components",
+          "name": "改装元件",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Water Troubles"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 26,
+      "name": "切换供给",
+      "quest_giver": "Celeste",
+      "location": "航天港",
+      "objectives": [
+        "单轮内：找到航天港地下隧道",
+        "在航天港地下隧道中找到并转动阀门"
+      ],
+      "rewards": [
+        {
+          "item_id": "blue-radio-renegade-color",
+          "name": "无线电叛逆服装（蓝色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "spaceport-trench-tower-key",
+          "name": "航天港壕沟塔钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "synthesized-fuel",
+          "name": "合成燃料",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Source Of The Contamination"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 27,
+      "name": "温暖的休息之地",
+      "quest_giver": "Apollo",
+      "location": "掩埋之城",
+      "objectives": [
+        "找到废弃高速公路营地",
+        "搜寻任何幸存者的痕迹",
+        "跟随红色标记",
+        "检查坟墓"
+      ],
+      "rewards": [
+        {
+          "item_id": "goggles-radio-renegade-variant",
+          "name": "无线电叛逆服装（护目镜变体）",
+          "quantity": 1
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "噪音发生器",
+          "quantity": 3
+        },
+        {
+          "item_id": "blue-light-stick",
+          "name": "蓝色荧光棒",
+          "quantity": 5
+        },
+        {
+          "item_id": "rosary",
+          "name": "念珠",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Switching The Supply"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 28,
+      "name": "过去的处方",
+      "quest_giver": "Lance",
+      "location": "航天港",
+      "objectives": [
+        "单轮内：参观航天港的出发大楼",
+        "在出发大楼内找到医疗检查室",
+        "搜寻记录"
+      ],
+      "rewards": [
+        {
+          "item_id": "heavy-shield",
+          "name": "重型护盾",
+          "quantity": 1
+        },
+        {
+          "item_id": "tactical-mk-3-healing",
+          "name": "战术型 Mk.3（治疗）",
+          "quantity": 1
+        },
+        {
+          "item_id": "adrenaline-shot",
+          "name": "肾上腺素注射",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A Warm Place To Rest"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 29,
+      "name": "断电",
+      "quest_giver": "Celeste",
+      "location": "航天港",
+      "objectives": [
+        "单轮内：找到航天港南部的变电站",
+        "找到失踪工程师的任何迹象",
+        "安装保险丝",
+        "恢复电力"
+      ],
+      "rewards": [
+        {
+          "item_id": "bag-radio-renegade-variant",
+          "name": "无线电叛逆服装（背包变体）",
+          "quantity": 1
+        },
+        {
+          "item_id": "wires-recipe",
+          "name": "电线",
+          "quantity": 5
+        },
+        {
+          "item_id": "explosive-compound",
+          "name": "爆炸化合物",
+          "quantity": 5
+        },
+        {
+          "item_id": "oil",
+          "name": "油",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Prescriptions Of The Past"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 30,
+      "name": "闪烁的威胁",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "进入大坝旁的发电综合设施",
+        "找到发电机房",
+        "修理发电机",
+        "找到通风管道",
+        "通过楼梯下方的电源开关启用电源"
+      ],
+      "rewards": [
+        {
+          "item_id": "helmet-radio-renegade-variant",
+          "name": "无线电叛逆服装（头盔变体）",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-gun-parts",
+          "name": "中型枪械零件",
+          "quantity": 5
+        },
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "高级机械元件",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Power Out"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 31,
+      "name": "蜜蜂！",
+      "quest_giver": "Celeste",
+      "location": "蓝门",
+      "objectives": [
+        "单轮内：到达蓝门的橄榄林",
+        "搜索橄榄林周围的蜂巢"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-electrical-components",
+          "name": "高级电气元件",
+          "quantity": 1
+        },
+        {
+          "item_id": "sensors-recipe",
+          "name": "传感器",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Flickering Threat"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 32,
+      "name": "浓缩咖啡",
+      "quest_giver": "Apollo",
+      "location": "任意",
+      "objectives": [
+        "单轮内：找到一台浓缩咖啡机回收备用零件",
+        "为Apollo获取浓缩咖啡机零件"
+      ],
+      "rewards": [
+        {
+          "item_id": "coffee-pot",
+          "name": "咖啡壶",
+          "quantity": 1
+        },
+        {
+          "item_id": "adrenaline-shot",
+          "name": "肾上腺素注射",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Bees!"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 33,
+      "name": "药剂师的生活",
+      "quest_giver": "Lance",
+      "location": "掩埋之城",
+      "objectives": [
+        "在塌陷高速公路旁找到Arbusto药房",
+        "记录药剂师的爱好",
+        "记录药剂师的家庭",
+        "记录药剂师的品味",
+        "记录药剂师的技能"
+      ],
+      "rewards": [
+        {
+          "item_id": "defibrillator",
+          "name": "除颤器",
+          "quantity": 1
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "激涌护盾充能器",
+          "quantity": 1
+        },
+        {
+          "item_id": "sterilized-bandage",
+          "name": "消毒绷带",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Espresso"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 34,
+      "name": "致敬托莱多",
+      "quest_giver": "Celeste",
+      "location": "任意",
+      "objectives": [
+        "为Celeste获取电源棒"
+      ],
+      "rewards": [
+        {
+          "item_id": "magnet",
+          "name": "磁铁",
+          "quantity": 5
+        },
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "高级机械元件",
+          "quantity": 2
+        },
+        {
+          "item_id": "synthesized-fuel",
+          "name": "合成燃料",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Life Of A Pharmacist"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 35,
+      "name": "挖掘秘密",
+      "quest_giver": "Celeste",
+      "location": "掩埋之城",
+      "objectives": [
+        "在老城区找到圣玛丽亚住宅",
+        "在庭院中找到秘密传递点"
+      ],
+      "rewards": [
+        {
+          "item_id": "advanced-electrical-components",
+          "name": "高级电气元件",
+          "quantity": 2
+        },
+        {
+          "item_id": "speaker-component",
+          "name": "扬声器元件",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Tribute To Toledo"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 36,
+      "name": "建造图书馆",
+      "quest_giver": "Apollo",
+      "location": "掩埋之城",
+      "objectives": [
+        "单轮内：找到市中心的图书馆",
+        "找到1本爱情书",
+        "找到1本侦探书",
+        "找到1本冒险书"
+      ],
+      "rewards": [
+        {
+          "item_id": "explosive-mine",
+          "name": "爆炸地雷",
+          "quantity": 1
+        },
+        {
+          "item_id": "jolt-mine",
+          "name": "电击地雷",
+          "quantity": 1
+        },
+        {
+          "item_id": "heavy-fuze-grenade",
+          "name": "重型引信手雷",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Digging Up Dirt"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 37,
+      "name": "新品种植物",
+      "quest_giver": "Lance",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：在旧战场男爵外壳附近搜寻新植物",
+        "向Lance交付可能有毒的植物"
+      ],
+      "rewards": [
+        {
+          "item_id": "vita-shot",
+          "name": "维生素注射",
+          "quantity": 1
+        },
+        {
+          "item_id": "antiseptic",
+          "name": "消毒剂",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Building A Library"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 38,
+      "name": "装甲运输",
+      "quest_giver": "Tian Wen",
+      "location": "蓝门",
+      "objectives": [
+        "到达检查站",
+        "在警卫亭搜寻装甲巡逻钥匙卡",
+        "到达蓝门检查站附近的交通隧道",
+        "找到并打开装甲巡逻车的后门"
+      ],
+      "rewards": [
+        {
+          "item_id": "blue-yellow-aviator-color",
+          "name": "飞行员服装（蓝黄颜色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "smoke-grenade",
+          "name": "烟雾弹",
+          "quantity": 3
+        },
+        {
+          "item_id": "defibrillator",
+          "name": "除颤器",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A New Type Of Plant",
+        "With A Trace"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4"
+    },
+    {
+      "id": 39,
+      "name": "逆转",
+      "quest_giver": "Celeste",
+      "location": "航天港",
+      "objectives": [
+        "前往北壕沟塔",
+        "找到勒索文件并上传给Celeste"
+      ],
+      "rewards": [
+        {
+          "item_id": "heavy-gun-parts",
+          "name": "重型枪械零件",
+          "quantity": 2
+        },
+        {
+          "item_id": "medium-gun-parts",
+          "name": "中型枪械零件",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "Digging Up Dirt"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_4_end"
+    },
+    {
+      "id": 40,
+      "name": "重回巅峰",
+      "quest_giver": "Tian Wen",
+      "location": "埋葬之城, 航天港, 大坝战场, 蓝门",
+      "objectives": [
+        "在蓝门，标记仓库综合设施南方的白色瞭望塔",
+        "在大坝战场，标记模型屋",
+        "在航天港，标记南壕沟塔",
+        "在埋葬之城，标记埋葬地产中有壁画的建筑"
+      ],
+      "rewards": [
+        {
+          "item_id": "renegade-i",
+          "name": "叛逆者 I",
+          "quantity": 1
+        },
+        {
+          "item_id": "stable-stock-iii",
+          "name": "稳定枪托 III",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-ammo",
+          "name": "中型弹药",
+          "quantity": 80
+        }
+      ],
+      "prerequisites": [
+        "Celeste's Journals",
+        "Eyes In The Sky",
+        "The Major's Footlocker"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 41,
+      "name": "我们在上方的存在",
+      "quest_giver": "Shani",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：参观大坝的模型屋",
+        "找到并拨动电源开关",
+        "完成屋顶天线安装"
+      ],
+      "rewards": [
+        {
+          "item_id": "buried-city-town-hall-key",
+          "name": "埋葬之城市政厅钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "掠夺者舱口钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "jolt-mine",
+          "name": "电击地雷",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Back On Top"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 42,
+      "name": "传输中丢失",
+      "quest_giver": "Shani",
+      "location": "航天港",
+      "objectives": [
+        "单轮内：参观A6控制塔",
+        "到达A6控制塔顶部",
+        "从终端建立连接"
+      ],
+      "rewards": [
+        {
+          "item_id": "snap-hook",
+          "name": "弹簧钩",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Our Presence Up There"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 43,
+      "name": "通信藏身处",
+      "quest_giver": "Shani",
+      "location": "掩埋之城",
+      "objectives": [
+        "单轮内：到达老城区的红塔",
+        "找到丢失的电池单元",
+        "将电池单元安装到发电机中",
+        "启用发电机电源",
+        "启动红塔附近的天线终端"
+      ],
+      "rewards": [
+        {
+          "item_id": "crimson-racer-aviator-colour",
+          "name": "飞行员服装（深红赛车手颜色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "anvil-iii",
+          "name": "铁砧 III",
+          "quantity": 1
+        },
+        {
+          "item_id": "heavy-ammo",
+          "name": "重型弹药",
+          "quantity": 40
+        }
+      ],
+      "prerequisites": [
+        "Lost In Transmission"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 44,
+      "name": "投入战斗",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "摧毁一个跳跃者",
+        "获取一个跳跃者脉冲装置"
+      ],
+      "rewards": [
+        {
+          "item_id": "radio-renegade-outfit",
+          "name": "无线电叛逆服装（灰色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "burgerboy-backpack-charm",
+          "name": "背包挂件（汉堡男孩）",
+          "quantity": 1
+        },
+        {
+          "item_id": "vulcano-iii",
+          "name": "火山 III",
+          "quantity": 1
+        },
+        {
+          "item_id": "shotgun-ammo",
+          "name": "霰弹枪弹药",
+          "quantity": 40
+        }
+      ],
+      "prerequisites": [
+        "Communication Hideout",
+        "Water Troubles"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5"
+    },
+    {
+      "id": 45,
+      "name": "沉睡的男爵",
+      "quest_giver": "Shani",
+      "location": "大坝战场, 航天港, 蓝门",
+      "objectives": [
+        "搜刮一个男爵外壳"
+      ],
+      "rewards": [
+        {
+          "item_id": "door-blocker",
+          "name": "门阻挡器",
+          "quantity": 3
+        },
+        {
+          "item_id": "lil-smoke-grenade",
+          "name": "小型烟雾弹",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Greasing Her Palms",
+        "The Trifecta"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 46,
+      "name": "我们留下的",
+      "quest_giver": "Tian Wen",
+      "location": "埋葬之城, 大坝战场, 航天港",
+      "objectives": [
+        "在埋葬之城，在停车场下方的掠夺者营地搜索2个容器",
+        "在大坝战场，在南沼泽前哨搜寻任何重要物品",
+        "在航天港，在集装箱仓库旁的Bilguun藏身处搜寻重要物品"
+      ],
+      "rewards": [
+        {
+          "item_id": "muzzle-brake-ii",
+          "name": "枪口制退器 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "vertical-grip-ii",
+          "name": "垂直握把 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "stable-stock-ii",
+          "name": "稳定枪托 II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Dormant Barons"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 47,
+      "name": "破碎的纪念碑",
+      "quest_giver": "Tian Wen",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：到达废料场旁的圣地",
+        "在抛锚车辆附近搜寻指南针",
+        "在圆柱形容器附近搜寻录像带",
+        "在掠夺者营地搜寻旧野战口粮",
+        "向天文交付第一波录音带",
+        "向天文交付第一波指南针",
+        "向天文交付第一波口粮"
+      ],
+      "rewards": [
+        {
+          "item_id": "arpeggio-i",
+          "name": "琶音 I",
+          "quantity": 1
+        },
+        {
+          "item_id": "compensator-ii",
+          "name": "补偿器 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-ammo",
+          "name": "中型弹药",
+          "quantity": 80
+        }
+      ],
+      "prerequisites": [
+        "What We Left Behind"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 48,
+      "name": "混乱的信号",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "摧毁一个ARC勘测者",
+        "获取1个勘测保险库"
+      ],
+      "rewards": [
+        {
+          "item_id": "photoelectric-cloak",
+          "name": "光电隐身斗篷",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "掠夺者舱口钥匙",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Dormant Barons"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6"
+    },
+    {
+      "id": 49,
+      "name": "直接记录",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "到达胜利山脊",
+        "找到旧的EMP陷阱",
+        "关闭第一个电源开关",
+        "关闭第二个电源开关",
+        "关闭第三个电源开关",
+        "关闭EMP陷阱"
+      ],
+      "rewards": [
+        {
+          "item_id": "medium-gun-parts",
+          "name": "中型枪械零件",
+          "quantity": 5
+        },
+        {
+          "item_id": "advanced-mechanical-components",
+          "name": "高级机械元件",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Broken Monument"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6a"
+    },
+    {
+      "id": 50,
+      "name": "守护记忆",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：到达蚁穴山丘中的残骸",
+        "搜寻失踪的头盔",
+        "将头盔归还纪念碑"
+      ],
+      "rewards": [
+        {
+          "item_id": "simple-gun-parts",
+          "name": "简易枪械零件",
+          "quantity": 5
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "管道胶带",
+          "quantity": 5
+        },
+        {
+          "item_id": "magnet",
+          "name": "磁铁",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Straight Record"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6a"
+    },
+    {
+      "id": 51,
+      "name": "胜利山脊的回声",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：到达胜利山脊",
+        "从断裂高速公路下的藏身处取回作战计划",
+        "向Celeste交付Aiva少校的臂章"
+      ],
+      "rewards": [
+        {
+          "item_id": "crude-explosives",
+          "name": "粗制炸药",
+          "quantity": 6
+        },
+        {
+          "item_id": "processor",
+          "name": "处理器",
+          "quantity": 2
+        },
+        {
+          "item_id": "music-box",
+          "name": "音乐盒",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Keeping The Memory"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6a"
+    },
+    {
+      "id": 52,
+      "name": "死亡标记",
+      "quest_giver": "Tian Wen",
+      "location": "掩埋之城",
+      "objectives": [
+        "到达埋葬之城郊区的Su Durante仓库",
+        "在仓库附近搜寻天文的隐藏点",
+        "跟随线索"
+      ],
+      "rewards": [
+        {
+          "item_id": "shotgun-choke-ii",
+          "name": "霰弹枪收束器 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "angled-grip-ii",
+          "name": "斜握把 II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Broken Monument"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 53,
+      "name": "市场纠正",
+      "quest_giver": "Tian Wen",
+      "location": "掩埋之城",
+      "objectives": [
+        "单轮内：找到马拉诺站附近的隐藏点",
+        "破坏武器库"
+      ],
+      "rewards": [
+        {
+          "item_id": "silencer-ii",
+          "name": "消音器 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-light-mag-i",
+          "name": "扩展轻型弹匣 I",
+          "quantity": 1
+        },
+        {
+          "item_id": "compensator-i",
+          "name": "补偿器 I",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Marked For Death"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 54,
+      "name": "目标明确",
+      "quest_giver": "Tian Wen",
+      "location": "掩埋之城",
+      "objectives": [
+        "在南站西南找到隐蔽的屋顶露台，寻找蓝色帆布",
+        "使用3根电线重新接线太阳能板"
+      ],
+      "rewards": [
+        {
+          "item_id": "extended-shotgun-mag-ii",
+          "name": "扩展霰弹枪弹匣 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-medium-mag-ii",
+          "name": "扩展中型弹匣 II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Market Correction"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 55,
+      "name": "工业间谍",
+      "quest_giver": "Tian Wen",
+      "location": "掩埋之城",
+      "objectives": [
+        "在郊区加油站附近找到天文的武器库",
+        "将滑稽剧交付到对手的武器库",
+        "在武器库中安装窃听器"
+      ],
+      "rewards": [
+        {
+          "item_id": "burletta-recipe",
+          "name": "滑稽剧蓝图",
+          "quantity": 1
+        },
+        {
+          "item_id": "mechanical-components",
+          "name": "机械元件",
+          "quantity": 3
+        },
+        {
+          "item_id": "simple-gun-parts",
+          "name": "简易枪械零件",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Eyes On The Prize"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6b"
+    },
+    {
+      "id": 56,
+      "name": "意外的主动",
+      "quest_giver": "Tian Wen",
+      "location": "掩埋之城",
+      "objectives": [
+        "单轮内：到达埋葬之城的Grandioso公寓",
+        "在Grandioso公寓屋顶搜寻湿度计",
+        "到达埋葬之城的罗马广场",
+        "在罗马广场破损的屋顶花园搜寻营养测量仪",
+        "向天文交付一个湿度计",
+        "向天文交付营养测量仪"
+      ],
+      "rewards": [
+        {
+          "item_id": "il-toro-i",
+          "name": "公牛 I",
+          "quantity": 1
+        },
+        {
+          "item_id": "shotgun-ammo",
+          "name": "霰弹枪弹药",
+          "quantity": 40
+        },
+        {
+          "item_id": "shotgun-choke-ii",
+          "name": "霰弹枪收束器 II",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Echoes Of Victory Ridge",
+        "Industrial Espionage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_merge"
+    },
+    {
+      "id": 57,
+      "name": "统一的象征",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：到达大坝战场的蚁穴前哨站",
+        "在蚁穴前哨站找到旗帜",
+        "在俯瞰红湖的小平台上升旗"
+      ],
+      "rewards": [
+        {
+          "item_id": "aviator-outfit",
+          "name": "飞行员服装（灰奶油颜色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "mod-components",
+          "name": "改装元件",
+          "quantity": 3
+        },
+        {
+          "item_id": "duct-tape-recipe",
+          "name": "管道胶带",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Unexpected Initiative"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_merge"
+    },
+    {
+      "id": 58,
+      "name": "Celeste的日记",
+      "quest_giver": "Celeste",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：从南沼泽前哨取回Celeste的日记",
+        "从俯瞰红湖的北方前哨取回Celeste的日记",
+        "向Celeste交付2本日记"
+      ],
+      "rewards": [
+        {
+          "item_id": "magnetic-accelerator",
+          "name": "磁力加速器",
+          "quantity": 1
+        },
+        {
+          "item_id": "heavy-gun-parts",
+          "name": "重型枪械零件",
+          "quantity": 3
+        },
+        {
+          "item_id": "exodus-modules",
+          "name": "出埃及记模块",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Symbol Of Unification"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_merge"
+    },
+    {
+      "id": 59,
+      "name": "走出阴影",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "摧毁一个火箭兵",
+        "获取一个火箭兵驱动器"
+      ],
+      "rewards": [
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "激涌护盾充能器",
+          "quantity": 3
+        },
+        {
+          "item_id": "wolfpack",
+          "name": "狼群",
+          "quantity": 2
+        }
+      ],
+      "prerequisites": [
+        "A Symbol Of Unification",
+        "Sparks Fly"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_end"
+    },
+    {
+      "id": 60,
+      "name": "少校的储物柜",
+      "quest_giver": "Tian Wen",
+      "location": "水坝战场",
+      "objectives": [
+        "单轮内：在大坝西北方的公寓中搜寻Aiva少校的纪念品",
+        "向天文交付Aiva少校的纪念品"
+      ],
+      "rewards": [
+        {
+          "item_id": "hullcracker-recipe",
+          "name": "破壳者蓝图",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "A Symbol Of Unification"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_6_end"
+    },
+    {
+      "id": 61,
+      "name": "铺路",
+      "quest_giver": "Apollo",
+      "location": "大坝战场, 蓝门, 埋葬之城",
+      "objectives": [
+        "前往任何ENELICA建筑",
+        "搜寻有研究员留言的告示板",
+        "在埋葬之城，到达罗马广场Convinio上方的顶楼",
+        "找到研究员的公寓并搜索研究数据"
+      ],
+      "rewards": [
+        {
+          "item_id": "raider-hatch-key",
+          "name": "掠夺者舱口钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "seeker-grenade",
+          "name": "追踪手雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "advanced-electrical-components",
+          "name": "高级电气元件",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Into The Fray"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "convergence_1"
+    },
+    {
+      "id": 62,
+      "name": "破译数据",
+      "quest_giver": "Shani",
+      "location": "航天港",
+      "objectives": [
+        "在燃料控制大楼使用磁力解密器",
+        "到达航天港的到达大楼",
+        "在到达大楼顶层使用磁力解密器"
+      ],
+      "rewards": [
+        {
+          "item_id": "defibrillator",
+          "name": "除颤器",
+          "quantity": 3
+        },
+        {
+          "item_id": "trailblazer-grenade",
+          "name": "开拓者",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Paving The Way"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "convergence_1"
+    },
+    {
+      "id": 63,
+      "name": "破土动工",
+      "quest_giver": "Apollo",
+      "location": "蓝门",
+      "objectives": [
+        "进入朝圣者之巅的锁定房间",
+        "在房间中搜索建筑研究资料",
+        "找到白板上图片中的建筑",
+        "拍摄废弃住房项目"
+      ],
+      "rewards": [
+        {
+          "item_id": "tangerine-warden-color",
+          "name": "守望者服装（橘色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "power-rod",
+          "name": "电源棒",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Deciphering The Data"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "convergence_1"
+    },
+    {
+      "id": 64,
+      "name": "有毒的踪迹",
+      "quest_giver": "Shani",
+      "location": "水坝战场",
+      "objectives": [
+        "返回水处理控制大楼下方的进水口",
+        "在沼泽中搜索桶的来源痕迹",
+        "拍摄桶装卡车",
+        "在行李箱中搜索破坏者身份的线索"
+      ],
+      "rewards": [
+        {
+          "item_id": "tactical-mk-2",
+          "name": "战术型 Mk.2",
+          "quantity": 1
+        },
+        {
+          "item_id": "zipline",
+          "name": "滑索",
+          "quantity": 3
+        },
+        {
+          "item_id": "pulse-mine",
+          "name": "脉冲地雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "gas-mine",
+          "name": "毒气地雷",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "Life Of A Pharmacist"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 65,
+      "name": "腐败的恶臭",
+      "quest_giver": "Shani",
+      "location": "航天港",
+      "objectives": [
+        "单轮内：到达出发大楼西南大厅",
+        "找到员工更衣室",
+        "在房间中搜索破坏者身份的线索",
+        "到达航天港下方的隧道",
+        "在任何冲洗终端上使用钥匙覆盖绕行协议"
+      ],
+      "rewards": [
+        {
+          "item_id": "warden-outfit",
+          "name": "守望者服装（蓝色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "air-freshener",
+          "name": "空气清新剂",
+          "quantity": 1
+        },
+        {
+          "item_id": "dam-staff-room-key",
+          "name": "大坝员工休息室钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "噪音发生器",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A Toxic Trail"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 66,
+      "name": "清洁之梦",
+      "quest_giver": "Apollo",
+      "location": "航天港, 蓝门",
+      "objectives": [
+        "在航天港，在地下隧道搜索4个容器",
+        "在隧道中找到并监控任何过滤系统",
+        "在蓝门，参观维护地堡",
+        "监控地堡中的净化系统",
+        "在地堡中找到并拍摄蓝图"
+      ],
+      "rewards": [
+        {
+          "item_id": "deadline",
+          "name": "死线",
+          "quantity": 1
+        },
+        {
+          "item_id": "showstopper",
+          "name": "惊鸿一击",
+          "quantity": 3
+        },
+        {
+          "item_id": "heavy-fuze-grenade",
+          "name": "重型引信手雷",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "With A Trace"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame_final"
+    },
+    {
+      "id": 67,
+      "name": "第一个据点",
+      "quest_giver": "Apollo",
+      "location": "蓝门",
+      "quest_line": "Blue Gate Introduction",
+      "objectives": [
+        "在猎人林地附近的掠夺者建筑上钉牢屋顶板",
+        "稳定山脊线附近的观察台",
+        "启用橄榄林附近的通信终端",
+        "旋转数据库北方教堂屋顶的卫星天线"
+      ],
+      "rewards": [
+        {
+          "item_id": "shrapnel-grenade",
+          "name": "弹片手雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "snap-blast-grenade",
+          "name": "速爆手雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "heavy-fuze-grenade",
+          "name": "重型引信手雷",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [],
+      "unlock_requirement": "蓝门已解锁（已完成18轮游戏）",
+      "tree_position": "blue_gate_intro"
+    },
+    {
+      "id": 68,
+      "name": "化为废墟",
+      "quest_giver": "Shani",
+      "location": "蓝门",
+      "quest_line": "Blue Gate Introduction",
+      "objectives": [
+        "拍摄塌陷的高速公路",
+        "前往破碎大地",
+        "沿着破碎大地的破坏痕迹前进",
+        "调查未知的ARC机器"
+      ],
+      "rewards": [
+        {
+          "item_id": "zipline",
+          "name": "滑索",
+          "quantity": 1
+        },
+        {
+          "item_id": "barricade-kit",
+          "name": "路障工具",
+          "quantity": 3
+        },
+        {
+          "item_id": "door-blocker",
+          "name": "门阻挡器",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "A First Foothold"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "blue_gate_intro"
+    },
+    {
+      "id": 69,
+      "name": "留下痕迹",
+      "quest_giver": "Shani",
+      "location": "蓝门",
+      "quest_line": "Blue Gate Introduction",
+      "objectives": [
+        "到达荒芜空地",
+        "找到是谁击落了ARC机器的线索",
+        "检查装饰过的残骸",
+        "检查通讯设备"
+      ],
+      "rewards": [
+        {
+          "item_id": "looting-mk-2",
+          "name": "拾取型 Mk.2",
+          "quantity": 1
+        },
+        {
+          "item_id": "medium-shield",
+          "name": "中型护盾",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Reduced To Rubble"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "blue_gate_intro"
+    },
+    {
+      "id": 70,
+      "name": "以我之形",
+      "quest_giver": "Lance",
+      "location": "星辰之山",
+      "quest_line": "Stella Montis Introduction",
+      "objectives": [
+        "部署进入星山",
+        "找到并搜索3个人形机器人"
+      ],
+      "rewards": [
+        {
+          "item_id": "looting-mk-2",
+          "name": "拾取型 Mk.2",
+          "quantity": 2
+        },
+        {
+          "item_id": "green-light-stick",
+          "name": "绿色荧光棒",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [],
+      "unlock_requirement": "星山已解锁（已完成24轮游戏）",
+      "tree_position": "stella_montis_intro"
+    },
+    {
+      "id": 71,
+      "name": "冷库",
+      "quest_giver": "Shani",
+      "location": "星辰之山",
+      "quest_line": "Stella Montis Introduction",
+      "objectives": [
+        "搜索任何J Kozma Ventures集装箱"
+      ],
+      "rewards": [
+        {
+          "item_id": "gas-mine",
+          "name": "毒气地雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "raider-hatch-key",
+          "name": "掠夺者舱口钥匙",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "In My Image"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_intro"
+    },
+    {
+      "id": 72,
+      "name": "拍照与回收",
+      "quest_giver": "Tian Wen",
+      "location": "星辰之山",
+      "quest_line": "Stella Montis Introduction",
+      "objectives": [
+        "在沙坑中拍摄任何一辆探测车",
+        "在大厅旁安检室搜索文件",
+        "向天文交付一个流量控制器",
+        "向天文交付一个磁控管"
+      ],
+      "rewards": [
+        {
+          "item_id": "burletta-iiii",
+          "name": "滑稽剧 III",
+          "quantity": 1
+        },
+        {
+          "item_id": "silencer-ii",
+          "name": "消音器 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "extended-light-mag-ii",
+          "name": "扩展轻型弹匣 II",
+          "quantity": 1
+        },
+        {
+          "item_id": "light-ammo",
+          "name": "轻型弹药",
+          "quantity": 100
+        }
+      ],
+      "prerequisites": [
+        "Cold Storage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_intro"
+    },
+    {
+      "id": 73,
+      "name": "联盟",
+      "quest_giver": "Apollo",
+      "location": "大坝战场, 埋葬之城",
+      "objectives": [
+        "为Apollo交付一个漏气的足球",
+        "为Apollo交付一个自行车打气筒",
+        "在大坝战场，拍摄水塔旁的球门",
+        "在埋葬之城，在任何报刊亭拍摄足球杂志"
+      ],
+      "rewards": [
+        {
+          "item_id": "faded-flush-aviator-color",
+          "name": "褪色（飞行员颜色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagging-grenade",
+          "name": "标记手雷",
+          "quantity": 5
+        },
+        {
+          "item_id": "firecracker",
+          "name": "鞭炮",
+          "quantity": 5
+        }
+      ],
+      "prerequisites": [
+        "Sparks Fly"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_2a_end"
+    },
+    {
+      "id": 74,
+      "name": "战斗侦察",
+      "quest_giver": "Shani",
+      "location": "掩埋之城",
+      "objectives": [
+        "在停车场楼梯间勘查掩护点",
+        "在马拉诺公园附近的公交车中勘查掩护点",
+        "在大街周围的阁楼勘查掩护点",
+        "摧毁2个观察者",
+        "向Shani交付一个观察者中继器"
+      ],
+      "rewards": [
+        {
+          "item_id": "red-radio-renegade-color",
+          "name": "无线电叛逆服装（红色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "firecracker",
+          "name": "鞭炮",
+          "quantity": 5
+        },
+        {
+          "item_id": "fireworks-box",
+          "name": "烟花盒",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Into The Fray"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5_end"
+    },
+    {
+      "id": 75,
+      "name": "轰炸行动",
+      "quest_giver": "Shani",
+      "location": "任意",
+      "objectives": [
+        "摧毁一个轰炸兵",
+        "向Shani交付一个轰炸兵电池"
+      ],
+      "rewards": [
+        {
+          "item_id": "finger-gun-single-shot-emote",
+          "name": "手指枪单发表情",
+          "quantity": 1
+        },
+        {
+          "item_id": "raider-tokens",
+          "name": "掠夺者代币",
+          "quantity": 30
+        }
+      ],
+      "prerequisites": [
+        "Combat Recon"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_5_end"
+    },
+    {
+      "id": 76,
+      "name": "充耳不闻",
+      "quest_giver": "Lance",
+      "location": "星辰之山",
+      "objectives": [
+        "在前台电脑上找到研究员的宾客记录",
+        "找到研究员举办讲座的地方并查看笔记",
+        "在医学研究电脑上查找原型信息",
+        "在组装车间找到打印的运输日志"
+      ],
+      "rewards": [
+        {
+          "item_id": "navy-blue-warden-color",
+          "name": "海军蓝（守望者颜色）",
+          "quantity": 1
+        },
+        {
+          "item_id": "lure-grenade",
+          "name": "诱饵手雷",
+          "quantity": 3
+        },
+        {
+          "item_id": "noisemaker",
+          "name": "噪音发生器",
+          "quantity": 5
+        },
+        {
+          "item_id": "shaker",
+          "name": "沙锤",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Groundbreaking"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 77,
+      "name": "登上地图",
+      "quest_giver": "Lance",
+      "location": "航天港",
+      "objectives": [
+        "前往燃料管线断裂处并发送你的位置",
+        "前往燃料控制附近的天线并发送你的位置",
+        "前往墙壁缺口处的仙人掌丛并发送你的位置",
+        "从集装箱仓库屋顶发送你的位置",
+        "找到帆布覆盖的集装箱并标记"
+      ],
+      "rewards": [
+        {
+          "item_id": "sterilized-bandage",
+          "name": "消毒绷带",
+          "quantity": 3
+        },
+        {
+          "item_id": "surge-shield-recharger",
+          "name": "激涌护盾充能器",
+          "quantity": 3
+        },
+        {
+          "item_id": "tactical-mk-3-healing",
+          "name": "战术型 Mk.3（治疗）",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "On Deaf Ears"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame"
+    },
+    {
+      "id": 78,
+      "name": "带风景的",
+      "quest_giver": "Shani",
+      "location": "星辰之山",
+      "objectives": [
+        "获取一个旋转编码器",
+        "参观装配线附近的任何控制室",
+        "使用旋转编码器激活服务器开关",
+        "使用附近电脑帮助识别正确路径",
+        "向Shani交付一个离子溅射器"
+      ],
+      "rewards": [
+        {
+          "item_id": "spring",
+          "name": "钢弹簧",
+          "quantity": 5
+        },
+        {
+          "item_id": "wires-recipe",
+          "name": "电线",
+          "quantity": 5
+        },
+        {
+          "item_id": "tactical-mk-2",
+          "name": "战术型 Mk.2",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "Snap And Salvage"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_end"
+    },
+    {
+      "id": 79,
+      "name": "电影之夜",
+      "quest_giver": "Apollo",
+      "location": "任意",
+      "objectives": [
+        "为Apollo交付一台便携电视",
+        "在星山，在文化档案馆搜寻旧电影录像带",
+        "向Apollo交付一叠电影录像带"
+      ],
+      "rewards": [
+        {
+          "item_id": "showstopper",
+          "name": "惊鸿一击",
+          "quantity": 3
+        },
+        {
+          "item_id": "smoke-grenade",
+          "name": "烟雾弹",
+          "quantity": 3
+        },
+        {
+          "item_id": "fireworks-box",
+          "name": "烟花盒",
+          "quantity": 1
+        }
+      ],
+      "prerequisites": [
+        "With A View"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "stella_montis_end"
+    },
+    {
+      "id": 80,
+      "name": "优质标本",
+      "quest_giver": "Shani",
+      "location": "蓝门",
+      "objectives": [
+        "单轮内：获取2个ARC能量电池",
+        "与任何ARC伐木机互动",
+        "搜刮一个ARC伐木机"
+      ],
+      "rewards": [
+        {
+          "item_id": "patrol-car-key",
+          "name": "巡逻车钥匙",
+          "quantity": 1
+        },
+        {
+          "item_id": "door-blocker",
+          "name": "门阻挡器",
+          "quantity": 3
+        }
+      ],
+      "prerequisites": [
+        "The Clean Dream"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "endgame_final"
+    },
+    {
+      "id": 81,
+      "name": "稳定住所",
+      "quest_giver": "Tian Wen",
+      "location": "星辰之山",
+      "objectives": [
+        "在星山找到一个稳定的位置",
+        "为天文确保区域安全"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "星辰之山已解锁",
+      "tree_position": "root"
+    },
+    {
+      "id": 82,
+      "name": "保持警惕",
+      "quest_giver": "Celeste",
+      "location": "蓝门",
+      "objectives": [
+        "侦察蓝门周边区域",
+        "向Celeste汇报发现"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "蓝门已解锁",
+      "tree_position": "root"
+    },
+    {
+      "id": 83,
+      "name": "死胡同",
+      "quest_giver": "Shani",
+      "location": "蓝门",
+      "objectives": [
+        "调查蓝门的死胡同",
+        "找到通路"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "蓝门已解锁",
+      "tree_position": "root"
+    },
+    {
+      "id": 84,
+      "name": "涨潮",
+      "quest_giver": "Celeste",
+      "location": "埋葬之城, 大坝战场",
+      "objectives": [
+        "调查该区域的涨潮",
+        "帮助Celeste确保补给"
+      ],
+      "rewards": [],
+      "prerequisites": [
+        "A Dead End"
+      ],
+      "unlock_requirement": null,
+      "tree_position": "branch_1"
+    },
+    {
+      "id": 85,
+      "name": "将就",
+      "quest_giver": "Tian Wen",
+      "location": "任意",
+      "objectives": [
+        "收集基础制作材料",
+        "给天文带去补给"
+      ],
+      "rewards": [],
+      "prerequisites": [],
+      "unlock_requirement": "水坝战场已解锁",
+      "tree_position": "root"
+    }
+  ],
+  "quest_givers": [
+    {
+      "name": "Shani",
+      "quest_count": 29
+    },
+    {
+      "name": "Celeste",
+      "quest_count": 24
+    },
+    {
+      "name": "Tian Wen",
+      "quest_count": 15
+    },
+    {
+      "name": "Apollo",
+      "quest_count": 11
+    },
+    {
+      "name": "Lance",
+      "quest_count": 10
+    }
+  ],
+  "locations": [
+    "任意",
+    "水坝战场",
+    "掩埋之城",
+    "航天港",
+    "蓝门",
+    "星辰之山"
+  ]
+}

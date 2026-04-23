@@ -1,24 +1,722 @@
 [
-  { "id": "bp-arc-rifle-mk2", "name": "ARC Rifle MK2", "category": "weapons", "rarity": "rare", "materials": ["Scrap Metal x5", "Electronics x3", "Power Cell x1"], "collected": false },
-  { "id": "bp-plasma-cutter-v2", "name": "Plasma Cutter V2", "category": "weapons", "rarity": "epic", "materials": ["ARC Crystal x1", "Electronics x5", "Polymer x3"], "collected": false },
-  { "id": "bp-tactical-shotgun", "name": "Tactical Shotgun", "category": "weapons", "rarity": "common", "materials": ["Scrap Metal x8", "Polymer x2"], "collected": false },
-  { "id": "bp-sniper-repeater", "name": "Sniper Repeater", "category": "weapons", "rarity": "legendary", "materials": ["ARC Crystal x2", "Electronics x8", "Scrap Metal x10"], "collected": false },
-  { "id": "bp-smg-compact", "name": "Compact SMG", "category": "weapons", "rarity": "common", "materials": ["Scrap Metal x4", "Polymer x1"], "collected": false },
-  { "id": "bp-grenade-launcher", "name": "Grenade Launcher", "category": "weapons", "rarity": "rare", "materials": ["Scrap Metal x6", "Electronics x2", "Polymer x4"], "collected": false },
-  { "id": "bp-blaze-grenade", "name": "Blaze Grenade", "category": "gadgets", "rarity": "legendary", "materials": ["Power Cell x2", "Polymer x5", "ARC Crystal x1"], "collected": false },
-  { "id": "bp-frag-grenade", "name": "Frag Grenade", "category": "gadgets", "rarity": "common", "materials": ["Scrap Metal x3", "Polymer x1"], "collected": false },
-  { "id": "bp-smoke-device", "name": "Smoke Device", "category": "gadgets", "rarity": "common", "materials": ["Polymer x2", "Electronics x1"], "collected": false },
-  { "id": "bp-emp-mine", "name": "EMP Mine", "category": "gadgets", "rarity": "rare", "materials": ["Electronics x4", "Power Cell x1", "Polymer x2"], "collected": false },
-  { "id": "bp-arc-trap", "name": "ARC Trap", "category": "gadgets", "rarity": "epic", "materials": ["ARC Crystal x1", "Electronics x6", "Scrap Metal x3"], "collected": false },
-  { "id": "bp-cloaking-module", "name": "Cloaking Module", "category": "gadgets", "rarity": "legendary", "materials": ["ARC Crystal x3", "Electronics x10", "Power Cell x2"], "collected": false },
-  { "id": "bp-reinforced-vest", "name": "Reinforced Vest", "category": "gear", "rarity": "common", "materials": ["Polymer x4", "Scrap Metal x3"], "collected": false },
-  { "id": "bp-tactical-rig", "name": "Tactical Rig", "category": "gear", "rarity": "rare", "materials": ["Polymer x6", "Electronics x2", "Scrap Metal x4"], "collected": false },
-  { "id": "bp-exo-frame", "name": "Exo Frame", "category": "gear", "rarity": "epic", "materials": ["Power Cell x3", "Scrap Metal x12", "Electronics x5"], "collected": false },
-  { "id": "bp-arc-shield", "name": "ARC Shield", "category": "gear", "rarity": "legendary", "materials": ["ARC Crystal x2", "Power Cell x4", "Electronics x8"], "collected": false },
-  { "id": "bp-extended-mag", "name": "Extended Magazine", "category": "mods", "rarity": "common", "materials": ["Scrap Metal x2", "Polymer x1"], "collected": false },
-  { "id": "bp-red-dot-sight", "name": "Red Dot Sight", "category": "mods", "rarity": "common", "materials": ["Electronics x2", "Polymer x1"], "collected": false },
-  { "id": "bp-suppressor", "name": "Suppressor", "category": "mods", "rarity": "rare", "materials": ["Scrap Metal x3", "Polymer x3"], "collected": false },
-  { "id": "bp-stabilizer", "name": "Barrel Stabilizer", "category": "mods", "rarity": "rare", "materials": ["Scrap Metal x4", "Electronics x2"], "collected": false },
-  { "id": "bp-arc-scope", "name": "ARC Scope", "category": "mods", "rarity": "epic", "materials": ["ARC Crystal x1", "Electronics x4"], "collected": false },
-  { "id": "bp-heavy-barrel", "name": "Heavy Barrel", "category": "mods", "rarity": "epic", "materials": ["Scrap Metal x8", "Power Cell x1"], "collected": false }
+  {
+    "id": "bp-angled-grip-ii-recipe",
+    "name": "Angled Grip II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/angled-grip-ii-recipe.webp"
+  },
+  {
+    "id": "bp-angled-grip-iii-recipe",
+    "name": "Angled Grip III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/angled-grip-iii-recipe.webp"
+  },
+  {
+    "id": "bp-anvil-recipe",
+    "name": "Anvil",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/anvil-recipe.webp"
+  },
+  {
+    "id": "bp-anvil-splitter-recipe",
+    "name": "Anvil Splitter",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/anvil-splitter-recipe.webp"
+  },
+  {
+    "id": "bp-aphelion-rifle-blueprint",
+    "name": "Aphelion Rifle",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/aphelion-rifle-blueprint.webp"
+  },
+  {
+    "id": "bp-arc-circuitry-recipe",
+    "name": "ARC Circuitry",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/arc-circuitry-recipe.webp"
+  },
+  {
+    "id": "bp-barricade-kit-recipe",
+    "name": "Barricade Kit",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/barricade-kit-recipe.webp"
+  },
+  {
+    "id": "bp-bettina-blueprint",
+    "name": "Bettina",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/bettina-blueprint.webp"
+  },
+  {
+    "id": "bp-blaze-grenade-blueprint",
+    "name": "Blaze Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/blaze-grenade-blueprint.webp"
+  },
+  {
+    "id": "bp-blue-light-stick-blueprint",
+    "name": "Blue Light Stick",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/blue-light-stick-blueprint.webp"
+  },
+  {
+    "id": "bp-bobcat-i-recipe",
+    "name": "Bobcat",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/bobcat-i-recipe.webp"
+  },
+  {
+    "id": "bp-burltetta-recipe",
+    "name": "Burletta",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/burltetta-recipe.webp"
+  },
+  {
+    "id": "bp-combat-mk-3-flanking",
+    "name": "Combat Mk. 3 (Flanking)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/combat-mk-3-flanking.webp"
+  },
+  {
+    "id": "bp-combat-mk3-aggressive-blueprint",
+    "name": "Combat Mk.3 (Aggressive)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/combat-mk3-aggressive-blueprint.webp"
+  },
+  {
+    "id": "bp-compensator-ii-recipe",
+    "name": "Compensator II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/compensator-ii-recipe.webp"
+  },
+  {
+    "id": "bp-compensator-iii-recipe",
+    "name": "Compensator III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/compensator-iii-recipe.webp"
+  },
+  {
+    "id": "bp-complex-gun-parts-blueprint",
+    "name": "Complex Gun Parts",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/complex-gun-parts-blueprint.webp"
+  },
+  {
+    "id": "bp-deadline-blueprint",
+    "name": "Deadline",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/deadline-blueprint.webp"
+  },
+  {
+    "id": "bp-defibrillator-recipe",
+    "name": "Defibrillator",
+    "category": "medical",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/defibrillator-recipe.webp"
+  },
+  {
+    "id": "bp-door-blocker-recipe",
+    "name": "Door Blocker",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/door-blocker-recipe.webp"
+  },
+  {
+    "id": "bp-energy-ammo-recipe",
+    "name": "Energy Ammo",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/energy-ammo-recipe.webp"
+  },
+  {
+    "id": "bp-equalizer-recipe",
+    "name": "Equalizer",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/equalizer-recipe.webp"
+  },
+  {
+    "id": "bp-explosive-mine-blueprint",
+    "name": "Explosive Mine",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/explosive-mine-blueprint.webp"
+  },
+  {
+    "id": "bp-extended-barrel-recipe",
+    "name": "Extended Barrel",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-barrel-recipe.webp"
+  },
+  {
+    "id": "bp-extended-light-mag-ii-recipe",
+    "name": "Extended Light Mag II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-light-mag-ii-recipe.webp"
+  },
+  {
+    "id": "bp-extended-light-mag-iii-recipe",
+    "name": "Extended Light Mag III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-light-mag-iii-recipe.webp"
+  },
+  {
+    "id": "bp-extended-medium-mag-ii-recipe",
+    "name": "Extended Medium Mag II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-medium-mag-ii-recipe.webp"
+  },
+  {
+    "id": "bp-extended-medium-mag-iii-blueprint",
+    "name": "Extended Medium Mag III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-medium-mag-iii-blueprint.webp"
+  },
+  {
+    "id": "bp-extended-shotgun-mag-ii-recipe",
+    "name": "Extended Shotgun Mag II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-shotgun-mag-ii-recipe.webp"
+  },
+  {
+    "id": "bp-extended-shotgun-mag-iii-recipe",
+    "name": "Extended Shotgun Mag III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/extended-shotgun-mag-iii-recipe.webp"
+  },
+  {
+    "id": "bp-fireworks-box-blueprint",
+    "name": "Fireworks Box",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/fireworks-box-blueprint.webp"
+  },
+  {
+    "id": "bp-gas-mine-blueprint",
+    "name": "Gas Mine",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/gas-mine-blueprint.webp"
+  },
+  {
+    "id": "bp-green-light-stick-blueprint",
+    "name": "Green Light Stick",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/green-light-stick-blueprint.webp"
+  },
+  {
+    "id": "bp-heavy-fuse-grenade-recipe",
+    "name": "Heavy Fuse Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/heavy-fuse-grenade-recipe.webp"
+  },
+  {
+    "id": "bp-heavy-gun-parts-recipe",
+    "name": "Heavy Gun Parts",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/heavy-gun-parts-recipe.webp"
+  },
+  {
+    "id": "bp-horizontal-grip-blueprint",
+    "name": "Horizontal Grip",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/horizontal-grip-blueprint.webp"
+  },
+  {
+    "id": "bp-hullcracker-blueprint",
+    "name": "Hullcracker",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/hullcracker-blueprint.webp"
+  },
+  {
+    "id": "bp-il-toro-recipe",
+    "name": "Il Toro",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/il-toro-recipe.webp"
+  },
+  {
+    "id": "bp-jolt-mine-recipe",
+    "name": "Jolt Mine",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/jolt-mine-recipe.webp"
+  },
+  {
+    "id": "bp-jupiter-i-recipe",
+    "name": "Jupiter",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/jupiter-i-recipe.webp"
+  },
+  {
+    "id": "bp-kinetic-converter-recipe",
+    "name": "Kinetic Converter",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/kinetic-converter-recipe.webp"
+  },
+  {
+    "id": "bp-laser-trap-fire-recipe",
+    "name": "Laser Trap: Fire",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/laser-trap-fire-recipe.webp"
+  },
+  {
+    "id": "bp-laser-trap-gas-recipe",
+    "name": "Laser Trap: Gas",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/laser-trap-gas-recipe.webp"
+  },
+  {
+    "id": "bp-launcher-ammo-blueprint",
+    "name": "Launcher Ammo",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/launcher-ammo-blueprint.webp"
+  },
+  {
+    "id": "bp-light-gun-parts-recipe",
+    "name": "Light Gun Parts",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/light-gun-parts-recipe.webp"
+  },
+  {
+    "id": "bp-lightweight-stock-recipe",
+    "name": "Lightweight Stock",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/lightweight-stock-recipe.webp"
+  },
+  {
+    "id": "bp-looting-mk-3-safekeeper-blueprint",
+    "name": "Looting MK. 3 (Safekeeper)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/looting-mk-3-safekeeper-blueprint.webp"
+  },
+  {
+    "id": "bp-looting-mk-3-survivor-blueprint",
+    "name": "Looting MK. 3 (Survivor)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/looting-mk-3-survivor-blueprint.webp"
+  },
+  {
+    "id": "bp-lure-grenade-recipe",
+    "name": "Lure Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/lure-grenade-recipe.webp"
+  },
+  {
+    "id": "bp-medium-gun-parts-recipe",
+    "name": "Medium Gun Parts",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/medium-gun-parts-recipe.webp"
+  },
+  {
+    "id": "bp-mod-components-recipe",
+    "name": "Mod Components",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/mod-components-recipe.webp"
+  },
+  {
+    "id": "bp-muzzle-brake-ii-recipe",
+    "name": "Muzzle Brake II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/muzzle-brake-ii-recipe.webp"
+  },
+  {
+    "id": "bp-muzzle-brake-iii-recipe",
+    "name": "Muzzle Brake III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/muzzle-brake-iii-recipe.webp"
+  },
+  {
+    "id": "bp-osprey-recipe",
+    "name": "Osprey",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/osprey-recipe.webp"
+  },
+  {
+    "id": "bp-padded-stock-recipe",
+    "name": "Padded Stock",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/padded-stock-recipe.webp"
+  },
+  {
+    "id": "bp-power-rod-recipe",
+    "name": "Power Rod",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/power-rod-recipe.webp"
+  },
+  {
+    "id": "bp-pulse-mine-blueprint",
+    "name": "Pulse Mine",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/pulse-mine-blueprint.webp"
+  },
+  {
+    "id": "bp-red-light-stick-blueprint",
+    "name": "Red Light Stick",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/red-light-stick-blueprint.webp"
+  },
+  {
+    "id": "bp-remote-raider-flare-blueprint",
+    "name": "Remote Raider Flare",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/remote-raider-flare-blueprint.webp"
+  },
+  {
+    "id": "bp-renegade-recipe",
+    "name": "Renegade",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/renegade-recipe.webp"
+  },
+  {
+    "id": "bp-seeker-grenade-blueprint",
+    "name": "Seeker Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/seeker-grenade-blueprint.webp"
+  },
+  {
+    "id": "bp-shotgun-choke-ii-recipe",
+    "name": "Shotgun Choke II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/shotgun-choke-ii-recipe.webp"
+  },
+  {
+    "id": "bp-shotgun-choke-iii-recipe",
+    "name": "Shotgun Choke III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/shotgun-choke-iii-recipe.webp"
+  },
+  {
+    "id": "bp-shotgun-parts-recipe",
+    "name": "Shotgun Parts",
+    "category": "materials",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/shotgun-parts-recipe.webp"
+  },
+  {
+    "id": "bp-shotgun-silencer-blueprint",
+    "name": "Shotgun Silencer",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/shotgun-silencer-blueprint.webp"
+  },
+  {
+    "id": "bp-showstopper-blueprint",
+    "name": "Showstopper",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/showstopper-blueprint.webp"
+  },
+  {
+    "id": "bp-silencer-i-recipe",
+    "name": "Silencer I",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/silencer-i-recipe.webp"
+  },
+  {
+    "id": "bp-silencer-ii-recipe",
+    "name": "Silencer II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/silencer-ii-recipe.webp"
+  },
+  {
+    "id": "bp-silencer-iii-recipe",
+    "name": "Silencer III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/silencer-iii-recipe.webp"
+  },
+  {
+    "id": "bp-smoke-grenade-blueprint",
+    "name": "Smoke Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/smoke-grenade-blueprint.webp"
+  },
+  {
+    "id": "bp-snap-hook-recipe",
+    "name": "Snap Hook",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/snap-hook-recipe.webp"
+  },
+  {
+    "id": "bp-stable-stock-ii-recipe",
+    "name": "Stable Stock II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/stable-stock-ii-recipe.webp"
+  },
+  {
+    "id": "bp-stable-stock-iii-recipe",
+    "name": "Stable Stock III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/stable-stock-iii-recipe.webp"
+  },
+  {
+    "id": "bp-sterilized-bandage-recipe",
+    "name": "Sterilized Bandage",
+    "category": "medical",
+    "rarity": "legendary",
+    "value": 0,
+    "imageUrl": "icons/sterilized-bandage-recipe.webp"
+  },
+  {
+    "id": "bp-tactical-mk-3-revival-blueprint",
+    "name": "Tactical Mk. 3 (Revival)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/tactical-mk-3-revival-blueprint.webp"
+  },
+  {
+    "id": "bp-tactical-mk3-defensive-blueprint",
+    "name": "Tactical MK.3 (Defensive)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/tactical-mk3-defensive-blueprint.webp"
+  },
+  {
+    "id": "bp-tacical-mk3-healing-blueprint",
+    "name": "Tactical MK.3 (Healing)",
+    "category": "augments",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/tacical-mk3-healing-blueprint.webp"
+  },
+  {
+    "id": "bp-tagging-grenade-recipe",
+    "name": "Tagging Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/tagging-grenade-recipe.webp"
+  },
+  {
+    "id": "bp-tempest-i-recipe",
+    "name": "Tempest",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/tempest-i-recipe.webp"
+  },
+  {
+    "id": "bp-torrent-i-recipe",
+    "name": "Torrente",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/torrent-i-recipe.webp"
+  },
+  {
+    "id": "bp-trailblazer-grenade-blueprint",
+    "name": "Trailblazer Grenade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/trailblazer-grenade-blueprint.webp"
+  },
+  {
+    "id": "bp-trigger-nade-recipe",
+    "name": "Trigger Nade",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/trigger-nade-recipe.webp"
+  },
+  {
+    "id": "bp-venator-recipe",
+    "name": "Venator",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/venator-recipe.webp"
+  },
+  {
+    "id": "bp-vertical-grip-ii-recipe",
+    "name": "Vertical Grip II",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/vertical-grip-ii-recipe.webp"
+  },
+  {
+    "id": "bp-vertical-grip-iii-recipe",
+    "name": "Vertical Grip III",
+    "category": "mods",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/vertical-grip-iii-recipe.webp"
+  },
+  {
+    "id": "bp-vita-shot-recipe",
+    "name": "Vita Shot",
+    "category": "medical",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/vita-shot-recipe.webp"
+  },
+  {
+    "id": "bp-vita-spray-recipe",
+    "name": "Vita Spray",
+    "category": "medical",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/vita-spray-recipe.webp"
+  },
+  {
+    "id": "bp-vulcano-blueprint",
+    "name": "Vulcano",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/vulcano-blueprint.webp"
+  },
+  {
+    "id": "bp-wolfpack-recipe",
+    "name": "Wolfpack",
+    "category": "weapons",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/wolfpack-recipe.webp"
+  },
+  {
+    "id": "bp-yellow-light-stick-blueprint",
+    "name": "Yellow Light Stick",
+    "category": "gadgets",
+    "rarity": "legendary",
+    "value": 5000,
+    "imageUrl": "icons/yellow-light-stick-blueprint.webp"
+  }
 ]

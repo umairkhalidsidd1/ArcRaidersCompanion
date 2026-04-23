@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "スニッチスキャナー",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "アンコモン",
+      "item_type": "リサイクル可能",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "ARC合成樹脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "センサー",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ティックポッド",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "アンコモン",
+      "item_type": "リサイクル可能",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ライト弾薬",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "light-ammo"
+    },
+    {
+      "name": "簡易銃パーツ",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC合成樹脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC回路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高度な機械部品",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "レア",
+      "item_type": "高度な素材",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "高度な電気部品",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "レア",
+      "item_type": "精製素材",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "クイーンリアクター",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "リサイクル可能",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "ARC冷却剤",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARCフレックスラバー",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC断熱ライニング",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC高性能鋼",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "磁気加速器",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "エピック",
+      "item_type": "精製素材",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ファイアボールバーナー",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "アンコモン",
+      "item_type": "リサイクル可能",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "粗製爆薬",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ライト弾薬",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "light-ammo"
+    },
+    {
+      "name": "ワスプドライバー",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC断熱ライニング",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "粗製爆薬",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "ポップトリガー",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "アンコモン",
+      "item_type": "リサイクル可能",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "センサー",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC回路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "サーベイヤー金庫",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "設計図: ヴィータスプレー",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "設計図: バリケードキット",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "設計図: 拡張ミディアムマガジンIII",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "設計図: 重火器パーツ",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "設計図: 延長バレル",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "設計図: パッド入りストック",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "設計図: ヴィータショット",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC合成樹脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC回路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARCフレックスラバー",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC断熱ライニング",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC高性能鋼",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "磁気加速器",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "エピック",
+      "item_type": "精製素材",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "マトリアークリアクター",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "リサイクル可能",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "設計図: アフェリオンライフル",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "レジェンダリー",
+      "item_type": "設計図",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC回路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ロケッティアドライバー",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "エピック",
+      "item_type": "リサイクル可能",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "ヘビー弾薬",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "重火器パーツ",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "簡易銃パーツ",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "ショットガン弾薬",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "シュレッダージャイロ",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC回路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "バスティオンセル",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "エピック",
+      "item_type": "リサイクル可能",
+      "id": "bastion-part"
+    },
+    {
+      "name": "機械部品",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "中火器パーツ",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "ミディアム弾薬",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC回路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARCフレックスラバー",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC高性能鋼",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "機械部品",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "リーパーパルスユニット",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "エピック",
+      "item_type": "投擲物",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "爆発性化合物",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "レア",
+      "item_type": "精製素材",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC高性能鋼",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "機械部品",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "中火器パーツ",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "ボンバルディアセル",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "エピック",
+      "item_type": "リサイクル可能",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "ランチャー弾薬",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "レア",
+      "item_type": "弾薬",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC冷却剤",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC断熱ライニング",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "粗製爆薬",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "爆発性化合物",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "レア",
+      "item_type": "精製素材",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "コメットイグナイター"
+    },
+    {
+      "name": "電気部品",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "アンコモン",
+      "item_type": "精製素材",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "簡易銃パーツ",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "ファイアフライバーナー"
+    },
+    {
+      "name": "化学物質",
+      "icon": "icons/chemicals.webp",
+      "rarity": "コモン",
+      "item_type": "基本素材",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "簡易銃パーツ",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "ミディアム弾薬",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "ホーネットドライバー",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC合成樹脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARCモーションコア",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "高度なARCパワーセル",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "レア",
+      "item_type": "地表素材",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC冷却剤",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC断熱ライニング",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ヘビー弾薬",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "コモン",
+      "item_type": "弾薬",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "センチネル射撃コア",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "レア",
+      "item_type": "リサイクル可能",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "アンコモン",
+      "item_type": "地表素材",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARCパワーセル",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "コモン",
+      "item_type": "地表素材",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "スポッターリレー",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "アンコモン",
+      "item_type": "リサイクル可能",
+      "id": "spotter-relay"
+    }
+  ]
+}

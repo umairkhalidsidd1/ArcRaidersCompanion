@@ -57,7 +57,30 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
+
+def releaseKeyPropertiesFile = rootProject.file("key.properties")
+def releaseKeyProperties = new Properties()
+if (releaseKeyPropertiesFile.exists()) {
+    releaseKeyProperties.load(new FileInputStream(releaseKeyPropertiesFile))
+}
+
+def releaseStoreFile = releaseKeyProperties["storeFile"] ?: System.getenv("ANDROID_KEYSTORE_FILE")
+def releaseStorePassword = releaseKeyProperties["storePassword"] ?: System.getenv("ANDROID_KEYSTORE_PASSWORD")
+def releaseKeyAlias = releaseKeyProperties["keyAlias"] ?: System.getenv("ANDROID_KEY_ALIAS")
+def releaseKeyPassword = releaseKeyProperties["keyPassword"] ?: System.getenv("ANDROID_KEY_PASSWORD")
+def hasReleaseSigningConfig =
+    releaseStoreFile && releaseStorePassword && releaseKeyAlias && releaseKeyPassword
+def isReleaseTaskRequested = gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains("release")
+}
+
+if (isReleaseTaskRequested && !hasReleaseSigningConfig) {
+    throw new RuntimeException(
+        "Release signing is not configured. Create android/key.properties or set " +
+        "ANDROID_KEYSTORE_FILE, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD."
+    )
+}
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -77,12 +100,12 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.arcraiderscompanion"
+    namespace "com.ArcRaidersCompanion"
     defaultConfig {
-        applicationId "com.arcraiderscompanion"
+        applicationId "com.ArcRaidersCompanion"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 5
         versionName "1.0"
     }
     signingConfigs {
@@ -92,16 +115,25 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (hasReleaseSigningConfig) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            if (hasReleaseSigningConfig) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }

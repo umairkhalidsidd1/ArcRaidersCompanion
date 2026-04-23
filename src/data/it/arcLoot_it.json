@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Scanner di Snitch",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "Non comune",
+      "item_type": "Riciclabile",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "Resina sintetica ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Sensori",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Baccello di Tick",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "Non comune",
+      "item_type": "Riciclabile",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Munizioni leggere",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Parti arma semplici",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Resina sintetica ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuiti ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Componenti meccanici avanzati",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale avanzato",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "Componenti elettrici avanzati",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale raffinato",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Reattore della Regina",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "Leggendario",
+      "item_type": "Riciclabile",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "Refrigerante ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Gomma flessibile ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Rivestimento termico ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Acciaio ad alte prestazioni ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Acceleratore magnetico",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Epico",
+      "item_type": "Materiale raffinato",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Bruciatore di Fireball",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "Non comune",
+      "item_type": "Riciclabile",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "Esplosivi grezzi",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Munizioni leggere",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Pilota di Wasp",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Rivestimento termico ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Esplosivi grezzi",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Innesco di Pop",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "Non comune",
+      "item_type": "Riciclabile",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Sensori",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuiti ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Camera del Ricognitore",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "Progetto Spray Vita",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "Progetto Kit barricata",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "Progetto Caricatore medio III esteso",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "Progetto Parti arma pesante",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "Progetto Canna estesa",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "Progetto Calcio imbottito",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "Progetto Iniezione Vita",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Resina sintetica ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuiti ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Gomma flessibile ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Rivestimento termico ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Acciaio ad alte prestazioni ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Acceleratore magnetico",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Epico",
+      "item_type": "Materiale raffinato",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "Reattore della Matriarca",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "Leggendario",
+      "item_type": "Riciclabile",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "Progetto Fucile Aphelion",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "Leggendario",
+      "item_type": "Progetto",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuiti ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Pilota di Rocketeer",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "Epico",
+      "item_type": "Riciclabile",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "Munizioni pesanti",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Parti arma pesante",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Parti arma semplici",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Munizioni fucile a pompa",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "Giroscopio di Shredder",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuiti ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Cellula di Bastion",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "Epico",
+      "item_type": "Riciclabile",
+      "id": "bastion-part"
+    },
+    {
+      "name": "Componenti meccanici",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Parti arma media",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Munizioni medie",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Circuiti ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Gomma flessibile ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Acciaio ad alte prestazioni ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Componenti meccanici",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Unità impulso Leaper",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "Epico",
+      "item_type": "Lanciabile",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "Composto esplosivo",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale raffinato",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Acciaio ad alte prestazioni ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Componenti meccanici",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Parti arma media",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Cellula di Bombardier",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "Epico",
+      "item_type": "Riciclabile",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "Munizioni lanciatore",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "Raro",
+      "item_type": "Munizioni",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Refrigerante ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Rivestimento termico ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Esplosivi grezzi",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Composto esplosivo",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale raffinato",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "Accenditore di Comet"
+    },
+    {
+      "name": "Componenti elettrici",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale raffinato",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Parti arma semplici",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Bruciatore di Firefly"
+    },
+    {
+      "name": "Sostanze chimiche",
+      "icon": "icons/chemicals.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale base",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Parti arma semplici",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Munizioni medie",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "Pilota di Hornet",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Resina sintetica ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Nucleo motore ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Cella energetica ARC avanzata",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Raro",
+      "item_type": "Materiale di superficie",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Refrigerante ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Rivestimento termico ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Munizioni pesanti",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Comune",
+      "item_type": "Munizioni",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Nucleo di fuoco della Sentinella",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "Raro",
+      "item_type": "Riciclabile",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "Lega ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Non comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Cella energetica ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Comune",
+      "item_type": "Materiale di superficie",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Relè di Spotter",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "Non comune",
+      "item_type": "Riciclabile",
+      "id": "spotter-relay"
+    }
+  ]
+}

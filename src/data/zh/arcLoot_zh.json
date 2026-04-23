@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "告密者扫描仪",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "稀有",
+      "item_type": "可回收物",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "ARC合成树脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "传感器",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "蜱虫豆荚",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "稀有",
+      "item_type": "可回收物",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "轻型弹药",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "light-ammo"
+    },
+    {
+      "name": "简易枪械零件",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC合成树脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC电路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高级机械组件",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "精良",
+      "item_type": "高级材料",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "高级电气组件",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "精良",
+      "item_type": "精炼材料",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "女王反应堆",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "传说",
+      "item_type": "可回收物",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "ARC冷却液",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC柔性橡胶",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC隔热衬层",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC高性能钢",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "磁力加速器",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "史诗",
+      "item_type": "精炼材料",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "火球燃烧器",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "稀有",
+      "item_type": "可回收物",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "粗制炸药",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "轻型弹药",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "light-ammo"
+    },
+    {
+      "name": "黄蜂驱动器",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC隔热衬层",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "粗制炸药",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "爆弹触发器",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "稀有",
+      "item_type": "可回收物",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "传感器",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC电路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "勘测者保险箱",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "活力喷雾蓝图",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "路障套件蓝图",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "扩展中型弹匣III蓝图",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "重型枪械零件蓝图",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "加长枪管蓝图",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "缓冲枪托蓝图",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "活力针剂蓝图",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC合成树脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC电路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC柔性橡胶",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC隔热衬层",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC高性能钢",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "磁力加速器",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "史诗",
+      "item_type": "精炼材料",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "女族长反应堆",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "传说",
+      "item_type": "可回收物",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "远日步枪蓝图",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "传说",
+      "item_type": "蓝图",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC电路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "火箭兵驱动器",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "史诗",
+      "item_type": "可回收物",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "重型弹药",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "重型枪械零件",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "简易枪械零件",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "霰弹弹药",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "碎裂者陀螺仪",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC电路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "堡垒核心",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "史诗",
+      "item_type": "可回收物",
+      "id": "bastion-part"
+    },
+    {
+      "name": "机械组件",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "中型枪械零件",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "中型弹药",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC电路",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC柔性橡胶",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC高性能钢",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "机械组件",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "跳跃者脉冲装置",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "史诗",
+      "item_type": "投掷物",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "爆炸化合物",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "精良",
+      "item_type": "精炼材料",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC高性能钢",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "机械组件",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "中型枪械零件",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "轰炸者核心",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "史诗",
+      "item_type": "可回收物",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "发射器弹药",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "精良",
+      "item_type": "弹药",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC冷却液",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC隔热衬层",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "粗制炸药",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "爆炸化合物",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "精良",
+      "item_type": "精炼材料",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "彗星点火器"
+    },
+    {
+      "name": "电气组件",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "稀有",
+      "item_type": "精炼材料",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "简易枪械零件",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "萤火虫燃烧器"
+    },
+    {
+      "name": "化学品",
+      "icon": "icons/chemicals.webp",
+      "rarity": "普通",
+      "item_type": "基础材料",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "简易枪械零件",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "中型弹药",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "大黄蜂驱动器",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC合成树脂",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC运动核心",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "高级ARC能量电池",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "精良",
+      "item_type": "地表材料",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC冷却液",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC隔热衬层",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "重型弹药",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "普通",
+      "item_type": "弹药",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "哨兵射击核心",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "精良",
+      "item_type": "可回收物",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "ARC合金",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "稀有",
+      "item_type": "地表材料",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC能量电池",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "普通",
+      "item_type": "地表材料",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "勘测者中继器",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "稀有",
+      "item_type": "可回收物",
+      "id": "spotter-relay"
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "name": "ホーネットにダメージを与える",
+    "description": "レイド制限時間内にホーネットにできるだけ多くのダメージを与えよ。",
+    "image": "weekly-trials/damage-hornets.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "ブルーゲート",
+      "宇宙港"
+    ],
+    "tip": "スニッチを刺激してホーネットの追加スポーンを強制。ブルーゲートの巡礼者の頂は絶好の高所。"
+  },
+  {
+    "id": 2,
+    "name": "ワスプにダメージを与える",
+    "description": "任意のマップでワスプにダメージを与えよ。",
+    "image": "weekly-trials/damage-wasps.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ワスプはすべてのエリアで一般的。スニッチのアラームを利用して群れでスポーンさせよう。"
+  },
+  {
+    "id": 3,
+    "name": "バスティオンにダメージを与える",
+    "description": "重装甲ARC敵のバスティオンにダメージを与えよ。",
+    "image": "weekly-trials/damage-bastions.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "バスティオンは重装甲持ち。アンヴィルIVやハルクラッカーなどの高火力武器を持参せよ。"
+  },
+  {
+    "id": 4,
+    "name": "ロケッティアにダメージを与える",
+    "description": "すべての遠征でロケッティアにダメージを与えよ。",
+    "image": "weekly-trials/damage-rocketeers.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ロケッティアは爆発弾を発射する — 距離を保ち遮蔽物を活用せよ。"
+  },
+  {
+    "id": 5,
+    "name": "リーパーにダメージを与える",
+    "description": "素早い移動型ARC敵リーパーにダメージを与えよ。",
+    "image": "weekly-trials/trial-1769368839314.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "リーパーは速い。近接戦闘にはショットガンやSMGを使え。"
+  },
+  {
+    "id": 6,
+    "name": "ボンバルディアにダメージを与える",
+    "description": "大型ARC脅威のボンバルディアにダメージを与えよ。",
+    "image": "custom/damagebombardiers.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ボンバルディアには常に2体のサーベイヤーが随伴。先にサーベイヤーを倒せ。"
+  },
+  {
+    "id": 7,
+    "name": "クイーンまたはマトリアークにダメージを与える",
+    "description": "最も危険なARCであるクイーンまたはマトリアークにダメージを与えよ。",
+    "image": "weekly-trials/damage-queens-or-matriarchs.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ボス級ARC。フル分隊と重火器を持参せよ。"
+  },
+  {
+    "id": 8,
+    "name": "サーベイヤーにダメージを与える",
+    "description": "ボンバルディアに随伴するサーベイヤーにダメージを与えよ。",
+    "image": "weekly-trials/damage-spotters.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ボンバルディアを見つけろ — 各1体に常に2体のサーベイヤーがいる。"
+  },
+  {
+    "id": 9,
+    "name": "ロケッティア、リーパーまたはバスティオンにダメージを与える",
+    "description": "ロケッティア、リーパー、バスティオンの任意の組み合わせにダメージを与えよ。",
+    "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "3種類すべてのARC型がカウントされる — 最初に見つけた敵に集中せよ。"
+  },
+  {
+    "id": 10,
+    "name": "地上ARC敵にダメージを与える",
+    "description": "地上型ARC敵にダメージを与えよ。",
+    "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "地上ARCはティック、リーパー、バスティオンを含む。どのマップでも簡単にファームできる。"
+  },
+  {
+    "id": 11,
+    "name": "飛行ARC敵にダメージを与える",
+    "description": "任意のマップで飛行ARC敵にダメージを与えよ。",
+    "image": "weekly-trials/damage-flying-arc-enemies.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ホーネット、ワスプ、スニッチすべてがカウントされる。高所に登って角度を確保せよ。"
+  },
+  {
+    "id": 12,
+    "name": "宇宙港内で飛行ARCにダメージを与える",
+    "description": "宇宙港の壁内で飛行ARC敵にダメージを与えよ。",
+    "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "宇宙港"
+    ],
+    "tip": "宇宙港の壁内にいろ — 外で与えたダメージはカウントされない。"
+  },
+  {
+    "id": 13,
+    "name": "ティックを破壊する",
+    "description": "すべてのマップでティックARCユニットを破壊せよ。",
+    "image": "weekly-trials/destroy-ticks.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ティックは小型地上ARC。適切なスキルなら近接攻撃一発で破壊できる。"
+  },
+  {
+    "id": 14,
+    "name": "ティック、ファイアボール、ポップを破壊する",
+    "description": "ティック、ファイアボール、ポップのARCユニットを破壊せよ。",
+    "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "3種類の小型ARCすべてがカウントされる。ARC密集地帯で連続撃破が容易。"
+  },
+  {
+    "id": 15,
+    "name": "ファイアボールを破壊する",
+    "description": "ファイアボールARCユニットを破壊せよ。",
+    "image": "weekly-trials/trial-1769368872612.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ファイアボールは接触で爆発する — 射撃時は距離を保て。"
+  },
+  {
+    "id": 16,
+    "name": "ポップを破壊する",
+    "description": "遠征エリアのポップARCユニットを破壊せよ。",
+    "image": "weekly-trials/destroy-pops.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ポップは小さくて素早い。音のヒントを聞いて位置を特定せよ。"
+  },
+  {
+    "id": 17,
+    "name": "沼地でARC敵を破壊する",
+    "description": "ダム戦場の沼地エリアでARC敵を破壊せよ。",
+    "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "ダム"
+    ],
+    "tip": "沼地はダム戦場マップ内にある。ここでのキルのみカウントされる。"
+  },
+  {
+    "id": 18,
+    "name": "植物を採集する",
+    "description": "すべての遠征マップで植物を採集せよ。",
+    "image": "weekly-trials/harvest-plants.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
+    "category": "採集",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "植物はすべてのマップに豊富にある。最大効率のために採集ルートを巡れ。"
+  },
+  {
+    "id": 19,
+    "name": "搬送物を配達する",
+    "description": "搬送物を抽出ポイントまたは格納ポイントに配達せよ。",
+    "image": "weekly-trials/deliver-carriables.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
+    "category": "目標",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "搬送物はイベントやPOI付近で見つかる。抽出船に届けよ。"
+  },
+  {
+    "id": 20,
+    "name": "ARCプローブを開く",
+    "description": "マップに散在するARCプローブを開け。",
+    "image": "weekly-trials/open-arc-probes.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
+    "category": "探索",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ARCプローブはすべてのマップに散在。独特のハム音を聞け。"
+  },
+  {
+    "id": 21,
+    "name": "レイダーキャッシュを探す",
+    "description": "マップに隠されたレイダーキャッシュを探せ。",
+    "image": "weekly-trials/search-raider-caches.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
+    "category": "略奪",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "キャッシュは他のプレイヤーが死んだ場所に隠されている。人気の戦闘エリアを確認せよ。"
+  },
+  {
+    "id": 22,
+    "name": "ファーストウェーブの残骸を調べる",
+    "description": "任意のマップでファーストウェーブのハスクコンテナを調べよ。",
+    "image": "weekly-trials/search-first-wave-husks.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
+    "category": "略奪",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "ファーストウェーブの残骸は戦利品付きの骸骨遺体。建物や避難所の近くにある。"
+  },
+  {
+    "id": 23,
+    "name": "鳥の巣を略奪する",
+    "description": "高所にある鳥の巣を略奪せよ。",
+    "image": "weekly-trials/loot-birds-nests.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
+    "category": "略奪",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "鳥の巣は高所にある — 屋上、塔、崖の上。"
+  },
+  {
+    "id": 24,
+    "name": "医療研究棟のコンテナを調べる",
+    "description": "ステラ・モンティスの医療研究棟内のコンテナを調べよ。",
+    "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
+    "category": "略奪",
+    "threeStarScore": 4000,
+    "maps": [
+      "ステラ・モンティス"
+    ],
+    "tip": "医療研究棟はステラ・モンティスにある。エリアを守るシュレッダーに注意。"
+  },
+  {
+    "id": 25,
+    "name": "交通トンネル内のコンテナを開く",
+    "description": "ブルーゲートのロックドゲートイベント中に交通トンネル内のコンテナを開け。",
+    "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
+    "category": "略奪",
+    "threeStarScore": 4000,
+    "maps": [
+      "ブルーゲート"
+    ],
+    "tip": "ブルーゲートのロックドゲートイベント中のみ利用可能。"
+  },
+  {
+    "id": 26,
+    "name": "封鎖門中に地雷を解除する",
+    "description": "ブルーゲートの封鎖門イベント中に4つの主要地点で地雷を解除せよ。",
+    "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
+    "category": "目標",
+    "threeStarScore": 4000,
+    "maps": [
+      "ブルーゲート"
+    ],
+    "tip": "封鎖門中に4つの主要地点に地雷が出現。慎重に近づけ。"
+  },
+  {
+    "id": 27,
+    "name": "バンカー内で情報をダウンロードする",
+    "description": "隠されたバンカー内の端末から情報をダウンロードせよ。",
+    "image": "weekly-trials/download-information-inside-the-bunker.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
+    "category": "目標",
+    "threeStarScore": 4000,
+    "maps": [
+      "宇宙港"
+    ],
+    "tip": "宇宙港の隠されたバンカーイベント中のみ利用可能。"
+  },
+  {
+    "id": 28,
+    "name": "雷に打たれる",
+    "description": "電磁嵐イベント中に雷に打たれよ。",
+    "image": "weekly-trials/get-hit-by-lightning.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
+    "category": "特殊",
+    "threeStarScore": 4000,
+    "maps": [
+      "全マップ"
+    ],
+    "tip": "電磁イベント中のみ。高所や金属構造物の上に立て。"
+  },
+  {
+    "id": 29,
+    "name": "シュレッダーにダメージを与える",
+    "description": "シュレッダーARC敵にダメージを与えよ。",
+    "image": "weekly-trials/deal-damage-to-shredders.webp",
+    "reward": "コスメティック報酬 + ランクポイント",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
+    "category": "戦闘",
+    "threeStarScore": 4000,
+    "maps": [
+      "ステラ・モンティス"
+    ],
+    "tip": "シュレッダーはステラ・モンティスにいる。重火器とシールドを持参せよ。"
+  }
+]

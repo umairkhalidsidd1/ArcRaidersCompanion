@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Snitch Scanner",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "Uncommon",
+      "item_type": "Recyclable",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "ARC Synthetic Resin",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Sensors",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Tick Pod",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "Uncommon",
+      "item_type": "Recyclable",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Light Ammo",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Simple Gun Parts",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Synthetic Resin",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Circuitry",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Advanced Mechanical Components",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "Rare",
+      "item_type": "Advanced Material",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "Advanced Electrical Components",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "Rare",
+      "item_type": "Refined Material",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Queen Reactor",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "Legendary",
+      "item_type": "Recyclable",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "ARC Coolant",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC Flex Rubber",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC Thermo Lining",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC Performance Steel",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Magnetic Accelerator",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Epic",
+      "item_type": "Refined Material",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Fireball Burner",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "Uncommon",
+      "item_type": "Recyclable",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "Crude Explosives",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Light Ammo",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Wasp Driver",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Thermo Lining",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Crude Explosives",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Pop Trigger",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "Uncommon",
+      "item_type": "Recyclable",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Sensors",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Circuitry",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Surveyor Vault",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "Vita Spray Blueprint",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "Barricade Kit Blueprint",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "Extended Medium Mag III Blueprint",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "Heavy Gun Parts Blueprint",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "Extended Barrel Blueprint",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "Padded Stock Blueprint",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "Vita Shot Blueprint",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Synthetic Resin",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Circuitry",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Flex Rubber",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC Thermo Lining",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC Performance Steel",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Magnetic Accelerator",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Epic",
+      "item_type": "Refined Material",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "Matriarch Reactor",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "Legendary",
+      "item_type": "Recyclable",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "Aphelion Rifle Blueprint",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "Legendary",
+      "item_type": "Blueprint",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Circuitry",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Rocketeer Driver",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "Epic",
+      "item_type": "Recyclable",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "Heavy Ammo",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Heavy Gun Parts",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Simple Gun Parts",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Shotgun ammo",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "Shredder Gyro",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Circuitry",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Bastion Cell",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "Epic",
+      "item_type": "Recyclable",
+      "id": "bastion-part"
+    },
+    {
+      "name": "Mechanical Components",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Medium Gun Parts",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Medium Ammo",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC Circuitry",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Flex Rubber",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC Performance Steel",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Mechanical Components",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Leaper Pulse Unit",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "Epic",
+      "item_type": "Throwable",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "Explosive Compound",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Rare",
+      "item_type": "Refined Material",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Performance Steel",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Mechanical Components",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Medium Gun Parts",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Bombardier Cell",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "Epic",
+      "item_type": "Recyclable",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "Launcher Ammo",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "Rare",
+      "item_type": "Ammunition",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Coolant",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC Thermo Lining",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Crude Explosives",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Explosive Compound",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Rare",
+      "item_type": "Refined Material",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "Comet Igniter"
+    },
+    {
+      "name": "Electrical Components",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "Uncommon",
+      "item_type": "Refined Material",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Simple Gun Parts",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Firefly Burner"
+    },
+    {
+      "name": "Chemicals",
+      "icon": "icons/chemicals.webp",
+      "rarity": "Common",
+      "item_type": "Basic Material",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Simple Gun Parts",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Medium Ammo",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "Hornet Driver",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Synthetic Resin",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC Motion Core",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Advanced ARC Powercell",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Rare",
+      "item_type": "Topside Material",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC Coolant",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC Thermo Lining",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Heavy Ammo",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Common",
+      "item_type": "Ammunition",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Sentinel Firing Core",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "Rare",
+      "item_type": "Recyclable",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "ARC Alloy",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Uncommon",
+      "item_type": "Topside Material",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC Powercell",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Common",
+      "item_type": "Topside Material",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Spotter Relay",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "Uncommon",
+      "item_type": "Recyclable",
+      "id": "spotter-relay"
+    }
+  ]
+}

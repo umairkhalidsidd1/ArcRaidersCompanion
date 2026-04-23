@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "name": "Obrażenia Szerszeniam",
+    "description": "Zadaj jak najwięcej obrażeń Szerszeniam w ramach limitu czasu rajdu.",
+    "image": "weekly-trials/damage-hornets.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Niebieska brama",
+      "Kosmodrom"
+    ],
+    "tip": "Sprowokuj Donosicieli, aby wymusić dodatkowe spawny Szerszenów. Szczyt Pielgrzyma na Niebieskiej bramie oferuje świetną wysokość."
+  },
+  {
+    "id": 2,
+    "name": "Obrażenia Osom",
+    "description": "Zadaj obrażenia Osom na dowolnej mapie.",
+    "image": "weekly-trials/damage-wasps.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Osy są pospolite we wszystkich obszarach. Użyj alarmów Donosicieli, aby spawnovały się w grupach."
+  },
+  {
+    "id": 3,
+    "name": "Obrażenia Bastionom",
+    "description": "Zadaj obrażenia Bastionom, ciężko opancerzonym wrogom ARC.",
+    "image": "weekly-trials/damage-bastions.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Bastiony mają ciężki pancerz. Zabierz broń o wysokich obrażeniach jak Kowadło IV lub Łamacz kadłubów."
+  },
+  {
+    "id": 4,
+    "name": "Obrażenia Rakieciarzom",
+    "description": "Zadaj obrażenia Rakieciarzom we wszystkich wyprawach.",
+    "image": "weekly-trials/damage-rocketeers.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Rakieciarze strzelają pociskami wybuchowymi — zachowaj dystans i korzystaj z osłon."
+  },
+  {
+    "id": 5,
+    "name": "Obrażenia Skoczkom",
+    "description": "Zadaj obrażenia Skoczkom, szybkim wrogom ARC.",
+    "image": "weekly-trials/trial-1769368839314.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Skoczki są szybkie. Używaj strzelb lub PM-ów do walki bliskiej."
+  },
+  {
+    "id": 6,
+    "name": "Obrażenia Bombardierom",
+    "description": "Zadaj obrażenia Bombardierom, dużym zagrożeniom ARC.",
+    "image": "custom/damagebombardiers.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Bombardierzy zawsze mają ze sobą dwóch Mierniczych. Najpierw zajmij się Mierniczymi."
+  },
+  {
+    "id": 7,
+    "name": "Obrażenia Królowym lub Matriarchiniom",
+    "description": "Zadaj obrażenia Królowym lub Matriarchiniom — najniebezpieczniejszym ARC.",
+    "image": "weekly-trials/damage-queens-or-matriarchs.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "To ARC poziomu bossa. Zabierz pełny oddział i ciężką broń."
+  },
+  {
+    "id": 8,
+    "name": "Obrażenia Mierniczym",
+    "description": "Zadaj obrażenia Mierniczym, którzy towarzyszą Bombardierom.",
+    "image": "weekly-trials/damage-spotters.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Znajdź Bombardierów — każdy ma zawsze dwóch Mierniczych."
+  },
+  {
+    "id": 9,
+    "name": "Obrażenia Rakieciarzom, Skoczkom lub Bastionom",
+    "description": "Zadaj obrażenia dowolnej kombinacji Rakieciarzy, Skoczków lub Bastionów.",
+    "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Wszystkie trzy typy ARC się liczą — skup się na tym, którego znajdziesz pierwszego."
+  },
+  {
+    "id": 10,
+    "name": "Obrażenia naziemnym wrogom ARC",
+    "description": "Zadaj obrażenia naziemnym wrogom ARC.",
+    "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Naziemne ARC to Kleszcze, Skoczki i Bastiony. Bardzo łatwe do farmienia na każdej mapie."
+  },
+  {
+    "id": 11,
+    "name": "Obrażenia latającym wrogom ARC",
+    "description": "Zadaj obrażenia latającym wrogom ARC na dowolnej mapie.",
+    "image": "weekly-trials/damage-flying-arc-enemies.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Szerszenie, Osy i Donosiciele się liczą. Wejdź na wysoką pozycję dla lepszych kątów."
+  },
+  {
+    "id": 12,
+    "name": "Obrażenia latającym ARC w Kosmodromie",
+    "description": "Zadaj obrażenia latającym ARC wewnątrz murów Kosmodromu.",
+    "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Kosmodrom"
+    ],
+    "tip": "Zostań wewnątrz murów Kosmodromu — obrażenia zadane na zewnątrz się nie liczą."
+  },
+  {
+    "id": 13,
+    "name": "Zniszcz Kleszcze",
+    "description": "Zniszcz jednostki ARC Kleszcze na wszystkich mapach.",
+    "image": "weekly-trials/destroy-ticks.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Kleszcze to małe naziemne ARC. Jedno uderzenie w zwarciu niszczy je odpowiednią umiejętnością."
+  },
+  {
+    "id": 14,
+    "name": "Zniszcz Kleszcze, Kule ognia i Popy",
+    "description": "Zniszcz jednostki ARC Kleszcze, Kule ognia i Popy.",
+    "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Wszystkie trzy małe typy ARC się liczą. Łatwe do łańcuchowania w gęstych obszarach ARC."
+  },
+  {
+    "id": 15,
+    "name": "Zniszcz Kule ognia",
+    "description": "Zniszcz jednostki ARC Kule ognia.",
+    "image": "weekly-trials/trial-1769368872612.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Kule ognia eksplodują przy kontakcie — zachowaj dystans podczas strzelania."
+  },
+  {
+    "id": 16,
+    "name": "Zniszcz Popy",
+    "description": "Zniszcz jednostki ARC Pop w obszarach wypraw.",
+    "image": "weekly-trials/destroy-pops.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Popy są małe i szybkie. Nasłuchuj ich dźwiękowych sygnałów, aby je zlokalizować."
+  },
+  {
+    "id": 17,
+    "name": "Zniszcz wrogów ARC na Bagnach",
+    "description": "Zniszcz wrogów ARC w strefie Bagien na Polach bitewnych zapory.",
+    "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Zapora"
+    ],
+    "tip": "Bagno jest na mapie Pola bitewne zapory. Liczą się tylko zabicia tutaj."
+  },
+  {
+    "id": 18,
+    "name": "Zbieraj rośliny",
+    "description": "Zbieraj rośliny na wszystkich mapach wypraw.",
+    "image": "weekly-trials/harvest-plants.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
+    "category": "Zbieranie",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Rośliny są obfite na wszystkich mapach. Podążaj trasami zbierania dla maksymalnej wydajności."
+  },
+  {
+    "id": 19,
+    "name": "Dostarcz przedmioty do przenoszenia",
+    "description": "Dostarcz przedmioty do przenoszenia do punktów ekstrakcji lub składowania.",
+    "image": "weekly-trials/deliver-carriables.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
+    "category": "Cel",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Przedmioty do przenoszenia znajdują się w pobliżu wydarzeń i POI. Dostarcz je na statek ewakuacyjny."
+  },
+  {
+    "id": 20,
+    "name": "Otwórz Sondy ARC",
+    "description": "Otwórz Sondy ARC rozsiane po mapach.",
+    "image": "weekly-trials/open-arc-probes.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
+    "category": "Eksploracja",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Sondy ARC są rozrzucone po wszystkich mapach. Nasłuchuj ich charakterystycznego brzęczenia."
+  },
+  {
+    "id": 21,
+    "name": "Przeszukaj skrytki Rajderów",
+    "description": "Przeszukaj ukryte skrytki Rajderów na mapach.",
+    "image": "weekly-trials/search-raider-caches.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
+    "category": "Grabież",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Skrytki są ukryte w miejscach śmierci innych graczy. Sprawdź popularne obszary walki."
+  },
+  {
+    "id": 22,
+    "name": "Przeszukaj szczątki Pierwszej Fali",
+    "description": "Przeszukaj kontenery szczątków Pierwszej Fali na dowolnej mapie.",
+    "image": "weekly-trials/search-first-wave-husks.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
+    "category": "Grabież",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Szczątki Pierwszej Fali to szkieletowe pozostałości z łupem. Znajdowane w pobliżu budynków i schronień."
+  },
+  {
+    "id": 23,
+    "name": "Plądru gniazda ptaków",
+    "description": "Plądruj gniazda ptaków na podwyższonych pozycjach.",
+    "image": "weekly-trials/loot-birds-nests.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
+    "category": "Grabież",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Gniazda ptaków są wysoko — na dachach, wieżach i klifach."
+  },
+  {
+    "id": 24,
+    "name": "Przeszukaj pojemniki w Skrzydle Badań Medycznych",
+    "description": "Przeszukaj pojemniki wewnątrz Skrzydła Badań Medycznych na Stella Montis.",
+    "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
+    "category": "Grabież",
+    "threeStarScore": 4000,
+    "maps": [
+      "Stella Montis"
+    ],
+    "tip": "Badania Medyczne są na Stella Montis. Uważaj na Rozszarpywacze strzegące okolicy."
+  },
+  {
+    "id": 25,
+    "name": "Otwórz pojemniki w Tunelach Ruchu",
+    "description": "Otwórz pojemniki w tunelach ruchu podczas Zamkniętej bramy na Niebieskiej bramie.",
+    "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
+    "category": "Grabież",
+    "threeStarScore": 4000,
+    "maps": [
+      "Niebieska brama"
+    ],
+    "tip": "Dostępne tylko podczas wydarzenia Zamknięta brama na Niebieskiej bramie."
+  },
+  {
+    "id": 26,
+    "name": "Rozbrajaj miny podczas Zamkniętej bramy",
+    "description": "Rozbrój miny w 4 głównych lokalizacjach podczas wydarzenia Zamknięta brama na Niebieskiej bramie.",
+    "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
+    "category": "Cel",
+    "threeStarScore": 4000,
+    "maps": [
+      "Niebieska brama"
+    ],
+    "tip": "Miny pojawiają się w 4 głównych lokalizacjach podczas Zamkniętej bramy. Podchodź ostrożnie."
+  },
+  {
+    "id": 27,
+    "name": "Pobierz informacje w Bunkrze",
+    "description": "Pobierz informacje z terminali wewnątrz Ukrytego bunkra.",
+    "image": "weekly-trials/download-information-inside-the-bunker.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
+    "category": "Cel",
+    "threeStarScore": 4000,
+    "maps": [
+      "Kosmodrom"
+    ],
+    "tip": "Dostępne tylko podczas wydarzenia Ukryty bunkier na Kosmodromie."
+  },
+  {
+    "id": 28,
+    "name": "Zostań trafiony piorunem",
+    "description": "Zostań trafiony piorunem podczas wydarzeń Burzy elektromagnetycznej.",
+    "image": "weekly-trials/get-hit-by-lightning.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
+    "category": "Specjalne",
+    "threeStarScore": 4000,
+    "maps": [
+      "Wszystkie mapy"
+    ],
+    "tip": "Tylko podczas wydarzeń elektromagnetycznych. Stań na wysokości i metalowych konstrukcjach."
+  },
+  {
+    "id": 29,
+    "name": "Zadaj obrażenia Rozszarpywaczom",
+    "description": "Zadaj obrażenia wrogom ARC Rozszarpywaczom.",
+    "image": "weekly-trials/deal-damage-to-shredders.webp",
+    "reward": "Nagrody kosmetyczne + Punkty rangi",
+    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
+    "category": "Walka",
+    "threeStarScore": 4000,
+    "maps": [
+      "Stella Montis"
+    ],
+    "tip": "Rozszarpywacze znajdują się na Stella Montis. Zabierz ciężką broń i tarcze."
+  }
+]

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FlatList,
   Image,
@@ -12,9 +13,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import {usePremium} from '../context/PremiumContext';
+import PremiumLockOverlay from '../components/PremiumLockOverlay';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
 import { getMapImage } from '../data/mapImages';
-import maps from '../data/maps.json';
+import {getMaps} from '../data/localizedData';
 import markers from '../data/markers.json';
 
 const getDifficultyColor = (d: string) => {
@@ -41,20 +44,44 @@ const DB_MAP_NAME: Record<string, string> = {
   'stella-montis': 'Stella_Montis_Map',
 };
 
+const TAG_I18N_KEYS: Record<string, string> = {
+  'ELECTROMAGNETS STORE': 'maps.electromagnetsStore',
+  'DISTILLERY': 'maps.distillery',
+  'UNDERGROUND VAULTS': 'maps.undergroundVaults',
+  'METRO RUINS': 'maps.metroRuins',
+  'LAUNCH PAD': 'maps.launchPad',
+  'ARC HANGAR': 'maps.arcHangar',
+  'MILITARY BUNKER': 'maps.militaryBunker',
+  'CHECKPOINT': 'maps.checkpoint',
+  'ALPINE BUNKER': 'maps.alpineBunker',
+  'MINING SHAFT': 'maps.miningShaft',
+};
+
 const MapListScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
+  const maps = getMaps();
+  const {isPremium} = usePremium();
+  const FREE_MAP_COUNT = 2;
 
-  const renderMap = ({ item, index }: { item: typeof maps[0]; index: number }) => {
+  const renderMap = ({ item, index }: { item: (typeof maps)[0]; index: number }) => {
     const mapDbName = DB_MAP_NAME[item.id] || 'Dam';
     const markerCount = ((markers as Record<string, any[]>)[mapDbName] || []).length;
     const tags = MAP_TAGS[item.id] || [];
     const mapImage = getMapImage(item.id);
+    const isLocked = !isPremium && index >= FREE_MAP_COUNT;
 
     return (
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={() => navigation.navigate('MapDetail', { mapId: item.id })}>
-        <View style={styles.mapCard}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => {
+            if (isLocked) {
+              navigation.navigate('Paywall');
+              return;
+            }
+            navigation.navigate('MapDetail', { mapId: item.id });
+          }}>
+          <View style={styles.mapCard}>
           <ImageBackground
             source={mapImage}
             style={[styles.mapImageContainer, { backgroundColor: item.bgColor }]}
@@ -66,6 +93,14 @@ const MapListScreen = ({ navigation }: any) => {
               colors={['transparent', 'rgba(15, 16, 28, 0.4)', 'rgba(15, 16, 28, 0.95)']}
               style={StyleSheet.absoluteFillObject}
             />
+
+            {/* Lock overlay for premium maps */}
+            {isLocked && (
+              <PremiumLockOverlay
+                onPress={() => navigation.navigate('Paywall')}
+                style={{borderRadius: borderRadius.xl}}
+              />
+            )}
 
             {/* Floating UI Elements */}
             <View style={styles.cardOverlayContent}>
@@ -85,7 +120,7 @@ const MapListScreen = ({ navigation }: any) => {
                 <View style={styles.cardMetaRow}>
                   <View style={styles.markerBadge}>
                     <Icon name="map-marker-multiple" size={12} color={colors.orange} />
-                    <Text style={styles.markerCountText}>{markerCount} MARKERS</Text>
+                    <Text style={styles.markerCountText}>{markerCount} {t('maps.markers')}</Text>
                   </View>
                   
                   <View style={styles.tagDivider} />
@@ -93,7 +128,7 @@ const MapListScreen = ({ navigation }: any) => {
                   <View style={styles.cardTagsInline}>
                     {tags.slice(0, 2).map((tag, i) => (
                       <Text key={tag} style={styles.inlineTagText}>
-                        {i > 0 ? ' • ' : ''}{tag}
+                        {i > 0 ? ' • ' : ''}{t(TAG_I18N_KEYS[tag] || tag)}
                       </Text>
                     ))}
                   </View>
@@ -107,7 +142,7 @@ const MapListScreen = ({ navigation }: any) => {
             </View>
           </ImageBackground>
         </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
     );
   };
 
@@ -121,8 +156,8 @@ const MapListScreen = ({ navigation }: any) => {
           <Icon name="map-legend" size={20} color={colors.orange} />
         </View>
         <View>
-          <Text style={styles.headerTitle}>DEPLOYMENT ZONES</Text>
-          <Text style={styles.headerSubtitle}>{maps.length} zones available</Text>
+          <Text style={styles.headerTitle}>{t('maps.title')}</Text>
+          <Text style={styles.headerSubtitle}>{maps.length} {t('maps.zonesAvailable')}</Text>
         </View>
       </View>
 
@@ -142,7 +177,7 @@ const MapListScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: 'row',

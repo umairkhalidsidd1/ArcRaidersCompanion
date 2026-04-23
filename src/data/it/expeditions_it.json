@@ -1,0 +1,201 @@
+{
+  "description": "Le Spedizioni sono un sistema opzionale di prestigio/reset soft. Disponibile al livello 20, i giocatori resettano i progressi in cambio di ricompense permanenti. Il progetto ha 6 fasi di difficoltà crescente.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Fondamenta",
+      "description": "Raccogli materiali da costruzione di base per iniziare a costruire la carovana.",
+      "objectives": [
+        {
+          "item": "Parti metalliche",
+          "quantity": 150
+        },
+        {
+          "item": "Chimici",
+          "quantity": 100
+        },
+        {
+          "item": "Lega ARC",
+          "quantity": 80
+        },
+        {
+          "item": "Molla d'acciaio",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Sistemi centrali",
+      "description": "Installa i sistemi elettrici e meccanici centrali della carovana.",
+      "objectives": [
+        {
+          "item": "Tessuto resistente",
+          "quantity": 30
+        },
+        {
+          "item": "Cavi",
+          "quantity": 25
+        },
+        {
+          "item": "Componenti elettrici",
+          "quantity": 20
+        },
+        {
+          "item": "Caricatore industriale",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "Struttura",
+      "description": "Assembla la struttura portante e i componenti specializzati.",
+      "objectives": [
+        {
+          "item": "Caffettiera",
+          "quantity": 1
+        },
+        {
+          "item": "Batteria",
+          "quantity": 25
+        },
+        {
+          "item": "Bruciatore palla di fuoco",
+          "quantity": 5
+        },
+        {
+          "item": "Moduli Exodus",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Equipaggiamento",
+      "description": "Equipaggia la carovana con tecnologia avanzata e componenti ARC rari.",
+      "objectives": [
+        {
+          "item": "Sistema di guida rotto",
+          "quantity": 1
+        },
+        {
+          "item": "Componenti elettrici avanzati",
+          "quantity": 10
+        },
+        {
+          "item": "Palla di neve mozzafiato",
+          "quantity": 3
+        },
+        {
+          "item": "Cella bombardiere",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Fase di carico",
+      "description": "Riempi la carovana con rifornimenti categorizzati per valore in monete.",
+      "objectives": [
+        {
+          "item": "Materiali (per valore in monete)",
+          "quantity": 300000
+        },
+        {
+          "item": "Oggetti da combattimento (per valore in monete)",
+          "quantity": 200000
+        },
+        {
+          "item": "Oggetti di sopravvivenza (per valore in monete)",
+          "quantity": 100000
+        },
+        {
+          "item": "Provviste (per valore in monete)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Partenza",
+      "description": "Registra il tuo Raider durante la finestra di partenza. Tutti gli oggetti rimanenti nel deposito contribuiscono al valore della tua spedizione.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "Punti abilità bonus",
+        "description": "Fino a 5 punti abilità bonus (1 per milione di valore in monete)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 Spazi deposito",
+        "description": "Spazio di deposito aggiuntivo per il tuo prossimo Raider",
+        "icon": "archive"
+      },
+      {
+        "name": "Outfit Raider rattoppato",
+        "description": "Cosmetico evolutivo esclusivo",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "Cosmetico arrangiat",
+        "description": "Copricapo unico (es: Berretto da custode arrangiato)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "Indicatore di spedizione",
+        "description": "Distintivo che mostra il tuo conteggio spedizioni",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "Boost valore riparazione",
+        "description": "+60-70% valore riparazione (cumulabile x3)",
+        "icon": "tools"
+      },
+      {
+        "name": "Boost XP",
+        "description": "+5-10% guadagno XP (cumulabile x3)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "Materiali arrangiati",
+        "description": "+6% materiali dall'Arrangiatore (cumulabile x3)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "Mappe sbloccate",
+    "Cosmetici",
+    "Mazzi Raider",
+    "Gettoni Raider",
+    "Crediti",
+    "Voci del Codice",
+    "Stazioni officina",
+    "Prove",
+    "Classifiche attive",
+    "Progressi eventi personali",
+    "Punti abilità bonus (precedenti)"
+  ],
+  "loses": [
+    "Progetti",
+    "Inventario e Deposito",
+    "Livello giocatore",
+    "Monete",
+    "Miglioramenti officina",
+    "Progressione missioni",
+    "Punti abilità (iniziali)"
+  ]
+}

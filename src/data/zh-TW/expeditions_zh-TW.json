@@ -1,0 +1,201 @@
+{
+  "description": "遠征是一種可選的聲望/軟重置系統。在20級時可用，玩家通過重置進度來換取永久獎勵。該項目有6個難度遞增的階段。",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "基礎",
+      "description": "收集基本建築材料，開始建造商隊。",
+      "objectives": [
+        {
+          "item": "金屬零件",
+          "quantity": 150
+        },
+        {
+          "item": "化學品",
+          "quantity": 100
+        },
+        {
+          "item": "ARC合金",
+          "quantity": 80
+        },
+        {
+          "item": "鋼彈簧",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "核心系統",
+      "description": "為商隊安裝電氣和機械核心系統。",
+      "objectives": [
+        {
+          "item": "耐用布料",
+          "quantity": 30
+        },
+        {
+          "item": "電線",
+          "quantity": 25
+        },
+        {
+          "item": "電子元件",
+          "quantity": 20
+        },
+        {
+          "item": "工業充電器",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "框架",
+      "description": "組裝結構框架和專用組件。",
+      "objectives": [
+        {
+          "item": "咖啡壺",
+          "quantity": 1
+        },
+        {
+          "item": "電池",
+          "quantity": 25
+        },
+        {
+          "item": "火球燃燒器",
+          "quantity": 5
+        },
+        {
+          "item": "出行模組",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "裝備",
+      "description": "用先進技術和稀有ARC組件裝備商隊。",
+      "objectives": [
+        {
+          "item": "損壞的導引系統",
+          "quantity": 1
+        },
+        {
+          "item": "高級電子元件",
+          "quantity": 10
+        },
+        {
+          "item": "精美雪花球",
+          "quantity": 3
+        },
+        {
+          "item": "轟炸機電池",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "裝載階段",
+      "description": "按照鑄幣價值分類為商隊裝載物資。",
+      "objectives": [
+        {
+          "item": "材料（按鑄幣價值）",
+          "quantity": 300000
+        },
+        {
+          "item": "戰鬥物品（按鑄幣價值）",
+          "quantity": 200000
+        },
+        {
+          "item": "生存物品（按鑄幣價值）",
+          "quantity": 100000
+        },
+        {
+          "item": "補給品（按鑄幣價值）",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "出發",
+      "description": "在出發窗口期註冊你的掠奪者。所有剩餘儲藏物品將計入你的遠征價值。",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "額外技能點",
+        "description": "最多5個額外技能點（每百萬鑄幣價值1個）",
+        "icon": "star"
+      },
+      {
+        "name": "+12儲藏空間",
+        "description": "為你的下一個掠奪者提供額外儲藏空間",
+        "icon": "archive"
+      },
+      {
+        "name": "補丁掠奪者服裝",
+        "description": "獨家進化外觀",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "拼湊外觀",
+        "description": "獨特頭飾（如拼湊清潔工帽）",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "遠征標識",
+        "description": "顯示你遠征次數的徽章",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "修理價值提升",
+        "description": "+60-70%修理價值（最多疊加3次）",
+        "icon": "tools"
+      },
+      {
+        "name": "經驗值提升",
+        "description": "+5-10%經驗值獲取（最多疊加3次）",
+        "icon": "trending-up"
+      },
+      {
+        "name": "拼湊材料",
+        "description": "+6%拼湊者材料獲取（最多疊加3次）",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "已解鎖地圖",
+    "外觀",
+    "掠奪者牌組",
+    "掠奪者代幣",
+    "信用點",
+    "圖鑑條目",
+    "工坊工作台",
+    "試煉",
+    "活躍排行榜",
+    "個人活動進度",
+    "額外技能點（先前獲得）"
+  ],
+  "loses": [
+    "藍圖",
+    "背包與儲藏",
+    "玩家等級",
+    "鑄幣",
+    "工坊升級",
+    "任務進度",
+    "技能點（初始）"
+  ]
+}

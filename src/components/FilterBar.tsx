@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FilterBar;
+export default React.memo(FilterBar);

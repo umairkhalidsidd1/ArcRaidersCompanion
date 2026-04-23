@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Staudamm-Schlachtfelder",
+    "description": "Ein massiver Wasserkraftdamm, überrannt von ARC-Truppen. Dichte Kampfzonen um die Überläufe und Generatorräume.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Mittel"
+  },
+  {
+    "id": "buried-city",
+    "name": "Begrabene Stadt",
+    "description": "Die Ruinen einer einst blühenden Metropole, halb begraben unter Sand und Schutt. Reich an Beute, aber gefährlich.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Schwer"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "Der Raumhafen",
+    "description": "Eine verlassene Startanlage mit Hangars, Kontrolltürmen und verstreuter ARC-Technologie. Weite offene Sichtlinien.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Leicht"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Blaues Tor",
+    "description": "Ein befestigter Kontrollpunkt zwischen Regionen. Enge Korridore und Vertikalität sorgen für intensive Feuergefechte.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Mittel"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "Eine bergige Region mit alpinen Wäldern und versteckten Bunkern. Hochwertige Ressourcen über die Gipfel verstreut.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Schwer"
+  }
+]

@@ -11,81 +11,24 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
 import { colors, fonts, spacing, borderRadius } from '../theme/theme';
-
-// Placeholder avatar colors
-const AVATAR_COLORS = ['#FF6B2C', '#00E5FF', '#A855F7', '#00FF88', '#FFD600'];
+import { useTranslation } from 'react-i18next';
 
 const ToolsScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>TOOLS</Text>
-        <Text style={styles.headerSubtitle}>Traders, skill builds & more</Text>
+        <Text style={styles.headerTitle}>{t('tools.title')}</Text>
+        <Text style={styles.headerSubtitle}>{t('tools.subtitle')}</Text>
       </View>
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
-        {/* Community */}
-        <TouchableOpacity activeOpacity={0.7}>
-          <Card style={styles.toolCard}>
-            <View style={styles.toolRow}>
-              <View style={[styles.toolIconWrap, { backgroundColor: colors.orange + '18' }]}>
-                <Icon name="account-group-outline" size={26} color={colors.orange} />
-              </View>
-              <View style={styles.toolInfo}>
-                <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>COMMUNITY</Text>
-                  <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
-                  </View>
-                </View>
-                <Text style={styles.toolDesc}>Join groups, chat & find squads</Text>
-              </View>
-              <Icon name="chevron-right" size={20} color={colors.textMuted} />
-            </View>
-            {/* Avatars */}
-            <View style={styles.avatarRow}>
-              {AVATAR_COLORS.map((c, i) => (
-                <View
-                  key={i}
-                  style={[
-                    styles.avatar,
-                    { backgroundColor: c + '30', borderColor: c, marginLeft: i > 0 ? -8 : 0 },
-                  ]}>
-                  <Icon name="account" size={16} color={c} />
-                </View>
-              ))}
-              <Text style={styles.avatarCount}>+142 online</Text>
-            </View>
-          </Card>
-        </TouchableOpacity>
-
-        {/* Marketplace */}
-        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Marketplace')}>
-          <Card style={styles.toolCard}>
-            <View style={styles.toolRow}>
-              <View style={[styles.toolIconWrap, { backgroundColor: colors.red + '18' }]}>
-                <Icon name="storefront-outline" size={26} color={colors.red} />
-              </View>
-              <View style={styles.toolInfo}>
-                <View style={styles.toolTitleRow}>
-                  <Text style={styles.toolName}>MARKETPLACE</Text>
-                  <View style={styles.newBadge}>
-                    <Text style={styles.newBadgeText}>NEW</Text>
-                  </View>
-                </View>
-                <Text style={styles.toolDesc}>Trade items with other raiders</Text>
-              </View>
-              <Icon name="chevron-right" size={20} color={colors.textMuted} />
-            </View>
-          </Card>
-        </TouchableOpacity>
-
         {/* Traders */}
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('TraderList')}>
           <Card style={styles.toolCard}>
@@ -94,8 +37,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="account-cash-outline" size={26} color={colors.yellow} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>TRADERS</Text>
-                <Text style={styles.toolDesc}>5 TRADERS · 91 ITEMS</Text>
+                <Text style={styles.toolName}>{t('tools.traders')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.tradersDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -110,8 +53,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="clipboard-text-outline" size={26} color="#FF9800" />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>QUEST TRACKER</Text>
-                <Text style={styles.toolDesc}>72 QUESTS WITH CHAINS</Text>
+                <Text style={styles.toolName}>{t('tools.questTracker')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.questTrackerDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -126,8 +69,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="robot-angry" size={26} color="#F44336" />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>ARC ENCYCLOPEDIA</Text>
-                <Text style={styles.toolDesc}>16 ENEMIES DOCUMENTED</Text>
+                <Text style={styles.toolName}>{t('tools.arcEncyclopedia')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.arcEncyclopediaDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -142,8 +85,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="clock-outline" size={26} color="#26C6DA" />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>EVENT TIMERS</Text>
-                <Text style={styles.toolDesc}>36 SCHEDULED EVENTS</Text>
+                <Text style={styles.toolName}>{t('tools.eventTimers')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.eventTimersDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -158,8 +101,8 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="floor-plan" size={26} color={colors.green} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>BLUEPRINT TRACKER</Text>
-                <Text style={styles.toolDesc}>0 / 176 blueprints collected</Text>
+                <Text style={styles.toolName}>{t('tools.blueprintTracker')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.blueprintTrackerDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -174,8 +117,71 @@ const ToolsScreen = ({ navigation }: any) => {
                 <Icon name="file-tree-outline" size={26} color={colors.cyan} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>SKILL TREE BUILDER</Text>
-                <Text style={styles.toolDesc}>Interactive Rive animation</Text>
+                <Text style={styles.toolName}>{t('tools.skillTreeBuilder')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.skillTreeBuilderDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Expedition Tracker */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Expedition')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FF572218' }]}>
+                <Icon name="rocket-launch-outline" size={26} color="#FF5722" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.expeditions')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.expeditionsDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Trials */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Trials')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#E91E6318' }]}>
+                <Icon name="trophy-outline" size={26} color="#E91E63" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.trials')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.trialsDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Guides */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Guides')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#4CAF5018' }]}>
+                <Icon name="book-open-variant" size={26} color="#4CAF50" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.guides')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.guidesDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -183,15 +189,99 @@ const ToolsScreen = ({ navigation }: any) => {
         </TouchableOpacity>
 
         {/* Tier List Maker */}
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('TierList')}>
           <Card style={styles.toolCard}>
             <View style={styles.toolRow}>
               <View style={[styles.toolIconWrap, { backgroundColor: colors.purple + '18' }]}>
                 <Icon name="format-list-numbered" size={26} color={colors.purple} />
               </View>
               <View style={styles.toolInfo}>
-                <Text style={styles.toolName}>TIER LIST MAKER</Text>
-                <Text style={styles.toolDesc}>Create & share tier rankings</Text>
+                <Text style={styles.toolName}>{t('tools.tierListMaker')}</Text>
+                <Text style={styles.toolDesc}>{t('tools.tierListMakerDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Loadout Builder */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('LoadoutBuilder')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#F4433618' }]}>
+                <Icon name="shield-sword" size={26} color="#F44336" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.loadoutBuilder')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.loadoutBuilderDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Quest Tree */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('QuestTree')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FF980018' }]}>
+                <Icon name="source-branch" size={26} color="#FF9800" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.questTree')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.questTreeDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Cosmetics Browser */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Cosmetics')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#E040FB18' }]}>
+                <Icon name="palette" size={26} color="#E040FB" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.cosmetics')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.cosmeticsDesc')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
+        {/* Collectible Tracker */}
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('CollectibleTracker')}>
+          <Card style={styles.toolCard}>
+            <View style={styles.toolRow}>
+              <View style={[styles.toolIconWrap, { backgroundColor: '#FFC10718' }]}>
+                <Icon name="diamond-stone" size={26} color="#FFC107" />
+              </View>
+              <View style={styles.toolInfo}>
+                <View style={styles.toolTitleRow}>
+                  <Text style={styles.toolName}>{t('tools.collectibles')}</Text>
+                  <View style={styles.newBadge}>
+                    <Text style={styles.newBadgeText}>{t('common.new')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.toolDesc}>{t('tools.collectiblesDesc')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
@@ -205,7 +295,7 @@ const ToolsScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: 'transparent',
   },
   header: {
     paddingHorizontal: spacing.xl,
@@ -278,27 +368,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Avatars
-  avatarRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: spacing.md,
-    paddingLeft: spacing.xxxl + spacing.lg,
-  },
-  avatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarCount: {
-    fontSize: fonts.sizes.xs,
-    color: colors.textMuted,
-    fontWeight: '600',
-    marginLeft: spacing.sm,
-  },
+
 });
 
 export default ToolsScreen;

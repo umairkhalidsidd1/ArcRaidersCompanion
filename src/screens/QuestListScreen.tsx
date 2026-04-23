@@ -1,6 +1,10 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useCallback, useEffect, memo} from 'react';
 import {
+  Alert,
+  BackHandler,
   FlatList,
+  Image,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -9,8 +13,25 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
-import questData from '../data/quests.json';
+import {useTranslation} from 'react-i18next';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
+import {getQuests} from '../data/localizedData';
+import {
+  getCompletedQuests,
+  toggleCompletedQuest,
+  resetCompletedQuests,
+} from '../utils/storage';
+import {usePremium} from '../context/PremiumContext';
+
+/* ─── Trader portraits (reuse from TraderListScreen) ─── */
+const TRADER_PORTRAITS: Record<string, any> = {
+  'Tian Wen': require('../assets/traders/tian-wen.webp'),
+  Shani: require('../assets/traders/shani.webp'),
+  Lance: require('../assets/traders/lance.webp'),
+  Celeste: require('../assets/traders/celeste.webp'),
+  Apollo: require('../assets/traders/apollo.webp'),
+};
 
 type Quest = {
   id: number;
@@ -30,205 +51,532 @@ const GIVER_COLORS: Record<string, string> = {
   Lance: '#42A5F5',
   Apollo: '#FF7043',
   TianWen: '#FDD835',
+  'Tian Wen': '#FDD835',
 };
 
-const quests: Quest[] = (questData as any).quests || [];
+const TABS = ['AVAILABLE', 'LOCKED', 'COMPLETED'] as const;
+type Tab = typeof TABS[number];
 
-const QuestListScreen = ({navigation}: any) => {
-  const insets = useSafeAreaInsets();
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-
-  const giverFilter = useMemo(() => {
-    const givers = [...new Set(quests.map(q => q.quest_giver))];
-    return ['All', ...givers];
-  }, []);
-
-  const [activeGiver, setActiveGiver] = useState('All');
-
-  const filtered = useMemo(
-    () =>
-      activeGiver === 'All'
-        ? quests
-        : quests.filter(q => q.quest_giver === activeGiver),
-    [activeGiver],
-  );
-
-  const renderQuest = ({item}: {item: Quest}) => {
-    const giverColor = GIVER_COLORS[item.quest_giver] || colors.orange;
-    const isExpanded = expandedId === item.id;
+/* ─── Quest card component ─── */
+const QuestCard = memo(
+  ({
+    quest,
+    tab,
+    onPress,
+    isLockedByPremium,
+  }: {
+    quest: Quest;
+    tab: Tab;
+    onPress: (id: number) => void;
+    isLockedByPremium?: boolean;
+  }) => {
+    const {t} = useTranslation();
+    const giverColor = GIVER_COLORS[quest.quest_giver] || colors.orange;
+    const portrait = TRADER_PORTRAITS[quest.quest_giver];
+    const isLocked = tab === 'LOCKED';
+    const isCompleted = tab === 'COMPLETED';
 
     return (
       <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => setExpandedId(isExpanded ? null : item.id)}>
-        <View style={styles.questCard}>
-          {/* Header Row */}
-          <View style={styles.questHeader}>
-            <View style={[styles.giverDot, {backgroundColor: giverColor}]} />
-            <View style={styles.questHeaderInfo}>
-              <Text style={styles.questName}>{item.name}</Text>
-              <Text style={[styles.questGiver, {color: giverColor}]}>
-                {item.quest_giver} · {item.location}
-              </Text>
-            </View>
-            <Icon
-              name={isExpanded ? 'chevron-up' : 'chevron-down'}
-              size={20}
-              color={colors.textMuted}
-            />
+        activeOpacity={0.7}
+        onPress={() => onPress(quest.id)}
+        style={[s.card, isLockedByPremium && {opacity: 0.5}]}>
+        {/* Portrait */}
+        {portrait ? (
+          <Image source={portrait} style={s.portrait} />
+        ) : (
+          <View style={[s.portraitFallback, {backgroundColor: giverColor + '25'}]}>
+            <Icon name="account" size={24} color={giverColor} />
           </View>
+        )}
 
-          {/* Prerequisites */}
-          {item.prerequisites.length > 0 && (
-            <View style={styles.prereqRow}>
-              <Icon name="lock-outline" size={12} color={colors.textMuted} />
-              <Text style={styles.prereqText}>
-                Requires: {item.prerequisites.join(', ')}
+        {/* Info */}
+        <View style={s.cardInfo}>
+          <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+            <Text style={[s.questName, {flexShrink: 1}]} numberOfLines={1}>
+              {quest.name}
+            </Text>
+            {isLockedByPremium && (
+              <View style={{flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(0,229,255,0.12)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4}}>
+                <Icon name="lock" size={10} color={colors.cyan} />
+                <Text style={{fontSize: 9, fontWeight: '900', color: colors.cyan, letterSpacing: 1}}>PRO</Text>
+              </View>
+            )}
+          </View>
+          <Text style={[s.questGiver, {color: giverColor}]}>
+            {quest.quest_giver}
+          </Text>
+          {quest.location ? (
+            <View style={s.locationRow}>
+              <Icon name="map-marker" size={12} color={colors.textMuted} />
+              <Text style={s.locationText} numberOfLines={1}>
+                {quest.location}
               </Text>
             </View>
-          )}
-
-          {/* Expanded Content */}
-          {isExpanded && (
-            <View style={styles.expandedContent}>
-              {/* Objectives */}
-              <Text style={styles.sectionLabel}>OBJECTIVES</Text>
-              {item.objectives.map((obj, idx) => (
-                <View key={idx} style={styles.objectiveRow}>
-                  <View style={styles.bulletDot} />
-                  <Text style={styles.objectiveText}>{obj}</Text>
-                </View>
-              ))}
-
-              {/* Rewards */}
-              {item.rewards.length > 0 && (
-                <>
-                  <Text style={[styles.sectionLabel, {marginTop: spacing.md}]}>
-                    REWARDS
-                  </Text>
-                  {item.rewards.map((reward, idx) => (
-                    <View key={idx} style={styles.rewardRow}>
-                      <Icon name="gift" size={14} color={colors.orange} />
-                      <Text style={styles.rewardText}>
-                        {reward.name} x{reward.quantity}
-                      </Text>
-                    </View>
-                  ))}
-                </>
-              )}
-
-              {/* Unlock Requirement */}
-              {item.unlock_requirement && (
-                <View style={styles.unlockRow}>
-                  <Icon name="map-marker-check" size={14} color={colors.yellow} />
-                  <Text style={styles.unlockText}>{item.unlock_requirement}</Text>
-                </View>
-              )}
-            </View>
+          ) : null}
+          {isLocked && quest.prerequisites.length > 0 && (
+            <Text style={s.requiresText} numberOfLines={1}>
+              {t('quests.requires')}: {quest.prerequisites.join(', ')}
+            </Text>
           )}
         </View>
+
+        {/* Status icon */}
+        {isLockedByPremium ? (
+          <Icon name="lock" size={18} color={colors.textMuted} />
+        ) : isLocked ? (
+          <Icon name="lock" size={18} color={colors.textMuted} />
+        ) : isCompleted ? (
+          <Icon name="check-circle" size={20} color={colors.green} />
+        ) : (
+          <Icon name="play-circle-outline" size={20} color={colors.green} />
+        )}
       </TouchableOpacity>
     );
-  };
+  },
+);
+
+const QuestListScreen = ({navigation, route}: any) => {
+  const {t, i18n} = useTranslation();
+  const insets = useSafeAreaInsets();
+  const isFocused = useIsFocused();
+  const initialGiver = route?.params?.filterGiver || null;
+  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
+  const {isPremium} = usePremium();
+  const FREE_QUEST_COUNT = 3;
+
+  const [activeTab, setActiveTab] = useState<Tab>('AVAILABLE');
+  const [completedIds, setCompletedIds] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (isFocused) {
+      getCompletedQuests().then(setCompletedIds);
+    }
+  }, [isFocused]);
+
+  /* Build a set of completed quest names for prerequisite checking */
+  const completedNames = useMemo(() => {
+    const set = new Set<string>();
+    for (const q of allQuests) {
+      if (completedIds.includes(q.id)) set.add(q.name);
+    }
+    return set;
+  }, [completedIds, i18n.language]);
+
+  /* Filter quests by giver if coming from trader detail */
+  const giverQuests = useMemo(
+    () =>
+      initialGiver
+        ? allQuests.filter(q => q.quest_giver === initialGiver)
+        : allQuests,
+    [initialGiver, i18n.language],
+  );
+
+  /* Split into available / locked / completed */
+  const {available, locked, completed} = useMemo(() => {
+    const avail: Quest[] = [];
+    const lock: Quest[] = [];
+    const comp: Quest[] = [];
+    for (const q of giverQuests) {
+      if (completedIds.includes(q.id)) {
+        comp.push(q);
+      } else if (
+        q.prerequisites.length > 0 &&
+        !q.prerequisites.every(p => completedNames.has(p))
+      ) {
+        lock.push(q);
+      } else {
+        avail.push(q);
+      }
+    }
+    return {available: avail, locked: lock, completed: comp};
+  }, [giverQuests, completedIds, completedNames]);
+
+  const displayQuests =
+    activeTab === 'AVAILABLE'
+      ? available
+      : activeTab === 'LOCKED'
+      ? locked
+      : completed;
+
+  const totalQuests = giverQuests.length;
+  const completedCount = completed.length;
+  const progressRatio = totalQuests > 0 ? completedCount / totalQuests : 0;
+
+  const handleToggle = useCallback(
+    async (questId: number) => {
+      const isNowCompleted = await toggleCompletedQuest(questId);
+      setCompletedIds(prev =>
+        isNowCompleted ? [...prev, questId] : prev.filter(id => id !== questId),
+      );
+    },
+    [],
+  );
+
+  const handlePress = useCallback(
+    (questId: number) => {
+      navigation.navigate('QuestDetail', {questId});
+    },
+    [navigation],
+  );
+
+  const handleBackToHome = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return true;
+    }
+
+    navigation.navigate('MainTabs', {screen: 'Bunker'});
+    return true;
+  }, [navigation]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS !== 'android') return undefined;
+
+      const sub = BackHandler.addEventListener('hardwareBackPress', handleBackToHome);
+      return () => sub.remove();
+    }, [handleBackToHome]),
+  );
+
+  const handleReset = useCallback(() => {
+    Alert.alert(
+      t('quests.resetProgress'),
+      t('quests.resetConfirm'),
+      [
+        {text: t('common.cancel'), style: 'cancel'},
+        {
+          text: t('quests.reset'),
+          style: 'destructive',
+          onPress: async () => {
+            await resetCompletedQuests();
+            setCompletedIds([]);
+          },
+        },
+      ],
+    );
+  }, []);
+
+  const renderItem = useCallback(
+    ({item, index}: {item: Quest; index: number}) => {
+      const isLockedByPremium = !isPremium && index >= FREE_QUEST_COUNT;
+      return (
+        <QuestCard quest={item} tab={activeTab} onPress={isLockedByPremium ? () => navigation.navigate('Paywall') : handlePress} isLockedByPremium={isLockedByPremium} />
+      );
+    },
+    [activeTab, handlePress, isPremium, navigation],
+  );
+
+  const keyExtractor = useCallback((item: Quest) => String(item.id), []);
+
+  const emptyComponent = useMemo(() => {
+    if (activeTab === 'COMPLETED') {
+      return (
+        <View style={s.emptyWrap}>
+          <Icon name="trophy-outline" size={64} color={colors.textMuted} />
+          <Text style={s.emptyTitle}>{t('quests.noCompletedQuests')}</Text>
+          <Text style={s.emptySubtitle}>
+            {t('quests.startCompleting')}
+          </Text>
+        </View>
+      );
+    }
+    if (activeTab === 'LOCKED') {
+      return (
+        <View style={s.emptyWrap}>
+          <Icon name="lock-open-outline" size={64} color={colors.textMuted} />
+          <Text style={s.emptyTitle}>{t('quests.noLockedQuests')}</Text>
+          <Text style={s.emptySubtitle}>
+            {t('quests.allPrereqsMet')}
+          </Text>
+        </View>
+      );
+    }
+    return (
+      <View style={s.emptyWrap}>
+        <Icon name="check-all" size={64} color={colors.textMuted} />
+        <Text style={s.emptyTitle}>{t('quests.allQuestsCompleted')}</Text>
+        <Text style={s.emptySubtitle}>
+          {t('quests.allQuestsCompletedSub')}
+        </Text>
+      </View>
+    );
+  }, [activeTab]);
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={[s.root, {paddingTop: insets.top}]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
 
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+      {/* Header */}
+      <View style={s.header}>
+        <TouchableOpacity onPress={() => { handleBackToHome(); }} style={s.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />
         </TouchableOpacity>
-        <View>
-          <Text style={styles.headerTitle}>QUESTS</Text>
-          <Text style={styles.headerSubtitle}>{quests.length} quests available</Text>
+        <View pointerEvents="none" style={[StyleSheet.absoluteFill, {alignItems: 'center', justifyContent: 'center'}]}>
+          <Text style={s.headerTitleCenter}>{t('quests.title')}</Text>
+        </View>
+        <TouchableOpacity onPress={handleReset} style={s.resetBtn}>
+          <Text style={s.resetText}>{t('quests.reset')}</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Tabs */}
+      <View style={s.tabRow}>
+        {TABS.map(tab => {
+          const isActive = activeTab === tab;
+          return (
+            <TouchableOpacity
+              key={tab}
+              style={s.tab}
+              onPress={() => setActiveTab(tab)}>
+              <Text style={[s.tabText, isActive && s.tabTextActive]}>
+                {t(`quests.${tab.toLowerCase()}`)}
+              </Text>
+              {isActive && <View style={s.tabIndicator} />}
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      {/* Progress bar */}
+      <View style={s.progressWrap}>
+        <View style={s.progressLabelRow}>
+          <Text style={s.progressLabel}>{t('quests.questProgress')}</Text>
+          <Text style={s.progressCount}>
+            <Text style={s.progressCountHighlight}>{completedCount}</Text>
+            {' / '}
+            {totalQuests}
+          </Text>
+        </View>
+        <View style={s.progressBarBg}>
+          <View
+            style={[
+              s.progressBarFill,
+              {width: `${Math.min(progressRatio * 100, 100)}%`},
+            ]}
+          />
         </View>
       </View>
 
-      {/* Giver Filter */}
-      <FlatList
-        horizontal
-        data={giverFilter}
-        renderItem={({item: giver}) => {
-          const isActive = activeGiver === giver;
-          const gColor = GIVER_COLORS[giver] || colors.orange;
-          return (
-            <TouchableOpacity
-              style={[
-                styles.filterChip,
-                isActive && {backgroundColor: gColor + '20', borderColor: gColor},
-              ]}
-              onPress={() => setActiveGiver(giver)}>
-              <Text
-                style={[styles.filterText, isActive && {color: gColor}]}>
-                {giver}
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={item => item}
-        contentContainerStyle={styles.filterRow}
-        showsHorizontalScrollIndicator={false}
-      />
+      {/* Separator */}
+      <View style={s.separator} />
 
+      {/* Quest list */}
       <FlatList
-        data={filtered}
-        renderItem={renderQuest}
-        keyExtractor={item => String(item.id)}
-        contentContainerStyle={styles.list}
+        data={displayQuests}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={s.list}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={emptyComponent}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.bg},
+const s = StyleSheet.create({
+  root: {flex: 1, backgroundColor: 'transparent'},
+
+  /* Header */
   header: {
-    flexDirection: 'row', alignItems: 'center',
-    paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.sm,
-    gap: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
   },
   backBtn: {
-    width: 36, height: 36, borderRadius: 18,
-    backgroundColor: colors.bgCard, alignItems: 'center', justifyContent: 'center',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.bgCard,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  headerTitle: {fontSize: fonts.sizes.xl, fontWeight: '900', color: colors.textPrimary, letterSpacing: 2},
-  headerSubtitle: {fontSize: fonts.sizes.xs, color: colors.textMuted, marginTop: 1},
-  filterRow: {paddingHorizontal: spacing.lg, paddingBottom: spacing.sm, gap: spacing.xs},
-  filterChip: {
-    paddingHorizontal: spacing.sm, paddingVertical: 6,
-    borderRadius: borderRadius.md, borderWidth: 1,
-    borderColor: 'transparent', backgroundColor: colors.bgCard,
+  headerTitle: {
+    flex: 1,
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    textAlign: 'center',
   },
-  filterText: {fontSize: 11, fontWeight: '700', color: colors.textMuted},
-  list: {paddingHorizontal: spacing.lg, paddingBottom: 100, gap: spacing.sm},
-  questCard: {
-    backgroundColor: colors.bgCard, borderRadius: borderRadius.lg,
-    borderWidth: 1, borderColor: colors.border, padding: spacing.md,
+  headerTitleCenter: {
+    fontSize: fonts.sizes.xl,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    textAlign: 'center',
+    lineHeight: 36,
   },
-  questHeader: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm},
-  giverDot: {width: 8, height: 8, borderRadius: 4},
-  questHeaderInfo: {flex: 1},
-  questName: {fontSize: fonts.sizes.md, fontWeight: '700', color: colors.textPrimary},
-  questGiver: {fontSize: 11, fontWeight: '600', marginTop: 1},
-  prereqRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    marginTop: spacing.xs, paddingLeft: 20,
+  resetBtn: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: br.sm,
+    backgroundColor: 'rgba(255,68,68,0.10)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,68,68,0.25)',
   },
-  prereqText: {fontSize: 10, color: colors.textMuted, fontStyle: 'italic'},
-  expandedContent: {marginTop: spacing.md, paddingTop: spacing.md, borderTopWidth: 1, borderTopColor: colors.border},
-  sectionLabel: {fontSize: 10, fontWeight: '700', color: colors.textMuted, letterSpacing: 1, marginBottom: spacing.xs},
-  objectiveRow: {flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, marginBottom: 4},
-  bulletDot: {width: 5, height: 5, borderRadius: 3, backgroundColor: colors.orange, marginTop: 5},
-  objectiveText: {fontSize: fonts.sizes.sm, color: colors.textSecondary, flex: 1, lineHeight: 20},
-  rewardRow: {flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: 4},
-  rewardText: {fontSize: fonts.sizes.sm, color: colors.textPrimary, fontWeight: '600'},
-  unlockRow: {
-    flexDirection: 'row', alignItems: 'center', gap: spacing.sm,
-    marginTop: spacing.md, paddingTop: spacing.sm, borderTopWidth: 1, borderTopColor: colors.border,
+  resetText: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '700',
+    color: colors.red,
+    letterSpacing: 1,
   },
-  unlockText: {fontSize: 11, color: colors.yellow, fontWeight: '600'},
+
+  /* Tabs */
+  tabRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: spacing.md,
+    position: 'relative',
+  },
+  tabText: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '700',
+    color: colors.textMuted,
+    letterSpacing: 1.5,
+  },
+  tabTextActive: {
+    color: colors.cyan,
+  },
+  tabIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 20,
+    right: 20,
+    height: 3,
+    backgroundColor: colors.cyan,
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
+  },
+
+  /* Progress */
+  progressWrap: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.sm,
+  },
+  progressLabelRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  progressLabel: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '700',
+    color: colors.textMuted,
+    letterSpacing: 1.5,
+  },
+  progressCount: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: '700',
+    color: colors.textMuted,
+  },
+  progressCountHighlight: {
+    color: colors.cyan,
+    fontWeight: '800',
+  },
+  progressBarBg: {
+    height: 4,
+    backgroundColor: colors.bgElevated,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: colors.cyan,
+    borderRadius: 2,
+  },
+
+  separator: {
+    height: 1,
+    backgroundColor: colors.border,
+  },
+
+  /* List */
+  list: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: 100,
+    paddingTop: spacing.sm,
+  },
+
+  /* Card */
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.bgCard,
+    borderRadius: br.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.md,
+    marginTop: spacing.sm,
+    gap: spacing.md,
+  },
+  portrait: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  portraitFallback: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardInfo: {
+    flex: 1,
+  },
+  questName: {
+    fontSize: fonts.sizes.md,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  questGiver: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: '700',
+    marginTop: 2,
+  },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    marginTop: 3,
+  },
+  locationText: {
+    fontSize: fonts.sizes.xs,
+    color: colors.textMuted,
+  },
+  requiresText: {
+    fontSize: fonts.sizes.xs,
+    color: colors.cyan,
+    fontStyle: 'italic',
+    marginTop: 3,
+  },
+
+  /* Empty state */
+  emptyWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 120,
+    gap: 10,
+  },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 1,
+  },
+  emptySubtitle: {
+    fontSize: 13,
+    color: colors.textMuted,
+    textAlign: 'center',
+  },
 });
 
 export default QuestListScreen;

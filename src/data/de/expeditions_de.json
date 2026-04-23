@@ -1,0 +1,201 @@
+{
+  "description": "Expeditionen sind ein optionales Prestige-/Soft-Reset-System. Ab Level 20 verfügbar, setzen Spieler ihren Fortschritt im Austausch gegen permanente Belohnungen zurück. Das Projekt hat 6 Stufen mit steigendem Schwierigkeitsgrad.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Fundament",
+      "description": "Sammeln Sie grundlegende Baumaterialien, um mit dem Bau der Karawane zu beginnen.",
+      "objectives": [
+        {
+          "item": "Metallteile",
+          "quantity": 150
+        },
+        {
+          "item": "Chemikalien",
+          "quantity": 100
+        },
+        {
+          "item": "ARC-Legierung",
+          "quantity": 80
+        },
+        {
+          "item": "Stahlfeder",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Kernsysteme",
+      "description": "Installieren Sie die elektrischen und mechanischen Kernsysteme der Karawane.",
+      "objectives": [
+        {
+          "item": "Strapazierfähiges Tuch",
+          "quantity": 30
+        },
+        {
+          "item": "Drähte",
+          "quantity": 25
+        },
+        {
+          "item": "Elektrische Komponenten",
+          "quantity": 20
+        },
+        {
+          "item": "Industrielader",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "Rahmenwerk",
+      "description": "Montieren Sie das Strukturgerüst und die Spezialkomponenten.",
+      "objectives": [
+        {
+          "item": "Kaffeekanne",
+          "quantity": 1
+        },
+        {
+          "item": "Batterie",
+          "quantity": 25
+        },
+        {
+          "item": "Feuerball-Brenner",
+          "quantity": 5
+        },
+        {
+          "item": "Exodus-Module",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Ausrüstung",
+      "description": "Rüsten Sie die Karawane mit fortschrittlicher Technik und seltenen ARC-Komponenten aus.",
+      "objectives": [
+        {
+          "item": "Defektes Leitsystem",
+          "quantity": 1
+        },
+        {
+          "item": "Fortgeschrittene elektrische Komponenten",
+          "quantity": 10
+        },
+        {
+          "item": "Atemberaubende Schneekugel",
+          "quantity": 3
+        },
+        {
+          "item": "Bombardier-Zelle",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Beladungsphase",
+      "description": "Füllen Sie die Karawane mit Vorräten, kategorisiert nach Münzwert.",
+      "objectives": [
+        {
+          "item": "Materialien (nach Münzwert)",
+          "quantity": 300000
+        },
+        {
+          "item": "Kampfgegenstände (nach Münzwert)",
+          "quantity": 200000
+        },
+        {
+          "item": "Überlebensgegenstände (nach Münzwert)",
+          "quantity": 100000
+        },
+        {
+          "item": "Proviant (nach Münzwert)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Abfahrt",
+      "description": "Registrieren Sie Ihren Raider während des Abfahrtfensters. Alle verbleibenden Lagerartikel tragen zu Ihrem Expeditionswert bei.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "Bonus-Fähigkeitspunkte",
+        "description": "Bis zu 5 Bonus-Fähigkeitspunkte (1 pro Million Münzwert)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 Lagerplätze",
+        "description": "Zusätzlicher Lagerspeicher für Ihren nächsten Raider",
+        "icon": "archive"
+      },
+      {
+        "name": "Flickwerk-Raider-Outfit",
+        "description": "Exklusives evolvierendes Kosmetik",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "Zusammengeflicktes Kosmetik",
+        "description": "Einzigartige Kopfbedeckung (z.B. Zusammengeflickte Hausmeistermütze)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "Expeditionsanzeige",
+        "description": "Abzeichen, das Ihre Expeditionsanzahl zeigt",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "Reparaturwert-Boost",
+        "description": "+60-70% Reparaturwert (stapelbar x3)",
+        "icon": "tools"
+      },
+      {
+        "name": "EP-Boost",
+        "description": "+5-10% EP-Gewinn (stapelbar x3)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "Zusammengeflickte Materialien",
+        "description": "+6% Materialien vom Zusammenflicker (stapelbar x3)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "Freigeschaltete Karten",
+    "Kosmetik",
+    "Raider-Decks",
+    "Raider-Token",
+    "Cred",
+    "Kodex-Einträge",
+    "Werkstatt-Stationen",
+    "Prüfungen",
+    "Aktive Bestenlisten",
+    "Persönlicher Event-Fortschritt",
+    "Bonus-Fähigkeitspunkte (vorherige)"
+  ],
+  "loses": [
+    "Baupläne",
+    "Inventar & Lager",
+    "Spielerlevel",
+    "Münzen",
+    "Werkstatt-Upgrades",
+    "Quest-Fortschritt",
+    "Fähigkeitspunkte (initial)"
+  ]
+}

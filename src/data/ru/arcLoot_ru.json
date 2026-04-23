@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Сканер Снитча",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "Необычный",
+      "item_type": "Перерабатываемое",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "Синтетическая смола ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Датчики",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Капсула Тика",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "Необычный",
+      "item_type": "Перерабатываемое",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Лёгкие боеприпасы",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Простые оружейные детали",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Синтетическая смола ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Микросхемы ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Продвинутые механические компоненты",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "Редкий",
+      "item_type": "Продвинутый материал",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "Продвинутые электрические компоненты",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "Редкий",
+      "item_type": "Очищенный материал",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Реактор Королевы",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "Легендарный",
+      "item_type": "Перерабатываемое",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "Охладитель ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Гибкая резина ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Термоизоляция ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Высокопрочная сталь ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Магнитный ускоритель",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Эпический",
+      "item_type": "Очищенный материал",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Горелка Фаерболла",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "Необычный",
+      "item_type": "Перерабатываемое",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "Грубая взрывчатка",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Лёгкие боеприпасы",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "light-ammo"
+    },
+    {
+      "name": "Привод Осы",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Термоизоляция ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Грубая взрывчатка",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Спусковик Попа",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "Необычный",
+      "item_type": "Перерабатываемое",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Датчики",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Микросхемы ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Хранилище Разведчика",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "Чертёж: Спрей Вита",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "Чертёж: Набор баррикад",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "Чертёж: Расширенный средний магазин III",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "Чертёж: Тяжёлые оружейные детали",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "Чертёж: Удлинённый ствол",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "Чертёж: Мягкий приклад",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "Чертёж: Укол Вита",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Синтетическая смола ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Микросхемы ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Гибкая резина ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Термоизоляция ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Высокопрочная сталь ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Магнитный ускоритель",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "Эпический",
+      "item_type": "Очищенный материал",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "Реактор Матриарха",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "Легендарный",
+      "item_type": "Перерабатываемое",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "Чертёж: Винтовка Афелион",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "Легендарный",
+      "item_type": "Чертёж",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Микросхемы ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Привод Ракетчика",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "Эпический",
+      "item_type": "Перерабатываемое",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "Тяжёлые боеприпасы",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Тяжёлые оружейные детали",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Простые оружейные детали",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Патроны для дробовика",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "Гироскоп Шреддера",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Микросхемы ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Ячейка Бастиона",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "Эпический",
+      "item_type": "Перерабатываемое",
+      "id": "bastion-part"
+    },
+    {
+      "name": "Механические компоненты",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Средние оружейные детали",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Средние боеприпасы",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Микросхемы ARC",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Гибкая резина ARC",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "Высокопрочная сталь ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Механические компоненты",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Импульсный блок Прыгуна",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "Эпический",
+      "item_type": "Метательное",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "Взрывчатое соединение",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Редкий",
+      "item_type": "Очищенный материал",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Высокопрочная сталь ARC",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "Механические компоненты",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "Средние оружейные детали",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "Ячейка Бомбардира",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "Эпический",
+      "item_type": "Перерабатываемое",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "Снаряды для ПУ",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "Редкий",
+      "item_type": "Боеприпасы",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Охладитель ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Термоизоляция ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Грубая взрывчатка",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "Взрывчатое соединение",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "Редкий",
+      "item_type": "Очищенный материал",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "Воспламенитель Кометы"
+    },
+    {
+      "name": "Электрические компоненты",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "Необычный",
+      "item_type": "Очищенный материал",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Простые оружейные детали",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Горелка Светлячка"
+    },
+    {
+      "name": "Химикаты",
+      "icon": "icons/chemicals.webp",
+      "rarity": "Обычный",
+      "item_type": "Базовый материал",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Простые оружейные детали",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "Средние боеприпасы",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "Привод Шершня",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Синтетическая смола ARC",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "Двигательное ядро ARC",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "Продвинутая энергоячейка ARC",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "Редкий",
+      "item_type": "Поверхностный материал",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "Охладитель ARC",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "Термоизоляция ARC",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "Тяжёлые боеприпасы",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "Обычный",
+      "item_type": "Боеприпасы",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "Стрелковое ядро Стража",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "Редкий",
+      "item_type": "Перерабатываемое",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "Сплав ARC",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "Необычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "Энергоячейка ARC",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "Обычный",
+      "item_type": "Поверхностный материал",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "Реле Наблюдателя",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "Необычный",
+      "item_type": "Перерабатываемое",
+      "id": "spotter-relay"
+    }
+  ]
+}

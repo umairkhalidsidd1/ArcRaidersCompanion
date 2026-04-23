@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
-  ScrollView,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -10,22 +10,36 @@ import {
 } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Svg, {Path} from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withDecay,
+  clamp,
+} from 'react-native-reanimated';
 
 const SKILL_STORAGE_KEY = '@arcc_skilltree_v6';
-const {width: SW} = Dimensions.get('window');
+const {width: SW, height: SH} = Dimensions.get('window');
+
+const MIN_SCALE = 0.45;
+const MAX_SCALE = 3;
+const INITIAL_SCALE = 0.55;
 
 // ── Layout geometric constants ──
-const ROW_H = 90;
-const NODE_R = 21;
-const ROOT_R = 28;
-const CANVAS_PAD_TOP = 150;
-const CANVAS_PAD_BOT = 120;
+const ROW_H = 110;
+const NODE_R = 30;
+const ROOT_R = 42;
+const CANVAS_PAD_TOP = 180;
+const CANVAS_PAD_BOT = 160;
 const CANVAS_H = CANVAS_PAD_TOP + 8 * ROW_H + CANVAS_PAD_BOT;
+const CANVAS_W = SW * 2; // Wide canvas for 3-branch spread
 
-const DX = SW * 0.095; // Tighter horizontal spread to match screenshots
+const DX = SW * 0.13; // Horizontal spread per helix offset
 
 const HELIX = [
   { p: 0, x: 0, y: 0, parents: [] },         // 0: Root (Bottom)
@@ -46,7 +60,7 @@ const HELIX = [
 ];
 
 const BC: Record<string, string> = {s: '#00D87A', m: '#FDE600', c: '#FF3A59'};
-const BN: Record<string, string> = {s: 'SURVIVAL', m: 'MOBILITY', c: 'CONDITIONING'};
+const BN: Record<string, string> = {s: 'skillTree.survival', m: 'skillTree.mobility', c: 'skillTree.conditioning'};
 
 type N = {
   id: string; branch: 's'|'m'|'c'; pos: number;
@@ -118,7 +132,7 @@ SKILLS_C.forEach((s, i) => NODES.push({...s, branch: 'c', pos: i+1} as N));
 
 const getXY = (n: N) => {
   const cfg = HELIX[n.pos];
-  const cx = {s: SW * 0.20, m: SW * 0.50, c: SW * 0.80}[n.branch];
+  const cx = {s: CANVAS_W * 0.18, m: CANVAS_W * 0.50, c: CANVAS_W * 0.82}[n.branch];
   return {
     x: cx + cfg.x * DX,
     y: CANVAS_H - CANVAS_PAD_BOT - cfg.y * ROW_H,
@@ -131,6 +145,7 @@ const SkillTreeScreen = ({navigation}: any) => {
   const [selected, setSelected] = useState<N | null>(null);
   const [totalPoints, setTotalPoints] = useState(80);
   const lastTap = React.useRef<{id: string, time: number} | null>(null);
+  const {t} = useTranslation();
 
   useEffect(() => { load(); }, []);
 
@@ -217,9 +232,198 @@ const SkillTreeScreen = ({navigation}: any) => {
     save({}, totalPoints);
   };
 
+  /* ── Zoom & Pan (unified RNGH + Reanimated for both platforms) ── */
+  const scale = useSharedValue(INITIAL_SCALE);
+  const translateX = useSharedValue((SW - CANVAS_W * INITIAL_SCALE) / 2);
+  const translateY = useSharedValue((SH - CANVAS_H * INITIAL_SCALE) / 2);
+
+  const getBounds = (s: number) => {
+    'worklet';
+    const cw = CANVAS_W * s;
+    const ch = CANVAS_H * s;
+    // When canvas fits within screen, lock to center; otherwise allow scrolling
+    const centerX = (SW - cw) / 2;
+    const centerY = (SH - ch) / 2;
+    return {
+      minX: cw > SW ? SW - cw : centerX,
+      maxX: cw > SW ? 0 : centerX,
+      minY: ch > SH ? SH - ch : centerY,
+      maxY: ch > SH ? 0 : centerY,
+    };
+  };
+
+  const clampTranslation = (tx: number, ty: number, s: number) => {
+    'worklet';
+    const {minX, maxX, minY, maxY} = getBounds(s);
+    return { x: clamp(tx, minX, maxX), y: clamp(ty, minY, maxY) };
+  };
+
+  const pinch = Gesture.Pinch()
+    .onChange((e) => {
+      'worklet';
+      const prevScale = scale.value;
+      const newScale = clamp(prevScale * e.scaleChange, MIN_SCALE, MAX_SCALE);
+      const ratio = newScale / prevScale;
+      const newTX = e.focalX - ratio * (e.focalX - translateX.value);
+      const newTY = e.focalY - ratio * (e.focalY - translateY.value);
+      const clamped = clampTranslation(newTX, newTY, newScale);
+      scale.value = newScale;
+      translateX.value = clamped.x;
+      translateY.value = clamped.y;
+    });
+
+  const pan = Gesture.Pan()
+    .activeOffsetX([-10, 10])
+    .activeOffsetY([-10, 10])
+    .minPointers(1)
+    .maxPointers(2)
+    .onChange((e) => {
+      'worklet';
+      const clamped = clampTranslation(
+        translateX.value + e.changeX,
+        translateY.value + e.changeY,
+        scale.value,
+      );
+      translateX.value = clamped.x;
+      translateY.value = clamped.y;
+    })
+    .onEnd((e) => {
+      'worklet';
+      const {minX, maxX, minY, maxY} = getBounds(scale.value);
+      translateX.value = withDecay({velocity: e.velocityX, clamp: [minX, maxX]});
+      translateY.value = withDecay({velocity: e.velocityY, clamp: [minY, maxY]});
+    });
+
+  const composed = Gesture.Simultaneous(pan, pinch);
+
+  const canvasStyle = useAnimatedStyle(() => ({
+    width: CANVAS_W,
+    height: CANVAS_H,
+    transformOrigin: 'left top',
+    transform: [
+      {translateX: translateX.value},
+      {translateY: translateY.value},
+      {scale: scale.value},
+    ],
+  }));
+
+  /* ── Shared tree content (used by both iOS ScrollView and Android GestureDetector) ── */
+  const treeContent = (
+    <>
+      {/* SVG connection lines */}
+      <Svg height={CANVAS_H} width={CANVAS_W} style={StyleSheet.absoluteFillObject}>
+        {HELIX.map(h => {
+           return h.parents.map(p_pos => {
+             return ['s', 'm', 'c'].map(b => {
+               const child = NODES.find(n => n.branch === b && n.pos === h.p);
+               const parent = NODES.find(n => n.branch === b && n.pos === p_pos);
+               if (!child || !parent) return null;
+
+               const c_pos = getXY(child);
+               const p_pos_xy = getXY(parent);
+               
+               const active = isUnlocked(child.id) && (parent.pos === 0 || isUnlocked(parent.id));
+               const color = active ? BC[b] : '#1E2D3D';
+
+               const midY = (p_pos_xy.y + c_pos.y) / 2;
+               const pR = parent.pos === 0 ? ROOT_R : NODE_R;
+               const path = `M ${p_pos_xy.x} ${p_pos_xy.y - pR} C ${p_pos_xy.x} ${midY}, ${c_pos.x} ${midY}, ${c_pos.x} ${c_pos.y + NODE_R}`;
+
+               return (
+                 <React.Fragment key={`${b}-${p_pos}-${h.p}`}>
+                   {active && <Path d={path} stroke={color} strokeWidth={4} fill="none" opacity={0.2} />}
+                   <Path d={path} stroke={color} strokeWidth={active ? 2 : 0.8} fill="none" opacity={active ? 1 : 0.6} />
+                 </React.Fragment>
+               );
+             });
+           });
+        })}
+      </Svg>
+
+      {/* Skill nodes */}
+      {NODES.map(node => {
+        const {x, y} = getXY(node);
+        const pts = alloc[node.id] || 0;
+        const active = pts > 0 || node.pos === 0;
+        const bc = BC[node.branch];
+        const r = node.pos === 0 ? ROOT_R : NODE_R;
+        
+        let can = false, isAvailable = false;
+        if (node.pos !== 0) {
+          can = canAllocate(node);
+          const parentNodes = HELIX[node.pos].parents.map(p => NODES.find(n => n.branch === node.branch && n.pos === p)!);
+          const parentUnlocked = parentNodes.some(p => p.pos === 0 || isUnlocked(p.id));
+          const meetsReq = !node.reqPts || branchPts(node.branch) >= node.reqPts;
+          isAvailable = parentUnlocked && meetsReq;
+        }
+
+        return (
+          <React.Fragment key={node.id}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => handleNodePress(node)}
+              onLongPress={() => {
+                ReactNativeHapticFeedback.trigger('impactMedium', {enableVibrateFallback: true});
+                if (node.pos !== 0) deallocPoint(node);
+              }}
+              style={[
+                styles.node,
+                {
+                  left: x - r, top: y - r,
+                  width: r * 2, height: r * 2, borderRadius: r,
+                  borderWidth: active ? (node.pos === 0 ? 2 : 1.5) : 1,
+                  borderColor: active ? bc : (isAvailable ? bc + '30' : '#1A2838'),
+                  backgroundColor: active ? bc + '18' : 'rgba(7, 11, 19, 0.96)',
+                },
+                active && {
+                  shadowColor: bc, shadowOffset: {width: 0, height: 0},
+                  shadowOpacity: 1, shadowRadius: 16,
+                  elevation: Platform.OS === 'ios' ? 12 : 0,
+                },
+              ]}>
+              <Icon name={node.icon} size={node.pos === 0 ? 34 : 22}
+                color={active ? bc : (isAvailable ? '#4A5A6A' : '#1E2D3D')} />
+            </TouchableOpacity>
+
+            {/* Point dots beneath node */}
+            {(isAvailable || pts > 0) && node.pos !== 0 && node.maxPts > 0 && (
+              <View style={[styles.dotsRow, {left: x - (node.maxPts * 6.5) / 2, top: y + r + 6}]}>
+                {Array.from({length: node.maxPts}).map((_, i) => {
+                  const filled = i < pts;
+                  return (
+                    <View key={i} style={[
+                      styles.dot,
+                      {backgroundColor: filled ? bc : '#1E2D3D'},
+                      filled && {shadowColor: bc, shadowOpacity: 1, shadowRadius: 4, elevation: Platform.OS === 'ios' ? 3 : 0}
+                    ]} />
+                  );
+                })}
+              </View>
+            )}
+
+            {/* Root labels under the bottom nodes */}
+            {node.pos === 0 && (
+              <View style={[styles.rootLabelBox, {left: x - 50, top: y + ROOT_R + 10}]}>
+                <Text style={[styles.rootLabel, {color: bc}]}>{t(BN[node.branch])}</Text>
+                <Text style={[styles.rootScore, {color: bc}]}>{branchPts(node.branch)}</Text>
+              </View>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </>
+  );
+
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#0B131D" />
+      <StatusBar barStyle="light-content" backgroundColor="#060A11" />
+
+      {/* Gradient background overlay */}
+      <LinearGradient
+        colors={['#060A11', '#0D1520', '#0A1018', '#060A11']}
+        locations={[0, 0.35, 0.65, 1]}
+        style={StyleSheet.absoluteFillObject}
+      />
 
       {/* Header absolutely positioned */}
       <View style={[styles.header, {top: insets.top + 8}]}>
@@ -229,137 +433,35 @@ const SkillTreeScreen = ({navigation}: any) => {
         
         <View style={styles.pointsContainer}>
           <View style={styles.pointsBox}>
-            <View style={styles.pointsLabelRow}>
-              <Text style={styles.pointsLabel}>SKILL POINTS</Text>
-              <TouchableOpacity style={styles.pmBtn} onPress={() => { const tp = Math.max(0, totalPoints - 1); setTotalPoints(tp); save(alloc, tp); }}>
-                <Icon name="minus" size={14} color="#8A9AA8" />
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.pointsLabel}>{t('skillTree.skillPoints')}</Text>
             <View style={styles.pointsBoxRow}>
               <Text style={styles.pointsBig}>{remaining}</Text>
               <Text style={styles.pointsSmall}> / {totalPoints}</Text>
-              <TouchableOpacity style={[styles.pmBtn, {marginLeft: 8}]} onPress={() => { const tp = Math.min(80, totalPoints + 1); setTotalPoints(tp); save(alloc, tp); }}>
-                <Icon name="plus" size={12} color="#8A9AA8" />
-              </TouchableOpacity>
+              <View style={styles.pmGroup}>
+                <TouchableOpacity style={styles.pmBtn} onPress={() => { const tp = Math.max(0, totalPoints - 1); setTotalPoints(tp); save(alloc, tp); }}>
+                  <Icon name="minus" size={14} color="#8A9AA8" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.pmBtn} onPress={() => { const tp = Math.min(80, totalPoints + 1); setTotalPoints(tp); save(alloc, tp); }}>
+                  <Icon name="plus" size={14} color="#8A9AA8" />
+                </TouchableOpacity>
+              </View>
             </View>
+            <TouchableOpacity onPress={reset} style={styles.resetBtn}>
+              <Icon name="refresh" size={13} color="#FF3A59" />
+              <Text style={styles.resetText}>{t('skillTree.reset')}</Text>
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity onPress={reset} style={styles.resetBtn}>
-            <Icon name="refresh" size={14} color="#FF3A59" />
-            <Text style={styles.resetText}>RESET</Text>
-          </TouchableOpacity>
         </View>
       </View>
 
       {/* Tree Canvas */}
-      <ScrollView
-        contentContainerStyle={{height: CANVAS_H, width: SW}}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        maximumZoomScale={2.5}
-        minimumZoomScale={0.8}
-        centerContent={true}
-        bouncesZoom={true}
-        contentOffset={{x: 0, y: CANVAS_H - SW * 2}} // start scrolled to bottom
-        bounces={false}>
-
-        {/* SVG connection lines - Bezier Curves! */}
-        <Svg height={CANVAS_H} width={SW} style={StyleSheet.absoluteFillObject}>
-          {HELIX.map(h => {
-             return h.parents.map(p_pos => {
-               return ['s', 'm', 'c'].map(b => {
-                 const child = NODES.find(n => n.branch === b && n.pos === h.p);
-                 const parent = NODES.find(n => n.branch === b && n.pos === p_pos);
-                 if (!child || !parent) return null;
-
-                 const c_pos = getXY(child);
-                 const p_pos_xy = getXY(parent);
-                 
-                 const active = isUnlocked(child.id) && (parent.pos === 0 || isUnlocked(parent.id));
-                 const color = active ? BC[b] : '#2A3B4C';
-
-                 // Cubic bezier curve for beautiful S-shaped connections
-                 const midY = (p_pos_xy.y + c_pos.y) / 2;
-                 const pR = parent.pos === 0 ? ROOT_R : NODE_R;
-                 const path = `M ${p_pos_xy.x} ${p_pos_xy.y - pR} C ${p_pos_xy.x} ${midY}, ${c_pos.x} ${midY}, ${c_pos.x} ${c_pos.y + NODE_R}`;
-
-                 return <Path key={`${b}-${p_pos}-${h.p}`} d={path} stroke={color} strokeWidth={active ? 2 : 1.2} fill="none" />;
-               });
-             });
-          })}
-        </Svg>
-
-        {/* Skill nodes */}
-        {NODES.map(node => {
-          const {x, y} = getXY(node);
-          const pts = alloc[node.id] || 0;
-          const active = pts > 0 || node.pos === 0;
-          const bc = BC[node.branch];
-          const r = node.pos === 0 ? ROOT_R : NODE_R;
-          
-          let can = false, isAvailable = false;
-          if (node.pos !== 0) {
-            can = canAllocate(node);
-            const parentNodes = HELIX[node.pos].parents.map(p => NODES.find(n => n.branch === node.branch && n.pos === p)!);
-            const parentUnlocked = parentNodes.some(p => p.pos === 0 || isUnlocked(p.id));
-            const meetsReq = !node.reqPts || branchPts(node.branch) >= node.reqPts;
-            isAvailable = parentUnlocked && meetsReq;
-          }
-
-          return (
-            <React.Fragment key={node.id}>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => handleNodePress(node)}
-                onLongPress={() => {
-                  ReactNativeHapticFeedback.trigger('impactMedium', {enableVibrateFallback: true});
-                  if (node.pos !== 0) deallocPoint(node);
-                }}
-                style={[
-                  styles.node,
-                  {
-                    left: x - r, top: y - r,
-                    width: r * 2, height: r * 2, borderRadius: r,
-                    borderWidth: node.pos === 0 ? 1.5 : 1,
-                    borderColor: active ? bc : (isAvailable ? bc + '80' : '#2A3B4C'),
-                    backgroundColor: active ? bc + '20' : '#0B131D',
-                  },
-                  active && {
-                    shadowColor: bc, shadowOffset: {width: 0, height: 0},
-                    shadowOpacity: 0.8, shadowRadius: 10, elevation: 8,
-                  },
-                ]}>
-                <Icon name={node.icon} size={node.pos === 0 ? 28 : 18}
-                  color={active ? bc : (isAvailable ? '#8C9BAA' : '#2A3B4C')} />
-              </TouchableOpacity>
-
-              {/* Point dots beneath node */}
-              {(isAvailable || pts > 0) && node.pos !== 0 && node.maxPts > 0 && (
-                <View style={[styles.dotsRow, {left: x - (node.maxPts * 6.5) / 2, top: y + r + 6}]}>
-                  {Array.from({length: node.maxPts}).map((_, i) => {
-                    const filled = i < pts;
-                    return (
-                      <View key={i} style={[
-                        styles.dot,
-                        {backgroundColor: filled ? bc : '#2A3B4C'},
-                        filled && {shadowColor: bc, shadowOpacity: 1, shadowRadius: 3}
-                      ]} />
-                    );
-                  })}
-                </View>
-              )}
-
-              {/* Root labels under the bottom nodes */}
-              {node.pos === 0 && (
-                <View style={[styles.rootLabelBox, {left: x - 50, top: y + ROOT_R + 10}]}>
-                  <Text style={[styles.rootLabel, {color: bc}]}>{BN[node.branch]}</Text>
-                  <Text style={[styles.rootScore, {color: bc}]}>{branchPts(node.branch)}</Text>
-                </View>
-              )}
-            </React.Fragment>
-          );
-        })}
-      </ScrollView>
+      <GestureDetector gesture={composed}>
+        <Animated.View style={styles.canvasWrap}>
+          <Animated.View style={canvasStyle}>
+            {treeContent}
+          </Animated.View>
+        </Animated.View>
+      </GestureDetector>
 
       {/* Dark Tooltip popup matching screenshot */}
       {selected && selected.pos !== 0 && (
@@ -376,7 +478,7 @@ const SkillTreeScreen = ({navigation}: any) => {
               {selected.reqPts && branchPts(selected.branch) < selected.reqPts ? (
                 <View style={styles.tooltipReq}>
                   <Icon name="lock-outline" size={12} color="#9EA8B3" />
-                  <Text style={styles.tooltipReqText}>{selected.reqPts} PTS REQ.</Text>
+                  <Text style={styles.tooltipReqText}>{selected.reqPts} {t('skillTree.ptsReq')}</Text>
                 </View>
               ) : <View/>}
 
@@ -394,7 +496,8 @@ const SkillTreeScreen = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#0B131D'},
+  container: {flex: 1, backgroundColor: 'transparent'},
+  canvasWrap: {flex: 1, overflow: 'hidden'},
   
   header: {
     position: 'absolute',
@@ -404,42 +507,45 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   backBtn: {
-    width: 44, height: 44, borderRadius: 12,
-    backgroundColor: '#1E252D',
+    width: 48, height: 48, borderRadius: 14,
+    backgroundColor: '#181F28',
     alignItems: 'center', justifyContent: 'center',
-    borderWidth: 1, borderColor: '#2A3B4C',
+    borderWidth: 1, borderColor: '#2A3444',
+    shadowColor: '#000', shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.4, shadowRadius: 4, elevation: 4,
   },
   pointsContainer: {
-    alignItems: 'flex-end', gap: 6,
+    alignItems: 'flex-end',
   },
   pointsBox: {
-    backgroundColor: '#050A10',
-    borderRadius: 10, paddingLeft: 14, paddingRight: 6, paddingVertical: 8,
-    borderWidth: 1, borderColor: '#1F344A',
-    minWidth: 150,
-  },
-  pointsLabelRow: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    marginBottom: 2,
+    backgroundColor: '#050A12',
+    borderRadius: 12, paddingHorizontal: 16, paddingVertical: 10,
+    borderWidth: 1, borderColor: '#1A2A3D',
+    minWidth: 200,
+    shadowColor: '#000', shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5, shadowRadius: 6, elevation: 5,
   },
   pointsLabel: {
-    fontSize: 9, fontWeight: '800', color: '#8A9AA8', 
-    letterSpacing: 2, marginRight: 8,
+    fontSize: 10, fontWeight: '800', color: '#7A8A98',
+    letterSpacing: 2, marginBottom: 4,
   },
   pmBtn: {
-    padding: 2, borderRadius: 4, borderWidth: 1, borderColor: '#2A3B4C', marginLeft: 4,
+    padding: 5, borderRadius: 6, borderWidth: 1, borderColor: '#2A3444',
+  },
+  pmGroup: {
+    flexDirection: 'row', alignItems: 'center', gap: 6, marginLeft: 10,
   },
   pointsBoxRow: {
-    flexDirection: 'row', alignItems: 'baseline', justifyContent: 'flex-end',
-    paddingRight: 8,
+    flexDirection: 'row', alignItems: 'center',
   },
-  pointsBig: {fontSize: 26, fontWeight: 'bold', color: '#44D5E8'},
-  pointsSmall: {fontSize: 14, fontWeight: '600', color: '#6A7A8A'},
+  pointsBig: {fontSize: 30, fontWeight: '900', color: '#44D5E8'},
+  pointsSmall: {fontSize: 15, fontWeight: '600', color: '#5A6A7A'},
   resetBtn: {
-    flexDirection: 'row', alignItems: 'center', gap: 6,
-    paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8,
-    backgroundColor: 'rgba(255, 58, 89, 0.1)', 
-    borderWidth: 1, borderColor: 'rgba(255, 58, 89, 0.3)',
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5,
+    paddingVertical: 6, borderRadius: 7, marginTop: 8,
+    backgroundColor: 'rgba(255, 58, 89, 0.08)',
+    borderWidth: 1, borderColor: 'rgba(255, 58, 89, 0.25)',
+    alignSelf: 'stretch',
   },
   resetText: {fontSize: 10, fontWeight: '800', color: '#FF3A59', letterSpacing: 1.5},
 
@@ -449,37 +555,39 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   dotsRow: {
-    position: 'absolute', flexDirection: 'row', gap: 2.5,
+    position: 'absolute', flexDirection: 'row', gap: 3,
   },
-  dot: {width: 4, height: 4, borderRadius: 2},
+  dot: {width: 4.5, height: 4.5, borderRadius: 2.25},
   rootLabelBox: {
     position: 'absolute', width: 100, alignItems: 'center',
   },
-  rootLabel: {fontSize: 8, fontWeight: '900', letterSpacing: 1.5},
-  rootScore: {fontSize: 12, fontWeight: 'bold', marginTop: 2},
+  rootLabel: {fontSize: 9, fontWeight: '900', letterSpacing: 2},
+  rootScore: {fontSize: 14, fontWeight: '900', marginTop: 3},
 
   // Dark Tooltip
   tooltipOverlay: {
     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
     justifyContent: 'center', alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.7)',
   },
   tooltip: {
-    backgroundColor: '#1E252D',
-    borderRadius: 12, padding: 20,
-    width: SW * 0.8, maxWidth: 320,
-    borderWidth: 1, borderColor: '#2A3B4C',
+    backgroundColor: '#151C26',
+    borderRadius: 14, padding: 22,
+    width: SW * 0.82, maxWidth: 340,
+    borderWidth: 1, borderColor: '#1E2D3D',
+    shadowColor: '#000', shadowOffset: {width: 0, height: 8},
+    shadowOpacity: 0.6, shadowRadius: 20, elevation: 10,
   },
   tooltipName: {
-    fontSize: 16, fontWeight: '800', color: '#FFFFFF',
-    letterSpacing: 1.2,
+    fontSize: 17, fontWeight: '800', color: '#FFFFFF',
+    letterSpacing: 1,
   },
   tooltipDivider: {
-    height: 1, backgroundColor: '#2A3B4C', marginVertical: 12,
+    height: 1, backgroundColor: '#1E2D3D', marginVertical: 14,
   },
   tooltipDesc: {
-    fontSize: 14, color: '#9EA8B3', lineHeight: 22,
-    marginBottom: 16,
+    fontSize: 14, color: '#8A9AAA', lineHeight: 22,
+    marginBottom: 18,
   },
   tooltipBottom: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
@@ -487,11 +595,11 @@ const styles = StyleSheet.create({
   tooltipReq: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
   },
-  tooltipReqText: {fontSize: 11, fontWeight: 'bold', color: '#9EA8B3', letterSpacing: 0.5},
+  tooltipReqText: {fontSize: 11, fontWeight: 'bold', color: '#8A9AAA', letterSpacing: 0.5},
   tooltipPtsBox: {
-    paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6,
+    paddingHorizontal: 12, paddingVertical: 5, borderRadius: 8,
   },
-  tooltipPtsText: {fontSize: 12, fontWeight: '800'},
+  tooltipPtsText: {fontSize: 13, fontWeight: '800'},
 });
 
 export default SkillTreeScreen;

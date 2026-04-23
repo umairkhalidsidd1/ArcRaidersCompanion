@@ -1,0 +1,942 @@
+{
+  "snitch": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "스니치 스캐너",
+      "icon": "icons/snitch-scanner.webp",
+      "rarity": "고급",
+      "item_type": "재활용 가능",
+      "id": "snitch-scanner"
+    },
+    {
+      "name": "ARC 합성 수지",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "센서",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "sensors-recipe"
+    }
+  ],
+  "tick": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "틱 포드",
+      "icon": "icons/tick-pod.webp",
+      "rarity": "고급",
+      "item_type": "재활용 가능",
+      "id": "tick-pod"
+    }
+  ],
+  "turret": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "경량 탄약",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "light-ammo"
+    },
+    {
+      "name": "기본 총기 부품",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "simple-gun-parts"
+    }
+  ],
+  "queen": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 합성 수지",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC 회로",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "고급 기계 부품",
+      "icon": "icons/advanced-mechanical-components.webp",
+      "rarity": "희귀",
+      "item_type": "고급 재료",
+      "id": "advanced-mechanical-components"
+    },
+    {
+      "name": "고급 전기 부품",
+      "icon": "icons/advanced-electrical-components.webp",
+      "rarity": "희귀",
+      "item_type": "정제 재료",
+      "id": "advanced-electrical-components"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "퀸 리액터",
+      "icon": "icons/queen-reactor.webp",
+      "rarity": "전설",
+      "item_type": "재활용 가능",
+      "id": "queen-reactor"
+    },
+    {
+      "name": "ARC 냉각제",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC 플렉스 고무",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC 단열 라이닝",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC 고성능 강철",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "자기 가속기",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "영웅",
+      "item_type": "정제 재료",
+      "id": "magnetic-accelerator"
+    }
+  ],
+  "fireball": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "파이어볼 버너",
+      "icon": "icons/fireball-burner.webp",
+      "rarity": "고급",
+      "item_type": "재활용 가능",
+      "id": "fireball-burner"
+    },
+    {
+      "name": "조폭약",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "crude-explosives"
+    }
+  ],
+  "wasp": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "경량 탄약",
+      "icon": "icons/light-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "light-ammo"
+    },
+    {
+      "name": "와스프 드라이버",
+      "icon": "icons/wasp-driver.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "wasp-driver"
+    }
+  ],
+  "pop": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC 단열 라이닝",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "조폭약",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "팝 트리거",
+      "icon": "icons/pop-trigger.webp",
+      "rarity": "고급",
+      "item_type": "재활용 가능",
+      "id": "pop-trigger"
+    }
+  ],
+  "rollbot": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "센서",
+      "icon": "icons/sensors-recipe.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "sensors-recipe"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC 회로",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "서베이어 금고",
+      "icon": "icons/surveyor-vault.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "surveyor-vault"
+    },
+    {
+      "name": "설계도: 비타 스프레이",
+      "icon": "icons/vita-spray.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "vita-spray-recipe"
+    },
+    {
+      "name": "설계도: 바리케이드 키트",
+      "icon": "icons/barricade-kit.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "barricade-kit-recipe"
+    },
+    {
+      "name": "설계도: 확장 미디엄 탄창 III",
+      "icon": "icons/extended-medium-mag-iii.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "extended-medium-mag-iii-blueprint"
+    },
+    {
+      "name": "설계도: 중형 총기 부품",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "heavy-gun-parts-recipe"
+    },
+    {
+      "name": "설계도: 확장 총열",
+      "icon": "icons/extended-barrel.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "extended-barrel-recipe"
+    },
+    {
+      "name": "설계도: 패딩 개머리판",
+      "icon": "icons/padded-stock.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "padded-stock-recipe"
+    },
+    {
+      "name": "설계도: 비타 샷",
+      "icon": "icons/vita-shot.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "vita-shot-recipe"
+    }
+  ],
+  "matriarch": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 합성 수지",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC 회로",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC 플렉스 고무",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC 단열 라이닝",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "ARC 고성능 강철",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "자기 가속기",
+      "icon": "icons/magnetic-accelerator.webp",
+      "rarity": "영웅",
+      "item_type": "정제 재료",
+      "id": "magnetic-accelerator"
+    },
+    {
+      "name": "매트리아크 리액터",
+      "icon": "icons/matriarch-reactor.webp",
+      "rarity": "전설",
+      "item_type": "재활용 가능",
+      "id": "matriarch-reactor"
+    },
+    {
+      "name": "설계도: 아펠리온 라이플",
+      "icon": "icons/aphelion-rifle-blueprint.webp",
+      "rarity": "전설",
+      "item_type": "설계도",
+      "id": "aphelion-rifle-blueprint"
+    }
+  ],
+  "rocketeer": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC 회로",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "로켓티어 드라이버",
+      "icon": "icons/rocketeer-part.webp",
+      "rarity": "영웅",
+      "item_type": "재활용 가능",
+      "id": "rocketeer-part"
+    },
+    {
+      "name": "중형 탄약",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "중형 총기 부품",
+      "icon": "icons/heavy-gun-parts.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "heavy-gun-parts"
+    }
+  ],
+  "shredder": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "기본 총기 부품",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "산탄총 탄약",
+      "icon": "icons/shotgun-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "shotgun-ammo"
+    },
+    {
+      "name": "슈레더 자이로",
+      "icon": "icons/shredder-gyro.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "shredder-gyro"
+    }
+  ],
+  "bastion": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC 회로",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "바스티온 셀",
+      "icon": "icons/bastion-part.webp",
+      "rarity": "영웅",
+      "item_type": "재활용 가능",
+      "id": "bastion-part"
+    },
+    {
+      "name": "기계 부품",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "중형 총기 부품",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "중형 탄약",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "medium-ammo"
+    }
+  ],
+  "bison": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "ARC 회로",
+      "icon": "icons/arc-circuitry.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-circuitry"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC 플렉스 고무",
+      "icon": "icons/arc-flex-rubber.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-flex-rubber"
+    },
+    {
+      "name": "ARC 고성능 강철",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "기계 부품",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "리퍼 펄스 유닛",
+      "icon": "icons/leaper-pulse-unit.webp",
+      "rarity": "영웅",
+      "item_type": "투척물",
+      "id": "leaper-pulse-unit"
+    },
+    {
+      "name": "폭발성 화합물",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "희귀",
+      "item_type": "정제 재료",
+      "id": "explosive-compound"
+    }
+  ],
+  "bombardier": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC 고성능 강철",
+      "icon": "icons/arc-performance-steel.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-performance-steel"
+    },
+    {
+      "name": "기계 부품",
+      "icon": "icons/mechanical-components.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "mechanical-components"
+    },
+    {
+      "name": "중형 총기 부품",
+      "icon": "icons/medium-gun-parts.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "medium-gun-parts"
+    },
+    {
+      "name": "봄바디어 셀",
+      "icon": "icons/bombardier-cell.webp",
+      "rarity": "영웅",
+      "item_type": "재활용 가능",
+      "id": "bombardier-cell"
+    },
+    {
+      "name": "런처 탄약",
+      "icon": "icons/launcher-ammo.webp",
+      "rarity": "희귀",
+      "item_type": "탄약",
+      "id": "launcher-ammo"
+    }
+  ],
+  "comet": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC 냉각제",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC 단열 라이닝",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "조폭약",
+      "icon": "icons/crude-explosives.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "crude-explosives"
+    },
+    {
+      "name": "폭발성 화합물",
+      "icon": "icons/explosive-compound.webp",
+      "rarity": "희귀",
+      "item_type": "정제 재료",
+      "id": "explosive-compound"
+    },
+    {
+      "name": "코멧 점화기"
+    },
+    {
+      "name": "전기 부품",
+      "icon": "icons/electrical-components.webp",
+      "rarity": "고급",
+      "item_type": "정제 재료",
+      "id": "electrical-components"
+    }
+  ],
+  "firefly": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "기본 총기 부품",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "파이어플라이 버너"
+    },
+    {
+      "name": "화학물질",
+      "icon": "icons/chemicals.webp",
+      "rarity": "일반",
+      "item_type": "기본 재료",
+      "id": "chemicals"
+    }
+  ],
+  "hornet": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "기본 총기 부품",
+      "icon": "icons/simple-gun-parts.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "simple-gun-parts"
+    },
+    {
+      "name": "중형 탄약",
+      "icon": "icons/medium-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "medium-ammo"
+    },
+    {
+      "name": "호넷 드라이버",
+      "icon": "icons/hornet-driver.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "hornet-driver"
+    }
+  ],
+  "sentinel": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 합성 수지",
+      "icon": "icons/arc-synthetic-resin.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-synthetic-resin"
+    },
+    {
+      "name": "ARC 모션 코어",
+      "icon": "icons/arc-motion-core.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "arc-motion-core"
+    },
+    {
+      "name": "고급 ARC 파워셀",
+      "icon": "icons/advanced-arc-powercell.webp",
+      "rarity": "희귀",
+      "item_type": "지상 재료",
+      "id": "advanced-arc-powercell"
+    },
+    {
+      "name": "ARC 냉각제",
+      "icon": "icons/arc-coolant.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-coolant"
+    },
+    {
+      "name": "ARC 단열 라이닝",
+      "icon": "icons/arc-thermo-lining.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "arc-thermo-lining"
+    },
+    {
+      "name": "중형 탄약",
+      "icon": "icons/heavy-ammo.webp",
+      "rarity": "일반",
+      "item_type": "탄약",
+      "id": "heavy-ammo"
+    },
+    {
+      "name": "센티넬 발사 코어",
+      "icon": "icons/sentinel-part.webp",
+      "rarity": "희귀",
+      "item_type": "재활용 가능",
+      "id": "sentinel-part"
+    }
+  ],
+  "spotter": [
+    {
+      "name": "ARC 합금",
+      "icon": "icons/arc-alloy.webp",
+      "rarity": "고급",
+      "item_type": "지상 재료",
+      "id": "arc-alloy"
+    },
+    {
+      "name": "ARC 파워셀",
+      "icon": "icons/arc-powercell.webp",
+      "rarity": "일반",
+      "item_type": "지상 재료",
+      "id": "arc-powercell"
+    },
+    {
+      "name": "스포터 릴레이",
+      "icon": "icons/spotter-relay.webp",
+      "rarity": "고급",
+      "item_type": "재활용 가능",
+      "id": "spotter-relay"
+    }
+  ]
+}

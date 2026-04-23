@@ -1,0 +1,89 @@
+{
+  "description": "远征是一种可选的声望/软重置系统。在20级时可用，玩家通过重置进度来换取永久奖励。该项目有6个难度递增的阶段。",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "基础",
+      "description": "收集基本建筑材料，开始建造商队。",
+      "objectives": [
+        {"item": "金属零件", "quantity": 150},
+        {"item": "化学品", "quantity": 100},
+        {"item": "ARC合金", "quantity": 80},
+        {"item": "钢弹簧", "quantity": 15}
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "核心系统",
+      "description": "为商队安装电气和机械核心系统。",
+      "objectives": [
+        {"item": "耐用布料", "quantity": 30},
+        {"item": "电线", "quantity": 25},
+        {"item": "电子元件", "quantity": 20},
+        {"item": "工业充电器", "quantity": 3}
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "框架",
+      "description": "组装结构框架和专用组件。",
+      "objectives": [
+        {"item": "咖啡壶", "quantity": 1},
+        {"item": "电池", "quantity": 25},
+        {"item": "火球燃烧器", "quantity": 5},
+        {"item": "出行模块", "quantity": 1}
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "装备",
+      "description": "用先进技术和稀有ARC组件装备商队。",
+      "objectives": [
+        {"item": "损坏的制导系统", "quantity": 1},
+        {"item": "高级电子元件", "quantity": 10},
+        {"item": "精美雪花球", "quantity": 3},
+        {"item": "轰炸机电池", "quantity": 2}
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "装载阶段",
+      "description": "按照铸币价值分类为商队装载物资。",
+      "objectives": [
+        {"item": "材料（按铸币价值）", "quantity": 300000},
+        {"item": "战斗物品（按铸币价值）", "quantity": 200000},
+        {"item": "生存物品（按铸币价值）", "quantity": 100000},
+        {"item": "补给品（按铸币价值）", "quantity": 150000}
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "出发",
+      "description": "在出发窗口期注册你的掠夺者。所有剩余储藏物品将计入你的远征价值。",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {"name": "额外技能点", "description": "最多5个额外技能点（每百万铸币价值1个）", "icon": "star"},
+      {"name": "+12储藏空间", "description": "为你的下一个掠夺者提供额外储藏空间", "icon": "archive"},
+      {"name": "补丁掠夺者服装", "description": "独家进化外观", "icon": "tshirt-crew"},
+      {"name": "拼凑外观", "description": "独特头饰（如拼凑清洁工帽）", "icon": "hat-fedora"},
+      {"name": "远征标识", "description": "显示你远征次数的徽章", "icon": "medal"}
+    ],
+    "temporary": [
+      {"name": "修理价值提升", "description": "+60-70%修理价值（最多叠加3次）", "icon": "tools"},
+      {"name": "经验值提升", "description": "+5-10%经验值获取（最多叠加3次）", "icon": "trending-up"},
+      {"name": "拼凑材料", "description": "+6%拼凑者材料获取（最多叠加3次）", "icon": "recycle"}
+    ]
+  },
+  "keeps": ["已解锁地图", "外观", "掠夺者牌组", "掠夺者代币", "信用点", "图鉴条目", "工坊工作台", "试炼", "活跃排行榜", "个人活动进度", "额外技能点（先前获得）"],
+  "loses": ["蓝图", "背包与储藏", "玩家等级", "铸币", "工坊升级", "任务进度", "技能点（初始）"]
+}

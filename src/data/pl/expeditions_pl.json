@@ -1,0 +1,201 @@
+{
+  "description": "Wyprawy to opcjonalny system prestiżu/miękkiego resetu. Dostępne na poziomie 20, gracze resetują postępy w zamian za trwałe nagrody. Projekt ma 6 etapów o rosnącym stopniu trudności.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Fundament",
+      "description": "Zbierz podstawowe materiały budowlane, aby rozpocząć budowę karawany.",
+      "objectives": [
+        {
+          "item": "Części metalowe",
+          "quantity": 150
+        },
+        {
+          "item": "Chemikalia",
+          "quantity": 100
+        },
+        {
+          "item": "Stop ARC",
+          "quantity": 80
+        },
+        {
+          "item": "Sprężyna stalowa",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Systemy rdzeniowe",
+      "description": "Zainstaluj elektryczne i mechaniczne systemy rdzeniowe karawany.",
+      "objectives": [
+        {
+          "item": "Wytrzymały materiał",
+          "quantity": 30
+        },
+        {
+          "item": "Przewody",
+          "quantity": 25
+        },
+        {
+          "item": "Komponenty elektryczne",
+          "quantity": 20
+        },
+        {
+          "item": "Ładowarka przemysłowa",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "Szkielet",
+      "description": "Zmontuj szkielet konstrukcyjny i specjalistyczne komponenty.",
+      "objectives": [
+        {
+          "item": "Dzbanek do kawy",
+          "quantity": 1
+        },
+        {
+          "item": "Bateria",
+          "quantity": 25
+        },
+        {
+          "item": "Palnik kuli ognia",
+          "quantity": 5
+        },
+        {
+          "item": "Moduły Exodus",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Wyposażenie",
+      "description": "Wyposaż karawanę w zaawansowaną technologię i rzadkie komponenty ARC.",
+      "objectives": [
+        {
+          "item": "Uszkodzony system naprowadzający",
+          "quantity": 1
+        },
+        {
+          "item": "Zaawansowane komponenty elektryczne",
+          "quantity": 10
+        },
+        {
+          "item": "Zapierająca dech śnieżna kula",
+          "quantity": 3
+        },
+        {
+          "item": "Komórka Bombardiera",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Faza załadunku",
+      "description": "Wypełnij karawanę zapasami skategoryzowanymi według wartości monet.",
+      "objectives": [
+        {
+          "item": "Materiały (wg wartości monet)",
+          "quantity": 300000
+        },
+        {
+          "item": "Przedmioty bojowe (wg wartości monet)",
+          "quantity": 200000
+        },
+        {
+          "item": "Przedmioty survival (wg wartości monet)",
+          "quantity": 100000
+        },
+        {
+          "item": "Prowiant (wg wartości monet)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Odjazd",
+      "description": "Zarejestruj swojego Rajdera podczas okna odjazdu. Wszystkie pozostałe przedmioty w skrytce przyczyniają się do wartości wyprawy.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "Bonusowe punkty umiejętności",
+        "description": "Do 5 bonusowych punktów umiejętności (1 na milion wartości monet)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 Miejsca w skrytce",
+        "description": "Dodatkowa przestrzeń skrytki dla twojego następnego Rajdera",
+        "icon": "archive"
+      },
+      {
+        "name": "Łatany strój Rajdera",
+        "description": "Ekskluzywny ewoluujący kosmetyk",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "Kosmetyk Złomiarza",
+        "description": "Unikalne nakrycie głowy (np. Czapka woźnego Złomiarza)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "Wskaźnik wypraw",
+        "description": "Odznaka pokazująca liczbę twoich wypraw",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "Wzmocnienie wartości naprawy",
+        "description": "+60-70% wartości naprawy (kumuluje się x3)",
+        "icon": "tools"
+      },
+      {
+        "name": "Wzmocnienie PD",
+        "description": "+5-10% zdobywania PD (kumuluje się x3)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "Materiały Złomiarza",
+        "description": "+6% materiałów od Złomiarza (kumuluje się x3)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "Odblokowane mapy",
+    "Kosmetyki",
+    "Talie Rajdera",
+    "Żetony Rajdera",
+    "Kredyty",
+    "Wpisy Kodeksu",
+    "Stacje warsztatowe",
+    "Próby",
+    "Aktywne rankingi",
+    "Osobisty postęp wydarzeń",
+    "Bonusowe punkty umiejętności (wcześniejsze)"
+  ],
+  "loses": [
+    "Plany",
+    "Ekwipunek i skrytka",
+    "Poziom gracza",
+    "Monety",
+    "Ulepszenia warsztatu",
+    "Postęp misji",
+    "Punkty umiejętności (początkowe)"
+  ]
+}

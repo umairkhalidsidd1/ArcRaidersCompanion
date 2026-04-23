@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dam-battlegrounds",
+    "name": "Campi di battaglia della diga",
+    "description": "Un'enorme diga idroelettrica invasa dalle forze ARC. Zone di combattimento dense attorno agli sfioratori e alle sale generatori.",
+    "bgColor": "#1B3A4B",
+    "accentColor": "#00E5FF",
+    "markerCount": 14,
+    "difficulty": "Medio"
+  },
+  {
+    "id": "buried-city",
+    "name": "Città sepolta",
+    "description": "Le rovine di una metropoli un tempo fiorente, ora semisepolta sotto sabbia e macerie. Ricca di bottino ma pericolosa.",
+    "bgColor": "#3B2F1A",
+    "accentColor": "#FF6B2C",
+    "markerCount": 15,
+    "difficulty": "Difficile"
+  },
+  {
+    "id": "the-spaceport",
+    "name": "Lo spazioporto",
+    "description": "Un impianto di lancio abbandonato con hangar, torri di controllo e tecnologia ARC sparsa. Ampie linee di vista.",
+    "bgColor": "#1A1A2E",
+    "accentColor": "#A855F7",
+    "markerCount": 12,
+    "difficulty": "Facile"
+  },
+  {
+    "id": "blue-gate",
+    "name": "Porta blu",
+    "description": "Un checkpoint fortificato tra le regioni. Corridoi stretti e verticalità rendono gli scontri intensi.",
+    "bgColor": "#0A2540",
+    "accentColor": "#2196F3",
+    "markerCount": 10,
+    "difficulty": "Medio"
+  },
+  {
+    "id": "stella-montis",
+    "name": "Stella Montis",
+    "description": "Una regione montuosa con foreste alpine e bunker nascosti. Risorse di alto valore sparse sulle cime.",
+    "bgColor": "#1A2E1A",
+    "accentColor": "#00FF88",
+    "markerCount": 12,
+    "difficulty": "Difficile"
+  }
+]

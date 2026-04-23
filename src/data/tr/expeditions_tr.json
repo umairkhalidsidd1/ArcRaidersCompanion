@@ -1,0 +1,201 @@
+{
+  "description": "Seferler isteğe bağlı bir prestij/yumuşak sıfırlama sistemidir. Seviye 20'de kullanılabilir hale gelir, oyuncular kalıcı ödüller karşılığında ilerlemeyi sıfırlar. Proje 6 artan zorluk aşamasından oluşur.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Temel",
+      "description": "Kervanı inşa etmeye başlamak için temel yapı malzemelerini toplayın.",
+      "objectives": [
+        {
+          "item": "Metal Parçalar",
+          "quantity": 150
+        },
+        {
+          "item": "Kimyasallar",
+          "quantity": 100
+        },
+        {
+          "item": "ARC Alaşımı",
+          "quantity": 80
+        },
+        {
+          "item": "Çelik Yay",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Çekirdek Sistemler",
+      "description": "Kervanın elektriksel ve mekanik çekirdek sistemlerini kurun.",
+      "objectives": [
+        {
+          "item": "Dayanıklı Kumaş",
+          "quantity": 30
+        },
+        {
+          "item": "Kablolar",
+          "quantity": 25
+        },
+        {
+          "item": "Elektrikli Bileşenler",
+          "quantity": 20
+        },
+        {
+          "item": "Endüstriyel Şarj Cihazı",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "İskelet",
+      "description": "Yapısal iskelet ve özel bileşenleri monte edin.",
+      "objectives": [
+        {
+          "item": "Kahve Demliği",
+          "quantity": 1
+        },
+        {
+          "item": "Pil",
+          "quantity": 25
+        },
+        {
+          "item": "Ateş Topu Yakıcısı",
+          "quantity": 5
+        },
+        {
+          "item": "Exodus Modülleri",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Donatım",
+      "description": "Kervanı ileri teknoloji ve nadir ARC bileşenleriyle donatın.",
+      "objectives": [
+        {
+          "item": "Bozuk Güdüm Sistemi",
+          "quantity": 1
+        },
+        {
+          "item": "Gelişmiş Elektrikli Bileşenler",
+          "quantity": 10
+        },
+        {
+          "item": "Nefes Kesici Kar Küresi",
+          "quantity": 3
+        },
+        {
+          "item": "Bombardıman Hücresi",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Yükleme Aşaması",
+      "description": "Kervanı madeni para değerine göre kategorize edilmiş malzemelerle doldurun.",
+      "objectives": [
+        {
+          "item": "Malzemeler (madeni para değerine göre)",
+          "quantity": 300000
+        },
+        {
+          "item": "Savaş Eşyaları (madeni para değerine göre)",
+          "quantity": 200000
+        },
+        {
+          "item": "Hayatta Kalma Eşyaları (madeni para değerine göre)",
+          "quantity": 100000
+        },
+        {
+          "item": "Erzak (madeni para değerine göre)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Kalkış",
+      "description": "Kalkış penceresi sırasında Raider'ınızı kaydedin. Kalan tüm depo eşyaları Sefer değerinize katkıda bulunur.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "Bonus Yetenek Puanları",
+        "description": "5'e kadar bonus yetenek puanı (1 milyon madeni para değeri başına 1)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 Depo Alanı",
+        "description": "Bir sonraki Raider'ınız için ek depo alanı",
+        "icon": "archive"
+      },
+      {
+        "name": "Yamalı Raider Kıyafeti",
+        "description": "Özel gelişen kozmetik",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "Hurda Kozmetik",
+        "description": "Benzersiz başlık (ör. Hurda Hademe Şapkası)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "Sefer Göstergesi",
+        "description": "Sefer sayınızı gösteren rozet",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "Onarım Değeri Artışı",
+        "description": "+%60-70 onarım değeri (x3 birikir)",
+        "icon": "tools"
+      },
+      {
+        "name": "XP Artışı",
+        "description": "+%5-10 XP kazanımı (x3 birikir)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "Hurda Malzemeler",
+        "description": "+%6 Hurda malzeme (x3 birikir)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "Açılmış Haritalar",
+    "Kozmetikler",
+    "Raider Desteleri",
+    "Raider Jetonları",
+    "Kredi",
+    "Kodeks Girişleri",
+    "Atölye İstasyonları",
+    "Denemeler",
+    "Aktif Sıralamalar",
+    "Kişisel Etkinlik İlerlemesi",
+    "Bonus Yetenek Puanları (önceki)"
+  ],
+  "loses": [
+    "Taslaklar",
+    "Envanter ve Depo",
+    "Oyuncu Seviyesi",
+    "Madeni Paralar",
+    "Atölye Yükseltmeleri",
+    "Görev İlerlemesi",
+    "Yetenek Puanları (başlangıç)"
+  ]
+}

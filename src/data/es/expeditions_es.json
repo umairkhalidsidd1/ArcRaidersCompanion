@@ -1,0 +1,201 @@
+{
+  "description": "Las Expediciones son un sistema opcional de prestigio/reinicio suave. Disponible en el nivel 20, los jugadores reinician su progreso a cambio de recompensas permanentes. El proyecto tiene 6 etapas de dificultad creciente.",
+  "unlock_level": 20,
+  "stages": [
+    {
+      "id": 1,
+      "name": "Fundación",
+      "description": "Reúne materiales de construcción básicos para empezar a construir la caravana.",
+      "objectives": [
+        {
+          "item": "Piezas metálicas",
+          "quantity": 150
+        },
+        {
+          "item": "Químicos",
+          "quantity": 100
+        },
+        {
+          "item": "Aleación ARC",
+          "quantity": 80
+        },
+        {
+          "item": "Muelle de acero",
+          "quantity": 15
+        }
+      ],
+      "icon": "hammer"
+    },
+    {
+      "id": 2,
+      "name": "Sistemas centrales",
+      "description": "Instala los sistemas eléctricos y mecánicos centrales de la caravana.",
+      "objectives": [
+        {
+          "item": "Tela resistente",
+          "quantity": 30
+        },
+        {
+          "item": "Cables",
+          "quantity": 25
+        },
+        {
+          "item": "Componentes eléctricos",
+          "quantity": 20
+        },
+        {
+          "item": "Cargador industrial",
+          "quantity": 3
+        }
+      ],
+      "icon": "cog"
+    },
+    {
+      "id": 3,
+      "name": "Armazón",
+      "description": "Ensambla el armazón estructural y los componentes especializados.",
+      "objectives": [
+        {
+          "item": "Cafetera",
+          "quantity": 1
+        },
+        {
+          "item": "Batería",
+          "quantity": 25
+        },
+        {
+          "item": "Quemador de bola de fuego",
+          "quantity": 5
+        },
+        {
+          "item": "Módulos Exodus",
+          "quantity": 1
+        }
+      ],
+      "icon": "cube-outline"
+    },
+    {
+      "id": 4,
+      "name": "Equipamiento",
+      "description": "Equipa la caravana con tecnología avanzada y componentes ARC raros.",
+      "objectives": [
+        {
+          "item": "Sistema de guía roto",
+          "quantity": 1
+        },
+        {
+          "item": "Componentes eléctricos avanzados",
+          "quantity": 10
+        },
+        {
+          "item": "Bola de nieve impresionante",
+          "quantity": 3
+        },
+        {
+          "item": "Célula de bombardero",
+          "quantity": 2
+        }
+      ],
+      "icon": "wrench"
+    },
+    {
+      "id": 5,
+      "name": "Fase de carga",
+      "description": "Llena la caravana con suministros categorizados por valor en monedas.",
+      "objectives": [
+        {
+          "item": "Materiales (por valor en monedas)",
+          "quantity": 300000
+        },
+        {
+          "item": "Objetos de combate (por valor en monedas)",
+          "quantity": 200000
+        },
+        {
+          "item": "Objetos de supervivencia (por valor en monedas)",
+          "quantity": 100000
+        },
+        {
+          "item": "Provisiones (por valor en monedas)",
+          "quantity": 150000
+        }
+      ],
+      "icon": "package-variant"
+    },
+    {
+      "id": 6,
+      "name": "Partida",
+      "description": "Registra tu Raider durante la ventana de salida. Todos los objetos del almacén restantes contribuyen a tu valor de expedición.",
+      "objectives": [],
+      "icon": "rocket-launch"
+    }
+  ],
+  "rewards": {
+    "permanent": [
+      {
+        "name": "Puntos de habilidad extra",
+        "description": "Hasta 5 puntos de habilidad extra (1 por millón de valor en monedas)",
+        "icon": "star"
+      },
+      {
+        "name": "+12 Espacios de almacén",
+        "description": "Almacenamiento adicional para tu próximo Raider",
+        "icon": "archive"
+      },
+      {
+        "name": "Traje Raider remendado",
+        "description": "Cosmético evolutivo exclusivo",
+        "icon": "tshirt-crew"
+      },
+      {
+        "name": "Cosmético improvisado",
+        "description": "Casco único (ej: Gorra de conserje improvisada)",
+        "icon": "hat-fedora"
+      },
+      {
+        "name": "Indicador de expedición",
+        "description": "Insignia que muestra tu número de expediciones",
+        "icon": "medal"
+      }
+    ],
+    "temporary": [
+      {
+        "name": "Aumento de valor de reparación",
+        "description": "+60-70% valor de reparación (acumulable x3)",
+        "icon": "tools"
+      },
+      {
+        "name": "Aumento de XP",
+        "description": "+5-10% ganancia de XP (acumulable x3)",
+        "icon": "trending-up"
+      },
+      {
+        "name": "Materiales improvisados",
+        "description": "+6% materiales del Improvisador (acumulable x3)",
+        "icon": "recycle"
+      }
+    ]
+  },
+  "keeps": [
+    "Mapas desbloqueados",
+    "Cosméticos",
+    "Mazos de Raider",
+    "Fichas de Raider",
+    "Créditos",
+    "Entradas del Códex",
+    "Estaciones del taller",
+    "Pruebas",
+    "Tablas de clasificación activas",
+    "Progreso personal de eventos",
+    "Puntos de habilidad extra (previos)"
+  ],
+  "loses": [
+    "Planos",
+    "Inventario y almacén",
+    "Nivel del jugador",
+    "Monedas",
+    "Mejoras del taller",
+    "Progresión de misiones",
+    "Puntos de habilidad (iniciales)"
+  ]
+}
