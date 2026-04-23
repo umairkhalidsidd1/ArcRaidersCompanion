@@ -26,6 +26,7 @@ import {
   requestPermissions,
 } from '../utils/notifications';
 import {usePremium} from '../context/PremiumContext';
+import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 
 const APP_NAME = 'Arc Raiders Companion';
 const APP_VERSION = Platform.OS === 'ios' ? '1.0.1' : '1.0';
@@ -94,6 +95,12 @@ const SettingsScreen = ({navigation}: any) => {
 
   const handleRestorePurchase = useCallback(async () => {
     try {
+      const configured = await ensureRevenueCatConfigured();
+      if (!configured) {
+        Alert.alert(t('common.error'), 'Purchases are not configured on this build yet.');
+        return;
+      }
+
       const Purchases = require('react-native-purchases').default;
       await Purchases.restorePurchases();
       await checkPremiumStatus();
@@ -138,7 +145,7 @@ const SettingsScreen = ({navigation}: any) => {
     if (!shown) {
       const url = Platform.select({
         ios: 'https://apps.apple.com/app/id6761329723?action=write-review',
-        android: 'https://play.google.com/store/apps/details?id=com.arcraiderscompanion',
+        android: 'https://play.google.com/store/apps/details?id=com.ArcRaidersCompanion',
       });
       if (url) Linking.openURL(url).catch(() => {});
     }

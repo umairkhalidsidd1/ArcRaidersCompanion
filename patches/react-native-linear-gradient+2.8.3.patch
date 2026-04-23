@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-linear-gradient/android/src/main/java/com/BV/LinearGradient/LinearGradientView.java b/node_modules/react-native-linear-gradient/android/src/main/java/com/BV/LinearGradient/LinearGradientView.java
+index 3194c0b..4924fe3 100644
+--- a/node_modules/react-native-linear-gradient/android/src/main/java/com/BV/LinearGradient/LinearGradientView.java
++++ b/node_modules/react-native-linear-gradient/android/src/main/java/com/BV/LinearGradient/LinearGradientView.java
+@@ -33,6 +33,8 @@ public class LinearGradientView extends View {
+ 
+     public LinearGradientView(Context context) {
+         super(context);
++        // Enable paint dithering to reduce color banding on dark gradients.
++        mPaint.setDither(true);
+     }
+ 
+     /**

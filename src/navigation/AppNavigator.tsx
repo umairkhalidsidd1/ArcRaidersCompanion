@@ -298,7 +298,15 @@ const AppNavigator = () => {
           <RootStack.Screen name="ArcDetail" component={ArcDetailScreen} />
           <RootStack.Screen name="GuideDetail" component={GuideDetailScreen} />
           <RootStack.Screen name="Settings" component={SettingsScreen} />
-          <RootStack.Screen name="Paywall" component={PaywallScreen} options={{animation: 'none', gestureEnabled: false}} />
+          <RootStack.Screen
+            name="Paywall"
+            component={PaywallScreen}
+            options={{
+              animation: 'none',
+              gestureEnabled: false,
+              contentStyle: {backgroundColor: navBackground, paddingBottom: 0},
+            }}
+          />
         </RootStack.Navigator>
     </NavigationContainer>
   );

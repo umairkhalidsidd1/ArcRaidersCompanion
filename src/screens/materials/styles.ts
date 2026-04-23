@@ -105,7 +105,11 @@ export const styles = StyleSheet.create({
 
   /* Grid */
   grid: {paddingHorizontal: PADDING, paddingBottom: 100},
-  row: {gap: CARD_GAP, marginBottom: CARD_GAP},
+  row: {flexDirection: 'row', gap: CARD_GAP, marginBottom: CARD_GAP},
+  cardSpacer: {
+    width: CARD_W,
+    height: CARD_H,
+  },
   loadingMore: {
     paddingVertical: spacing.md,
     alignItems: 'center',
@@ -221,6 +225,12 @@ export const detailStyles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: PADDING,
     paddingBottom: 40,
+  },
+  deferredLoader: {
+    flex: 1,
+    minHeight: 160,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerRow: {
     flexDirection: 'row',
@@ -592,6 +602,12 @@ export const wbStyles = StyleSheet.create({
     fontSize: fonts.sizes.xs,
     color: colors.textMuted,
     marginTop: 2,
+  },
+  deferredLoader: {
+    flex: 1,
+    minHeight: 180,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   stationBlock: {
     marginBottom: spacing.xl,

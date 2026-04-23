@@ -1,0 +1,6 @@
+# Copy this file to key.properties and fill in your release key details.
+# Path can be absolute, or relative to android/app/build.gradle.
+storeFile=release-upload-key.jks
+storePassword=CHANGE_ME
+keyAlias=upload
+keyPassword=CHANGE_ME

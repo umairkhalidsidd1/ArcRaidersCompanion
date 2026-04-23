@@ -1,4 +1,5 @@
 import React, {createContext, useContext, useState, useCallback, useEffect} from 'react';
+import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 
 type PremiumContextType = {
   isPremium: boolean;
@@ -28,6 +29,12 @@ export const PremiumProvider = ({children}: {children: React.ReactNode}) => {
 
   const checkPremiumStatus = useCallback(async () => {
     try {
+      const configured = await ensureRevenueCatConfigured();
+      if (!configured) {
+        setIsPremium(false);
+        return;
+      }
+
       const Purchases = require('react-native-purchases').default;
       const info = await Purchases.getCustomerInfo();
       setIsPremium(hasEntitlement(info));
@@ -41,15 +48,30 @@ export const PremiumProvider = ({children}: {children: React.ReactNode}) => {
   useEffect(() => {
     checkPremiumStatus();
 
+    let unsubscribe: (() => void) | undefined;
+    let cancelled = false;
+
     // Auto-update on any customer info change (purchase, restore, expiry)
-    try {
-      const Purchases = require('react-native-purchases').default;
-      const listener = (info: any) => {
-        setIsPremium(hasEntitlement(info));
-      };
-      Purchases.addCustomerInfoUpdateListener(listener);
-      return () => Purchases.removeCustomerInfoUpdateListener(listener);
-    } catch {}
+    const setupListener = async () => {
+      try {
+        const configured = await ensureRevenueCatConfigured();
+        if (!configured || cancelled) return;
+
+        const Purchases = require('react-native-purchases').default;
+        const listener = (info: any) => {
+          setIsPremium(hasEntitlement(info));
+        };
+        Purchases.addCustomerInfoUpdateListener(listener);
+        unsubscribe = () => Purchases.removeCustomerInfoUpdateListener(listener);
+      } catch {}
+    };
+
+    setupListener();
+
+    return () => {
+      cancelled = true;
+      unsubscribe?.();
+    };
   }, [checkPremiumStatus]);
 
   return (

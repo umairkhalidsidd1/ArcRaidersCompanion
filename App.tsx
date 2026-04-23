@@ -22,6 +22,7 @@ const SmokeBackground = Platform.OS === 'android'
   : require('./src/components/SmokeBackground').default;
 import SplashScreen from './src/screens/SplashScreen';
 import {PremiumProvider} from './src/context/PremiumContext';
+import {initializeRevenueCat} from './src/utils/revenueCat';
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
@@ -34,14 +35,8 @@ function App() {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
-    try {
-      const Purchases = require('react-native-purchases').default;
-      Purchases.configure({apiKey: 'appl_VxNOzHvNXDGxuwGuEORYsIJQQIP'});
-      // Pre-fetch offerings so the paywall renders instantly when opened
-      Purchases.getOfferings().catch(() => {});
-    } catch (_) {
-      // RevenueCat native module not yet available — will retry on paywall
-    }
+    initializeRevenueCat().catch(() => {});
+
     AsyncStorage.getItem(ONBOARDING_KEY).then(val => {
       setShowOnboarding(val !== 'true');
       setReady(true);
@@ -65,7 +60,7 @@ function App() {
   const handleOnboardingDone = async () => {
     setShowOnboarding(false);
     // Show paywall only after the first-time onboarding, not when replaying from Settings
-    if (!_isReplayingTutorial && Platform.OS !== 'android') {
+    if (!_isReplayingTutorial) {
       setTimeout(() => {
         if (navigationRef.isReady()) {
           (navigationRef as any).navigate('Paywall');

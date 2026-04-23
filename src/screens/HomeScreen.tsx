@@ -414,7 +414,6 @@ const HomeScreen = ({ navigation }: any) => {
 
   // Show paywall once per app launch — only after premium check resolves
   useEffect(() => {
-    if (Platform.OS === 'android') return; // Android paywall not configured yet
     if (isLoading) return;
     if (isPremium) return;
     if (!_isFirstLaunch) return;
@@ -424,7 +423,9 @@ const HomeScreen = ({ navigation }: any) => {
     const show = async () => {
       // Give HomeScreen time to render first
       await new Promise<void>(resolve => setTimeout(resolve, 1000));
-      if (!cancelled) navigation.navigate('Paywall');
+      if (!cancelled && navigation.isFocused?.()) {
+        navigation.navigate('Paywall');
+      }
     };
     show();
     return () => { cancelled = true; };

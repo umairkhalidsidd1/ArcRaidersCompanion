@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Animated,
   Easing,
@@ -18,6 +18,8 @@ import {colors} from '../../theme/theme';
 import {resolveImage} from '../../data/imageRegistry';
 import {
   type RawItem,
+  type ItemRef,
+  type SavedEntry,
   STAT_LABELS,
   SAVED_LIST_I18N,
   getRarityColor,
@@ -38,10 +40,14 @@ import {
 } from './dataIndexes';
 import {detailStyles} from './styles';
 
-const PAN_CAPTURE_DY = Platform.OS === 'android' ? 5 : 8;
-const CLOSE_VELOCITY = Platform.OS === 'android' ? 0.9 : 1.2;
-const OPEN_VELOCITY = Platform.OS === 'android' ? -0.9 : -1.2;
-const CLOSE_OFFSET_FROM_HALF = Platform.OS === 'android' ? 36 : 52;
+const IS_ANDROID = Platform.OS === 'android';
+const PAN_CAPTURE_DY = IS_ANDROID ? 5 : 8;
+const CLOSE_VELOCITY = IS_ANDROID ? 0.9 : 1.2;
+const OPEN_VELOCITY = IS_ANDROID ? -0.9 : -1.2;
+const CLOSE_OFFSET_FROM_HALF = IS_ANDROID ? 36 : 52;
+const ANDROID_CLOSE_DRAG = 56;
+const OPEN_DURATION = IS_ANDROID ? 0 : 260;
+const BACKDROP_OPEN_DURATION = IS_ANDROID ? 0 : 120;
 
 /* ═══════════════ STAT BAR ═══════════════ */
 const StatBarRow = ({label, value, maxVal}: {label: string; value: number; maxVal: number}) => {
@@ -59,6 +65,19 @@ const StatBarRow = ({label, value, maxVal}: {label: string; value: number; maxVa
 };
 
 /* ═══════════════ DETAIL BOTTOM SHEET ═══════════════ */
+type DetailSheetProps = {
+  item: RawItem | null;
+  visible: boolean;
+  onClose: () => void;
+  isBlueprint: boolean;
+  bpCollected: boolean;
+  onToggleBp: (id: string) => void;
+  onItemPress: (item: RawItem) => void;
+  onOpenWbSheet?: () => void;
+  onOpenExpSheet?: () => void;
+  onOpenTdSheet?: () => void;
+};
+
 const DetailSheet = ({
   item,
   visible,
@@ -70,18 +89,7 @@ const DetailSheet = ({
   onOpenWbSheet,
   onOpenExpSheet,
   onOpenTdSheet,
-}: {
-  item: RawItem | null;
-  visible: boolean;
-  onClose: () => void;
-  isBlueprint: boolean;
-  bpCollected: boolean;
-  onToggleBp: (id: string) => void;
-  onItemPress: (item: RawItem) => void;
-  onOpenWbSheet?: () => void;
-  onOpenExpSheet?: () => void;
-  onOpenTdSheet?: () => void;
-}) => {
+}: DetailSheetProps) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const translateY = useRef(new Animated.Value(WB_TY_HIDDEN)).current;
@@ -99,6 +107,14 @@ const DetailSheet = ({
   if (item) displayItemRef.current = item;
   const displayItem = displayItemRef.current;
 
+  const [imagesReady, setImagesReady] = useState(!IS_ANDROID);
+  useEffect(() => {
+    if (!IS_ANDROID) return;
+    if (!visible || !item) { setImagesReady(false); return; }
+    const raf = requestAnimationFrame(() => setImagesReady(true));
+    return () => cancelAnimationFrame(raf);
+  }, [item, visible]);
+
   useEffect(() => {
     const id = translateY.addListener(({value}) => { currentTY.current = value; });
     return () => translateY.removeListener(id);
@@ -107,6 +123,14 @@ const DetailSheet = ({
   const animateTo = useCallback((target: number) => {
     if (target >= WB_TY_HIDDEN) {
       isExpanded.current = false;
+      if (IS_ANDROID) {
+        translateY.stopAnimation();
+        backdropAnim.stopAnimation();
+        translateY.setValue(WB_TY_HIDDEN);
+        backdropAnim.setValue(0);
+        onCloseRef.current();
+        return;
+      }
       Animated.parallel([
         Animated.timing(translateY, {toValue: WB_TY_HIDDEN, duration: 210, useNativeDriver: true}),
         Animated.timing(backdropAnim, {toValue: 0, duration: 210, useNativeDriver: true}),
@@ -122,16 +146,25 @@ const DetailSheet = ({
       Animated.parallel([
         Animated.timing(translateY, {
           toValue: target,
-          duration: 260,
+          duration: OPEN_DURATION,
           easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
         }),
-        Animated.timing(backdropAnim, {toValue: 1, duration: 120, useNativeDriver: true}),
+        Animated.timing(backdropAnim, {toValue: 1, duration: BACKDROP_OPEN_DURATION, useNativeDriver: true}),
       ]).start();
     }
   }, [backdropAnim, translateY]);
 
   const snapNearest = useCallback((ty: number, vy: number) => {
+    if (IS_ANDROID) {
+      if (vy > 0.15 || ty > ANDROID_CLOSE_DRAG) {
+        animateTo(WB_TY_HIDDEN);
+        return;
+      }
+      animateTo(WB_TY_FULL);
+      return;
+    }
+
     if (vy > CLOSE_VELOCITY || ty > WB_TY_HALF + CLOSE_OFFSET_FROM_HALF) {
       animateTo(WB_TY_HIDDEN);
       return;
@@ -192,11 +225,16 @@ const DetailSheet = ({
   useEffect(() => {
     if (visible && item) {
       scrollOffset.current = 0;
-      isExpanded.current = false;
+      isExpanded.current = true;
       scrollRef.current?.scrollTo?.({y: 0, animated: false});
       translateY.stopAnimation();
       backdropAnim.stopAnimation();
-      animateTo(WB_TY_FULL);
+      if (IS_ANDROID) {
+        translateY.setValue(WB_TY_FULL);
+        backdropAnim.setValue(1);
+      } else {
+        animateTo(WB_TY_FULL);
+      }
     } else if (!visible) {
       translateY.stopAnimation();
       backdropAnim.stopAnimation();
@@ -210,43 +248,85 @@ const DetailSheet = ({
     scrollOffset.current = e.nativeEvent.contentOffset.y;
   }, []);
 
+  const rarityColor = displayItem ? getRarityColor(displayItem.rarity) : colors.textMuted;
+  const {
+    parsed,
+    stats,
+    maxStatVal,
+    recyclesFrom,
+    recycleOutputs,
+    craftedFrom,
+    usedInRecipes,
+    craftedAt,
+    droppedBy,
+    savedInLists,
+    foundInAreas,
+  } = useMemo(() => {
+    if (!displayItem) {
+      return {
+        parsed: null,
+        stats: [] as [string, unknown][],
+        maxStatVal: 100,
+        recyclesFrom: [] as ItemRef[],
+        recycleOutputs: [] as ItemRef[],
+        craftedFrom: [] as ItemRef[],
+        usedInRecipes: [] as ItemRef[],
+        craftedAt: undefined,
+        droppedBy: [] as {name: string; icon: string}[],
+        savedInLists: [] as SavedEntry[],
+        foundInAreas: [] as string[],
+      };
+    }
+
+    const parsedStats = displayItem.stat_block
+      ? (() => {
+          try {
+            return JSON.parse(displayItem.stat_block!);
+          } catch {
+            return null;
+          }
+        })()
+      : null;
+    const nextStats = parsedStats
+      ? Object.entries(parsedStats).filter(
+          ([k, v]) => typeof v === 'number' && (v as number) !== 0 && STAT_LABELS[k],
+        )
+      : [];
+    const nextMaxStatVal = nextStats.length > 0 ? Math.max(...nextStats.map(([, v]) => v as number), 100) : 100;
+
+    ensureItemByName();
+    ensureIndexes();
+
+    return {
+      parsed: parsedStats,
+      stats: nextStats,
+      maxStatVal: nextMaxStatVal,
+      recyclesFrom: _recyclesFromIdx.get(displayItem.name.toLowerCase()) || [],
+      recycleOutputs: _recycleOutputsIdx.get(displayItem.name) || [],
+      craftedFrom: _craftedFromIdx.get(displayItem.name) || [],
+      usedInRecipes: _usedInIdx.get(displayItem.name) || [],
+      craftedAt: displayItem.workbench,
+      droppedBy: getDroppedBy(displayItem.name),
+      savedInLists: _savedIdx.get(displayItem.name.toLowerCase()) || [],
+      foundInAreas: displayItem.loot_area
+        ? displayItem.loot_area.split(',').map((s: string) => s.trim()).filter(Boolean)
+        : [],
+    };
+  }, [displayItem]);
+
   if (!displayItem) return null;
-
-  const rarityColor = getRarityColor(displayItem.rarity);
-  const parsed = displayItem.stat_block ? (() => { try { return JSON.parse(displayItem.stat_block!); } catch { return null; } })() : null;
-  const stats = parsed
-    ? Object.entries(parsed).filter(
-        ([k, v]) => typeof v === 'number' && (v as number) !== 0 && STAT_LABELS[k],
-      )
-    : [];
-  const maxStatVal = stats.length > 0 ? Math.max(...stats.map(([, v]) => v as number), 100) : 100;
-
-  ensureItemByName();
-  ensureIndexes();
-  const recyclesFrom = _recyclesFromIdx.get(displayItem.name.toLowerCase()) || [];
-  const recycleOutputs = _recycleOutputsIdx.get(displayItem.name) || [];
-  const craftedFrom = _craftedFromIdx.get(displayItem.name) || [];
-  const usedInRecipes = _usedInIdx.get(displayItem.name) || [];
-  const craftedAt = displayItem.workbench;
-  const droppedBy = getDroppedBy(displayItem.name);
-  const savedInLists = _savedIdx.get(displayItem.name.toLowerCase()) || [];
-  const foundInAreas = displayItem.loot_area
-    ? displayItem.loot_area.split(',').map((s: string) => s.trim()).filter(Boolean)
-    : [];
 
   return (
     <>
-      {visible && (
-        <Animated.View
-          style={[detailStyles.backdrop, {opacity: backdropAnim}]}
-          pointerEvents="auto">
-          <TouchableOpacity
-            style={StyleSheet.absoluteFill}
-            activeOpacity={1}
-            onPress={() => animateTo(WB_TY_HIDDEN)}
-          />
-        </Animated.View>
-      )}
+      <Animated.View
+        style={[detailStyles.backdrop, {opacity: backdropAnim}]}
+        pointerEvents={visible ? 'auto' : 'none'}>
+        <TouchableOpacity
+          style={StyleSheet.absoluteFill}
+          activeOpacity={1}
+          onPress={() => animateTo(WB_TY_HIDDEN)}
+        />
+      </Animated.View>
       <Animated.View
         pointerEvents={visible ? 'auto' : 'none'}
         style={[
@@ -273,7 +353,7 @@ const DetailSheet = ({
 
           {/* Header row */}
           <View style={detailStyles.headerRow}>
-            {displayItem.icon ? (
+            {imagesReady && displayItem.icon ? (
               <Image source={resolveImage(displayItem.icon)} style={detailStyles.heroImage} resizeMode="contain" />
             ) : (
               <View style={detailStyles.heroPlaceholder}>
@@ -397,7 +477,7 @@ const DetailSheet = ({
               </View>
               {droppedBy.map((enemy, idx) => (
                 <View key={idx} style={detailStyles.droppedByRow}>
-                  {enemy.icon ? (
+                  {imagesReady && enemy.icon ? (
                     <Image source={resolveImage(enemy.icon)} style={detailStyles.droppedByIcon} resizeMode="contain" />
                   ) : (
                     <View style={detailStyles.droppedByIconPlaceholder}>
@@ -438,7 +518,7 @@ const DetailSheet = ({
                   <View style={detailStyles.thumbRow}>
                     {craftedFrom.map(({item: r, quantity}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
-                        {r.icon ? (
+                        {imagesReady && r.icon ? (
                           <Image source={resolveImage(r.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
@@ -463,7 +543,7 @@ const DetailSheet = ({
                   <View style={detailStyles.thumbRow}>
                     {usedInRecipes.map(({item: r}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
-                        {r.icon ? (
+                        {imagesReady && r.icon ? (
                           <Image source={resolveImage(r.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
@@ -483,7 +563,7 @@ const DetailSheet = ({
                   <View style={detailStyles.thumbRow}>
                     {recyclesFrom.map(({item: r, quantity}) => (
                       <TouchableOpacity key={r.id} onPress={() => onItemPress(r)} style={detailStyles.thumbCard}>
-                        {r.icon ? (
+                        {imagesReady && r.icon ? (
                           <Image source={resolveImage(r.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
@@ -508,7 +588,7 @@ const DetailSheet = ({
                   <View style={detailStyles.thumbRow}>
                     {recycleOutputs.map(({item: ri, quantity}) => (
                       <TouchableOpacity key={ri.id} onPress={() => onItemPress(ri)} style={detailStyles.thumbCard}>
-                        {ri.icon ? (
+                        {imagesReady && ri.icon ? (
                           <Image source={resolveImage(ri.icon)} style={detailStyles.thumbImage} resizeMode="contain" />
                         ) : (
                           <Icon name="help-circle" size={24} color={colors.textMuted} />
@@ -570,4 +650,23 @@ const DetailSheet = ({
   );
 };
 
-export default DetailSheet;
+const areDetailSheetPropsEqual = (
+  prev: DetailSheetProps,
+  next: DetailSheetProps,
+) => {
+  if (!prev.visible && !next.visible) return true;
+  return (
+    prev.visible === next.visible &&
+    prev.item === next.item &&
+    prev.isBlueprint === next.isBlueprint &&
+    prev.bpCollected === next.bpCollected &&
+    prev.onClose === next.onClose &&
+    prev.onToggleBp === next.onToggleBp &&
+    prev.onItemPress === next.onItemPress &&
+    prev.onOpenWbSheet === next.onOpenWbSheet &&
+    prev.onOpenExpSheet === next.onOpenExpSheet &&
+    prev.onOpenTdSheet === next.onOpenTdSheet
+  );
+};
+
+export default React.memo(DetailSheet, areDetailSheetPropsEqual);

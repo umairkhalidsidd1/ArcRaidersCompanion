@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -86,11 +86,12 @@ const StatusIcon = React.memo(({isBlueprint, bpCollected, showCraftIcon, isCraft
 
 /* ═══════════════ ITEM CARD ═══════════════ */
 const ItemCard = React.memo(
-  ({item, isBlueprint, bpCollected, onPress}: {
+  ({item, isBlueprint, bpCollected, onPress, showImage = true}: {
     item: RawItem;
     isBlueprint: boolean;
     bpCollected: boolean;
     onPress: (item: RawItem) => void;
+    showImage?: boolean;
   }) => {
     const rarityColor = getRarityColor(item.rarity);
     const isCraftable = CRAFTABLE_TYPES.has(item.item_type);
@@ -127,10 +128,10 @@ const ItemCard = React.memo(
 
         {/* Image */}
         <View style={cardStyles.imageWrap}>
-          {item.icon ? (
+          {showImage && item.icon ? (
             <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" fadeDuration={0} />
           ) : (
-            <Icon name="help-circle-outline" size={28} color={colors.textMuted} />
+            <ActivityIndicator size="small" color={colors.cyan} />
           )}
         </View>
 
@@ -146,7 +147,8 @@ const ItemCard = React.memo(
   },
   (prev, next) =>
     prev.item.id === next.item.id &&
-    prev.bpCollected === next.bpCollected,
+    prev.bpCollected === next.bpCollected &&
+    prev.showImage === next.showImage,
 );
 
 export default ItemCard;

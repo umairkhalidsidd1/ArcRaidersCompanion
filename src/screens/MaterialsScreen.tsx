@@ -52,7 +52,13 @@ type MaterialsScreenCache = {
   wbChecked: string[];
 };
 
+type MaterialRow = {
+  id: string;
+  items: RawItem[];
+};
+
 const EMPTY_ITEMS: RawItem[] = [];
+const EMPTY_ROWS: MaterialRow[] = [];
 
 let MATERIALS_SCREEN_CACHE: MaterialsScreenCache | null = null;
 
@@ -78,26 +84,14 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
   const [selectedItem, setSelectedItem] = useState<RawItem | null>(null);
   const [activeSheet, setActiveSheet] = useState<ActiveSheet>('none');
   const [wbChecked, setWbChecked] = useState<string[]>(seed?.wbChecked ?? []);
+  const [isHydratingItems, setIsHydratingItems] = useState(!seed);
+  const [cardImagesReady, setCardImagesReady] = useState(!!seed);
   const activeSheetRef = useRef<ActiveSheet>('none');
-  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const setActiveSheetSynced = useCallback((next: ActiveSheet) => {
     activeSheetRef.current = next;
     setActiveSheet(next);
   }, []);
-
-  const clearTransitionTimer = useCallback(() => {
-    if (transitionTimerRef.current) {
-      clearTimeout(transitionTimerRef.current);
-      transitionTimerRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      clearTransitionTimer();
-    };
-  }, [clearTransitionTimer]);
 
   useEffect(() => {
     let active = true;
@@ -113,37 +107,10 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
   const transitionToSheet = useCallback(
     (target: ActiveSheet) => {
       const current = activeSheetRef.current;
-      const hasPendingTransition = transitionTimerRef.current != null;
-      if (current === target && !hasPendingTransition) {
-        if (target === 'none') return;
-
-        // Recovery for close-animation race: force a fresh reopen cycle
-        // so taps right after close are not ignored.
-        setActiveSheetSynced('none');
-        transitionTimerRef.current = setTimeout(() => {
-          setActiveSheetSynced(target);
-          transitionTimerRef.current = null;
-        }, 50);
-        return;
-      }
-
-      clearTransitionTimer();
-
-      if (target === 'none') {
-        setActiveSheetSynced('none');
-        return;
-      }
-
-      if (current === 'none' && !hasPendingTransition) {
-        setActiveSheetSynced(target);
-        return;
-      }
-
-      // Direct switch – the old sheet sees visible=false (snaps hidden)
-      // while the new sheet sees visible=true (animates in) in the same frame.
+      if (current === target) return;
       setActiveSheetSynced(target);
     },
-    [clearTransitionTimer, setActiveSheetSynced],
+    [setActiveSheetSynced],
   );
 
   const showContent = ready && listVisible;
@@ -151,7 +118,7 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
   // Fast open: seed from cache, then hydrate data/storage after navigation settles.
   useEffect(() => {
     let active = true;
-    let listTask: ReturnType<typeof InteractionManager.runAfterInteractions> | null = null;
+    let loadTask: ReturnType<typeof InteractionManager.runAfterInteractions> | null = null;
 
     const cached = MATERIALS_SCREEN_CACHE && MATERIALS_SCREEN_CACHE.language === i18nHook.language
       ? MATERIALS_SCREEN_CACHE
@@ -163,53 +130,60 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
       setWbChecked(cached.wbChecked);
       setReady(true);
       setListVisible(true);
+      setIsHydratingItems(false);
+      setCardImagesReady(true);
     } else {
-      setReady(false);
-      setListVisible(false);
-      listTask = InteractionManager.runAfterInteractions(() => {
-        if (active) setListVisible(true);
+      // First navigation: mount screen instantly with lightweight UI,
+      // then hydrate heavy list data after nav interactions settle.
+      setMaterialItems(EMPTY_ITEMS);
+      setBpCollected([]);
+      setWbChecked([]);
+      setReady(true);
+      setListVisible(true);
+      setIsHydratingItems(true);
+      setCardImagesReady(false);
+
+      loadTask = InteractionManager.runAfterInteractions(() => {
+        refreshMaterialItems();
+        const nextItems = allItems;
+
+        if (!active) return;
+        setMaterialItems(nextItems);
+
+        Promise.all([
+          AsyncStorage.getItem(BP_STORAGE_KEY),
+          AsyncStorage.getItem(WB_CHECKED_KEY),
+        ])
+          .then(([bpRaw, wbRaw]) => {
+            const nextBp = bpRaw ? JSON.parse(bpRaw) : [];
+            const nextWb = wbRaw ? JSON.parse(wbRaw) : [];
+
+            if (!active) return;
+            setBpCollected(nextBp);
+            setWbChecked(nextWb);
+            MATERIALS_SCREEN_CACHE = {
+              language: i18nHook.language,
+              items: nextItems,
+              bpCollected: nextBp,
+              wbChecked: nextWb,
+            };
+          })
+          .catch(() => {
+            if (!active) return;
+            setBpCollected([]);
+            setWbChecked([]);
+            MATERIALS_SCREEN_CACHE = {
+              language: i18nHook.language,
+              items: nextItems,
+              bpCollected: [],
+              wbChecked: [],
+            };
+          })
+          .finally(() => {
+            if (active) setIsHydratingItems(false);
+          });
       });
     }
-
-    const loadTask = InteractionManager.runAfterInteractions(() => {
-      refreshMaterialItems();
-      const nextItems = allItems;
-
-      Promise.all([
-        AsyncStorage.getItem(BP_STORAGE_KEY),
-        AsyncStorage.getItem(WB_CHECKED_KEY),
-      ])
-        .then(([bpRaw, wbRaw]) => {
-          const nextBp = bpRaw ? JSON.parse(bpRaw) : [];
-          const nextWb = wbRaw ? JSON.parse(wbRaw) : [];
-
-          if (!active) return;
-          setMaterialItems(nextItems);
-          setBpCollected(nextBp);
-          setWbChecked(nextWb);
-          MATERIALS_SCREEN_CACHE = {
-            language: i18nHook.language,
-            items: nextItems,
-            bpCollected: nextBp,
-            wbChecked: nextWb,
-          };
-        })
-        .catch(() => {
-          if (!active) return;
-          setMaterialItems(nextItems);
-          setBpCollected([]);
-          setWbChecked([]);
-          MATERIALS_SCREEN_CACHE = {
-            language: i18nHook.language,
-            items: nextItems,
-            bpCollected: [],
-            wbChecked: [],
-          };
-        })
-        .finally(() => {
-          if (active) setReady(true);
-        });
-    });
 
     // Warm heavy indexes in the background to make sheet opens instant.
     const warmTask = InteractionManager.runAfterInteractions(() => {
@@ -220,11 +194,31 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
 
     return () => {
       active = false;
-      listTask?.cancel();
-      loadTask.cancel();
+      loadTask?.cancel();
       warmTask.cancel();
     };
   }, [i18nHook.language]);
+
+  useEffect(() => {
+    if (!showContent || materialItems.length === 0) {
+      setCardImagesReady(false);
+      return;
+    }
+
+    let active = true;
+    let raf: number | null = null;
+    const task = InteractionManager.runAfterInteractions(() => {
+      raf = requestAnimationFrame(() => {
+        if (active) setCardImagesReady(true);
+      });
+    });
+
+    return () => {
+      active = false;
+      task.cancel();
+      if (raf != null) cancelAnimationFrame(raf);
+    };
+  }, [materialItems.length, showContent]);
 
   useEffect(() => {
     if (!ready) return;
@@ -299,11 +293,18 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
     return list;
   }, [showContent, materialItems, selectedType, selectedFilters, search, sortAZ]);
 
+  const shouldShowLoadingOverlay = !showContent || isHydratingItems;
 
+  const materialRows = useMemo<MaterialRow[]>(() => {
+    if (filteredItems.length === 0) return EMPTY_ROWS;
 
-  const visibleItems = showContent ? filteredItems : EMPTY_ITEMS;
-
-  const shouldShowLoadingOverlay = !showContent;
+    const rows: MaterialRow[] = [];
+    for (let i = 0; i < filteredItems.length; i += NUM_COLUMNS) {
+      const items = filteredItems.slice(i, i + NUM_COLUMNS);
+      rows.push({id: items[0].id, items});
+    }
+    return rows;
+  }, [filteredItems]);
 
   const handleItemPress = useCallback((item: RawItem) => {
     setSelectedItem(item);
@@ -346,28 +347,49 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
     // Sheet will re-render with new item
   }, []);
 
-  const renderItem = useCallback(
-    ({item}: {item: RawItem}) => {
-      const isBp = item.item_type === 'Blueprint';
+  const renderRow = useCallback(
+    ({item}: {item: MaterialRow}) => {
+      const placeholders = NUM_COLUMNS - item.items.length;
+
       return (
-        <ItemCard
-          item={item}
-          isBlueprint={isBp}
-          bpCollected={isBp ? bpSetRef.current.has(item.id) : false}
-          onPress={handleItemPress}
-        />
+        <View style={styles.row}>
+          {item.items.map(material => {
+            const isBp = material.item_type === 'Blueprint';
+            return (
+              <ItemCard
+                key={material.id}
+                item={material}
+                isBlueprint={isBp}
+                bpCollected={isBp ? bpSetRef.current.has(material.id) : false}
+                showImage={cardImagesReady}
+                onPress={handleItemPress}
+              />
+            );
+          })}
+          {placeholders > 0 &&
+            Array.from({length: placeholders}, (_unused, idx) => (
+              <View key={`spacer-${item.id}-${idx}`} style={styles.cardSpacer} />
+            ))}
+        </View>
       );
     },
-    [handleItemPress],
+    [cardImagesReady, handleItemPress],
   );
 
-  const keyExtractor = useCallback((item: RawItem) => item.id, []);
+  const rowKeyExtractor = useCallback((item: MaterialRow) => item.id, []);
+
+  const listExtraData = useMemo(() => ({bpCollected, cardImagesReady}), [bpCollected, cardImagesReady]);
 
   const getItemLayout = useCallback((_data: any, index: number) => ({
     length: ROW_H,
     offset: ROW_H * index,
     index,
   }), []);
+
+  const gridContentStyle = useMemo(
+    () => [styles.grid, {paddingBottom: 100 + Math.max(insets.bottom, 12)}],
+    [insets.bottom],
+  );
 
   const detailItem = activeSheet === 'detail' ? selectedItem : null;
   const isSelectedItem = detailItem ? detailItem.item_type === 'Blueprint' : false;
@@ -394,7 +416,7 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
                 key={list.id}
                 activeOpacity={0.7}
                 delayPressIn={0}
-                onPress={() => {
+                onPressIn={() => {
                   if (list.id === 'expedition') {
                     transitionToSheet('expedition');
                   } else if (list.id === 'workbench') {
@@ -460,22 +482,19 @@ const MaterialsScreen = ({navigation: _navigation}: any) => {
 
       {/* Grid */}
       <FlatList
-        data={visibleItems}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
+        data={materialRows}
+        renderItem={renderRow}
+        keyExtractor={rowKeyExtractor}
         getItemLayout={getItemLayout}
-        numColumns={NUM_COLUMNS}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={[styles.grid, {paddingBottom: 100 + Math.max(insets.bottom, 12)}]}
+        contentContainerStyle={gridContentStyle}
         showsVerticalScrollIndicator={false}
-        initialNumToRender={18}
-        maxToRenderPerBatch={18}
-        windowSize={11}
+        initialNumToRender={21}
+        maxToRenderPerBatch={21}
+        windowSize={21}
         updateCellsBatchingPeriod={50}
-        removeClippedSubviews={Platform.OS === 'android'}
-        scrollEventThrottle={16}
+        removeClippedSubviews={false}
         keyboardShouldPersistTaps="handled"
-        extraData={bpCollected}
+        extraData={listExtraData}
       />
 
       {shouldShowLoadingOverlay && (
