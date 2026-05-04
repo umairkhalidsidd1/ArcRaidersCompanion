@@ -1,9 +1,10 @@
 import React, {useRef} from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native';
+import { Dimensions, StyleSheet, View, TouchableOpacity, Text, Platform, useWindowDimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {useSafeAreaInsets as useNativeSafeAreaInsets} from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from '../utils/safeArea';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -42,6 +43,9 @@ import PaywallScreen from '../screens/PaywallScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
+const TAB_BAR_FLOATING_GAP = 10;
+const ANDROID_NAV_OVERLAY_CLEARANCE = 8;
+const ANDROID_WINDOW_INSET_THRESHOLD = 8;
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -62,6 +66,20 @@ function useStableAndroidBottomInset() {
   }, [bottom]);
 
   return Platform.OS === 'android' ? stableBottomInset : bottom;
+}
+
+function useAndroidTabBarBottomOffset() {
+  const {bottom} = useNativeSafeAreaInsets();
+  const {height: windowHeight} = useWindowDimensions();
+  const screenHeight = Dimensions.get('screen').height;
+  const windowAlreadyAvoidsSystemNav =
+    screenHeight - windowHeight > ANDROID_WINDOW_INSET_THRESHOLD;
+
+  if (windowAlreadyAvoidsSystemNav) {
+    return TAB_BAR_FLOATING_GAP;
+  }
+
+  return Math.max(bottom + ANDROID_NAV_OVERLAY_CLEARANCE, TAB_BAR_FLOATING_GAP);
 }
 
 function BunkerStackScreen() {
@@ -145,9 +163,10 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
 /* ── Custom floating glass tab bar ── */
 function GlassTabBar({ state, descriptors, navigation }: any) {
   const bottomInset = useStableAndroidBottomInset();
+  const androidBottomOffset = useAndroidTabBarBottomOffset();
   const { t } = useTranslation();
   const bottomPad = Platform.OS === 'android'
-    ? Math.max(bottomInset, 13)
+    ? androidBottomOffset
     : (bottomInset > 0 ? Math.max(bottomInset - 8, 6) : 6);
 
   const TAB_LABELS: Record<string, string> = {

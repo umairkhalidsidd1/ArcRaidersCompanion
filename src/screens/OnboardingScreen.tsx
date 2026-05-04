@@ -18,20 +18,171 @@ import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';
 import {requestPermissions} from '../utils/notifications';
+import localEvents from '../data/events.json';
 
 const {width: W, height: H} = Dimensions.get('window');
 const ONBOARDING_KEY = '@arcc_onboarding_done';
 const PREVIEW_W = W * 0.75;
 const PREVIEW_H = W * 0.62;
 
+const RARITY_COLORS = {
+  Common: '#6C6C6C',
+  Uncommon: '#26BF57',
+  Rare: '#00A8F2',
+  Epic: '#CC3099',
+  Legendary: '#FFC600',
+};
+
+type TimeSlot = {start: string; end: string};
+type GameEvent = {
+  id: number;
+  name: string;
+  map: string;
+  icon: string;
+  description: string;
+  days: string;
+  times: string;
+};
+type PreviewEvent = {
+  id: string;
+  name: string;
+  map: string;
+  icon: string;
+  color: string;
+  time: string;
+  status: 'ACTIVE' | 'STARTS';
+  secondsRemaining: number;
+};
+
+const DAY_SECONDS = 24 * 60 * 60;
+
+const withAlpha = (hex: string, alpha: string) => `${hex}${alpha}`;
+
+const getRarityGradient = (rarity: string): [string, string, string] => [
+  withAlpha(rarity, '28'),
+  '#172031',
+  withAlpha(rarity, '18'),
+];
+
+const EVENT_VISUALS: Record<string, {icon: string; color: string}> = {
+  'Launch Tower Loot': {icon: 'rocket-launch-outline', color: '#FFB35C'},
+  'Hidden Bunker': {icon: 'shield-lock-outline', color: '#8FD8FF'},
+  Matriarch: {icon: 'skull-crossbones', color: '#FF4D4D'},
+  Harvester: {icon: 'robot-industrial-outline', color: '#FF7A2F'},
+  'Prospecting Probes': {icon: 'radar', color: '#38D982'},
+  'Night Raid': {icon: 'weather-night', color: '#5DA8FF'},
+  'Electromagnetic Storm': {icon: 'weather-lightning', color: '#A76DFF'},
+  'Locked Gate': {icon: 'gate', color: '#F6C85F'},
+  'Close Scrutiny': {icon: 'eye-outline', color: '#FF8C52'},
+  Hurricane: {icon: 'weather-hurricane', color: '#74D9FF'},
+  'Husk Graveyard': {icon: 'grave-stone', color: '#D6A354'},
+  'Bird City': {icon: 'city-variant-outline', color: '#B0BEC5'},
+  Beachcombing: {icon: 'waves', color: '#31D8D3'},
+};
+
+const EVENT_MAP_NAMES: Record<string, string> = {
+  Dam: 'Dam Battlegrounds',
+  'Buried City': 'Buried City',
+  Spaceport: 'Spaceport',
+  'Blue Gate': 'Blue Gate',
+  'Stella Montis': 'Stella Montis',
+  'Riven Tides': 'Riven Tides',
+};
+
+const parseEventSlots = (raw: string): TimeSlot[] => {
+  try {
+    const slots = JSON.parse(raw);
+    return Array.isArray(slots) ? slots : [];
+  } catch {
+    return [];
+  }
+};
+
+const parseToSeconds = (time: string): number => {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 3600 + (minutes || 0) * 60;
+};
+
+const getStatusForSlots = (slots: TimeSlot[], nowSeconds: number) => {
+  for (const slot of slots) {
+    const startSeconds = parseToSeconds(slot.start);
+    const endSeconds = parseToSeconds(slot.end);
+    const wrapsMidnight = endSeconds <= startSeconds;
+
+    if (!wrapsMidnight && nowSeconds >= startSeconds && nowSeconds < endSeconds) {
+      return {isActive: true, secondsRemaining: endSeconds - nowSeconds};
+    }
+
+    if (wrapsMidnight && (nowSeconds >= startSeconds || nowSeconds < endSeconds)) {
+      return {
+        isActive: true,
+        secondsRemaining: nowSeconds >= startSeconds
+          ? DAY_SECONDS - nowSeconds + endSeconds
+          : endSeconds - nowSeconds,
+      };
+    }
+  }
+
+  const sorted = [...slots].sort((a, b) => parseToSeconds(a.start) - parseToSeconds(b.start));
+  const nextSlot = sorted.find(slot => parseToSeconds(slot.start) > nowSeconds) ?? sorted[0];
+  if (!nextSlot) return {isActive: false, secondsRemaining: -1};
+
+  const nextStartSeconds = parseToSeconds(nextSlot.start);
+  return {
+    isActive: false,
+    secondsRemaining: nextStartSeconds > nowSeconds
+      ? nextStartSeconds - nowSeconds
+      : DAY_SECONDS - nowSeconds + nextStartSeconds,
+  };
+};
+
+const formatPreviewTimer = (secondsRemaining: number): string => {
+  if (secondsRemaining < 0) return '--:--';
+  const hours = Math.floor(secondsRemaining / 3600);
+  const minutes = Math.floor((secondsRemaining % 3600) / 60);
+  const seconds = Math.floor(secondsRemaining % 60);
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
+const getPreviewEvents = (now: Date): PreviewEvent[] => {
+  const nowSeconds = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
+  const events = (localEvents as GameEvent[])
+    .map(event => {
+      const slots = parseEventSlots(event.times);
+      const status = getStatusForSlots(slots, nowSeconds);
+      const visual = EVENT_VISUALS[event.name] ?? {icon: 'clock-outline', color: colors.cyan};
+
+      return {
+        id: `${event.id}-${event.name}-${event.map}`,
+        name: event.name,
+        map: EVENT_MAP_NAMES[event.map] ?? event.map,
+        icon: visual.icon,
+        color: visual.color,
+        time: formatPreviewTimer(status.secondsRemaining),
+        status: status.isActive ? 'ACTIVE' as const : 'STARTS' as const,
+        secondsRemaining: status.secondsRemaining,
+      };
+    })
+    .filter(event => event.secondsRemaining >= 0);
+
+  const active = events
+    .filter(event => event.status === 'ACTIVE')
+    .sort((a, b) => a.secondsRemaining - b.secondsRemaining);
+  const upcoming = events
+    .filter(event => event.status === 'STARTS')
+    .sort((a, b) => a.secondsRemaining - b.secondsRemaining);
+
+  return [...active, ...upcoming].slice(0, 4);
+};
+
 /* ── Mini-mockup item data (real assets from the app) ── */
 const MATERIAL_ITEMS = [
-  {name: 'Arc Circuitry', icon: require('../assets/game/icons/arc-circuitry.webp'), rarity: '#42A5F5', gradient: ['#081006', '#142010'] as [string, string]},
-  {name: 'Arc Powercell', icon: require('../assets/game/icons/arc-powercell.webp'), rarity: '#AB47BC', gradient: ['#081006', '#142010'] as [string, string]},
-  {name: 'Duct Tape', icon: require('../assets/game/icons/duct-tape.webp'), rarity: '#B0BEC5', gradient: ['#081006', '#142010'] as [string, string]},
-  {name: 'Explosives', icon: require('../assets/game/icons/crude-explosives.webp'), rarity: '#66BB6A', gradient: ['#081006', '#142010'] as [string, string]},
-  {name: 'Rubber Parts', icon: require('../assets/game/icons/rubber-parts-recipe.webp'), rarity: '#B0BEC5', gradient: ['#080E16', '#0D1624'] as [string, string]},
-  {name: 'Arc Alloy', icon: require('../assets/game/icons/arc-alloy.webp'), rarity: '#FFA000', gradient: ['#081006', '#142010'] as [string, string]},
+  {name: 'ARC Circuitry', icon: require('../assets/game/icons/arc-circuitry.webp'), rarity: RARITY_COLORS.Rare},
+  {name: 'ARC Powercell', icon: require('../assets/game/icons/arc-powercell.webp'), rarity: RARITY_COLORS.Common},
+  {name: 'Duct Tape', icon: require('../assets/game/icons/duct-tape.webp'), rarity: RARITY_COLORS.Uncommon},
+  {name: 'Crude Explosives', icon: require('../assets/game/icons/crude-explosives.webp'), rarity: RARITY_COLORS.Uncommon},
+  {name: 'Rubber Parts', icon: require('../assets/game/icons/rubber-parts-recipe.webp'), rarity: RARITY_COLORS.Common},
+  {name: 'ARC Alloy', icon: require('../assets/game/icons/arc-alloy.webp'), rarity: RARITY_COLORS.Uncommon},
 ];
 
 const THREAT_ARCS = [
@@ -44,12 +195,12 @@ const THREAT_ARCS = [
 ];
 
 const GEAR_ITEMS = [
-  {name: 'Vulcano', icon: require('../assets/game/icons/vulcano.webp'), rarity: '#FFA000', type: 'Weapon', gradient: ['#0D0818', '#1C1232'] as [string, string]},
-  {name: 'Tempest', icon: require('../assets/game/icons/tempest-i.webp'), rarity: '#AB47BC', type: 'Weapon', gradient: ['#0D0818', '#1C1232'] as [string, string]},
-  {name: 'Defibrillator', icon: require('../assets/game/icons/defibrillator.webp'), rarity: '#42A5F5', type: 'Medical', gradient: ['#100F06', '#201E0E'] as [string, string]},
-  {name: 'Vita Spray', icon: require('../assets/game/icons/vita-spray.webp'), rarity: '#66BB6A', type: 'Medical', gradient: ['#100F06', '#201E0E'] as [string, string]},
-  {name: 'Smoke Grenade', icon: require('../assets/game/icons/smoke-grenade.webp'), rarity: '#42A5F5', type: 'Gadget', gradient: ['#060C14', '#101C2C'] as [string, string]},
-  {name: 'Heavy Shield', icon: require('../assets/game/icons/heavy-shield.webp'), rarity: '#AB47BC', type: 'Shield', gradient: ['#060C14', '#101C2C'] as [string, string]},
+  {name: 'Vulcano I', icon: require('../assets/game/icons/vulcano-i.webp'), rarity: RARITY_COLORS.Epic, type: 'Weapon'},
+  {name: 'Tempest I', icon: require('../assets/game/icons/tempest-i.webp'), rarity: RARITY_COLORS.Epic, type: 'Weapon'},
+  {name: 'Defibrillator', icon: require('../assets/game/icons/defibrillator.webp'), rarity: RARITY_COLORS.Rare, type: 'Medical'},
+  {name: 'Vita Spray', icon: require('../assets/game/icons/vita-spray.webp'), rarity: RARITY_COLORS.Epic, type: 'Medical'},
+  {name: 'Smoke Grenade', icon: require('../assets/game/icons/smoke-grenade.webp'), rarity: RARITY_COLORS.Rare, type: 'Gadget'},
+  {name: 'Heavy Shield', icon: require('../assets/game/icons/heavy-shield.webp'), rarity: RARITY_COLORS.Epic, type: 'Shield'},
 ];
 
 const TRADERS = [
@@ -60,20 +211,19 @@ const TRADERS = [
   {name: 'Apollo', title: 'Smuggler', color: '#FF7043', portrait: require('../assets/traders/apollo.webp'), icon: 'account-cowboy-hat'},
 ];
 
-const EVENT_TIMERS = [
-  {name: 'Meteor Shower', map: 'Blue Gate', icon: 'meteor', color: '#FF6B2C', time: '02:45:00', status: 'ACTIVE'},
-  {name: 'Supply Drop', map: 'Spaceport', icon: 'parachute', color: '#4ADE80', time: '01:15:30', status: 'UPCOMING'},
-  {name: 'Arc Storm', map: 'Dam', icon: 'weather-lightning', color: '#A855F7', time: '00:32:10', status: 'ACTIVE'},
-  {name: 'Convoy Raid', map: 'Stella Montis', icon: 'truck-fast', color: '#FFD600', time: '03:10:45', status: 'UPCOMING'},
-];
-
 /* ── Map marker pin data ── */
 const MAP_MARKERS = [
-  {x: 0.25, y: 0.3, color: '#00E5FF', icon: 'treasure-chest'},
-  {x: 0.6, y: 0.2, color: '#FF4444', icon: 'skull-crossbones'},
-  {x: 0.45, y: 0.55, color: '#4ADE80', icon: 'arrow-up-bold-circle'},
-  {x: 0.75, y: 0.45, color: '#FFD600', icon: 'key-variant'},
-  {x: 0.35, y: 0.7, color: '#A855F7', icon: 'flash'},
+  {x: 0.24, y: 0.32, color: '#42A5F5', icon: 'briefcase-variant'},
+  {x: 0.58, y: 0.24, color: '#FF6B2C', icon: 'elevator'},
+  {x: 0.44, y: 0.56, color: '#4ADE80', icon: 'home-outline'},
+  {x: 0.72, y: 0.44, color: '#FFD600', icon: 'campfire'},
+  {x: 0.34, y: 0.72, color: '#A855F7', icon: 'warehouse'},
+];
+
+const MAP_LEGEND_ITEMS = [
+  {label: 'Weapon Case', color: '#42A5F5'},
+  {label: 'Field Depot', color: '#A855F7'},
+  {label: 'Raider Hatch', color: '#4ADE80'},
 ];
 
 /* ═══════════════ PREVIEW COMPONENTS ═══════════════ */
@@ -101,18 +251,12 @@ const MapPreview = () => {
       </View>
     ))}
     <View style={mockStyles.mapLegend}>
-      <View style={mockStyles.mapLegendRow}>
-        <View style={[mockStyles.mapLegendDot, {backgroundColor: '#00E5FF'}]} />
-        <Text style={mockStyles.mapLegendText}>{t('onboarding.preview.loot')}</Text>
-      </View>
-      <View style={mockStyles.mapLegendRow}>
-        <View style={[mockStyles.mapLegendDot, {backgroundColor: '#4ADE80'}]} />
-        <Text style={mockStyles.mapLegendText}>{t('onboarding.preview.extract')}</Text>
-      </View>
-      <View style={mockStyles.mapLegendRow}>
-        <View style={[mockStyles.mapLegendDot, {backgroundColor: '#FF4444'}]} />
-        <Text style={mockStyles.mapLegendText}>{t('onboarding.preview.threat')}</Text>
-      </View>
+      {MAP_LEGEND_ITEMS.map(item => (
+        <View key={item.label} style={mockStyles.mapLegendRow}>
+          <View style={[mockStyles.mapLegendDot, {backgroundColor: item.color}]} />
+          <Text style={mockStyles.mapLegendText}>{item.label}</Text>
+        </View>
+      ))}
     </View>
     <View style={mockStyles.mapNameBadge}>
       <Text style={mockStyles.mapNameText}>{t('onboarding.preview.blueGate')}</Text>
@@ -139,9 +283,10 @@ const MaterialsPreview = () => {
       </View>
       <View style={mockStyles.gridContainer}>
         {MATERIAL_ITEMS.map((item, i) => (
-          <View key={i} style={[mockStyles.matCard, {width: cardW, height: cardH}]}>
-            <LinearGradient colors={item.gradient} start={{x: 0, y: 0}} end={{x: 0.5, y: 1}} style={StyleSheet.absoluteFill} />
-            <View style={[mockStyles.iconWrap, {width: iconSz, height: iconSz}]}>
+          <View key={i} style={[mockStyles.matCard, {width: cardW, height: cardH, borderColor: withAlpha(item.rarity, '44'), shadowColor: item.rarity}]}> 
+            <LinearGradient colors={getRarityGradient(item.rarity)} start={{x: 0, y: 0}} end={{x: 0.65, y: 1}} style={StyleSheet.absoluteFill} />
+            <View style={[mockStyles.itemCardBloom, {backgroundColor: withAlpha(item.rarity, '1E')}]} />
+            <View style={[mockStyles.iconWrap, {width: iconSz, height: iconSz, backgroundColor: withAlpha(item.rarity, '14'), borderColor: withAlpha(item.rarity, '28')}]}>
               <Image source={item.icon} style={{width: iconSz, height: iconSz}} resizeMode="contain" />
             </View>
             <Text style={mockStyles.cardLabel} numberOfLines={1}>{item.name}</Text>
@@ -246,23 +391,31 @@ const TradersPreview = () => {
 /* 5. EVENTS — live timer cards (EventTimerScreen style) */
 const EventsPreview = () => {
   const {t} = useTranslation();
+  const [nowMs, setNowMs] = useState(() => Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNowMs(Date.now()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const previewEvents = getPreviewEvents(new Date(nowMs));
+
   return (
   <View style={mockStyles.gridWrap}>
     <View style={mockStyles.miniHeader}>
-      <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(168,85,247,0.12)'}]}>
-        <Icon name="clock-outline" size={10} color="#A855F7" />
+      <View style={[mockStyles.miniHeaderIconWrap, {backgroundColor: 'rgba(167,109,255,0.14)', borderColor: 'rgba(167,109,255,0.28)'}]}>
+        <Icon name="clock-outline" size={10} color="#A76DFF" />
       </View>
       <Text style={mockStyles.miniHeaderTitle}>{t('onboarding.preview.liveEvents')}</Text>
     </View>
     <View style={{gap: 5, flex: 1}}>
-      {EVENT_TIMERS.map((evt, i) => (
-        <View key={i} style={mockStyles.eventCard}>
-          <LinearGradient
-            colors={[evt.color + '12', 'transparent']}
-            start={{x: 0, y: 0}} end={{x: 1, y: 0}}
-            style={StyleSheet.absoluteFill}
-          />
-          <View style={[mockStyles.eventIconWrap, {backgroundColor: evt.color + '22'}]}>
+      {previewEvents.map(evt => {
+        const statusColor = evt.status === 'ACTIVE' ? '#36E37E' : '#FFC600';
+        return (
+        <View key={evt.id} style={[mockStyles.eventCard, {borderColor: withAlpha(evt.color, '38'), shadowColor: evt.color}]}> 
+          <View style={[StyleSheet.absoluteFill, {backgroundColor: withAlpha(evt.color, '12')}]} />
+          <View style={[mockStyles.eventLightStrip, {backgroundColor: evt.color, shadowColor: evt.color}]} />
+          <View style={[mockStyles.eventIconWrap, {backgroundColor: withAlpha(evt.color, '20'), borderColor: withAlpha(evt.color, '36'), shadowColor: evt.color}]}>
             <Icon name={evt.icon} size={14} color={evt.color} />
           </View>
           <View style={{flex: 1}}>
@@ -270,14 +423,15 @@ const EventsPreview = () => {
             <Text style={mockStyles.eventMap}>{evt.map}</Text>
           </View>
           <View style={{alignItems: 'flex-end'}}>
-            <View style={[mockStyles.eventStatusBadge, {backgroundColor: evt.status === 'ACTIVE' ? '#4ADE8022' : '#FFD60022'}]}>
-              <View style={{width: 4, height: 4, borderRadius: 2, backgroundColor: evt.status === 'ACTIVE' ? '#4ADE80' : '#FFD600'}} />
-              <Text style={[mockStyles.eventStatusText, {color: evt.status === 'ACTIVE' ? '#4ADE80' : '#FFD600'}]}>{evt.status}</Text>
+            <View style={[mockStyles.eventStatusBadge, {backgroundColor: withAlpha(statusColor, '22'), borderColor: withAlpha(statusColor, '36')}]}>
+              <View style={[mockStyles.eventStatusDot, {backgroundColor: statusColor, shadowColor: statusColor}]} />
+              <Text style={[mockStyles.eventStatusText, {color: statusColor}]}>{evt.status}</Text>
             </View>
             <Text style={[mockStyles.eventTimer, {color: evt.color}]}>{evt.time}</Text>
           </View>
         </View>
-      ))}
+        );
+      })}
     </View>
   </View>
   );
@@ -483,9 +637,9 @@ const GearPreview = () => {
       </View>
       <View style={{gap: 4, flex: 1}}>
         {GEAR_ITEMS.map((item, i) => (
-          <View key={i} style={[mockStyles.gearRow, {height: cardH}]}>
-            <LinearGradient colors={item.gradient} start={{x: 0, y: 0}} end={{x: 1, y: 0.5}} style={StyleSheet.absoluteFill} />
-            <View style={{width: iconSz, height: iconSz, alignItems: 'center', justifyContent: 'center'}}>
+          <View key={i} style={[mockStyles.gearRow, {height: cardH, borderColor: withAlpha(item.rarity, '42'), shadowColor: item.rarity}]}> 
+            <View style={[StyleSheet.absoluteFill, {backgroundColor: withAlpha(item.rarity, '12')}]} />
+            <View style={[mockStyles.gearIconWrap, {width: iconSz + 8, height: iconSz + 8, borderRadius: (iconSz + 8) / 2, backgroundColor: withAlpha(item.rarity, '16'), borderColor: withAlpha(item.rarity, '28')}]}>
               <Image source={item.icon} style={{width: iconSz, height: iconSz}} resizeMode="contain" />
             </View>
             <View style={{flex: 1, marginLeft: 8}}>
@@ -525,19 +679,25 @@ const mockStyles = StyleSheet.create({
   /* Shared grid */
   gridWrap: {flex: 1, padding: 10, paddingTop: 8},
   miniHeader: {flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 2, paddingBottom: 8},
-  miniHeaderIconWrap: {width: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center'},
+  miniHeaderIconWrap: {width: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)'},
   miniHeaderTitle: {fontSize: 11, fontWeight: '700', color: colors.textPrimary},
   gridContainer: {flexDirection: 'row', flexWrap: 'wrap', gap: 4, flex: 1},
 
   /* Shared card elements */
-  iconWrap: {alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm},
+  iconWrap: {alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm, borderRadius: 999, borderWidth: 1},
   cardLabel: {fontSize: 9, fontWeight: '700', color: colors.textPrimary, textAlign: 'center', paddingHorizontal: 4, marginBottom: 4},
-  rarityBar: {height: 3, borderRadius: 1.5, shadowOffset: {width: 0, height: 0}, shadowOpacity: 1, shadowRadius: 6, elevation: 6},
+  rarityBar: {height: 3, borderRadius: 1.5, shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.85, shadowRadius: 9, elevation: 8},
+  itemCardBloom: {
+    position: 'absolute', top: -18, right: -18,
+    width: 58, height: 58, borderRadius: 29,
+    opacity: 0.85,
+  },
 
   /* Material card */
   matCard: {
     backgroundColor: '#0D1624', borderRadius: borderRadius.lg, borderWidth: 1, borderColor: 'rgba(255,255,255,0.07)',
     alignItems: 'center', justifyContent: 'center', paddingTop: spacing.sm, paddingBottom: 4, overflow: 'hidden',
+    shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.3, shadowRadius: 8, elevation: 4,
   },
 
   /* Threat featured card */
@@ -576,23 +736,36 @@ const mockStyles = StyleSheet.create({
   /* Event cards */
   eventCard: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: borderRadius.md,
+    backgroundColor: 'rgba(18,27,41,0.86)', borderRadius: borderRadius.md,
     paddingHorizontal: 10, paddingVertical: 8,
     borderWidth: 1, borderColor: 'rgba(255,255,255,0.05)', overflow: 'hidden',
+    shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.28, shadowRadius: 10, elevation: 4,
   },
-  eventIconWrap: {width: 28, height: 28, borderRadius: 8, alignItems: 'center', justifyContent: 'center'},
+  eventLightStrip: {
+    position: 'absolute', left: 0, top: 0, bottom: 0,
+    width: 3, opacity: 0.95,
+    shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.9, shadowRadius: 8, elevation: 8,
+  },
+  eventIconWrap: {
+    width: 28, height: 28, borderRadius: 8,
+    alignItems: 'center', justifyContent: 'center', borderWidth: 1,
+    shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.35, shadowRadius: 8, elevation: 5,
+  },
   eventName: {fontSize: 9, fontWeight: '700', color: colors.textPrimary},
-  eventMap: {fontSize: 7, color: 'rgba(255,255,255,0.45)', fontWeight: '500', marginTop: 1},
-  eventStatusBadge: {flexDirection: 'row', alignItems: 'center', gap: 3, borderRadius: 4, paddingHorizontal: 4, paddingVertical: 1.5, marginBottom: 2},
+  eventMap: {fontSize: 7, color: 'rgba(255,255,255,0.58)', fontWeight: '500', marginTop: 1},
+  eventStatusBadge: {flexDirection: 'row', alignItems: 'center', gap: 3, borderRadius: 4, paddingHorizontal: 4, paddingVertical: 1.5, marginBottom: 2, borderWidth: 1},
+  eventStatusDot: {width: 4, height: 4, borderRadius: 2, shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.95, shadowRadius: 4, elevation: 4},
   eventStatusText: {fontSize: 6, fontWeight: '800', letterSpacing: 0.5},
   eventTimer: {fontSize: 11, fontWeight: '800', fontVariant: ['tabular-nums']},
 
   /* Gear loadout rows */
   gearRow: {
     flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10,
-    backgroundColor: '#0D1624', borderRadius: borderRadius.md,
+    backgroundColor: 'rgba(19,29,45,0.88)', borderRadius: borderRadius.md,
     borderWidth: 1, borderColor: 'rgba(255,255,255,0.07)', overflow: 'hidden',
+    shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.24, shadowRadius: 8, elevation: 3,
   },
+  gearIconWrap: {alignItems: 'center', justifyContent: 'center', borderWidth: 1},
   gearName: {fontSize: 10, fontWeight: '700', color: colors.textPrimary},
   gearType: {fontSize: 7, fontWeight: '600', marginTop: 1},
   gearRarityDot: {width: 6, height: 6, borderRadius: 3, shadowOffset: {width: 0, height: 0}, shadowOpacity: 1, shadowRadius: 4, elevation: 4},
@@ -655,7 +828,7 @@ const SLIDES = [
     badge: 'LIVE',
     badgeColor: '#A855F7',
     title: 'EVENT\nTIMERS',
-    description: 'Real-time countdown timers for every in-game event. Never miss a supply drop or meteor shower.',
+    description: 'Real-time rotations for real ARC Raiders events, from storms and Harvesters to Night Raid windows.',
     image: require('../assets/maps/buriedcity.webp'),
     preview: EventsPreview,
     overlayColors: ['rgba(168,85,247,0.08)', 'transparent', 'rgba(168,85,247,0.04)'],

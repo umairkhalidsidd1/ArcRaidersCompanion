@@ -16,7 +16,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from '../utils/safeArea';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
 import {useFocusEffect} from '@react-navigation/native';
 import {colors} from '../theme/theme';
@@ -71,10 +70,6 @@ type GroupedEvent = {
 };
 
 /* ── Constants ────────────────────────────────────────────── */
-const REMOTE_URL = 'https://trendyapptemplates.com/um/ArcRaider/events.json';
-const CACHE_KEY = '@arcc_events_cache_v2';
-const CACHE_TS_KEY = '@arcc_events_cache_ts';
-const CACHE_TTL = 30 * 60 * 1000;
 const ORANGE = '#FF6B2C';
 const GREEN = '#4ADE80';
 const CYAN = '#22D3EE';
@@ -273,6 +268,7 @@ const EventTimerScreen = ({navigation}: any) => {
     Spaceport: t('events.spaceport'),
     'Blue Gate': t('events.blueGate'),
     'Stella Montis': t('events.stellaMontis'),
+    'Riven Tides': 'Riven Tides',
   };
 
   const translateSlotTime = (slotStr: string): string => {
@@ -361,43 +357,11 @@ const EventTimerScreen = ({navigation}: any) => {
   }, []);
 
   /* ── Fetch logic ─────────────────────────────────────── */
-  const fetchEvents = useCallback(async (options?: {silent?: boolean; force?: boolean}) => {
+  const fetchEvents = useCallback(async (options?: {silent?: boolean}) => {
     const silent = options?.silent ?? false;
-    const force = options?.force ?? false;
     if (!silent) setLoading(true);
     try {
-      // Check cache (skip if force-refreshing)
-      if (!force) {
-        try {
-          const [cachedRaw, cachedTs] = await Promise.all([
-            AsyncStorage.getItem(CACHE_KEY),
-            AsyncStorage.getItem(CACHE_TS_KEY),
-          ]);
-          if (cachedRaw && cachedTs) {
-            const ts = parseInt(cachedTs, 10);
-            const parsed = JSON.parse(cachedRaw);
-            if (Array.isArray(parsed) && parsed.length > 0) setEvents(parsed);
-            if (Date.now() - ts < CACHE_TTL) return;
-          }
-        } catch {}
-      }
-      // Fetch remote
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 8000);
-      try {
-        const res = await fetch(REMOTE_URL, {signal: controller.signal});
-        clearTimeout(timeout);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setEvents(data);
-            await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-            await AsyncStorage.setItem(CACHE_TS_KEY, String(Date.now()));
-          }
-        }
-      } catch {
-        clearTimeout(timeout);
-      }
+      setEvents(localEvents as GameEvent[]);
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -410,11 +374,8 @@ const EventTimerScreen = ({navigation}: any) => {
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
-    try {
-      await AsyncStorage.removeItem(CACHE_KEY);
-      await AsyncStorage.removeItem(CACHE_TS_KEY);
-    } catch {}
-    await fetchEvents({force: true});
+    setTick(t => t + 1);
+    await fetchEvents();
   }, [fetchEvents]);
 
   /* ── Computed ─────────────────────────────────────────── */

@@ -129,7 +129,7 @@ const ItemCard = React.memo(
         {/* Image */}
         <View style={cardStyles.imageWrap}>
           {showImage && item.icon ? (
-            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" fadeDuration={0} />
+            <Image source={resolveImage(item.icon)} style={cardStyles.itemImage} resizeMode="contain" />
           ) : (
             <ActivityIndicator size="small" color={colors.cyan} />
           )}

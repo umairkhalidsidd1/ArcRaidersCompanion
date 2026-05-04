@@ -41,7 +41,7 @@ const FastImageRenderer = ({tnode}: any) => {
 
   if (!src) return null;
   return (
-    <View style={{width: imgW, height: imgH, borderRadius: 10, overflow: 'hidden', marginVertical: 8, backgroundColor: colors.card}}>
+    <View style={{width: imgW, height: imgH, borderRadius: 10, overflow: 'hidden', marginVertical: 8, backgroundColor: colors.bgCard}}>
       <Image
         source={{uri: src, priority: Image.priority.high}}
         style={{width: imgW, height: imgH}}
@@ -187,7 +187,6 @@ const GuideDetailScreen = ({route, navigation}: any) => {
                   source={resolveImage(guide.thumbnail_url)}
                   style={styles.heroIcon}
                   resizeMode="contain"
-                  fadeDuration={0}
                 />
               </View>
             </View>
@@ -260,7 +259,6 @@ const GuideDetailScreen = ({route, navigation}: any) => {
                       source={resolveImage(r.item.icon)}
                       style={styles.rewardIcon}
                       resizeMode="contain"
-                      fadeDuration={0}
                     />
                   )}
                   <View style={styles.rewardInfo}>

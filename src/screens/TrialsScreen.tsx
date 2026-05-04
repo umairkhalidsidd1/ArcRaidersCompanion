@@ -55,13 +55,24 @@ const CATEGORY_CONFIG: Record<string, {icon: string; color: string}> = {
   Special: {icon: 'lightning-bolt', color: '#AB47BC'},
 };
 
+const TRIALS_RESET_DAY_UTC = 1;
+const TRIALS_RESET_HOUR_UTC = 7;
+
 const getResetTime = () => {
   const now = new Date();
-  const nextTuesday = new Date(now);
-  nextTuesday.setDate(now.getDate() + ((2 - now.getDay() + 7) % 7 || 7));
-  nextTuesday.setHours(17, 0, 0, 0);
-  if (nextTuesday <= now) nextTuesday.setDate(nextTuesday.getDate() + 7);
-  const diff = nextTuesday.getTime() - now.getTime();
+  const nextReset = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    TRIALS_RESET_HOUR_UTC,
+    0,
+    0,
+    0,
+  ));
+  const daysUntilReset = (TRIALS_RESET_DAY_UTC - now.getUTCDay() + 7) % 7;
+  nextReset.setUTCDate(now.getUTCDate() + daysUntilReset);
+  if (nextReset <= now) nextReset.setUTCDate(nextReset.getUTCDate() + 7);
+  const diff = nextReset.getTime() - now.getTime();
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));

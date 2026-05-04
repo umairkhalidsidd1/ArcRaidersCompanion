@@ -55,11 +55,11 @@ export type SavedEntry = {listName: string; detail?: string; quantity?: number; 
 /* ═══════════════ HELPERS ═══════════════ */
 export const getRarityColor = (rarity: string) => {
   switch ((rarity || '').toLowerCase()) {
-    case 'common':    return '#B0BEC5';
-    case 'uncommon':  return '#66BB6A';
-    case 'rare':      return '#42A5F5';
-    case 'epic':      return '#AB47BC';
-    case 'legendary': return '#FFA000';
+    case 'common':    return '#6C6C6C';
+    case 'uncommon':  return '#26BF57';
+    case 'rare':      return '#00A8F2';
+    case 'epic':      return '#CC3099';
+    case 'legendary': return '#FFC600';
     default:          return colors.textSecondary;
   }
 };
@@ -104,11 +104,11 @@ export const CATEGORY_FILTERS = [
 ];
 
 export const RARITY_FILTERS = [
-  {key: 'common',    label: 'Common',    icon: 'circle',  color: '#B0BEC5'},
-  {key: 'uncommon',  label: 'Uncommon',  icon: 'circle',  color: '#66BB6A'},
-  {key: 'rare',      label: 'Rare',      icon: 'circle',  color: '#42A5F5'},
-  {key: 'epic',      label: 'Epic',      icon: 'circle',  color: '#AB47BC'},
-  {key: 'legendary', label: 'Legendary', icon: 'circle',  color: '#FFA000'},
+  {key: 'common',    label: 'Common',    icon: 'circle',  color: '#6C6C6C'},
+  {key: 'uncommon',  label: 'Uncommon',  icon: 'circle',  color: '#26BF57'},
+  {key: 'rare',      label: 'Rare',      icon: 'circle',  color: '#00A8F2'},
+  {key: 'epic',      label: 'Epic',      icon: 'circle',  color: '#CC3099'},
+  {key: 'legendary', label: 'Legendary', icon: 'circle',  color: '#FFC600'},
 ];
 
 export const MATERIAL_LISTS = [

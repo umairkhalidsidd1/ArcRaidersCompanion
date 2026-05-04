@@ -22,6 +22,7 @@ import Animated, {
   withDecay,
   clamp,
 } from 'react-native-reanimated';
+import {colors} from '../theme/theme';
 
 const SKILL_STORAGE_KEY = '@arcc_skilltree_v6';
 const {width: SW, height: SH} = Dimensions.get('window');
@@ -348,9 +349,8 @@ const SkillTreeScreen = ({navigation}: any) => {
         const bc = BC[node.branch];
         const r = node.pos === 0 ? ROOT_R : NODE_R;
         
-        let can = false, isAvailable = false;
+        let isAvailable = false;
         if (node.pos !== 0) {
-          can = canAllocate(node);
           const parentNodes = HELIX[node.pos].parents.map(p => NODES.find(n => n.branch === node.branch && n.pos === p)!);
           const parentUnlocked = parentNodes.some(p => p.pos === 0 || isUnlocked(p.id));
           const meetsReq = !node.reqPts || branchPts(node.branch) >= node.reqPts;

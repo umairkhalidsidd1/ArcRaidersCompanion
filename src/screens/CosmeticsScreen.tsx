@@ -197,7 +197,6 @@ const CarouselCard = React.memo(
               source={resolveImage(item.icon)}
               style={styles.carouselImage}
               resizeMode="contain"
-              fadeDuration={0}
             />
           ) : (
             <Icon
@@ -521,7 +520,6 @@ const CosmeticsScreen = ({navigation}: any) => {
                                 source={resolveImage(item.icon)}
                                 style={styles.relatedImage}
                                 resizeMode="contain"
-                                fadeDuration={0}
                               />
                             ) : (
                               <Icon name={ic.icon} size={24} color={ic.color} />

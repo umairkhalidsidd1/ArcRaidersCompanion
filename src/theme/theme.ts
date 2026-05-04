@@ -36,11 +36,11 @@ export const colors = {
   overlayLight: 'rgba(0, 0, 0, 0.4)',
 
   // Rarity
-  rarityCommon: '#B0B0B0',
-  rarityUncommon: '#4CAF50',
-  rarityRare: '#2196F3',
-  rarityEpic: '#A855F7',
-  rarityLegendary: '#FF9800',
+  rarityCommon: '#6C6C6C',
+  rarityUncommon: '#26BF57',
+  rarityRare: '#00A8F2',
+  rarityEpic: '#CC3099',
+  rarityLegendary: '#FFC600',
 
   // Category colors
   catWeapons: '#FF6B2C',

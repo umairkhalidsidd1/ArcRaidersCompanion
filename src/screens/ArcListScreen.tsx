@@ -162,7 +162,6 @@ const ArcListScreen = ({navigation}: any) => {
                     source={resolveImage(item.icon)}
                     style={styles.arcIcon}
                     resizeMode="contain"
-                    fadeDuration={0}
                   />
                 ) : (
                   <Icon name="robot" size={32} color={colors.textMuted} />

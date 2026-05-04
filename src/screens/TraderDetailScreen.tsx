@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Image from 'react-native-fast-image';
+import type {Source} from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from '../utils/safeArea';
@@ -173,7 +174,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
         {/* Hero banner with overlaid name */}
         {info.portrait ? (
           <View style={s.heroBannerWrap}>
-            <Image source={info.portrait} style={s.heroBanner} resizeMode="cover" />
+            <Image source={info.portrait as Source | number} style={s.heroBanner} resizeMode="cover" />
             <LinearGradient
               colors={[colors.bg, 'rgba(10,14,23,0.6)', 'transparent']}
               locations={[0, 0.25, 0.5]}

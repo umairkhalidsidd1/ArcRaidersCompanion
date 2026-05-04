@@ -19,7 +19,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useOnboarding} from '../../App';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import { useTranslation } from 'react-i18next';
-import {requestAppReview} from '../utils/review';
 import {
   areNotificationsEnabled,
   setNotificationsEnabled,
@@ -29,8 +28,10 @@ import {usePremium} from '../context/PremiumContext';
 import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 
 const APP_NAME = 'Arc Raiders Companion';
-const APP_VERSION = Platform.OS === 'ios' ? '1.0.2' : '1.0.1';
+const APP_VERSION = Platform.OS === 'ios' ? '1.0.3' : '1.0.2';
 const APP_YEAR = 2026;
+const APP_STORE_ID = '6761329723';
+const ANDROID_APPLICATION_ID = 'com.ArcRaidersCompanion';
 
 /* ── Supported languages ── */
 const LANGUAGES: {code: string; label: string; native: string}[] = [
@@ -51,6 +52,46 @@ const LANGUAGES: {code: string; label: string; native: string}[] = [
 
 function getLanguageLabel(code: string): string {
   return LANGUAGES.find(l => l.code === code)?.native ?? 'English';
+}
+
+function getStoreShareUrl(): string {
+  return Platform.select({
+    ios: `https://apps.apple.com/app/id${APP_STORE_ID}`,
+    android: `https://play.google.com/store/apps/details?id=${ANDROID_APPLICATION_ID}`,
+    default: `https://play.google.com/store/apps/details?id=${ANDROID_APPLICATION_ID}`,
+  });
+}
+
+function getRateUrlCandidates(): string[] {
+  if (Platform.OS === 'ios') {
+    return [
+      `itms-apps://itunes.apple.com/app/id${APP_STORE_ID}?action=write-review`,
+      `https://apps.apple.com/app/id${APP_STORE_ID}?action=write-review`,
+      `https://apps.apple.com/app/id${APP_STORE_ID}`,
+    ];
+  }
+
+  if (Platform.OS === 'android') {
+    return [
+      `market://details?id=${ANDROID_APPLICATION_ID}`,
+      `https://play.google.com/store/apps/details?id=${ANDROID_APPLICATION_ID}`,
+    ];
+  }
+
+  return [getStoreShareUrl()];
+}
+
+async function openFirstSupportedUrl(urls: string[]): Promise<boolean> {
+  for (const url of urls) {
+    try {
+      await Linking.openURL(url);
+      return true;
+    } catch {
+      // Try next candidate URL.
+    }
+  }
+
+  return false;
 }
 
 /* ── Row item types ── */
@@ -139,24 +180,24 @@ const SettingsScreen = ({navigation}: any) => {
   };
 
   const handleRate = async () => {
-    // Try native in-app review first (force=true for explicit user action)
-    const shown = await requestAppReview(true);
-    // If native review wasn't shown (e.g., iOS limit reached), open store directly
-    if (!shown) {
-      const url = Platform.select({
-        ios: 'https://apps.apple.com/app/id6761329723?action=write-review',
-        android: 'https://play.google.com/store/apps/details?id=com.ArcRaidersCompanion',
-      });
-      if (url) Linking.openURL(url).catch(() => {});
+    const opened = await openFirstSupportedUrl(getRateUrlCandidates());
+    if (!opened) {
+      Alert.alert(t('common.error'), 'Unable to open the app store right now. Please try again later.');
     }
   };
 
   const handleShare = async () => {
     try {
+      const storeUrl = getStoreShareUrl();
+      const shareMessage = String(t('settings.shareMessage', {appName: APP_NAME}));
       await Share.share({
-        message: t('settings.shareMessage', {appName: APP_NAME}),
+        title: APP_NAME,
+        message: `${shareMessage}\n\n${storeUrl}`,
+        url: storeUrl,
       });
-    } catch {}
+    } catch {
+      Alert.alert(t('common.error'), 'Unable to open the share menu right now. Please try again.');
+    }
   };
 
   const handleContact = () => {

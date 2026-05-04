@@ -1,371 +1,317 @@
 [
   {
     "id": 1,
-    "name": "Bird City",
-    "map": "Buried City",
-    "icon": "custom/birdcity.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 2,
-    "name": "Cold Snap",
-    "map": "Buried City",
-    "icon": "custom/coldsnap.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 3,
-    "name": "Cold Snap",
-    "map": "Dam",
-    "icon": "custom/coldsnap.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}]"
-  },
-  {
-    "id": 4,
-    "name": "Cold Snap",
-    "map": "Spaceport",
-    "icon": "custom/coldsnap.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}]"
-  },
-  {
-    "id": 5,
-    "name": "Electromagnetic Storm",
-    "map": "Blue Gate",
-    "icon": "custom/electrical.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}]"
-  },
-  {
-    "id": 6,
-    "name": "Electromagnetic Storm",
-    "map": "Dam",
-    "icon": "custom/electrical.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 7,
-    "name": "Electromagnetic Storm",
-    "map": "Spaceport",
-    "icon": "custom/electrical.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}]"
-  },
-  {
-    "id": 8,
-    "name": "Harvester",
-    "map": "Blue Gate",
-    "icon": "custom/harvester.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 9,
-    "name": "Harvester",
-    "map": "Dam",
-    "icon": "custom/harvester.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 10,
-    "name": "Harvester",
-    "map": "Spaceport",
-    "icon": "custom/harvester.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 11,
-    "name": "Hurricane",
-    "map": "Blue Gate",
-    "icon": "custom/hurricane.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 12,
-    "name": "Hurricane",
-    "map": "Buried City",
-    "icon": "custom/hurricane.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 13,
-    "name": "Hurricane",
-    "map": "Dam",
-    "icon": "custom/hurricane.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 14,
-    "name": "Hurricane",
-    "map": "Spaceport",
-    "icon": "custom/hurricane.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 15,
-    "name": "Husk Graveyard",
-    "map": "Blue Gate",
-    "icon": "custom/husk-graveyard.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 16,
-    "name": "Husk Graveyard",
-    "map": "Buried City",
-    "icon": "custom/husk-graveyard.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 17,
-    "name": "Husk Graveyard",
-    "map": "Dam",
-    "icon": "custom/husk-graveyard.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 18,
-    "name": "Husk Graveyard",
-    "map": "Spaceport",
-    "icon": "custom/husk-graveyard.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 19,
     "name": "Launch Tower Loot",
     "map": "Spaceport",
     "icon": "custom/launchtowerloot.webp",
     "description": "",
     "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
+    "times": "[{\"start\":\"01:00\",\"end\":\"02:00\"},{\"start\":\"18:00\",\"end\":\"19:00\"}]"
   },
   {
-    "id": 20,
-    "name": "Locked Gate",
-    "map": "Blue Gate",
-    "icon": "custom/lockedgate.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 21,
-    "name": "Lush Blooms",
-    "map": "Blue Gate",
-    "icon": "custom/lush.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 22,
-    "name": "Lush Blooms",
-    "map": "Buried City",
-    "icon": "custom/lush.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 23,
-    "name": "Lush Blooms",
-    "map": "Dam",
-    "icon": "custom/lush.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 24,
-    "name": "Lush Blooms",
-    "map": "Spaceport",
-    "icon": "custom/lush.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 25,
-    "name": "Matriarch",
-    "map": "Blue Gate",
-    "icon": "custom/matriarch.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 26,
-    "name": "Matriarch",
-    "map": "Dam",
-    "icon": "custom/matriarch.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 27,
-    "name": "Matriarch",
-    "map": "Spaceport",
-    "icon": "custom/matriarch.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 28,
-    "name": "Night Raid",
-    "map": "Blue Gate",
-    "icon": "custom/night.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 29,
-    "name": "Night Raid",
-    "map": "Buried City",
-    "icon": "custom/night.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}]"
-  },
-  {
-    "id": 30,
-    "name": "Night Raid",
-    "map": "Dam",
-    "icon": "custom/night.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 31,
-    "name": "Night Raid",
-    "map": "Spaceport",
-    "icon": "custom/night.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}]"
-  },
-  {
-    "id": 32,
-    "name": "Night Raid",
-    "map": "Stella Montis",
-    "icon": "custom/night.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 33,
-    "name": "Prospecting Probes",
-    "map": "Blue Gate",
-    "icon": "custom/probe.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 34,
-    "name": "Prospecting Probes",
-    "map": "Buried City",
-    "icon": "custom/probe.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 35,
-    "name": "Prospecting Probes",
-    "map": "Dam",
-    "icon": "custom/probe.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 36,
-    "name": "Prospecting Probes",
-    "map": "Spaceport",
-    "icon": "custom/probe.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 37,
-    "name": "Uncovered Caches",
-    "map": "Blue Gate",
-    "icon": "custom/cache.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 38,
-    "name": "Uncovered Caches",
-    "map": "Buried City",
-    "icon": "custom/cache.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}]"
-  },
-  {
-    "id": 39,
-    "name": "Uncovered Caches",
-    "map": "Dam",
-    "icon": "custom/cache.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"04:00\", \"end\": \"05:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"09:00\", \"end\": \"10:00\"}, {\"start\": \"10:00\", \"end\": \"11:00\"}, {\"start\": \"11:00\", \"end\": \"12:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}, {\"start\": \"17:00\", \"end\": \"18:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"19:00\", \"end\": \"20:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"21:00\", \"end\": \"22:00\"}, {\"start\": \"22:00\", \"end\": \"23:00\"}]"
-  },
-  {
-    "id": 40,
-    "name": "Uncovered Caches",
-    "map": "Spaceport",
-    "icon": "custom/cache.webp",
-    "description": "",
-    "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"01:00\", \"end\": \"02:00\"}, {\"start\": \"02:00\", \"end\": \"03:00\"}, {\"start\": \"03:00\", \"end\": \"04:00\"}, {\"start\": \"05:00\", \"end\": \"06:00\"}, {\"start\": \"06:00\", \"end\": \"07:00\"}, {\"start\": \"07:00\", \"end\": \"08:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"12:00\", \"end\": \"13:00\"}, {\"start\": \"13:00\", \"end\": \"14:00\"}, {\"start\": \"14:00\", \"end\": \"15:00\"}, {\"start\": \"15:00\", \"end\": \"16:00\"}, {\"start\": \"18:00\", \"end\": \"19:00\"}, {\"start\": \"20:00\", \"end\": \"21:00\"}, {\"start\": \"23:00\", \"end\": \"00:00\"}]"
-  },
-  {
-    "id": 41,
+    "id": 2,
     "name": "Hidden Bunker",
     "map": "Spaceport",
     "icon": "custom/hiddenbunker.webp",
     "description": "",
     "days": "[]",
-    "times": "[{\"start\": \"00:00\", \"end\": \"01:00\"}, {\"start\": \"08:00\", \"end\": \"09:00\"}, {\"start\": \"16:00\", \"end\": \"17:00\"}]"
+    "times": "[{\"start\":\"14:00\",\"end\":\"15:00\"}]"
+  },
+  {
+    "id": 3,
+    "name": "Matriarch",
+    "map": "Spaceport",
+    "icon": "custom/matriarch.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"04:00\",\"end\":\"05:00\"},{\"start\":\"16:00\",\"end\":\"17:00\"},{\"start\":\"21:00\",\"end\":\"22:00\"}]"
+  },
+  {
+    "id": 4,
+    "name": "Matriarch",
+    "map": "Dam",
+    "icon": "custom/matriarch.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"05:00\",\"end\":\"06:00\"},{\"start\":\"17:00\",\"end\":\"18:00\"},{\"start\":\"19:00\",\"end\":\"20:00\"}]"
+  },
+  {
+    "id": 5,
+    "name": "Matriarch",
+    "map": "Blue Gate",
+    "icon": "custom/matriarch.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"00:00\",\"end\":\"01:00\"},{\"start\":\"23:00\",\"end\":\"00:00\"}]"
+  },
+  {
+    "id": 6,
+    "name": "Harvester",
+    "map": "Blue Gate",
+    "icon": "custom/harvester.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"06:00\",\"end\":\"07:00\"},{\"start\":\"15:00\",\"end\":\"16:00\"}]"
+  },
+  {
+    "id": 7,
+    "name": "Harvester",
+    "map": "Dam",
+    "icon": "custom/harvester.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"11:00\",\"end\":\"12:00\"}]"
+  },
+  {
+    "id": 8,
+    "name": "Harvester",
+    "map": "Spaceport",
+    "icon": "custom/harvester.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"13:00\",\"end\":\"14:00\"}]"
+  },
+  {
+    "id": 9,
+    "name": "Prospecting Probes",
+    "map": "Buried City",
+    "icon": "custom/probe.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"07:00\",\"end\":\"08:00\"},{\"start\":\"22:00\",\"end\":\"23:00\"}]"
+  },
+  {
+    "id": 10,
+    "name": "Prospecting Probes",
+    "map": "Dam",
+    "icon": "custom/probe.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"08:00\",\"end\":\"09:00\"},{\"start\":\"22:00\",\"end\":\"23:00\"}]"
+  },
+  {
+    "id": 11,
+    "name": "Prospecting Probes",
+    "map": "Spaceport",
+    "icon": "custom/probe.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"07:00\",\"end\":\"08:00\"}]"
+  },
+  {
+    "id": 12,
+    "name": "Prospecting Probes",
+    "map": "Blue Gate",
+    "icon": "custom/probe.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"20:00\",\"end\":\"21:00\"}]"
+  },
+  {
+    "id": 13,
+    "name": "Night Raid",
+    "map": "Stella Montis",
+    "icon": "custom/night.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"03:00\",\"end\":\"04:00\"},{\"start\":\"07:00\",\"end\":\"08:00\"},{\"start\":\"11:00\",\"end\":\"12:00\"},{\"start\":\"15:00\",\"end\":\"16:00\"},{\"start\":\"18:00\",\"end\":\"19:00\"},{\"start\":\"22:00\",\"end\":\"23:00\"}]"
+  },
+  {
+    "id": 14,
+    "name": "Night Raid",
+    "map": "Riven Tides",
+    "icon": "custom/night.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"02:00\",\"end\":\"03:00\"},{\"start\":\"06:00\",\"end\":\"07:00\"},{\"start\":\"10:00\",\"end\":\"11:00\"},{\"start\":\"21:00\",\"end\":\"22:00\"}]"
+  },
+  {
+    "id": 15,
+    "name": "Night Raid",
+    "map": "Buried City",
+    "icon": "custom/night.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"03:00\",\"end\":\"04:00\"},{\"start\":\"18:00\",\"end\":\"19:00\"}]"
+  },
+  {
+    "id": 16,
+    "name": "Night Raid",
+    "map": "Blue Gate",
+    "icon": "custom/night.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"04:00\",\"end\":\"05:00\"}]"
+  },
+  {
+    "id": 17,
+    "name": "Night Raid",
+    "map": "Dam",
+    "icon": "custom/night.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"05:00\",\"end\":\"06:00\"}]"
+  },
+  {
+    "id": 18,
+    "name": "Night Raid",
+    "map": "Spaceport",
+    "icon": "custom/night.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"10:00\",\"end\":\"11:00\"}]"
+  },
+  {
+    "id": 19,
+    "name": "Electromagnetic Storm",
+    "map": "Spaceport",
+    "icon": "custom/electrical.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"06:00\",\"end\":\"07:00\"},{\"start\":\"21:00\",\"end\":\"22:00\"}]"
+  },
+  {
+    "id": 20,
+    "name": "Electromagnetic Storm",
+    "map": "Dam",
+    "icon": "custom/electrical.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"17:00\",\"end\":\"18:00\"}]"
+  },
+  {
+    "id": 21,
+    "name": "Electromagnetic Storm",
+    "map": "Blue Gate",
+    "icon": "custom/electrical.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"19:00\",\"end\":\"20:00\"}]"
+  },
+  {
+    "id": 22,
+    "name": "Locked Gate",
+    "map": "Blue Gate",
+    "icon": "custom/lockedgate.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"08:00\",\"end\":\"09:00\"},{\"start\":\"23:00\",\"end\":\"00:00\"}]"
+  },
+  {
+    "id": 23,
+    "name": "Close Scrutiny",
+    "map": "Dam",
+    "icon": "",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"09:00\",\"end\":\"10:00\"},{\"start\":\"20:00\",\"end\":\"21:00\"}]"
+  },
+  {
+    "id": 24,
+    "name": "Close Scrutiny",
+    "map": "Buried City",
+    "icon": "",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"11:00\",\"end\":\"12:00\"},{\"start\":\"22:00\",\"end\":\"23:00\"}]"
+  },
+  {
+    "id": 25,
+    "name": "Close Scrutiny",
+    "map": "Spaceport",
+    "icon": "",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"02:00\",\"end\":\"03:00\"}]"
+  },
+  {
+    "id": 26,
+    "name": "Close Scrutiny",
+    "map": "Blue Gate",
+    "icon": "",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"12:00\",\"end\":\"13:00\"}]"
+  },
+  {
+    "id": 27,
+    "name": "Hurricane",
+    "map": "Blue Gate",
+    "icon": "custom/hurricane.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"00:00\",\"end\":\"01:00\"}]"
+  },
+  {
+    "id": 28,
+    "name": "Hurricane",
+    "map": "Dam",
+    "icon": "custom/hurricane.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"01:00\",\"end\":\"02:00\"}]"
+  },
+  {
+    "id": 29,
+    "name": "Hurricane",
+    "map": "Buried City",
+    "icon": "custom/hurricane.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"07:00\",\"end\":\"08:00\"}]"
+  },
+  {
+    "id": 30,
+    "name": "Husk Graveyard",
+    "map": "Buried City",
+    "icon": "custom/husk-graveyard.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"02:00\",\"end\":\"03:00\"},{\"start\":\"14:00\",\"end\":\"15:00\"},{\"start\":\"19:00\",\"end\":\"20:00\"}]"
+  },
+  {
+    "id": 31,
+    "name": "Husk Graveyard",
+    "map": "Dam",
+    "icon": "custom/husk-graveyard.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"02:00\",\"end\":\"03:00\"},{\"start\":\"14:00\",\"end\":\"15:00\"}]"
+  },
+  {
+    "id": 32,
+    "name": "Husk Graveyard",
+    "map": "Blue Gate",
+    "icon": "custom/husk-graveyard.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"03:00\",\"end\":\"04:00\"},{\"start\":\"12:00\",\"end\":\"13:00\"}]"
+  },
+  {
+    "id": 33,
+    "name": "Husk Graveyard",
+    "map": "Spaceport",
+    "icon": "custom/husk-graveyard.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"10:00\",\"end\":\"11:00\"}]"
+  },
+  {
+    "id": 34,
+    "name": "Bird City",
+    "map": "Buried City",
+    "icon": "custom/birdcity.webp",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"05:00\",\"end\":\"06:00\"},{\"start\":\"11:00\",\"end\":\"12:00\"},{\"start\":\"17:00\",\"end\":\"18:00\"}]"
+  },
+  {
+    "id": 35,
+    "name": "Beachcombing",
+    "map": "Riven Tides",
+    "icon": "",
+    "description": "",
+    "days": "[]",
+    "times": "[{\"start\":\"01:00\",\"end\":\"02:00\"},{\"start\":\"03:00\",\"end\":\"04:00\"},{\"start\":\"05:00\",\"end\":\"06:00\"},{\"start\":\"20:00\",\"end\":\"21:00\"},{\"start\":\"22:00\",\"end\":\"23:00\"}]"
   }
 ]

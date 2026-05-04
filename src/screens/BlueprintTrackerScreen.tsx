@@ -181,7 +181,6 @@ const BlueprintCard = React.memo(
               source={resolveImage(item.icon)}
               style={cardStyles.itemImage}
               resizeMode="contain"
-              fadeDuration={0}
             />
           ) : (
             <Icon name="file-document-outline" size={28} color={colors.textMuted} />

@@ -24,7 +24,7 @@ class MainActivity : ReactActivity() {
    */
   override fun onCreate(savedInstanceState: Bundle?) {
     window.setFormat(PixelFormat.RGBA_8888)
-    super.onCreate(savedInstanceState)
+    super.onCreate(null)
   }
 
   /**

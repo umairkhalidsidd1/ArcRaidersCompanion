@@ -4,7 +4,6 @@ import {
   setAnalyticsCollectionEnabled,
 } from '@react-native-firebase/analytics';
 import {
-  crash,
   getCrashlytics,
   setCrashlyticsCollectionEnabled,
 } from '@react-native-firebase/crashlytics';
@@ -28,12 +27,4 @@ export async function logFirebaseScreenView(screenName: string) {
     screen_name: screenName,
     screen_class: screenName,
   });
-}
-
-export async function crashForCrashlyticsTest() {
-  try {
-    await setCrashlyticsCollectionEnabled(crashlyticsInstance, true);
-  } catch {}
-
-  crash(crashlyticsInstance);
 }
