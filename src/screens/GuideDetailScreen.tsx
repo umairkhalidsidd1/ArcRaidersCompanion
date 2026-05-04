@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {useTranslation} from 'react-i18next';
 import RenderHtml from 'react-native-render-html';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
@@ -158,7 +158,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <StatusBar barStyle="light-content" translucent backgroundColor={colors.bg} />
 
       {/* Floating back button */}
       <TouchableOpacity

@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from '../utils/safeArea';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../theme/theme';
-const CONTENT_BG = Platform.OS === 'android' ? colors.bg : 'transparent';
+import {logFirebaseScreenView} from '../utils/firebase';
+const CONTENT_BG = Platform.OS === 'ios' ? 'transparent' : colors.bg;
 
 import HomeScreen from '../screens/HomeScreen';
 import TrialsScreen from '../screens/TrialsScreen';
@@ -49,6 +50,19 @@ const TrialsStack = createNativeStackNavigator();
 const MaterialsStack = createNativeStackNavigator();
 const EnemiesStack = createNativeStackNavigator();
 const GuidesStack = createNativeStackNavigator();
+
+function useStableAndroidBottomInset() {
+  const {bottom} = useSafeAreaInsets();
+  const [stableBottomInset, setStableBottomInset] = React.useState(bottom);
+
+  React.useEffect(() => {
+    if (Platform.OS === 'android') {
+      setStableBottomInset(prev => Math.max(prev, bottom));
+    }
+  }, [bottom]);
+
+  return Platform.OS === 'android' ? stableBottomInset : bottom;
+}
 
 function BunkerStackScreen() {
   return (
@@ -130,11 +144,11 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
 
 /* ── Custom floating glass tab bar ── */
 function GlassTabBar({ state, descriptors, navigation }: any) {
-  const insets = useSafeAreaInsets();
+  const bottomInset = useStableAndroidBottomInset();
   const { t } = useTranslation();
   const bottomPad = Platform.OS === 'android'
-    ? Math.max(insets.bottom, 12)
-    : (insets.bottom > 0 ? insets.bottom - 8 : 4);
+    ? Math.max(bottomInset, 13)
+    : (bottomInset > 0 ? Math.max(bottomInset - 8, 6) : 6);
 
   const TAB_LABELS: Record<string, string> = {
     Bunker: t('tabs.bunker'),
@@ -145,7 +159,7 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
   };
 
   const TabBarWrapper = Platform.OS === 'android'
-    ? ({children, style}: any) => <View style={[style, {backgroundColor: 'rgba(8,12,22,0.96)'}]}>{children}</View>
+    ? ({children, style}: any) => <View style={[style, {backgroundColor: colors.bg}]}>{children}</View>
     : ({children, style}: any) => (
         <BlurView blurType="ultraThinMaterialDark" blurAmount={24}
           reducedTransparencyFallbackColor="rgba(17,24,39,0.85)" style={style}>
@@ -207,8 +221,8 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
 
 /* ── Tab Navigator ── */
 function TabNavigator() {
-  const insets = useSafeAreaInsets();
-  const tabSceneBottomInset = Platform.OS === 'android' ? Math.max(insets.bottom, 12) : 0;
+  const bottomInset = useStableAndroidBottomInset();
+  const tabSceneBottomInset = Platform.OS === 'android' ? Math.max(bottomInset, 8) : 0;
 
   return (
     <Tab.Navigator
@@ -229,13 +243,28 @@ function TabNavigator() {
 
 /* ── Root Navigator (MapDetail lives here — completely outside tabs) ── */
 const AppNavigator = () => {
-  const navBackground = Platform.OS === 'android' ? colors.bg : 'transparent';
-  const insets = useSafeAreaInsets();
-  const rootBottomInset = Platform.OS === 'android' ? Math.max(insets.bottom, 12) : 0;
+  const navBackground = Platform.OS === 'ios' ? 'transparent' : colors.bg;
+  const bottomInset = useStableAndroidBottomInset();
+  const rootBottomInset = Platform.OS === 'android' ? Math.max(bottomInset, 8) : 0;
+  const routeNameRef = useRef<string | undefined>(undefined);
 
   return (
     <NavigationContainer
       ref={navigationRef}
+      onReady={() => {
+        const initialRouteName = navigationRef.getCurrentRoute()?.name;
+        routeNameRef.current = initialRouteName;
+        if (initialRouteName) {
+          logFirebaseScreenView(initialRouteName).catch(() => {});
+        }
+      }}
+      onStateChange={() => {
+        const currentRouteName = navigationRef.getCurrentRoute()?.name;
+        if (currentRouteName && routeNameRef.current !== currentRouteName) {
+          logFirebaseScreenView(currentRouteName).catch(() => {});
+        }
+        routeNameRef.current = currentRouteName;
+      }}
       theme={{
         dark: true,
         colors: {
@@ -266,7 +295,11 @@ const AppNavigator = () => {
             options={{contentStyle: {backgroundColor: navBackground, paddingBottom: 0}}}
           />
           <RootStack.Screen name="MapList" component={MapListScreen} />
-          <RootStack.Screen name="MapDetail" component={MapDetailScreen} />
+          <RootStack.Screen
+            name="MapDetail"
+            component={MapDetailScreen}
+            options={{contentStyle: {backgroundColor: navBackground, paddingBottom: 0}}}
+          />
           <RootStack.Screen name="ItemDetail" component={ItemDetailScreen} />
           <RootStack.Screen
             name="BlueprintTracker"
@@ -304,7 +337,7 @@ const AppNavigator = () => {
             options={{
               animation: 'none',
               gestureEnabled: false,
-              contentStyle: {backgroundColor: navBackground, paddingBottom: 0},
+              contentStyle: {backgroundColor: 'transparent', paddingBottom: 0},
             }}
           />
         </RootStack.Navigator>
@@ -320,14 +353,13 @@ const styles = StyleSheet.create({
     right: 14,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: 'rgba(0,229,255,0.22)',
-    borderTopColor: 'rgba(0,229,255,0.40)',
-    backgroundColor: 'rgba(6,10,18,0.94)',
-    shadowColor: '#00E5FF',
+    borderColor: 'rgba(0,229,255,0.24)',
+    backgroundColor: 'rgba(10,14,23,0.94)',
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.30,
-    shadowRadius: 14,
-    elevation: 20,
+    shadowOpacity: 0.18,
+    shadowRadius: 10,
+    elevation: 2,
   },
   blurWrap: {
     borderRadius: 29,
@@ -339,7 +371,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 10,
     paddingHorizontal: 4,
-    backgroundColor: 'rgba(8,12,22,0.88)',
+    backgroundColor: 'rgba(10,14,23,0.92)',
   },
   tabItem: {
     flex: 1,

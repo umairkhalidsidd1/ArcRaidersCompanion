@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../../utils/safeArea';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme/theme';
 import {resolveImage} from '../../data/imageRegistry';

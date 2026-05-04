@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';
@@ -284,7 +284,7 @@ const SubmitScreen = ({navigation}: any) => {
     <KeyboardAvoidingView
       style={[styles.container, {paddingTop: insets.top}]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       <View style={styles.header}>
         {mode ? (

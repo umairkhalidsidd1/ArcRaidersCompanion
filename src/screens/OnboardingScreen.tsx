@@ -13,7 +13,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 'react-native-svg';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';

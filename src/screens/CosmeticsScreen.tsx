@@ -15,7 +15,7 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
 import {resolveImage} from '../data/imageRegistry';
@@ -288,7 +288,7 @@ const CosmeticsScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent />
 
       {/* Header */}
       <View style={styles.header}>

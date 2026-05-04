@@ -10,7 +10,7 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import {getQuests} from '../data/localizedData';
@@ -205,7 +205,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent />
 
       {/* Header */}
       <View style={s.header}>

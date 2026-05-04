@@ -16,7 +16,7 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors, spacing, borderRadius} from '../theme/theme';
 import rawItems from '../data/items.json';
@@ -383,7 +383,7 @@ const TierListScreen = ({navigation}: any) => {
     <LinearGradient
       colors={[colors.bg, colors.bgSecondary]}
       style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent />
 
       {/* ═══ HEADER ═══ */}
       <View style={s.header}>

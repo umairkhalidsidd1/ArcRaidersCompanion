@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getArcLoot} from '../data/localizedData';
@@ -87,7 +87,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <StatusBar barStyle="light-content" translucent backgroundColor={colors.bg} />
 
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         {/* Hero Image */}

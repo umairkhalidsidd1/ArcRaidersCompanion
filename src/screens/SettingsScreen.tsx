@@ -14,7 +14,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useOnboarding} from '../../App';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
@@ -29,7 +29,7 @@ import {usePremium} from '../context/PremiumContext';
 import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 
 const APP_NAME = 'Arc Raiders Companion';
-const APP_VERSION = Platform.OS === 'ios' ? '1.0.1' : '1.0';
+const APP_VERSION = Platform.OS === 'ios' ? '1.0.2' : '1.0.1';
 const APP_YEAR = 2026;
 
 /* ── Supported languages ── */
@@ -179,7 +179,7 @@ const SettingsScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       {/* ── Language picker modal ── */}
       <Modal

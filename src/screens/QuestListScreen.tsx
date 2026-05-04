@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {useTranslation} from 'react-i18next';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
@@ -305,7 +305,7 @@ const QuestListScreen = ({navigation, route}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       {/* Header */}
       <View style={s.header}>

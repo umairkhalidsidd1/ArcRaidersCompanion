@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {captureScreen} from 'react-native-view-shot';
 import {CameraRoll, iosRequestAddOnlyGalleryPermission} from '@react-native-camera-roll/camera-roll';
@@ -413,7 +413,7 @@ const TierListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={s.backBtn}>
           <Icon name="arrow-left" size={22} color={colors.textPrimary} />

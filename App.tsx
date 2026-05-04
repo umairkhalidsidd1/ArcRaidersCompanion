@@ -8,7 +8,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {Platform, StatusBar, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {SafeAreaProvider, initialWindowMetrics} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import './src/i18n/i18n';
 import AppNavigator from './src/navigation/AppNavigator';
@@ -23,6 +23,7 @@ const SmokeBackground = Platform.OS === 'android'
 import SplashScreen from './src/screens/SplashScreen';
 import {PremiumProvider} from './src/context/PremiumContext';
 import {initializeRevenueCat} from './src/utils/revenueCat';
+import {initializeFirebaseTelemetry} from './src/utils/firebase';
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
@@ -36,6 +37,7 @@ function App() {
 
   useEffect(() => {
     initializeRevenueCat().catch(() => {});
+    initializeFirebaseTelemetry().catch(() => {});
 
     AsyncStorage.getItem(ONBOARDING_KEY).then(val => {
       setShowOnboarding(val !== 'true');
@@ -46,7 +48,7 @@ function App() {
   if (!ready) {
     return (
       <View style={{flex: 1, backgroundColor: '#0A0E17'}}>
-        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" />
+        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" translucent={Platform.OS === 'android'} />
       </View>
     );
   }
@@ -73,8 +75,8 @@ function App() {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SmokeBackground />
-      <SafeAreaProvider>
-        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" />
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" translucent={Platform.OS === 'android'} />
         {showOnboarding ? (
           <OnboardingScreen onDone={handleOnboardingDone} />
         ) : (

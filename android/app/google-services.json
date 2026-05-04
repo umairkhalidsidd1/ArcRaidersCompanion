@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "45142142314",
+    "project_id": "arcraiderscompanion-c2219",
+    "storage_bucket": "arcraiderscompanion-c2219.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45142142314:android:dacc641711d70f51010913",
+        "android_client_info": {
+          "package_name": "com.ArcRaidersCompanion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKxoGq-6FI0uWEkupg_78GpgSQ-IrU8-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

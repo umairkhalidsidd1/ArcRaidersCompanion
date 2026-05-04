@@ -12,7 +12,7 @@ import {useTranslation} from 'react-i18next';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getTraders, getQuests} from '../data/localizedData';
 import {TRADER_INFO} from './TraderListScreen';
@@ -251,7 +251,7 @@ const TraderDetailScreen = ({route, navigation}: any) => {
 
   return (
     <View style={s.root}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <StatusBar barStyle="light-content" translucent backgroundColor={colors.bg} />
 
       {/* Floating back button */}
       <TouchableOpacity

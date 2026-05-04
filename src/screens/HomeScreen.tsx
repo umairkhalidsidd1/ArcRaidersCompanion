@@ -15,7 +15,7 @@ import {
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from '../utils/safeArea';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
 import { getMapFullImage } from '../data/mapImages';
 import {resolveImage} from '../data/imageRegistry';
@@ -463,7 +463,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}

@@ -19,7 +19,7 @@ import {
 import Image from 'react-native-fast-image';
 import {WebView} from 'react-native-webview';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import FilterModal from '../components/FilterModal';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getMaps} from '../data/localizedData';
@@ -178,11 +178,60 @@ const MARKER_TYPES = [
 const keyToLabel = (key: string) =>
   FILTER_CATEGORIES.find(c => c.key === key)?.label ?? key;
 
+const useStableMapInsets = () => {
+  const {top, bottom, left, right} = useSafeAreaInsets();
+  const [stableInsets, setStableInsets] = useState(() => ({
+    top: Platform.OS === 'android' ? Math.max(top, StatusBar.currentHeight ?? 0) : top,
+    bottom,
+    left,
+    right,
+  }));
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') {
+      setStableInsets(prev => {
+        if (
+          prev.top === top &&
+          prev.bottom === bottom &&
+          prev.left === left &&
+          prev.right === right
+        ) {
+          return prev;
+        }
+        return {top, bottom, left, right};
+      });
+      return;
+    }
+
+    setStableInsets(prev => {
+      const next = {
+        top: Math.max(prev.top, top, StatusBar.currentHeight ?? 0),
+        bottom: Math.max(prev.bottom, bottom),
+        left: Math.max(prev.left, left),
+        right: Math.max(prev.right, right),
+      };
+
+      if (
+        prev.top === next.top &&
+        prev.bottom === next.bottom &&
+        prev.left === next.left &&
+        prev.right === next.right
+      ) {
+        return prev;
+      }
+
+      return next;
+    });
+  }, [top, bottom, left, right]);
+
+  return stableInsets;
+};
+
 /* ══════════════════════════════════════════════════════════════
    SCREEN
    ══════════════════════════════════════════════════════════════ */
 const MapDetailScreen = ({route, navigation}: any) => {
-  const insets = useSafeAreaInsets();
+  const insets = useStableMapInsets();
   const {mapId} = route.params;
   const { t } = useTranslation();
   const maps = getMaps();
@@ -697,7 +746,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
   /* ═════════════════════ RENDER ═════════════════════ */
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <StatusBar barStyle="light-content" translucent backgroundColor={colors.bg} />
 
       {/* ── WebView Map (Edge to Edge) ── */}
       <View style={StyleSheet.absoluteFillObject}>

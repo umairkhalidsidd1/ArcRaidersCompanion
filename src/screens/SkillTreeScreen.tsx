@@ -12,7 +12,7 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Svg, {Path} from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -416,7 +416,7 @@ const SkillTreeScreen = ({navigation}: any) => {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#060A11" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       {/* Gradient background overlay */}
       <LinearGradient

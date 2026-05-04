@@ -3,7 +3,7 @@ import {View, StyleSheet, ActivityIndicator, StatusBar, Platform, TouchableOpaci
 import RevenueCatUI from 'react-native-purchases-ui';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 
 const PaywallScreen: React.FC = () => {
@@ -71,7 +71,7 @@ const PaywallScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: 'transparent',
   },
   loadingContainer: {
     alignItems: 'center',

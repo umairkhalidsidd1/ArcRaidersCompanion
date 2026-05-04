@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getTraders} from '../data/localizedData';
 
@@ -146,7 +146,7 @@ const TraderListScreen = ({navigation}: any) => {
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent />
 
       {/* Header */}
       <View style={s.header}>

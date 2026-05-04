@@ -23,7 +23,7 @@ import Svg, {
 } from 'react-native-svg';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
 import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
@@ -267,7 +267,7 @@ const ExpeditionScreen = ({navigation}: any) => {
      ═══════════════════════════════════════════════════ */
   return (
     <View style={[s.root, {paddingTop: ins.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       {/* HEADER */}
       <View style={s.header}>

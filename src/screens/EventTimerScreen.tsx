@@ -15,7 +15,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from '../utils/safeArea';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
 import {useFocusEffect} from '@react-navigation/native';
@@ -626,7 +626,7 @@ const EventTimerScreen = ({navigation}: any) => {
 
   return (
     <View style={[st.root, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="light-content" backgroundColor="#050A14" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent />
 
       {/* ── Header ─────────────────────────────────────── */}
       <View style={st.header}>
