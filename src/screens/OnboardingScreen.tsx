@@ -18,7 +18,7 @@ import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';
 import {requestPermissions} from '../utils/notifications';
-import localEvents from '../data/events.json';
+import {useLiveEvents} from '../data/eventsStore';
 
 const {width: W, height: H} = Dimensions.get('window');
 const ONBOARDING_KEY = '@arcc_onboarding_done';
@@ -144,9 +144,9 @@ const formatPreviewTimer = (secondsRemaining: number): string => {
   return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 };
 
-const getPreviewEvents = (now: Date): PreviewEvent[] => {
+const getPreviewEvents = (now: Date, allEvents: GameEvent[]): PreviewEvent[] => {
   const nowSeconds = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
-  const events = (localEvents as GameEvent[])
+  const events = allEvents
     .map(event => {
       const slots = parseEventSlots(event.times);
       const status = getStatusForSlots(slots, nowSeconds);
@@ -392,13 +392,14 @@ const TradersPreview = () => {
 const EventsPreview = () => {
   const {t} = useTranslation();
   const [nowMs, setNowMs] = useState(() => Date.now());
+  const allEvents = useLiveEvents() as GameEvent[];
 
   useEffect(() => {
     const interval = setInterval(() => setNowMs(Date.now()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const previewEvents = getPreviewEvents(new Date(nowMs));
+  const previewEvents = getPreviewEvents(new Date(nowMs), allEvents);
 
   return (
   <View style={mockStyles.gridWrap}>

@@ -1,15 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 
-// English data
+// Quest guides come from the unified arcraiders.wiki dataset (English only
+// for now), so they're served the same regardless of UI language.
 import guidesEn from '../data/guides.json';
+
+// English data
 import arcsEn from '../data/arcs.json';
 import trialsEn from '../data/trials.json';
 import arcLootEn from '../data/arcLoot.json';
 import questsEn from '../data/quests.json';
 
 // Chinese data
-import guidesZh from '../data/zh/guides_zh.json';
 import arcsZh from '../data/zh/arcs_zh.json';
 import trialsZh from '../data/zh/trials_zh.json';
 import arcLootZh from '../data/zh/arcLoot_zh.json';
@@ -17,7 +19,7 @@ import questsZh from '../data/zh/quests_zh.json';
 
 const dataMap = {
   en: { guides: guidesEn, arcs: arcsEn, trials: trialsEn, arcLoot: arcLootEn, quests: questsEn },
-  zh: { guides: guidesZh, arcs: arcsZh, trials: trialsZh, arcLoot: arcLootZh, quests: questsZh },
+  zh: { guides: guidesEn, arcs: arcsZh, trials: trialsZh, arcLoot: arcLootZh, quests: questsZh },
 } as const;
 
 type DataKey = keyof typeof dataMap.en;

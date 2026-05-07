@@ -9,6 +9,7 @@ import BastionSvg from './bastion.svg';
 import BombardierSvg from './bombardier.svg';
 import ButtonSvg from './button.svg';
 import CandleberriesSvg from './candleberries.svg';
+import CargoElevatorSvg from './cargo-elevator.svg';
 import CrashProbeSvg from './crash-pobe.svg';
 import DownloadConsoleSvg from './download-console.svg';
 import ElevatorSvg from './elevator.svg';
@@ -18,9 +19,11 @@ import FireballSvg from './fireball.svg';
 import FuelCellSvg from './fuel-cell.svg';
 import GeneratorSvg from './generator.svg';
 import GreatMullenSvg from './great-mullen.svg';
+import GreatMulleinSvg from './great-mullein.svg';
 import GrenadeTubeSvg from './grenade-tube.svg';
 import HarvesterSvg from './harvester.svg';
 import HatchSvg from './hatch.svg';
+import HurricaneCacheSvg from './hurricane-cache.svg';
 import KeyCardSvg from './key-card.svg';
 import LeaperSvg from './leaper.svg';
 import LemonSvg from './lemon.svg';
@@ -38,6 +41,7 @@ import QueenSvg from './queen.svg';
 import QuestSvg from './quest.svg';
 import RaiderCacheSvg from './raider-cache.svg';
 import RaiderCampSvg from './raider-camp.svg';
+import RaiderHatchSvg from './raider-hatch.svg';
 import RocketeerHuskSvg from './rocketeer-husk.svg';
 import RocketeerSvg from './rocketeer.svg';
 import SecurityLockerSvg from './security-locker.svg';
@@ -65,7 +69,9 @@ export const MarkerIcons: Record<string, React.FC<any>> = {
   'bombardier': BombardierSvg,
   'button': ButtonSvg,
   'candleberries': CandleberriesSvg,
+  'cargo-elevator': CargoElevatorSvg,
   'crash-probe': CrashProbeSvg,
+  'crashed-probe': CrashProbeSvg,
   'download-console': DownloadConsoleSvg,
   'elevator': ElevatorSvg,
   'field-crate': FieldCrateSvg,
@@ -74,9 +80,11 @@ export const MarkerIcons: Record<string, React.FC<any>> = {
   'fuel-cell': FuelCellSvg,
   'generator': GeneratorSvg,
   'great-mullen': GreatMullenSvg,
+  'great-mullein': GreatMulleinSvg,
   'grenade-tube': GrenadeTubeSvg,
   'harvester': HarvesterSvg,
   'hatch': HatchSvg,
+  'hurricane-cache': HurricaneCacheSvg,
   'key-card': KeyCardSvg,
   'leaper': LeaperSvg,
   'lemon': LemonSvg,
@@ -94,6 +102,7 @@ export const MarkerIcons: Record<string, React.FC<any>> = {
   'quest': QuestSvg,
   'raider-cache': RaiderCacheSvg,
   'raider-camp': RaiderCampSvg,
+  'raider-hatch': RaiderHatchSvg,
   'rocketeer-husk': RocketeerHuskSvg,
   'rocketeer': RocketeerSvg,
   'security-locker': SecurityLockerSvg,

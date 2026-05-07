@@ -28,7 +28,9 @@
     "enemy": "Enemy",
     "oc": "OC",
     "kg": "kg",
-    "level": "LEVEL"
+    "level": "LEVEL",
+    "close": "Close",
+    "intel": "INTEL"
   },
   "splash": {
     "arc": "ARC",
@@ -282,7 +284,22 @@
     "watchVideo": "Watch Video Guide",
     "objectives": "Objectives",
     "rewards": "Rewards",
-    "walkthrough": "Walkthrough"
+    "walkthrough": "Walkthrough",
+    "questGiver": "Quest Giver",
+    "location": "Location",
+    "anyLocation": "Any map",
+    "prerequisite": "Prerequisite",
+    "leadsTo": "Leads to",
+    "dialog": "In-Game Dialog",
+    "dialogIntro": "Introduction",
+    "dialogAcceptance": "Upon Acceptance",
+    "dialogIdle": "Idle",
+    "dialogInRaid": "Upon Entering Raid",
+    "dialogCompletion": "Upon Completion",
+    "viewOnWiki": "View on ARC Raiders Wiki",
+    "sourceWiki": "Source: arcraiders.wiki",
+    "licenseCcBySa": "Licensed CC BY-SA 4.0",
+    "noQuestData": "No quest data available."
   },
   "maps": {
     "title": "DEPLOYMENT ZONES",
@@ -327,7 +344,8 @@
     "resource": "Resource",
     "objective": "Objective",
     "poi": "POI",
-    "flora": "Flora"
+    "flora": "Flora",
+    "saveAsWaypoint": "Add Waypoint Here"
   },
   "items": {
     "weaponInspect": "WEAPON INSPECT",
@@ -508,6 +526,7 @@
     "spaceport": "Spaceport",
     "blueGate": "Blue Gate",
     "stellaMontis": "Stella Montis",
+    "rivenTides": "Riven Tides",
     "sun": "Sun",
     "mon": "Mon",
     "tue": "Tue",

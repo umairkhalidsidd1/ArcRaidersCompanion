@@ -19,8 +19,11 @@ import {useSafeAreaInsets} from '../utils/safeArea';
 import {useTranslation} from 'react-i18next';
 import {useFocusEffect} from '@react-navigation/native';
 import {colors} from '../theme/theme';
-import localEvents from '../data/events.json';
 import {resolveImage} from '../data/imageRegistry';
+import {
+  useLiveEvents,
+  refreshEventsFromServer,
+} from '../data/eventsStore';
 import {
   areNotificationsEnabled,
   setNotificationsEnabled,
@@ -76,6 +79,8 @@ const CYAN = '#22D3EE';
 const STARTING_SOON_THRESHOLD = 3600;
 
 /* MAP_DISPLAY is now handled via t() inside the component */
+/* Remote-fetch + cache logic for the live events feed lives in
+   src/data/eventsStore.ts so that all screens share a single source. */
 
 /* ── Helpers ──────────────────────────────────────────────── */
 const parseTimeSlots = (raw: string): TimeSlot[] => {
@@ -268,7 +273,7 @@ const EventTimerScreen = ({navigation}: any) => {
     Spaceport: t('events.spaceport'),
     'Blue Gate': t('events.blueGate'),
     'Stella Montis': t('events.stellaMontis'),
-    'Riven Tides': 'Riven Tides',
+    'Riven Tides': t('events.rivenTides', {defaultValue: 'Riven Tides'}),
   };
 
   const translateSlotTime = (slotStr: string): string => {
@@ -282,8 +287,7 @@ const EventTimerScreen = ({navigation}: any) => {
     }
     return result;
   };
-  const [events, setEvents] = useState<GameEvent[]>(localEvents as GameEvent[]);
-  const [loading, setLoading] = useState(false);
+  const events = useLiveEvents() as GameEvent[];
   const [refreshing, setRefreshing] = useState(false);
   const [tick, setTick] = useState(0);
   const [notifiedEvents, setNotifiedEvents] = useState<Set<string>>(new Set());
@@ -353,30 +357,28 @@ const EventTimerScreen = ({navigation}: any) => {
   useEffect(() => {
     getNotifiedEvents().then(prefs => setNotifiedEvents(prefs));
     areNotificationsEnabled().then(on => setAllEventsNotifOn(on));
-    rescheduleAllNotifications(events).catch(() => {});
   }, []);
 
-  /* ── Fetch logic ─────────────────────────────────────── */
-  const fetchEvents = useCallback(async (options?: {silent?: boolean}) => {
-    const silent = options?.silent ?? false;
-    if (!silent) setLoading(true);
-    try {
-      setEvents(localEvents as GameEvent[]);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, []);
-
+  /* ── Refresh ──────────────────────────────────────────
+   * The store already auto-refreshes on app boot and on every
+   * mount of useLiveEvents(). We only need to handle the
+   * pull-to-refresh user gesture, which forces a network fetch
+   * even if the cache is still fresh. */
+  // Reschedule notifications whenever the event list changes (cache hydrate,
+  // background refresh, or manual pull-to-refresh).
   useEffect(() => {
-    fetchEvents({silent: true});
-  }, [fetchEvents]);
+    rescheduleAllNotifications(events).catch(() => {});
+  }, [events]);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     setTick(t => t + 1);
-    await fetchEvents();
-  }, [fetchEvents]);
+    try {
+      await refreshEventsFromServer({force: true});
+    } finally {
+      setRefreshing(false);
+    }
+  }, []);
 
   /* ── Computed ─────────────────────────────────────────── */
 
@@ -608,7 +610,7 @@ const EventTimerScreen = ({navigation}: any) => {
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleRefresh} style={st.refreshBtn}>
-          {loading ? (
+          {refreshing ? (
             <ActivityIndicator size="small" color={CYAN} />
           ) : (
             <Icon name="refresh" size={18} color={CYAN} />

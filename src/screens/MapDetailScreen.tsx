@@ -18,12 +18,14 @@ import {
 } from 'react-native';
 import Image from 'react-native-fast-image';
 import {WebView} from 'react-native-webview';
+import {SvgXml} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from '../utils/safeArea';
 import FilterModal from '../components/FilterModal';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getMaps} from '../data/localizedData';
 import localMarkers from '../data/markers.json';
+import markerSvgs from '../data/markerSvgs.json';
 import {getWaypoints, saveWaypoint, deleteWaypoint, Waypoint} from '../utils/storage';
 import {MarkerIcons} from '../assets/icons/markers';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
@@ -178,6 +180,123 @@ const MARKER_TYPES = [
 const keyToLabel = (key: string) =>
   FILTER_CATEGORIES.find(c => c.key === key)?.label ?? key;
 
+/* ─────── helper: DB label → category info (key/color/category) ─────── */
+const TYPE_LOOKUP: Record<string, {key: string; color: string; category?: string}> = (() => {
+  const map: Record<string, {key: string; color: string; category?: string}> = {};
+  // index by exact label (matches markers.json `type`)
+  FILTER_CATEGORIES.forEach(c => {
+    if (c.key === 'blueprint-heatmap') return;
+    const mt = MARKER_TYPES.find(m => m.key === c.key);
+    map[c.label] = {key: c.key, color: c.color, category: mt?.category};
+  });
+  // a few known DB names that don't match the FILTER_CATEGORIES label exactly
+  const aliases: Array<[string, string]> = [
+    ['Crashed Probe', 'crashed-probe'],
+    ['Cargo Elevator', 'cargo-elevator'],
+    ['Hurricane Cache', 'hurricane-cache'],
+    ['Raider Hatch', 'raider-hatch'],
+  ];
+  aliases.forEach(([label, key]) => {
+    if (!map[label]) {
+      const cat = FILTER_CATEGORIES.find(c => c.key === key);
+      const mt = MARKER_TYPES.find(m => m.key === key);
+      map[label] = {
+        key,
+        color: cat?.color ?? '#3b82f6',
+        category: mt?.category,
+      };
+    }
+  });
+  return map;
+})();
+
+/* ─────── helper: filename → key  (handles the `great-mullein` naming) ─────── */
+const SVG_KEY_ALIASES: Record<string, string> = {
+  'great-mullein': 'great-mullen',
+  'crash-pobe': 'crashed-probe',
+  'crash-probe': 'crashed-probe',
+};
+const normalizeSvgKey = (raw?: string) => {
+  if (!raw) return '';
+  const base = raw.replace(/\.svg$/, '');
+  return SVG_KEY_ALIASES[base] || base;
+};
+
+/** Renders the same themed chip as markers injected into the map WebView */
+const MapMarkerChip = ({
+  svgKey,
+  color,
+  variant,
+  size = 56,
+  initials = '?',
+}: {
+  svgKey: string;
+  color: string;
+  variant: 'db' | 'waypoint';
+  size?: number;
+  initials?: string;
+}) => {
+  const hasKeyedIcon = Boolean(svgKey && svgKey !== 'custom');
+  const raw = hasKeyedIcon
+    ? (markerSvgs as Record<string, string>)[svgKey] ||
+      (markerSvgs as Record<string, string>)['player-marker'] ||
+      ''
+    : '';
+  const xml = raw
+    .replace(/viewBox="[^"]*"/, 'viewBox="18 13 124 124"')
+    .replace(/currentColor/gi, color);
+
+  const outer =
+    variant === 'db'
+      ? {
+          width: size,
+          height: size,
+          borderRadius: (size * 6) / 26,
+          borderWidth: Math.max(2, (size * 1.5) / 26),
+          borderColor: 'rgba(255,255,255,0.85)' as const,
+        }
+      : {
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          borderWidth: Math.max(2, (size * 2) / 28),
+          borderColor: '#FFFFFF' as const,
+        };
+
+  const innerSize =
+    variant === 'db' ? (size * 20) / 26 : (size * 22) / 28;
+
+  return (
+    <View
+      style={{
+        ...outer,
+        backgroundColor: color,
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: variant === 'db' ? 0.45 : 0.5,
+        shadowRadius: variant === 'db' ? 4 : 6,
+        elevation: 4,
+      }}>
+      {hasKeyedIcon && xml ? (
+        <SvgXml xml={xml} width={innerSize} height={innerSize} />
+      ) : (
+        <Text
+          style={{
+            color: '#FFF',
+            fontWeight: '800',
+            fontSize: innerSize * 0.42,
+            letterSpacing: 0.5,
+          }}>
+          {initials}
+        </Text>
+      )}
+    </View>
+  );
+};
+
 const useStableMapInsets = () => {
   const {top, bottom, left, right} = useSafeAreaInsets();
   const [stableInsets, setStableInsets] = useState(() => ({
@@ -255,6 +374,15 @@ const MapDetailScreen = ({route, navigation}: any) => {
   const [addMarkerFormVisible, setAddMarkerFormVisible] = useState(false);
   const [markerInfoVisible, setMarkerInfoVisible] = useState(false);
   const [selectedMarkerInfo, setSelectedMarkerInfo] = useState<Waypoint | null>(null);
+  const [builtinInfoVisible, setBuiltinInfoVisible] = useState(false);
+  const [selectedBuiltin, setSelectedBuiltin] = useState<{
+    type: string;
+    key: string;
+    color: string;
+    category?: string;
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   // Add marker form states
   const [selectedMarkerType, setSelectedMarkerType] = useState<typeof MARKER_TYPES[0] | null>(null);
@@ -448,26 +576,61 @@ const MapDetailScreen = ({route, navigation}: any) => {
           setMarkerInfoVisible(true);
         }
       }
+      // Built-in / DB marker tapped → show built-in info modal
+      if (data.tag === 'BUILTIN_MARKER_TAP') {
+        const lookup = TYPE_LOOKUP[data.type];
+        setSelectedBuiltin({
+          type: data.type || t('common.unknown', {defaultValue: 'Unknown'}),
+          key: lookup?.key || normalizeSvgKey(data.svg) || 'player-marker',
+          color: lookup?.color || '#3b82f6',
+          category: lookup?.category,
+          lat: data.lat,
+          lng: data.lng,
+        });
+        setBuiltinInfoVisible(true);
+      }
     } catch (e) {
       // ignore
     }
-  }, [waypoints]);
+  }, [waypoints, t]);
+
+  /* ─── Build inner HTML for a custom waypoint marker (themed) ─── */
+  const buildWaypointInnerHtml = useCallback((wp: Waypoint) => {
+    const svgKey = wp.markerType && wp.markerType !== 'custom' ? wp.markerType : null;
+    const lookup = svgKey ? FILTER_CATEGORIES.find(c => c.key === svgKey) : null;
+    const color = lookup?.color || '#00E5FF';
+    const svgContent = svgKey
+      ? (markerSvgs as Record<string, string>)[svgKey] || ''
+      : '';
+    const initials = (wp.label || 'M').substring(0, 2).toUpperCase();
+    const inner = svgContent
+      ? svgContent
+          .replace(/viewBox="[^"]*"/, 'viewBox="18 13 124 124"')
+          .replace('<svg', '<svg width="22" height="22" style="display:block;"')
+      : `<span style="color:white;font-weight:800;font-size:10px;letter-spacing:0.5px;font-family:sans-serif;">${initials}</span>`;
+    const wrapperStyle =
+      `width:28px;height:28px;border-radius:14px;` +
+      `background:${color};color:${color};` +
+      `border:2px solid #FFFFFF;` +
+      `box-shadow:0 2px 6px rgba(0,0,0,0.5),0 0 0 1px rgba(0,0,0,0.4);` +
+      `display:flex;align-items:center;justify-content:center;` +
+      `cursor:pointer;overflow:hidden;`;
+    return {wrapperStyle, inner};
+  }, []);
 
   /* ─── INJECT SAVED WAYPOINTS INTO WEBVIEW ─── */
   const injectSavedWaypoints = useCallback(() => {
     waypoints.forEach(wp => {
       const safeLabel = (wp.label || 'Marker').replace(/'/g, "\\'");
-      const svgKey = wp.markerType && wp.markerType !== 'custom' ? wp.markerType : null;
-      const markerInner = svgKey
-        ? `<img src="https://arcmap-dun.vercel.app/markers/${svgKey}.svg" style="width:32px;height:32px;" />`
-        : `<div style="width:24px;height:24px;background:#FF0000;border-radius:2px;display:flex;align-items:center;justify-content:center;"><span style="color:white;font-weight:bold;font-size:10px;line-height:1;font-family:sans-serif;">${(wp.label || 'M').substring(0, 2).toUpperCase()}</span></div>`;
+      const {wrapperStyle, inner} = buildWaypointInnerHtml(wp);
+      const innerEscaped = inner.replace(/'/g, "\\'");
       runJS(`
         (function() {
           var el = document.createElement('div');
           el.className = 'custom-waypoint';
           el.id = 'wp-${wp.id}';
-el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;';
-          el.innerHTML = '${markerInner.replace(/'/g, "\\'")}';
+          el.style.cssText = '${wrapperStyle}';
+          el.innerHTML = '${innerEscaped}';
           el.title = '${safeLabel}';
           el.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -481,66 +644,115 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
         })();
       `, 'WP_ADD');
     });
-  }, [waypoints, runJS]);
+  }, [waypoints, runJS, buildWaypointInnerHtml]);
 
   /* ─── MAP LOADED ─── */
   const handleMapLoaded = useCallback(() => {
     const mapDbName = DB_MAP_NAME[currentMapId] || 'Dam';
-    const currentMapMarkers = (localMarkers as Record<string, any>)[mapDbName] || [];
+    const rawMapMarkers = (localMarkers as Record<string, any>)[mapDbName] || [];
+
+    // Build the dedupe-friendly payload: a small marker record + an icon
+    // dictionary keyed by SVG key. The actual SVG bytes are sent only once
+    // per type, then referenced by key.
+    const usedKeys = new Set<string>();
+    const enriched = rawMapMarkers.map((m: any) => {
+      const lookup = TYPE_LOOKUP[m.type] || null;
+      const svgKey =
+        (lookup && lookup.key) ||
+        normalizeSvgKey(m.svg) ||
+        'player-marker';
+      usedKeys.add(svgKey);
+      return {
+        i: m.id,
+        t: m.type || 'Unknown',
+        x: m.lng,
+        y: m.lat,
+        s: m.svg || null,
+        c: (lookup && lookup.color) || '#3b82f6',
+        k: svgKey,
+      };
+    });
+
+    const iconDict: Record<string, string> = {};
+    usedKeys.forEach(k => {
+      iconDict[k] =
+        (markerSvgs as Record<string, string>)[k] ||
+        (markerSvgs as Record<string, string>)['player-marker'] ||
+        '';
+    });
 
     // Inject our 100% offline local markers directly
     const injectLocalMarkers = `
       try {
         var cMap = '${mapDbName}';
-        var data = ${JSON.stringify(currentMapMarkers)};
-        
-        data.forEach(function(markerData) {
-          var typeName = markerData.type || 'Unknown';
-          var svgFile = markerData.svg || null;
-          
+        var data = ${JSON.stringify(enriched)};
+        var icons = ${JSON.stringify(iconDict)};
+
+        data.forEach(function(md) {
+          var typeName = md.t || 'Unknown';
+
           if (typeof markerTypes !== 'undefined') {
             markerTypes.add(typeName);
           }
-          
+
+          // Themed marker: outer pill with the category color, dark border, inner svg.
+          // Using \`currentColor\` inside the bundled SVGs lets the wrapper's CSS
+          // \`color\` paint the original red parts in the per-type accent color.
           var el = document.createElement('div');
           el.className = 'marker';
-          
-          if (svgFile) {
-             el.style.cssText = 'width:24px;height:24px;background-size:contain;background-repeat:no-repeat;cursor:pointer;';
-             el.style.backgroundImage = 'url("https://arcmap-dun.vercel.app/markers/' + svgFile + '")';
+          el.style.cssText =
+            'width:26px;height:26px;border-radius:6px;' +
+            'background:' + md.c + ';' +
+            'color:' + md.c + ';' +
+            'border:1.5px solid rgba(255,255,255,0.85);' +
+            'box-shadow:0 2px 4px rgba(0,0,0,0.45),0 0 0 1px rgba(0,0,0,0.5);' +
+            'display:flex;align-items:center;justify-content:center;' +
+            'cursor:pointer;overflow:hidden;';
+
+          var svgContent = icons[md.k] || '';
+          if (svgContent) {
+            el.innerHTML = svgContent;
+            var svgEl = el.querySelector('svg');
+            if (svgEl) {
+              svgEl.setAttribute('width', '20');
+              svgEl.setAttribute('height', '20');
+              // Crop to the icon region (matches the original red rect bounds)
+              svgEl.setAttribute('viewBox', '18 13 124 124');
+              svgEl.style.display = 'block';
+            }
           } else {
-             var img = document.createElement('img');
-             img.src = 'https://arcmap-dun.vercel.app/markers/player-marker.svg';
-             img.style.cssText = 'width:32px;height:48px;';
-             el.style.cssText = 'border:none;background:transparent;cursor:pointer;';
-             el.appendChild(img);
+            el.innerHTML = '<div style="width:8px;height:8px;border-radius:50%;background:#fff;"></div>';
           }
 
-          var markerObj = new maplibregl.Marker({ 
-              element: el,
-              anchor: svgFile ? 'bottom' : 'center'
-          })
-          .setLngLat([markerData.lng, markerData.lat])
-          .addTo(map);
+          var markerObj = new maplibregl.Marker({ element: el, anchor: 'center' })
+            .setLngLat([md.x, md.y])
+            .addTo(map);
 
-          markerObj._metadata = { 
-             id: markerData.id,
+          markerObj._metadata = {
+             id: md.i,
              type: typeName,
              title: typeName,
-             description: markerData.desc,
-             color: '#3b82f6',
+             description: '',
+             color: md.c,
              marker_type_id: null,
-             svg_filename: svgFile,
-             lng: markerData.lng,
-             lat: markerData.lat,
+             svg_filename: md.s,
+             lng: md.x,
+             lat: md.y,
              map_name: cMap,
              isItemLocation: false
           };
 
           el.addEventListener('click', function(e) {
              e.stopPropagation();
-             if (window.sendToFlutter) {
-                 window.sendToFlutter('onMarkerClick', markerObj._metadata);
+             if (window.ReactNativeWebView) {
+               window.ReactNativeWebView.postMessage(JSON.stringify({
+                 tag: 'BUILTIN_MARKER_TAP',
+                 type: typeName,
+                 svg: md.s,
+                 lat: md.y,
+                 lng: md.x,
+                 color: md.c
+               }));
              }
           });
 
@@ -548,7 +760,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
               markers.push(markerObj);
           }
         });
-        
+
         if (typeof updateMarkerVisibility === 'function') updateMarkerVisibility();
 
         var m = document.getElementById('map');
@@ -660,19 +872,17 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
     setAddMarkerFormVisible(false);
     setPendingCoords(null);
 
-    // Inject marker on map
+    // Inject marker on map (themed)
     const safeLabel = wp.label.replace(/'/g, "\\'");
-    const svgKey = wp.markerType && wp.markerType !== 'custom' ? wp.markerType : null;
-    const markerInner = svgKey
-      ? `<img src="https://arcmap-dun.vercel.app/markers/${svgKey}.svg" style="width:32px;height:32px;" />`
-      : `<div style="width:24px;height:24px;background:#FF0000;border-radius:2px;display:flex;align-items:center;justify-content:center;"><span style="color:white;font-weight:bold;font-size:10px;line-height:1;font-family:sans-serif;">${wp.label.substring(0, 2).toUpperCase()}</span></div>`;
+    const {wrapperStyle, inner} = buildWaypointInnerHtml(wp);
+    const innerEscaped = inner.replace(/'/g, "\\'");
     runJS(`
       (function() {
         var el = document.createElement('div');
         el.className = 'custom-waypoint';
         el.id = 'wp-${wp.id}';
-        el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;';
-        el.innerHTML = '${markerInner.replace(/'/g, "\\'")}';
+        el.style.cssText = '${wrapperStyle}';
+        el.innerHTML = '${innerEscaped}';
         el.title = '${safeLabel}';
         el.addEventListener('click', function(e) {
           e.stopPropagation();
@@ -687,7 +897,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
     `, 'WP_ADD');
 
     showSnackbar(t('maps.markerAdded'));
-  }, [pendingCoords, selectedMarkerType, customMarkerName, markerNote, isPublished, currentMapId, runJS, showSnackbar, editingMarkerId]);
+  }, [pendingCoords, selectedMarkerType, customMarkerName, markerNote, isPublished, currentMapId, runJS, showSnackbar, editingMarkerId, buildWaypointInnerHtml, t]);
 
   /* ─── DELETE MARKER ─── */
   const handleDeleteMarker = useCallback(async (id: string) => {
@@ -811,7 +1021,7 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
       )}
 
       {/* ── Floating Filter Button ── */}
-      {!markerInfoVisible && (
+      {!markerInfoVisible && !builtinInfoVisible && (
         <View style={[styles.floatingFilterWrap, { bottom: Math.max(insets.bottom, 24) }]}>
           <TouchableOpacity
             style={styles.floatingFilterBtn}
@@ -1043,9 +1253,25 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
             {selectedMarkerInfo && (
               <>
                 <View style={styles.markerInfoHeader}>
-                  <View style={styles.markerInfoIconWrap}>
-                    {renderMarkerSvg(selectedMarkerInfo.markerType || selectedMarkerInfo.markerIcon || 'player-marker', 28)}
-                  </View>
+                  <MapMarkerChip
+                    variant="waypoint"
+                    svgKey={
+                      selectedMarkerInfo.markerType &&
+                      selectedMarkerInfo.markerType !== 'custom'
+                        ? selectedMarkerInfo.markerType
+                        : ''
+                    }
+                    color={
+                      selectedMarkerInfo.markerType &&
+                      selectedMarkerInfo.markerType !== 'custom'
+                        ? FILTER_CATEGORIES.find(
+                            c => c.key === selectedMarkerInfo.markerType,
+                          )?.color || '#00E5FF'
+                        : '#00E5FF'
+                    }
+                    initials={(selectedMarkerInfo.label || 'M').substring(0, 2).toUpperCase()}
+                    size={56}
+                  />
                   <View style={{flex: 1}}>
                     <Text style={styles.markerInfoName}>{selectedMarkerInfo.label}</Text>
                   </View>
@@ -1095,6 +1321,114 @@ el.style.cssText = 'width:32px;height:32px;border-radius:4px;background:transpar
                       <Icon name="delete-outline" size={18} color="#F44336" />
                     </View>
                     <Text style={[styles.markerInfoActionText, {color: '#F44336'}]}>{t('common.delete')}</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      {/* ── BUILT-IN MARKER INFO MODAL (on tap DB marker) ── */}
+      <Modal
+        visible={builtinInfoVisible && !!selectedBuiltin}
+        transparent
+        animationType={Platform.OS === 'android' ? 'fade' : 'slide'}
+        onRequestClose={() => {
+          setBuiltinInfoVisible(false);
+          setSelectedBuiltin(null);
+        }}>
+        <View style={styles.bottomSheetOverlay}>
+          <TouchableOpacity
+            style={styles.bottomSheetDismiss}
+            onPress={() => {
+              setBuiltinInfoVisible(false);
+              setSelectedBuiltin(null);
+            }}
+          />
+          <View style={[styles.bottomSheet, {paddingBottom: Math.max(insets.bottom, 20)}]}>
+            <View style={styles.sheetHandle} />
+            {selectedBuiltin && (
+              <>
+                <View style={styles.markerInfoHeader}>
+                  <MapMarkerChip
+                    variant="db"
+                    svgKey={selectedBuiltin.key}
+                    color={selectedBuiltin.color}
+                    size={56}
+                  />
+                  <View style={{flex: 1}}>
+                    <Text style={styles.markerInfoName}>{selectedBuiltin.type}</Text>
+                    {selectedBuiltin.category ? (
+                      <Text style={styles.markerInfoSub}>
+                        {t('filterCategories.' + selectedBuiltin.category.toLowerCase(), {
+                          defaultValue: selectedBuiltin.category,
+                        })}
+                      </Text>
+                    ) : null}
+                  </View>
+                  <View
+                    style={[
+                      styles.markerInfoBadge,
+                      {
+                        backgroundColor: selectedBuiltin.color + '22',
+                        borderColor: selectedBuiltin.color + '55',
+                      },
+                    ]}>
+                    <Text style={[styles.markerInfoBadgeText, {color: selectedBuiltin.color}]}>
+                      {t('common.intel', {defaultValue: 'INTEL'})}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style={styles.coordsRow}>
+                  <View style={styles.coordChip}>
+                    <Icon name="latitude" size={12} color={colors.textMuted} />
+                    <Text style={styles.coordChipLabel}>LAT</Text>
+                    <Text style={styles.coordChipValue}>{selectedBuiltin.lat.toFixed(4)}</Text>
+                  </View>
+                  <View style={styles.coordChip}>
+                    <Icon name="longitude" size={12} color={colors.textMuted} />
+                    <Text style={styles.coordChipLabel}>LNG</Text>
+                    <Text style={styles.coordChipValue}>{selectedBuiltin.lng.toFixed(4)}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.markerInfoActions}>
+                  <TouchableOpacity
+                    style={styles.markerInfoActionBtn}
+                    onPress={() => {
+                      setBuiltinInfoVisible(false);
+                      setSelectedBuiltin(null);
+                      setPendingCoords({lat: selectedBuiltin.lat, lng: selectedBuiltin.lng});
+                      const mt = MARKER_TYPES.find(m => m.key === selectedBuiltin.key);
+                      setSelectedMarkerType(mt || null);
+                      setCustomMarkerName(mt ? '' : selectedBuiltin.type);
+                      setMarkerNote('');
+                      setMarkerPhoto(null);
+                      setIsPublished(false);
+                      setEditingMarkerId(null);
+                      setAddMarkerFormVisible(true);
+                    }}>
+                    <View style={styles.actionIconWrap}>
+                      <Icon name="map-marker-plus-outline" size={18} color={colors.cyan} />
+                    </View>
+                    <Text style={styles.markerInfoActionText}>
+                      {t('maps.saveAsWaypoint', {defaultValue: 'Add Waypoint Here'})}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.markerInfoActionBtn}
+                    onPress={() => {
+                      setBuiltinInfoVisible(false);
+                      setSelectedBuiltin(null);
+                    }}>
+                    <View
+                      style={[styles.actionIconWrap, {backgroundColor: 'rgba(255,255,255,0.06)'}]}>
+                      <Icon name="close" size={18} color={colors.textSecondary} />
+                    </View>
+                    <Text style={styles.markerInfoActionText}>{t('common.close')}</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -1481,6 +1815,32 @@ const styles = StyleSheet.create({
   markerInfoName: {
     fontSize: 16, fontWeight: '800',
     color: colors.textPrimary, letterSpacing: 0.5,
+  },
+  markerInfoSub: {
+    fontSize: 11, fontWeight: '700',
+    color: colors.textMuted, letterSpacing: 1,
+    marginTop: 2, textTransform: 'uppercase',
+  },
+  coordsRow: {
+    flexDirection: 'row', gap: spacing.sm,
+    marginBottom: spacing.md,
+  },
+  coordChip: {
+    flex: 1,
+    flexDirection: 'row', alignItems: 'center', gap: 6,
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderRadius: 10, paddingHorizontal: spacing.md, paddingVertical: 10,
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.06)',
+  },
+  coordChipLabel: {
+    fontSize: 10, fontWeight: '900', letterSpacing: 1.5,
+    color: colors.textMuted,
+  },
+  coordChipValue: {
+    flex: 1, textAlign: 'right',
+    fontSize: 12, fontWeight: '700',
+    color: colors.textPrimary,
+    fontVariant: ['tabular-nums'],
   },
   markerInfoBadge: {
     paddingHorizontal: 8, paddingVertical: 4,

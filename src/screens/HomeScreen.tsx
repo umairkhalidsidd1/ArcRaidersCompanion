@@ -19,7 +19,7 @@ import { useSafeAreaInsets } from '../utils/safeArea';
 import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
 import { getMapFullImage } from '../data/mapImages';
 import {resolveImage} from '../data/imageRegistry';
-import rawEvents from '../data/events.json';
+import {useLiveEvents} from '../data/eventsStore';
 import rawItems from '../data/items.json';
 import tradersData from '../data/traders.json';
 import {getItems, getEvents, getMaps} from '../data/localizedData';
@@ -93,6 +93,7 @@ const MAP_NAME_TO_ID: Record<string, string> = {
   Spaceport: 'the-spaceport',
   'Blue Gate': 'blue-gate',
   'Stella Montis': 'stella-montis',
+  'Riven Tides': 'riven-tides',
 };
 
 const parseTimeSlots = (raw: string): TimeSlot[] => {
@@ -121,11 +122,11 @@ const formatLocalTime = (utcTime: string): string => {
 
 type MapEventInfo = { id: number; isActive: boolean; name: string; endsIn: string; startsAt: string; startsIn: string } | null;
 
-const getMapEventInfo = (mapId: string): MapEventInfo => {
+const getMapEventInfo = (mapId: string, allEvents: GameEvent[]): MapEventInfo => {
   const nowSec = getNowSeconds();
   const DAY = 24 * 3600;
 
-  const mapEvents = (rawEvents as GameEvent[]).filter(e => MAP_NAME_TO_ID[e.map] === mapId);
+  const mapEvents = allEvents.filter(e => MAP_NAME_TO_ID[e.map] === mapId);
   // Check for active event first
   for (const ev of mapEvents) {
     const slots = parseTimeSlots(ev.times);
@@ -230,17 +231,14 @@ const RAIDER_TOOLS = [
 ];
 
 /* ── Live Event Card helpers ── */
-const ALL_EVENTS = rawEvents as GameEvent[];
-const TOTAL_EVENTS = ALL_EVENTS.length;
-
 type LiveSlot = {id: number; name: string; map: string; icon: string; isActive: boolean; countdown: string; localTime: string};
 
-const getLiveEvents = (): LiveSlot[] => {
+const getLiveEvents = (allEvents: GameEvent[]): LiveSlot[] => {
   const nowSec = getNowSeconds();
   const DAY = 24 * 3600;
   const results: LiveSlot[] = [];
 
-  for (const ev of ALL_EVENTS) {
+  for (const ev of allEvents) {
     const slots = parseTimeSlots(ev.times);
     for (const s of slots) {
       const startSec = parseToSeconds(s.start);
@@ -298,7 +296,9 @@ const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
     return () => clearInterval(iv);
   }, []);
 
-  const liveEvents = getLiveEvents();
+  const allEvents = useLiveEvents() as GameEvent[];
+  const totalEvents = allEvents.length;
+  const liveEvents = getLiveEvents(allEvents);
   const activeCount = liveEvents.filter(e => e.isActive).length;
   const shown = liveEvents.slice(0, 3);
 
@@ -320,7 +320,7 @@ const LiveEventCard = React.memo(({onPress}: {onPress: () => void}) => {
           <View style={{flex: 1}}>
             <Text style={styles.eventCardTitle}>{t('home.eventTimers')}</Text>
             <Text style={styles.eventCardSub}>
-              {`${activeCount > 0 ? t('home.activeCount', {count: activeCount}) : t('home.noneActive')} • ${TOTAL_EVENTS} ${t('home.events')}`}
+              {`${activeCount > 0 ? t('home.activeCount', {count: activeCount}) : t('home.noneActive')} • ${totalEvents} ${t('home.events')}`}
             </Text>
           </View>
           <Icon name="chevron-right" size={24} color={colors.textMuted} />
@@ -364,7 +364,8 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
     return () => clearInterval(iv);
   }, []);
 
-  const eventInfo = getMapEventInfo(mapId);
+  const allEvents = useLiveEvents() as GameEvent[];
+  const eventInfo = getMapEventInfo(mapId, allEvents);
   if (!eventInfo) return null;
 
   // Look up localized event name
