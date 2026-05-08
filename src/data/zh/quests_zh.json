@@ -1,8 +1,7 @@
 {
   "quest_data": {
     "description": "ARC Raiders Quest Data with Prerequisites and Unlock Order",
-    "last_updated": "2026-03-24",
-    "source": "https://arcraiders.wiki/wiki/Quests"
+    "last_updated": "2026-03-24"
   },
   "unlock_requirements": {
     "dam_battlegrounds": "起始区域",

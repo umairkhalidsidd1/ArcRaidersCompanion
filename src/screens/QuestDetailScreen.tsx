@@ -17,6 +17,7 @@ import {getQuests} from '../data/localizedData';
 import {getCompletedQuests, toggleCompletedQuest} from '../utils/storage';
 import {resolveImage} from '../data/imageRegistry';
 import {checkQuestMilestoneReview} from '../utils/review';
+import {paraphraseQuestObjective} from '../utils/paraphraseQuestObjective';
 
 
 const TRADER_PORTRAITS: Record<string, any> = {
@@ -87,7 +88,7 @@ const getObjTip = (obj: string, t: (key: string) => string): string => {
   return t('questDetail.followMarkerTip');
 };
 
-const generateGuide = (quest: Quest, t: (key: string) => string): GuideData => {
+const generateGuide = (quest: Quest, t: (key: string) => string, language: string): GuideData => {
   const preparation: string[] = [];
   if (quest.prerequisites.length > 0)
     preparation.push(
@@ -103,7 +104,7 @@ const generateGuide = (quest: Quest, t: (key: string) => string): GuideData => {
     preparation.push(t('questDetail.singleRound'));
 
   const steps: GuideStep[] = quest.objectives.map(obj => ({
-    objective: obj,
+    objective: paraphraseQuestObjective(obj, language),
     tip: getObjTip(obj, t),
   }));
 
@@ -133,11 +134,14 @@ const QuestDetailScreen = ({route, navigation}: any) => {
   const {t, i18n} = useTranslation();
   const insets = useSafeAreaInsets();
   const {questId} = route.params;
-  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
+  const allQuests: Quest[] = useMemo(() => {
+    void i18n.language;
+    return ((getQuests() as any).quests || []) as Quest[];
+  }, [i18n.language]);
 
   const quest = useMemo(
     () => allQuests.find(q => q.id === questId)!,
-    [questId, i18n.language],
+    [allQuests, questId],
   );
 
   const [completedIds, setCompletedIds] = useState<number[]>([]);
@@ -152,7 +156,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
       if (completedIds.includes(q.id)) set.add(q.name);
     }
     return set;
-  }, [completedIds, i18n.language]);
+  }, [allQuests, completedIds]);
 
   const isCompleted = completedIds.includes(questId);
   const isLocked =
@@ -163,7 +167,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
 
   const giverColor = GIVER_COLORS[quest.quest_giver] || colors.orange;
 
-  const guide = useMemo(() => generateGuide(quest, t), [quest, t]);
+  const guide = useMemo(() => generateGuide(quest, t, i18n.language), [quest, t, i18n.language]);
 
   const handleMarkCompleted = useCallback(async () => {
     const wasCompleted = completedIds.includes(questId);
@@ -191,14 +195,14 @@ const QuestDetailScreen = ({route, navigation}: any) => {
       }
     }
     setCompletedIds(newIds);
-  }, [quest.prerequisites, completedIds, questId]);
+  }, [allQuests, quest.prerequisites, completedIds]);
 
   const navigateToPrereq = useCallback(
     (prereqName: string) => {
       const pq = allQuests.find(q => q.name === prereqName);
       if (pq) navigation.push('QuestDetail', {questId: pq.id});
     },
-    [navigation],
+    [allQuests, navigation],
   );
 
   if (!quest) return null;
@@ -325,7 +329,7 @@ const QuestDetailScreen = ({route, navigation}: any) => {
             {quest.objectives.map((obj, idx) => (
               <View key={idx} style={s.objectiveCard}>
                 <Icon name="checkbox-blank-circle-outline" size={20} color={colors.borderLight} />
-                <Text style={s.objectiveText}>{obj}</Text>
+                <Text style={s.objectiveText}>{paraphraseQuestObjective(obj, i18n.language)}</Text>
               </View>
             ))}
           </>

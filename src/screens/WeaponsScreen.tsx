@@ -187,6 +187,7 @@ const WeaponsScreen = ({navigation}: any) => {
 
   /* build weapon families */
   const families = useMemo(() => {
+    void i18n.language;
     const weapons = (getItems() as WeaponItem[]).filter(i => i.item_type === 'Weapon');
     const map = new Map<string, WeaponItem[]>();
     weapons.forEach(w => {

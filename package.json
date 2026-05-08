@@ -8,8 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "patch-package",
-    "build-marker-svgs": "node scripts/build-marker-svgs.js"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@notifee/react-native": "^9.1.8",

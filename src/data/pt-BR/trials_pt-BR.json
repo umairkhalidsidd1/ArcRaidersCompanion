@@ -5,7 +5,6 @@
     "description": "Cause o máximo de dano possível às Vespas-caçadoras dentro do limite de tempo do raid.",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "Cause dano às Vespas em qualquer mapa.",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "Cause dano aos Bastiões, inimigos ARC pesadamente blindados.",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "Cause dano aos Fogueteiros em todas as expedições.",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "Cause dano aos Saltadores, inimigos ARC de movimento rápido.",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "Cause dano aos Bombardeiros, grandes ameaças ARC.",
     "image": "custom/damagebombardiers.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "Cause dano a Rainhas ou Matriarcas — os ARC mais perigosos.",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "Cause dano aos Topógrafos que acompanham os Bombardeiros.",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "Cause dano a qualquer combinação de Fogueteiros, Saltadores ou Bastiões.",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "Cause dano a inimigos ARC terrestres.",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "Cause dano a inimigos ARC voadores em qualquer mapa.",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "Cause dano a inimigos ARC voadores especificamente dentro das paredes do Espaçoporto.",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "Destrua unidades ARC Carrapato em todos os mapas.",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "Destrua unidades ARC Carrapato, Bola de fogo e Pop.",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "Destrua unidades ARC Bola de fogo.",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "Destrua unidades ARC Pop em áreas de expedição.",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "Destrua inimigos ARC na área do Pântano nos Campos de batalha da represa.",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "Colha plantas em todos os mapas de expedição.",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "Coleta",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "Entregue itens transportáveis aos pontos de extração ou depósito.",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "Objetivo",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "Abra Sondas ARC espalhadas pelos mapas.",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "Exploração",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "Vasculhe caches de Raiders escondidos nos mapas.",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "Pilhagem",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "Vasculhe contêineres de restos da Primeira Onda em qualquer mapa.",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "Pilhagem",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "Saqueie ninhos de pássaros em posições elevadas.",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "Pilhagem",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "Vasculhe contêineres dentro da ala de Pesquisa Médica em Stella Montis.",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "Pilhagem",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "Abra contêineres dentro dos túneis de tráfego durante Portão trancado no Portão azul.",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "Pilhagem",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "Desarme minas em 4 locais principais durante o evento Portão trancado no Portão azul.",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "Objetivo",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "Baixe informações dos terminais dentro do Bunker oculto.",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "Objetivo",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "Seja atingido por um raio durante eventos de tempestade eletromagnética.",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "Especial",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "Cause dano a inimigos ARC Retalhadores.",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "Recompensas cosméticas + Pontos de ranque",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "Combate",
     "threeStarScore": 4000,
     "maps": [

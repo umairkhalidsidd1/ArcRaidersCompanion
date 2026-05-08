@@ -42,7 +42,7 @@ const REPORT_TYPES = [
 
 type SubmitMode = null | 'add-location' | 'report-issue' | 'suggest-item';
 
-const SubmitScreen = ({navigation}: any) => {
+const SubmitScreen = () => {
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
   const maps = getMaps();
@@ -109,7 +109,7 @@ const SubmitScreen = ({navigation}: any) => {
       t('submit.submittedMessage'),
       [{text: t('common.ok'), onPress: () => { setMode(null); resetForms(); }}],
     );
-  }, [mode, selectedMap, selectedCategory, locationName, locationDesc, reportType, reportDetails, itemName, itemType, itemDetails]);
+  }, [mode, selectedMap, selectedCategory, locationName, locationDesc, reportType, reportDetails, itemName, itemType, itemDetails, t]);
 
   const renderMainMenu = () => (
     <View style={styles.content}>

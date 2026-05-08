@@ -5,7 +5,6 @@
     "description": "在突襲時間限制內盡可能對大黃蜂造成更多傷害。",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "在任意地圖上對黃蜂造成傷害。",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "對堡壘造成傷害，它們是重裝甲ARC敵人。",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "在所有遠征中對火箭兵造成傷害。",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "對跳躍者造成傷害，它們是快速移動的ARC敵人。",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "對轟炸者造成傷害，它們是大型ARC威脅。",
     "image": "custom/damagebombardiers.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "對女王或女族長造成傷害——最危險的ARC敵人。",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "對伴隨轟炸者的勘測者造成傷害。",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "對火箭兵、跳躍者或堡壘的任意組合造成傷害。",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "對任何地面ARC敵人造成傷害。",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "在任意地圖上對飛行ARC敵人造成傷害。",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "在太空港城牆內部對飛行ARC敵人造成傷害。",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "摧毀所有地圖上的蜱蟲ARC單位。",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "摧毀蜱蟲、火球和爆彈ARC單位。",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "摧毀火球ARC單位。",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "摧毀遠征區域中的爆彈ARC單位。",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "在水壩戰場的沼澤區域摧毀ARC敵人。",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "在所有遠征地圖上採集植物。",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "採集",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "將搬運物品送到提取點或存放點。",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "目標",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "打開散布在地圖上的ARC探測器。",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "探索",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "搜索散布在地圖上的隱藏突襲者緩存。",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "拾取",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "在任意地圖上搜索先遣波殘骸容器。",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "拾取",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "掠取位於高處的鳥巢。",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "拾取",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "在星山的醫學研究翼內搜索容器。",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "拾取",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "在藍門的封鎖門事件期間打開交通隧道內的容器。",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "拾取",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "在藍門的封鎖門事件期間在4個主要位置拆除地雷。",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "目標",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "從隱藏掩體內的終端下載信息。",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "目標",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "在電磁風暴事件期間被閃電擊中。",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "特殊",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "對碎裂者ARC敵人造成傷害。",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "外觀獎勵 + 排名積分",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "戰鬥",
     "threeStarScore": 4000,
     "maps": [

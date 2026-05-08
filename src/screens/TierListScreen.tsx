@@ -295,7 +295,7 @@ const TierListScreen = ({navigation}: any) => {
       items = items.filter(i => i.name.toLowerCase().includes(q));
     }
     return items;
-  }, [ready, listVisible, assignedIds, filter, searchQuery, i18nHook.language]);
+  }, [ready, listVisible, assignedIds, filter, searchQuery]);
 
   const totalAssigned = assignedIds.size;
 
@@ -330,7 +330,7 @@ const TierListScreen = ({navigation}: any) => {
       {text: t('common.cancel'), style: 'cancel'},
       {text: t('tierList.reset'), style: 'destructive', onPress: () => save(DEFAULT_TIERS, {})},
     ]);
-  }, [save]);
+  }, [save, t]);
 
   const handleDownload = useCallback(async () => {
     try {
@@ -345,7 +345,7 @@ const TierListScreen = ({navigation}: any) => {
     } catch (e: any) {
       Alert.alert(t('common.error'), e?.message || t('tierList.saveError'));
     }
-  }, []);
+  }, [t]);
 
   const handleAddTier = useCallback(() => {
     setEditLabel('');
@@ -379,7 +379,7 @@ const TierListScreen = ({navigation}: any) => {
         setEditingTier(null);
       }},
     ]);
-  }, [editingTier, tiers, assignments, save]);
+  }, [editingTier, tiers, assignments, save, t]);
 
   const handleEditTier = useCallback((tier: TierDef) => {
     setEditingTier(tier);

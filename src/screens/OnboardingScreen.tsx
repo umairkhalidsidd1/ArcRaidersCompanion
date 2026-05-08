@@ -5,6 +5,7 @@ import {
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,7 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from '../utils/safeArea';
 import Svg, {Circle, Line, Defs, RadialGradient as SvgRadGrad, Stop, Rect} from 'react-native-svg';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import {colors, spacing, borderRadius} from '../theme/theme';
 import {useTranslation} from 'react-i18next';
 import {requestPermissions} from '../utils/notifications';
 import {useLiveEvents} from '../data/eventsStore';
@@ -211,19 +212,37 @@ const TRADERS = [
   {name: 'Apollo', title: 'Smuggler', color: '#FF7043', portrait: require('../assets/traders/apollo.webp'), icon: 'account-cowboy-hat'},
 ];
 
-/* ── Map marker pin data ── */
+/* ── Map preview markers — mirrors real map with every filter visible */
 const MAP_MARKERS = [
-  {x: 0.24, y: 0.32, color: '#42A5F5', icon: 'briefcase-variant'},
-  {x: 0.58, y: 0.24, color: '#FF6B2C', icon: 'elevator'},
-  {x: 0.44, y: 0.56, color: '#4ADE80', icon: 'home-outline'},
-  {x: 0.72, y: 0.44, color: '#FFD600', icon: 'campfire'},
-  {x: 0.34, y: 0.72, color: '#A855F7', icon: 'warehouse'},
+  {x: 0.18, y: 0.24, color: '#455A64', icon: 'briefcase', type: 'Loot'},
+  {x: 0.29, y: 0.18, color: '#8D6E63', icon: 'package-variant-closed', type: 'Loot'},
+  {x: 0.43, y: 0.22, color: '#FF9800', icon: 'store', type: 'Loot'},
+  {x: 0.68, y: 0.21, color: '#FF9800', icon: 'treasure-chest', type: 'Loot'},
+  {x: 0.81, y: 0.31, color: '#607D8B', icon: 'elevator-passenger', type: 'Nav'},
+  {x: 0.54, y: 0.33, color: '#BF360C', icon: 'door-open', type: 'Nav'},
+  {x: 0.22, y: 0.42, color: '#F44336', icon: 'lock', type: 'Nav'},
+  {x: 0.37, y: 0.46, color: '#00E676', icon: 'map-marker-star', type: 'Nav'},
+  {x: 0.63, y: 0.48, color: '#FF1744', icon: 'robot', type: 'ARC'},
+  {x: 0.76, y: 0.52, color: '#FF5722', icon: 'bomb', type: 'ARC'},
+  {x: 0.49, y: 0.58, color: '#FF3D00', icon: 'fire', type: 'ARC'},
+  {x: 0.31, y: 0.62, color: '#FF6F00', icon: 'tower-fire', type: 'ARC'},
+  {x: 0.71, y: 0.68, color: '#FFD600', icon: 'exclamation-thick', type: 'Quest'},
+  {x: 0.57, y: 0.74, color: '#00BCD4', icon: 'access-point', type: 'Quest'},
+  {x: 0.19, y: 0.74, color: '#4CAF50', icon: 'leaf', type: 'Flora'},
+  {x: 0.24, y: 0.58, color: '#CDDC39', icon: 'fruit-citrus', type: 'Flora'},
+  {x: 0.83, y: 0.73, color: '#689F38', icon: 'tree', type: 'Flora'},
+  {x: 0.15, y: 0.34, color: '#FFEB3B', icon: 'battery-charging', type: 'Resource'},
+  {x: 0.89, y: 0.42, color: '#FFC107', icon: 'lightning-bolt', type: 'Resource'},
+  {x: 0.47, y: 0.41, color: '#BF360C', icon: 'campfire', type: 'POI'},
+  {x: 0.61, y: 0.61, color: '#FF6B2C', icon: 'map-marker-radius', type: 'Heat'},
 ];
 
-const MAP_LEGEND_ITEMS = [
-  {label: 'Weapon Case', color: '#42A5F5'},
-  {label: 'Field Depot', color: '#A855F7'},
-  {label: 'Raider Hatch', color: '#4ADE80'},
+const MAP_FILTER_CHIPS = [
+  {label: 'ALL', color: colors.cyan},
+  {label: 'LOOT', color: '#FF9800'},
+  {label: 'NAV', color: '#607D8B'},
+  {label: 'ARC', color: '#FF1744'},
+  {label: 'QUEST', color: '#FFD600'},
 ];
 
 /* ═══════════════ PREVIEW COMPONENTS ═══════════════ */
@@ -232,36 +251,64 @@ const MAP_LEGEND_ITEMS = [
 const MapPreview = () => {
   const {t} = useTranslation();
   return (
-  <View style={mockStyles.mapWrap}>
-    <Image
-      source={require('../assets/maps/blue_gate_bg.webp')}
-      style={{width: PREVIEW_W, height: PREVIEW_H}}
-      resizeMode="cover"
-    />
-    <LinearGradient
-      colors={['rgba(10,14,23,0.2)', 'rgba(10,14,23,0.05)', 'rgba(10,14,23,0.3)']}
-      style={StyleSheet.absoluteFill}
-    />
-    {MAP_MARKERS.map((m, i) => (
-      <View key={i} style={[mockStyles.mapPin, {left: m.x * PREVIEW_W - 11, top: m.y * PREVIEW_H - 11}]}>
-        <View style={[mockStyles.mapPinInner, {backgroundColor: m.color + '33', borderColor: m.color}]}>
-          <Icon name={m.icon} size={10} color={m.color} />
-        </View>
-        <View style={[mockStyles.mapPinPulse, {backgroundColor: m.color + '22'}]} />
+    <View style={mockStyles.mapWrap}>
+      <Image
+        source={require('../assets/maps/blue_gate_bg.webp')}
+        style={mockStyles.mapImage}
+        resizeMode="cover"
+      />
+      <LinearGradient
+        colors={['rgba(6,10,17,0.26)', 'rgba(6,10,17,0.04)', 'rgba(6,10,17,0.42)']}
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={mockStyles.mapGridOverlay} pointerEvents="none">
+        <View style={mockStyles.mapGridH} />
+        <View style={[mockStyles.mapGridH, {top: '33%'}]} />
+        <View style={[mockStyles.mapGridH, {top: '66%'}]} />
+        <View style={mockStyles.mapGridV} />
+        <View style={[mockStyles.mapGridV, {left: '33%'}]} />
+        <View style={[mockStyles.mapGridV, {left: '66%'}]} />
       </View>
-    ))}
-    <View style={mockStyles.mapLegend}>
-      {MAP_LEGEND_ITEMS.map(item => (
-        <View key={item.label} style={mockStyles.mapLegendRow}>
-          <View style={[mockStyles.mapLegendDot, {backgroundColor: item.color}]} />
-          <Text style={mockStyles.mapLegendText}>{item.label}</Text>
+
+      {MAP_MARKERS.map((marker, index) => (
+        <View
+          key={`${marker.icon}-${index}`}
+          style={[mockStyles.mapPin, {left: marker.x * PREVIEW_W - 10, top: marker.y * PREVIEW_H - 10}]}> 
+          <View style={[mockStyles.mapPinPulse, {backgroundColor: marker.color + '1F'}]} />
+          <View style={[mockStyles.mapPinInner, {backgroundColor: marker.color + '24', borderColor: marker.color}]}> 
+            <Icon name={marker.icon} size={9.5} color={marker.color} />
+          </View>
         </View>
       ))}
+
+      <View style={mockStyles.mapControlRail}>
+        <View style={mockStyles.mapControlBtn}><Icon name="plus" size={10} color="#DDE7F0" /></View>
+        <View style={mockStyles.mapControlBtn}><Icon name="minus" size={10} color="#DDE7F0" /></View>
+        <View style={mockStyles.mapControlBtn}><Icon name="crosshairs-gps" size={10} color={colors.cyan} /></View>
+      </View>
+
+      <View style={mockStyles.mapNameBadge}>
+        <Icon name="map-marker-radius" size={9} color={colors.cyan} />
+        <Text style={mockStyles.mapNameText}>{t('onboarding.preview.blueGate')}</Text>
+      </View>
+
+      <View style={mockStyles.mapFilterSheet}>
+        <View style={mockStyles.mapFilterHeader}>
+          <Text style={mockStyles.mapFilterTitle}>FILTERS</Text>
+          <View style={mockStyles.mapSelectedBadge}>
+            <Text style={mockStyles.mapSelectedText}>ALL SELECTED</Text>
+          </View>
+        </View>
+        <View style={mockStyles.mapChipRow}>
+          {MAP_FILTER_CHIPS.map(chip => (
+            <View key={chip.label} style={[mockStyles.mapFilterChip, {borderColor: chip.color + '66', backgroundColor: chip.color + '18'}]}> 
+              <View style={[mockStyles.mapLegendDot, {backgroundColor: chip.color}]} />
+              <Text style={[mockStyles.mapFilterChipText, {color: chip.color}]}>{chip.label}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
     </View>
-    <View style={mockStyles.mapNameBadge}>
-      <Text style={mockStyles.mapNameText}>{t('onboarding.preview.blueGate')}</Text>
-    </View>
-  </View>
   );
 };
 
@@ -438,99 +485,168 @@ const EventsPreview = () => {
   );
 };
 
-/* 6. SKILL TREE — mini tree with nodes + connections (SkillTreeScreen style) */
-const TREE_NODES = [
-  // Root nodes (bottom) — pos 0
-  {branch: 's', row: 0, col: 0, icon: 'shield-half-full', active: true, root: true},
-  {branch: 'm', row: 0, col: 0, icon: 'run-fast', active: true, root: true},
-  {branch: 'c', row: 0, col: 0, icon: 'arm-flex', active: true, root: true},
-  // Tier 1
-  {branch: 's', row: 1, col: -1, icon: 'human', active: true},
-  {branch: 's', row: 1, col: 1, icon: 'hammer-wrench', active: true},
-  {branch: 'm', row: 1, col: -1, icon: 'run', active: true},
-  {branch: 'm', row: 1, col: 1, icon: 'slope-uphill', active: true},
-  {branch: 'c', row: 1, col: -1, icon: 'flash', active: true},
-  {branch: 'c', row: 1, col: 1, icon: 'door-open', active: false},
-  // Tier 2
-  {branch: 's', row: 2, col: -1, icon: 'meditation', active: true},
-  {branch: 's', row: 2, col: 1, icon: 'heart-plus', active: false},
-  {branch: 'm', row: 2, col: -1, icon: 'lungs', active: true},
-  {branch: 'm', row: 2, col: 1, icon: 'ski', active: false},
-  {branch: 'c', row: 2, col: -1, icon: 'weight', active: false},
-  {branch: 'c', row: 2, col: 1, icon: 'bomb', active: false},
-  // Tier 3 merge
-  {branch: 's', row: 3, col: 0, icon: 'toolbox', active: false},
-  {branch: 'm', row: 3, col: 0, icon: 'lightning-bolt', active: false},
-  {branch: 'c', row: 3, col: 0, icon: 'volume-off', active: false},
-];
+/* 6. SKILL TREE — current SkillTreeScreen-style preview */
+type PreviewBranchId = 'm' | 's' | 'c';
+type PreviewNodeState = 'active' | 'available' | 'locked';
+type PreviewTreeNode = {
+  branch: PreviewBranchId;
+  row: number;
+  lane: number;
+  icon: string;
+  state: PreviewNodeState;
+  root?: boolean;
+  pts?: string;
+};
 
-const TREE_BC: Record<string, string> = {s: '#00D87A', m: '#FDE600', c: '#FF3A59'};
+const PREVIEW_BRANCH_ORDER: PreviewBranchId[] = ['m', 's', 'c'];
+const PREVIEW_BRANCH_META: Record<PreviewBranchId, {labelKey: string; color: string; icon: string; points: number}> = {
+  m: {labelKey: 'onboarding.preview.mobility', color: '#FDE600', icon: 'run-fast', points: 18},
+  s: {labelKey: 'onboarding.preview.survival', color: '#00D87A', icon: 'bag-personal-outline', points: 24},
+  c: {labelKey: 'onboarding.preview.conditioning', color: '#FF3A59', icon: 'shield-half-full', points: 10},
+};
+
+const TREE_NODES: PreviewTreeNode[] = [
+  {branch: 'm', row: 0, lane: 0, icon: 'run-fast', state: 'active', root: true},
+  {branch: 's', row: 0, lane: 0, icon: 'bag-personal-outline', state: 'active', root: true},
+  {branch: 'c', row: 0, lane: 0, icon: 'shield-half-full', state: 'active', root: true},
+
+  {branch: 'm', row: 1, lane: -1, icon: 'slope-uphill', state: 'active', pts: '4'},
+  {branch: 'm', row: 1, lane: 1, icon: 'run-fast', state: 'active', pts: '5'},
+  {branch: 'm', row: 2, lane: -1, icon: 'lungs', state: 'active', pts: '3'},
+  {branch: 'm', row: 2, lane: 1, icon: 'ski', state: 'available'},
+  {branch: 'm', row: 3, lane: 0, icon: 'lightning-bolt', state: 'available'},
+  {branch: 'm', row: 4, lane: 0, icon: 'infinity', state: 'locked'},
+
+  {branch: 's', row: 1, lane: -1, icon: 'human-greeting', state: 'active', pts: '4'},
+  {branch: 's', row: 1, lane: 1, icon: 'magnify', state: 'active', pts: '5'},
+  {branch: 's', row: 2, lane: -1, icon: 'hammer-wrench', state: 'active', pts: '1'},
+  {branch: 's', row: 2, lane: 1, icon: 'weight-lifter', state: 'available'},
+  {branch: 's', row: 3, lane: 0, icon: 'toolbox', state: 'available'},
+  {branch: 's', row: 4, lane: 0, icon: 'shield-key-outline', state: 'locked'},
+
+  {branch: 'c', row: 1, lane: -1, icon: 'weight', state: 'active', pts: '3'},
+  {branch: 'c', row: 1, lane: 1, icon: 'bomb', state: 'available'},
+  {branch: 'c', row: 2, lane: -1, icon: 'flash', state: 'available'},
+  {branch: 'c', row: 2, lane: 1, icon: 'lock-open-variant', state: 'locked'},
+  {branch: 'c', row: 3, lane: 0, icon: 'heart-pulse', state: 'locked'},
+  {branch: 'c', row: 4, lane: 0, icon: 'medical-bag', state: 'locked'},
+];
 
 const SkillTreePreview = () => {
   const {t} = useTranslation();
   const treeW = PREVIEW_W;
   const treeH = PREVIEW_H;
-  const branchSpacing = treeW / 3;
-  const nodeR = 12;
-  const rootR = 15;
-  const rowH = (treeH - 50) / 4;
-  const colSpread = 18;
+  const canvasTop = 100;
+  const canvasBottom = 30;
+  const rootY = treeH - canvasBottom - 10;
+  const rowH = (rootY - canvasTop - 14) / 4;
+  const laneSpread = Math.max(13, treeW * 0.052);
+  const nodeR = 9;
+  const rootR = 13;
 
-  const getBranchCx = (b: string) => {
-    if (b === 's') return branchSpacing * 0.5;
-    if (b === 'm') return branchSpacing * 1.5;
-    return branchSpacing * 2.5;
+  const getBranchCx = (branch: PreviewBranchId) => {
+    const branchIndex = PREVIEW_BRANCH_ORDER.indexOf(branch);
+    return treeW * (0.18 + branchIndex * 0.32);
   };
 
-  const getNodeXY = (n: typeof TREE_NODES[0]) => {
-    const cx = getBranchCx(n.branch);
-    const x = cx + n.col * colSpread;
-    const y = treeH - 30 - n.row * rowH;
+  const getNodeXY = (node: PreviewTreeNode) => {
+    const x = getBranchCx(node.branch) + node.lane * laneSpread;
+    const y = rootY - node.row * rowH;
     return {x, y};
   };
 
-  // Build connection pairs
   const connections: {x1: number; y1: number; x2: number; y2: number; color: string; active: boolean}[] = [];
   TREE_NODES.forEach(node => {
     if (node.root) return;
-    const bc = TREE_BC[node.branch];
+    const branchColor = PREVIEW_BRANCH_META[node.branch].color;
     const {x, y} = getNodeXY(node);
-    // Connect to root if tier 1
-    if (node.row === 1) {
-      const root = TREE_NODES.find(n => n.branch === node.branch && n.root);
-      if (root) {
-        const rp = getNodeXY(root);
-        connections.push({x1: rp.x, y1: rp.y - rootR, x2: x, y2: y + nodeR, color: bc, active: node.active});
-      }
-    }
-    // Connect tier 2 to tier 1 same side
-    if (node.row === 2) {
-      const parent = TREE_NODES.find(n => n.branch === node.branch && n.row === 1 && n.col === node.col);
-      if (parent) {
-        const pp = getNodeXY(parent);
-        connections.push({x1: pp.x, y1: pp.y - nodeR, x2: x, y2: y + nodeR, color: bc, active: node.active});
-      }
-    }
-    // Connect tier 3 merge to both tier 2
-    if (node.row === 3) {
-      const parents = TREE_NODES.filter(n => n.branch === node.branch && n.row === 2);
-      parents.forEach(p => {
-        const pp = getNodeXY(p);
-        connections.push({x1: pp.x, y1: pp.y - nodeR, x2: x, y2: y + nodeR, color: bc, active: false});
+    const parentCandidates = node.row === 1
+      ? TREE_NODES.filter(parent => parent.branch === node.branch && parent.root)
+      : TREE_NODES.filter(parent => {
+          if (parent.branch !== node.branch || parent.row !== node.row - 1) return false;
+          return node.lane === 0 || parent.lane === node.lane || parent.lane === 0;
+        });
+
+    parentCandidates.forEach(parent => {
+      const parentPos = getNodeXY(parent);
+      const parentR = parent.root ? rootR : nodeR;
+      const active = node.state === 'active' && parent.state === 'active';
+      connections.push({
+        x1: parentPos.x,
+        y1: parentPos.y - parentR,
+        x2: x,
+        y2: y + nodeR,
+        color: branchColor,
+        active,
       });
-    }
+    });
   });
 
+  const gate15Y = rootY - rowH * 2.55;
+  const gate36Y = rootY - rowH * 3.62;
+
   return (
-    <View style={{flex: 1}}>
-      {/* Dark tree background matching SkillTreeScreen */}
+    <View style={mockStyles.skillPreviewRoot}>
       <LinearGradient
         colors={['#060A11', '#0D1520', '#0A1018', '#060A11']}
         locations={[0, 0.35, 0.65, 1]}
         style={StyleSheet.absoluteFill}
       />
+
+      <View style={mockStyles.skillMiniHeader}>
+        <View style={mockStyles.skillIconButton}>
+          <Icon name="arrow-left" size={12} color="#FFFFFF" />
+        </View>
+        <View pointerEvents="none" style={mockStyles.skillMiniTitleBox}>
+          <Text style={mockStyles.skillMiniEyebrow}>ARC RAIDERS</Text>
+          <Text style={mockStyles.skillMiniTitle}>{t('onboarding.preview.skillTree', 'SKILL TREE')}</Text>
+        </View>
+        <View style={mockStyles.skillHeaderActions}>
+          <View style={mockStyles.skillIconButton}>
+            <Icon name="help-circle-outline" size={11} color="#D7E2EF" />
+          </View>
+          <View style={mockStyles.skillIconButton}>
+            <Icon name="crosshairs-gps" size={11} color="#D7E2EF" />
+          </View>
+        </View>
+      </View>
+
+      <View style={mockStyles.skillPointsDock}>
+        <View style={mockStyles.skillPointsTopRow}>
+          <View>
+            <Text style={mockStyles.skillPointsLabel}>{t('onboarding.preview.skillPts')}</Text>
+            <View style={mockStyles.skillPointsValueRow}>
+              <Text style={mockStyles.skillPointsBig}>24</Text>
+              <Text style={mockStyles.skillPointsSmall}> / 76</Text>
+            </View>
+          </View>
+          <View style={mockStyles.skillPointActions}>
+            <View style={mockStyles.skillPmBtn}><Icon name="minus" size={8} color="#9AABBA" /></View>
+            <View style={mockStyles.skillPmBtn}><Icon name="plus" size={8} color="#9AABBA" /></View>
+            <View style={mockStyles.skillResetBtn}>
+              <Icon name="refresh" size={7} color="#FF3A59" />
+              <Text style={mockStyles.skillResetText}>RESET</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={mockStyles.skillBranchChipRow}>
+          {PREVIEW_BRANCH_ORDER.map(branch => {
+            const meta = PREVIEW_BRANCH_META[branch];
+            return (
+              <View key={branch} style={[mockStyles.skillBranchChip, {borderColor: withAlpha(meta.color, '44'), backgroundColor: withAlpha(meta.color, '0D')}]}> 
+                <Icon name={meta.icon} size={8} color={meta.color} />
+                <Text style={[mockStyles.skillBranchChipText, {color: meta.color}]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>
+                  {t(meta.labelKey)}
+                </Text>
+                <Text style={mockStyles.skillBranchChipCount}>{meta.points}</Text>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+
       <Svg width={treeW} height={treeH} style={StyleSheet.absoluteFill}>
-        {/* Subtle center glow */}
         <Defs>
           <SvgRadGrad id="treeGlow" cx="50%" cy="55%" r="50%">
             <Stop offset="0" stopColor="#1A2A3A" stopOpacity="0.4" />
@@ -539,7 +655,18 @@ const SkillTreePreview = () => {
         </Defs>
         <Rect x={0} y={0} width={treeW} height={treeH} fill="url(#treeGlow)" />
 
-        {/* Connection lines */}
+        {PREVIEW_BRANCH_ORDER.map(branch => {
+          const meta = PREVIEW_BRANCH_META[branch];
+          const left = getBranchCx(branch) - laneSpread * 1.72;
+          const right = getBranchCx(branch) + laneSpread * 1.72;
+          return (
+            <React.Fragment key={`gates-${branch}`}>
+              <Line x1={left} y1={gate15Y} x2={right} y2={gate15Y} stroke={withAlpha(meta.color, '4D')} strokeWidth={0.8} strokeDasharray="3 3" />
+              <Line x1={left} y1={gate36Y} x2={right} y2={gate36Y} stroke="rgba(255,255,255,0.13)" strokeWidth={0.8} strokeDasharray="3 3" />
+            </React.Fragment>
+          );
+        })}
+
         {connections.map((c, i) => (
           <React.Fragment key={`conn-${i}`}>
             {c.active && (
@@ -551,73 +678,64 @@ const SkillTreePreview = () => {
           </React.Fragment>
         ))}
 
-        {/* Nodes */}
         {TREE_NODES.map((node, i) => {
           const {x, y} = getNodeXY(node);
           const r = node.root ? rootR : nodeR;
-          const bc = TREE_BC[node.branch];
-          const active = node.active;
+          const branchColor = PREVIEW_BRANCH_META[node.branch].color;
+          const active = node.state === 'active';
+          const available = node.state === 'available';
           return (
             <React.Fragment key={`node-${i}`}>
-              {/* Glow ring for active nodes */}
               {active && (
-                <Circle cx={x} cy={y} r={r + 4} fill={bc} opacity={0.08} />
+                <Circle cx={x} cy={y} r={r + 5} fill={branchColor} opacity={0.09} />
               )}
-              {/* Node circle */}
+              {available && (
+                <Circle cx={x} cy={y} r={r + 3} fill="transparent" stroke={branchColor} strokeWidth={0.7} opacity={0.45} />
+              )}
               <Circle cx={x} cy={y} r={r}
-                fill={active ? bc + '18' : 'rgba(7,11,19,0.96)'}
-                stroke={active ? bc : '#1A2838'}
-                strokeWidth={active ? (node.root ? 2 : 1.5) : 0.8}
+                fill={active ? withAlpha(branchColor, '18') : available ? '#0C1521' : 'rgba(7,11,19,0.96)'}
+                stroke={active || available ? branchColor : '#1A2838'}
+                strokeWidth={active ? (node.root ? 2 : 1.5) : available ? 1 : 0.8}
               />
             </React.Fragment>
           );
         })}
       </Svg>
 
-      {/* Node icons as absolute-positioned Views (SVG can't render Icon) */}
       {TREE_NODES.map((node, i) => {
         const {x, y} = getNodeXY(node);
         const r = node.root ? rootR : nodeR;
-        const bc = TREE_BC[node.branch];
+        const branchColor = PREVIEW_BRANCH_META[node.branch].color;
         const iconSz = node.root ? 16 : 11;
         return (
-          <View key={`icon-${i}`} style={{
-            position: 'absolute',
-            left: x - r, top: y - r,
-            width: r * 2, height: r * 2,
-            alignItems: 'center', justifyContent: 'center',
-          }}>
+          <View key={`icon-${i}`} style={[mockStyles.skillNodeIcon, {left: x - r, top: y - r, width: r * 2, height: r * 2}]}> 
             <Icon name={node.icon} size={iconSz}
-              color={node.active ? bc : (node.row <= 2 ? '#4A5A6A' : '#1E2D3D')} />
+              color={node.state === 'active' || node.state === 'available' ? branchColor : '#354455'} />
+            {node.pts ? (
+              <View style={mockStyles.skillRankPips}>
+                <Text style={mockStyles.skillRankText}>{node.pts}</Text>
+              </View>
+            ) : null}
+            {node.state === 'locked' ? (
+              <View style={mockStyles.skillMiniLockDot}>
+                <Icon name="lock" size={5} color="#7F8C99" />
+              </View>
+            ) : null}
           </View>
         );
       })}
 
-      {/* Branch labels at bottom */}
-      {(['s', 'm', 'c'] as const).map(b => {
-        const cx = getBranchCx(b);
-        const bc = TREE_BC[b];
-        const names: Record<string, string> = {s: t('onboarding.preview.survival'), m: t('onboarding.preview.mobility'), c: t('onboarding.preview.conditioning')};
+      {PREVIEW_BRANCH_ORDER.map(branch => {
+        const cx = getBranchCx(branch);
+        const meta = PREVIEW_BRANCH_META[branch];
         return (
-          <View key={`lbl-${b}`} style={{position: 'absolute', left: cx - 30, bottom: 4, width: 60, alignItems: 'center'}}>
-            <Text style={{fontSize: 5.5, fontWeight: '900', color: bc, letterSpacing: 1, textAlign: 'center'}}>{names[b]}</Text>
+          <View key={`lbl-${branch}`} style={[mockStyles.skillRootLabelBox, {left: cx - 34}]}> 
+            <Text style={[mockStyles.skillRootLabel, {color: meta.color}]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.65}>
+              {t(meta.labelKey)}
+            </Text>
           </View>
         );
       })}
-
-      {/* Points counter overlay — matching real screen's pointsBox */}
-      <View style={{
-        position: 'absolute', top: 6, right: 6,
-        backgroundColor: '#050A12', borderRadius: 6,
-        paddingHorizontal: 8, paddingVertical: 4,
-        borderWidth: 1, borderColor: '#1A2A3D',
-      }}>
-        <Text style={{fontSize: 5.5, fontWeight: '800', color: '#7A8A98', letterSpacing: 1}}>{t('onboarding.preview.skillPts')}</Text>
-        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-          <Text style={{fontSize: 12, fontWeight: '900', color: '#44D5E8'}}>52</Text>
-          <Text style={{fontSize: 7, fontWeight: '600', color: '#5A6A7A'}}> / 80</Text>
-        </View>
-      </View>
     </View>
   );
 };
@@ -658,10 +776,30 @@ const GearPreview = () => {
 /* ═══════════════ MOCKUP STYLES ═══════════════ */
 const mockStyles = StyleSheet.create({
   /* Map */
-  mapWrap: {flex: 1, overflow: 'hidden'},
-  mapPin: {position: 'absolute', alignItems: 'center', justifyContent: 'center'},
-  mapPinInner: {width: 22, height: 22, borderRadius: 11, alignItems: 'center', justifyContent: 'center', borderWidth: 1.5, zIndex: 2},
-  mapPinPulse: {position: 'absolute', width: 34, height: 34, borderRadius: 17},
+  mapWrap: {flex: 1, overflow: 'hidden', backgroundColor: '#070B12'},
+  mapImage: {width: PREVIEW_W, height: PREVIEW_H},
+  mapGridOverlay: {...StyleSheet.absoluteFillObject, opacity: 0.13},
+  mapGridH: {position: 'absolute', left: 0, right: 0, top: 0, height: StyleSheet.hairlineWidth, backgroundColor: colors.cyan},
+  mapGridV: {position: 'absolute', top: 0, bottom: 0, left: 0, width: StyleSheet.hairlineWidth, backgroundColor: colors.cyan},
+  mapPin: {position: 'absolute', width: 20, height: 20, alignItems: 'center', justifyContent: 'center'},
+  mapPinInner: {width: 20, height: 20, borderRadius: 10, alignItems: 'center', justifyContent: 'center', borderWidth: 1.2, zIndex: 2},
+  mapPinPulse: {position: 'absolute', width: 30, height: 30, borderRadius: 15},
+  mapControlRail: {
+    position: 'absolute',
+    left: 8,
+    top: 8,
+    gap: 5,
+  },
+  mapControlBtn: {
+    width: 23,
+    height: 23,
+    borderRadius: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(7,11,19,0.88)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+  },
   mapLegend: {
     position: 'absolute', bottom: 8, left: 8,
     backgroundColor: 'rgba(10,14,23,0.85)', borderRadius: 6, padding: 6, gap: 3,
@@ -672,10 +810,49 @@ const mockStyles = StyleSheet.create({
   mapLegendText: {fontSize: 8, color: 'rgba(255,255,255,0.6)', fontWeight: '600'},
   mapNameBadge: {
     position: 'absolute', top: 8, right: 8,
-    backgroundColor: 'rgba(10,14,23,0.85)', borderRadius: 4, paddingHorizontal: 6, paddingVertical: 3,
-    borderWidth: 1, borderColor: 'rgba(0,229,255,0.2)',
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+    backgroundColor: 'rgba(7,11,19,0.9)', borderRadius: 8, paddingHorizontal: 7, paddingVertical: 5,
+    borderWidth: 1, borderColor: 'rgba(0,229,255,0.22)',
   },
   mapNameText: {fontSize: 8, color: '#00E5FF', fontWeight: '800', letterSpacing: 1},
+  mapFilterSheet: {
+    position: 'absolute',
+    left: 8,
+    right: 8,
+    bottom: 8,
+    padding: 7,
+    borderRadius: 11,
+    backgroundColor: 'rgba(7,11,19,0.92)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+  },
+  mapFilterHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  mapFilterTitle: {fontSize: 6.5, fontWeight: '900', color: '#AAB6C2', letterSpacing: 1.1},
+  mapSelectedBadge: {
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    backgroundColor: 'rgba(0,229,255,0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(0,229,255,0.24)',
+  },
+  mapSelectedText: {fontSize: 5.8, fontWeight: '900', color: colors.cyan, letterSpacing: 0.6},
+  mapChipRow: {flexDirection: 'row', alignItems: 'center', gap: 4},
+  mapFilterChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    borderRadius: 7,
+    borderWidth: 1,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
+  },
+  mapFilterChipText: {fontSize: 5.8, fontWeight: '900', letterSpacing: 0.35},
 
   /* Shared grid */
   gridWrap: {flex: 1, padding: 10, paddingTop: 8},
@@ -758,6 +935,136 @@ const mockStyles = StyleSheet.create({
   eventStatusDot: {width: 4, height: 4, borderRadius: 2, shadowOffset: {width: 0, height: 0}, shadowOpacity: 0.95, shadowRadius: 4, elevation: 4},
   eventStatusText: {fontSize: 6, fontWeight: '800', letterSpacing: 0.5},
   eventTimer: {fontSize: 11, fontWeight: '800', fontVariant: ['tabular-nums']},
+
+  /* Skill tree preview */
+  skillPreviewRoot: {flex: 1, overflow: 'hidden'},
+  skillMiniHeader: {
+    position: 'absolute',
+    left: 8,
+    right: 8,
+    top: 6,
+    minHeight: 28,
+    zIndex: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  skillIconButton: {
+    width: 26,
+    height: 26,
+    borderRadius: 8,
+    backgroundColor: 'rgba(13,21,32,0.94)',
+    borderWidth: 1,
+    borderColor: '#243244',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skillMiniTitleBox: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 1,
+  },
+  skillMiniEyebrow: {fontSize: 5.5, fontWeight: '900', color: '#67788A', letterSpacing: 1.2},
+  skillMiniTitle: {fontSize: 10, fontWeight: '900', color: '#EAF4FF', letterSpacing: 0.8},
+  skillHeaderActions: {flexDirection: 'row', gap: 5},
+  skillPointsDock: {
+    position: 'absolute',
+    left: 8,
+    right: 8,
+    top: 39,
+    zIndex: 7,
+    padding: 7,
+    borderRadius: 10,
+    backgroundColor: 'rgba(5,10,18,0.93)',
+    borderWidth: 1,
+    borderColor: '#1A2A3D',
+  },
+  skillPointsTopRow: {flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'},
+  skillPointsLabel: {fontSize: 6.5, fontWeight: '900', color: '#7A8A98', letterSpacing: 1},
+  skillPointsValueRow: {flexDirection: 'row', alignItems: 'flex-end'},
+  skillPointsBig: {fontSize: 17, fontWeight: '900', color: colors.cyan},
+  skillPointsSmall: {fontSize: 8, fontWeight: '800', color: '#627283', marginBottom: 2},
+  skillPointActions: {flexDirection: 'row', alignItems: 'center', gap: 4},
+  skillPmBtn: {
+    width: 18,
+    height: 18,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#2A3444',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.03)',
+  },
+  skillResetBtn: {
+    height: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    paddingHorizontal: 6,
+    borderRadius: 5,
+    backgroundColor: 'rgba(255,58,89,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,58,89,0.25)',
+  },
+  skillResetText: {fontSize: 5.8, fontWeight: '900', color: '#FF3A59', letterSpacing: 0.6},
+  skillBranchChipRow: {flexDirection: 'row', gap: 4, marginTop: 6},
+  skillBranchChip: {
+    flex: 1,
+    minHeight: 20,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  skillBranchChipText: {flex: 1, fontSize: 5.7, fontWeight: '900', letterSpacing: 0.15},
+  skillBranchChipCount: {fontSize: 7.5, fontWeight: '900', color: '#EAF4FF'},
+  skillNodeIcon: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skillRankPips: {
+    position: 'absolute',
+    right: -2,
+    bottom: -2,
+    minWidth: 10,
+    height: 10,
+    borderRadius: 5,
+    paddingHorizontal: 2,
+    backgroundColor: '#101824',
+    borderWidth: 1,
+    borderColor: '#34465A',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skillRankText: {fontSize: 5.5, fontWeight: '900', color: '#EAF4FF'},
+  skillMiniLockDot: {
+    position: 'absolute',
+    right: -2,
+    bottom: -2,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#101824',
+    borderWidth: 1,
+    borderColor: '#263345',
+  },
+  skillRootLabelBox: {
+    position: 'absolute',
+    bottom: 8,
+    width: 74,
+    alignItems: 'center',
+  },
+  skillRootLabel: {fontSize: 7, fontWeight: '900', letterSpacing: 0.45, textAlign: 'center'},
 
   /* Gear loadout rows */
   gearRow: {
@@ -870,7 +1177,17 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
   const {t} = useTranslation();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<any>(null);
+  const ctaPressHandledRef = useRef(false);
+  const ctaPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
+
+  const releaseCtaPressLock = useCallback(() => {
+    if (ctaPressTimerRef.current) {
+      clearTimeout(ctaPressTimerRef.current);
+      ctaPressTimerRef.current = null;
+    }
+    ctaPressHandledRef.current = false;
+  }, []);
 
   /* Gradient border spin — native driver OK (rotation only) */
   const spinAnim = useRef(new Animated.Value(0)).current;
@@ -901,28 +1218,35 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const page = Math.round(e.nativeEvent.contentOffset.x / W);
       setCurrentPage(page);
+      releaseCtaPressLock();
     },
-    [],
+    [releaseCtaPressLock],
   );
 
+  const finishOnboarding = useCallback(() => {
+    onDone();
+    AsyncStorage.setItem(ONBOARDING_KEY, 'true').catch(() => {});
+  }, [onDone]);
+
   const goNext = useCallback(() => {
+    if (ctaPressHandledRef.current) return;
+    ctaPressHandledRef.current = true;
+
     if (currentPage < NUM_SLIDES - 1) {
-      scrollRef.current?.scrollTo({x: (currentPage + 1) * W, animated: true});
-      setCurrentPage(currentPage + 1);
+      const nextPage = currentPage + 1;
+      scrollRef.current?.scrollTo({x: nextPage * W, animated: true});
+      if (Platform.OS === 'android') {
+        requestAnimationFrame(() => setCurrentPage(nextPage));
+      } else {
+        setCurrentPage(nextPage);
+      }
+      ctaPressTimerRef.current = setTimeout(releaseCtaPressLock, 650);
     } else {
       finishOnboarding();
     }
-  }, [currentPage]);
+  }, [currentPage, finishOnboarding, releaseCtaPressLock]);
 
-  const finishOnboarding = useCallback(async () => {
-    await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
-    onDone();
-  }, [onDone]);
-
-  const skipOnboarding = useCallback(async () => {
-    await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
-    onDone();
-  }, [onDone]);
+  useEffect(() => releaseCtaPressLock, [releaseCtaPressLock]);
 
   /* Ask for notification permission on the 4th slide */
   useEffect(() => {
@@ -1042,7 +1366,13 @@ const OnboardingScreen = ({onDone}: {onDone: () => void}) => {
         </View>
 
         {/* CTA Button with animated gradient border */}
-        <TouchableOpacity style={styles.ctaOuter} activeOpacity={0.8} onPress={goNext}>
+        <TouchableOpacity
+          style={styles.ctaOuter}
+          activeOpacity={0.8}
+          delayPressIn={0}
+          delayPressOut={0}
+          onPress={Platform.OS === 'android' ? undefined : goNext}
+          onPressIn={Platform.OS === 'android' ? goNext : undefined}>
           <View style={styles.ctaBorderWrap}>
             <Animated.View style={[styles.ctaGradientSpin, {transform: [{rotate: spinRotate}]}]}>
               <LinearGradient colors={GRAD_COLORS} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={{flex: 1}} />

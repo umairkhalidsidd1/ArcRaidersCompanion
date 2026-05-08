@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
 import {
   Animated,
-  Dimensions,
   LayoutAnimation,
   Platform,
   Pressable,
@@ -34,7 +33,6 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const {width: SW} = Dimensions.get('window');
 const ITEMS_KEY = '@arcc_exp_items_v3';
 const COIN_KEY = '@arcc_exp_coins_v3';
 
@@ -186,8 +184,6 @@ const ExpeditionScreen = ({navigation}: any) => {
       ]),
     ).start();
   }, [breathe]);
-
-  const breatheScale = breathe.interpolate({inputRange: [0, 1], outputRange: [1, 1.04]});
 
   useEffect(() => {
     Promise.all([AsyncStorage.getItem(ITEMS_KEY), AsyncStorage.getItem(COIN_KEY)]).then(([i, c]) => {

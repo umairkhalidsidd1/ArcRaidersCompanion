@@ -5,7 +5,6 @@
     "description": "レイド制限時間内にホーネットにできるだけ多くのダメージを与えよ。",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "任意のマップでワスプにダメージを与えよ。",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "重装甲ARC敵のバスティオンにダメージを与えよ。",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "すべての遠征でロケッティアにダメージを与えよ。",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "素早い移動型ARC敵リーパーにダメージを与えよ。",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "大型ARC脅威のボンバルディアにダメージを与えよ。",
     "image": "custom/damagebombardiers.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "最も危険なARCであるクイーンまたはマトリアークにダメージを与えよ。",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "ボンバルディアに随伴するサーベイヤーにダメージを与えよ。",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "ロケッティア、リーパー、バスティオンの任意の組み合わせにダメージを与えよ。",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "地上型ARC敵にダメージを与えよ。",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "任意のマップで飛行ARC敵にダメージを与えよ。",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "宇宙港の壁内で飛行ARC敵にダメージを与えよ。",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "すべてのマップでティックARCユニットを破壊せよ。",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "ティック、ファイアボール、ポップのARCユニットを破壊せよ。",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "ファイアボールARCユニットを破壊せよ。",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "遠征エリアのポップARCユニットを破壊せよ。",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "ダム戦場の沼地エリアでARC敵を破壊せよ。",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "すべての遠征マップで植物を採集せよ。",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "採集",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "搬送物を抽出ポイントまたは格納ポイントに配達せよ。",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "目標",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "マップに散在するARCプローブを開け。",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "探索",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "マップに隠されたレイダーキャッシュを探せ。",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "略奪",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "任意のマップでファーストウェーブのハスクコンテナを調べよ。",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "略奪",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "高所にある鳥の巣を略奪せよ。",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "略奪",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "ステラ・モンティスの医療研究棟内のコンテナを調べよ。",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "略奪",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "ブルーゲートのロックドゲートイベント中に交通トンネル内のコンテナを開け。",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "略奪",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "ブルーゲートの封鎖門イベント中に4つの主要地点で地雷を解除せよ。",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "目標",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "隠されたバンカー内の端末から情報をダウンロードせよ。",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "目標",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "電磁嵐イベント中に雷に打たれよ。",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "特殊",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "シュレッダーARC敵にダメージを与えよ。",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "コスメティック報酬 + ランクポイント",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "戦闘",
     "threeStarScore": 4000,
     "maps": [

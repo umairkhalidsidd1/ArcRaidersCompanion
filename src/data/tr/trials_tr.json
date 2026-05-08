@@ -5,7 +5,6 @@
     "description": "Baskın süresi içinde Eşek Arılarına mümkün olduğunca çok hasar verin.",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "Herhangi bir haritada Arılara hasar verin.",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "Ağır zırhlı ARC düşmanları olan Burçlara hasar verin.",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "Tüm seferlerde Roketçilere hasar verin.",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "Hızlı hareket eden ARC düşmanları olan Sıçrayıcılara hasar verin.",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "Büyük ARC tehditleri olan Bombardımanlara hasar verin.",
     "image": "custom/damagebombardiers.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "ARC'ların en tehlikelileri olan Kraliçelere veya Aile Reislerine hasar verin.",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "Bombardımanlarla birlikte bulunan Araştırmacılara hasar verin.",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "Roketçi, Sıçrayıcı veya Burçların herhangi bir kombinasyonuna hasar verin.",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "Kara tabanlı ARC düşmanlarına hasar verin.",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "Herhangi bir haritada uçan ARC düşmanlarına hasar verin.",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "Özellikle Uzay Limanı duvarları içinde uçan ARC düşmanlarına hasar verin.",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "Tüm haritalarda Kene ARC birimlerini yok edin.",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "Kene, Ateş Topu ve Pop ARC birimlerini yok edin.",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "Ateş Topu ARC birimlerini yok edin.",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "Sefer bölgelerinde Pop ARC birimlerini yok edin.",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "Baraj Savaş Alanlarındaki Bataklık bölgesinde ARC düşmanlarını yok edin.",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "Tüm sefer haritalarında bitki toplayın.",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "Toplama",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "Taşınabilir eşyaları çıkarma veya depo noktalarına teslim edin.",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "Hedef",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "Haritalara dağılmış ARC Sondalarını açın.",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "Keşif",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "Haritalara dağılmış gizli Raider Depolarını arayın.",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "Yağmalama",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "Herhangi bir haritada İlk Dalga Kalıntı konteynerlerini arayın.",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "Yağmalama",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "Yüksek konumlarda bulunan kuş yuvalarını yağmalayın.",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "Yağmalama",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "Stella Montis'teki Tıbbi Araştırma kanadı içindeki konteynerleri arayın.",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "Yağmalama",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "Mavi Kapı'daki Kilitli Kapı sırasında trafik tünelleri içindeki konteynerleri açın.",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "Yağmalama",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "Mavi Kapı'daki Kilitli Kapı olayı sırasında 4 ana konumda mayınları etkisizleştirin.",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "Hedef",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "Gizli Sığınak içindeki terminallerden bilgi indirin.",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "Hedef",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "Elektromanyetik fırtına olayları sırasında yıldırım çarpmasına maruz kalın.",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "Özel",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "Parçalayıcı ARC düşmanlarına hasar verin.",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "Kozmetik Ödüller + Rütbe Puanları",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "Savaş",
     "threeStarScore": 4000,
     "maps": [

@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useMemo} from 'react';
 import {
   FlatList,
   Image,
@@ -12,7 +12,7 @@ import {
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from '../utils/safeArea';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import {colors} from '../theme/theme';
 import {getTraders} from '../data/localizedData';
 
 const TRADER_PORTRAITS: Record<string, ImageSourcePropType> = {
@@ -115,7 +115,7 @@ const TRADER_ORDER = ['TianWen', 'Shani', 'Lance', 'Celeste', 'Apollo'];
 
 const TraderListScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
-  const {t, i18n} = useTranslation();
+  const {t} = useTranslation();
 
   const traderData = useMemo(() => {
     const grouped: Record<string, number> = {};
@@ -137,12 +137,7 @@ const TraderListScreen = ({navigation}: any) => {
         itemCount: grouped[name] || 0,
       };
     });
-  }, [i18n.language, t]);
-
-  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
-  const onImageError = useCallback((name: string) => {
-    setFailedImages(prev => ({...prev, [name]: true}));
-  }, []);
+  }, [t]);
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>

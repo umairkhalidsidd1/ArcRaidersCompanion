@@ -5,7 +5,6 @@
     "description": "레이드 제한 시간 내에 호넷에 최대한 많은 피해를 입히세요.",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "모든 맵에서 와스프에 피해를 입히세요.",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "중장갑 ARC 적인 배스천에 피해를 입히세요.",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "모든 원정에서 로켓병에 피해를 입히세요.",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "빠르게 이동하는 ARC 적 도약자에 피해를 입히세요.",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "대형 ARC 위협인 폭격병에 피해를 입히세요.",
     "image": "custom/damagebombardiers.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "가장 위험한 ARC인 퀸 또는 매트리아크에 피해를 입히세요.",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "폭격병에 동행하는 측량사에 피해를 입히세요.",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "로켓병, 도약자, 배스천 중 아무 조합에든 피해를 입히세요.",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "지상 ARC 적에게 피해를 입히세요.",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "모든 맵에서 비행 ARC 적에게 피해를 입히세요.",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "우주항 벽 안에서 비행 ARC 적에게 피해를 입히세요.",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "모든 맵에서 틱 ARC 유닛을 파괴하세요.",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "틱, 파이어볼, 팝 ARC 유닛을 파괴하세요.",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "파이어볼 ARC 유닛을 파괴하세요.",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "원정 지역의 팝 ARC 유닛을 파괴하세요.",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "댐 전장의 늪지 지역에서 ARC 적을 파괴하세요.",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "모든 원정 맵에서 식물을 채집하세요.",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "채집",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "운반물을 추출 또는 보관 지점에 배달하세요.",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "목표",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "맵에 흩어진 ARC 탐사선을 여세요.",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "탐험",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "맵에 숨겨진 레이더 은닉처를 수색하세요.",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "약탈",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "모든 맵에서 첫 번째 웨이브 잔해 컨테이너를 수색하세요.",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "약탈",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "높은 곳에 있는 새둥지를 약탈하세요.",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "약탈",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "스텔라 몬티스의 의료 연구동 안에 있는 컨테이너를 수색하세요.",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "약탈",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "블루 게이트의 잠긴 문 이벤트 중 교통 터널 안의 컨테이너를 여세요.",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "약탈",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "블루 게이트의 잠긴 문 이벤트 중 4개 주요 위치에서 지뢰를 해체하세요.",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "목표",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "숨겨진 벙커 안의 터미널에서 정보를 다운로드하세요.",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "목표",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "전자기 폭풍 이벤트 중 번개에 맞으세요.",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "특수",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "슈레더 ARC 적에게 피해를 입히세요.",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "코스메틱 보상 + 랭크 포인트",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "전투",
     "threeStarScore": 4000,
     "maps": [

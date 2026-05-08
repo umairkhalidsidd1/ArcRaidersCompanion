@@ -5,7 +5,6 @@
     "description": "Zadaj jak najwięcej obrażeń Szerszeniam w ramach limitu czasu rajdu.",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "Zadaj obrażenia Osom na dowolnej mapie.",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "Zadaj obrażenia Bastionom, ciężko opancerzonym wrogom ARC.",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "Zadaj obrażenia Rakieciarzom we wszystkich wyprawach.",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "Zadaj obrażenia Skoczkom, szybkim wrogom ARC.",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "Zadaj obrażenia Bombardierom, dużym zagrożeniom ARC.",
     "image": "custom/damagebombardiers.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "Zadaj obrażenia Królowym lub Matriarchiniom — najniebezpieczniejszym ARC.",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "Zadaj obrażenia Mierniczym, którzy towarzyszą Bombardierom.",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "Zadaj obrażenia dowolnej kombinacji Rakieciarzy, Skoczków lub Bastionów.",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "Zadaj obrażenia naziemnym wrogom ARC.",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "Zadaj obrażenia latającym wrogom ARC na dowolnej mapie.",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "Zadaj obrażenia latającym ARC wewnątrz murów Kosmodromu.",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "Zniszcz jednostki ARC Kleszcze na wszystkich mapach.",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "Zniszcz jednostki ARC Kleszcze, Kule ognia i Popy.",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "Zniszcz jednostki ARC Kule ognia.",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "Zniszcz jednostki ARC Pop w obszarach wypraw.",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "Zniszcz wrogów ARC w strefie Bagien na Polach bitewnych zapory.",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "Zbieraj rośliny na wszystkich mapach wypraw.",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "Zbieranie",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "Dostarcz przedmioty do przenoszenia do punktów ekstrakcji lub składowania.",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "Cel",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "Otwórz Sondy ARC rozsiane po mapach.",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "Eksploracja",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "Przeszukaj ukryte skrytki Rajderów na mapach.",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "Grabież",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "Przeszukaj kontenery szczątków Pierwszej Fali na dowolnej mapie.",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "Grabież",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "Plądruj gniazda ptaków na podwyższonych pozycjach.",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "Grabież",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "Przeszukaj pojemniki wewnątrz Skrzydła Badań Medycznych na Stella Montis.",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "Grabież",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "Otwórz pojemniki w tunelach ruchu podczas Zamkniętej bramy na Niebieskiej bramie.",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "Grabież",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "Rozbrój miny w 4 głównych lokalizacjach podczas wydarzenia Zamknięta brama na Niebieskiej bramie.",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "Cel",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "Pobierz informacje z terminali wewnątrz Ukrytego bunkra.",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "Cel",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "Zostań trafiony piorunem podczas wydarzeń Burzy elektromagnetycznej.",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "Specjalne",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "Zadaj obrażenia wrogom ARC Rozszarpywaczom.",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "Nagrody kosmetyczne + Punkty rangi",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "Walka",
     "threeStarScore": 4000,
     "maps": [

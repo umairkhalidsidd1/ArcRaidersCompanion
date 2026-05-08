@@ -23,10 +23,15 @@ import {usePremium} from '../context/PremiumContext';
 import PremiumLockOverlay from '../components/PremiumLockOverlay';
 
 const {width: SCREEN_W} = Dimensions.get('window');
-const THUMB_W = SCREEN_W * 0.32;
+const THUMB_W = SCREEN_W * 0.28;
 
 type Guide = ReturnType<typeof getGuides>[number];
-type GuideListItem = Guide & {stepCount: number; searchBlob: string};
+type GuideListItem = Guide & {
+  stepCount: number;
+  objectiveCount: number;
+  rewardCount: number;
+  searchBlob: string;
+};
 
 const EMPTY_GUIDES: GuideListItem[] = [];
 
@@ -48,6 +53,8 @@ const buildGuideList = (): GuideListItem[] => {
   return (getGuides() as Guide[]).map(g => ({
     ...g,
     stepCount: countSteps(g.content),
+    objectiveCount: (g.objectives || []).length,
+    rewardCount: (g.rewards || []).length,
     searchBlob: `${g.title} ${g.summary || ''} ${g.author || ''}`.toLowerCase(),
   }));
 };
@@ -152,13 +159,21 @@ const GuidesScreen = ({navigation}: any) => {
     () => (showContent ? filtered.slice(0, visibleCount) : EMPTY_GUIDES),
     [showContent, filtered, visibleCount],
   );
+  const listBottomPadding = Math.max(
+    insets.bottom + (Platform.OS === 'ios' ? 118 : 108),
+    128,
+  );
 
   const renderGuide = useCallback(
     ({item, index}: {item: GuideListItem; index: number}) => {
-      const steps = item.stepCount;
+      const isQuest = (item.type || 'general') === 'quest';
+      const steps = isQuest ? item.objectiveCount : item.stepCount;
+      const typeLabel = isQuest ? t('guides.questBadge') : t('guides.general');
+      const typeIcon = isQuest ? 'target-variant' : 'book-open-page-variant';
+      const typeColor = isQuest ? colors.orange : colors.cyan;
       const summary = item.summary || '';
       const trimmedSummary =
-        summary.length > 80 ? summary.slice(0, 80).trimEnd() + '…' : summary;
+        summary.length > 104 ? summary.slice(0, 104).trimEnd() + '…' : summary;
 
       const isLockedByPremium = !isPremium && index >= FREE_GUIDE_COUNT;
 
@@ -175,20 +190,31 @@ const GuidesScreen = ({navigation}: any) => {
               navigation.navigate('GuideDetail', {guideId: item.id});
             }}>
             {/* Thumbnail */}
-            {item.thumbnail_url ? (
-              <Image
-                source={resolveImage(item.thumbnail_url)}
-                style={styles.cardThumb}
-                resizeMode="contain"
-              />
-            ) : (
-              <View style={[styles.cardThumb, styles.cardThumbPlaceholder]}>
-                <Icon name="book-open-page-variant" size={28} color={colors.textMuted} />
-              </View>
-            )}
+            <View style={styles.cardThumbWrap}>
+              <View style={[styles.cardThumbGlow, {backgroundColor: `${typeColor}18`}]} />
+              {item.thumbnail_url ? (
+                <Image
+                  source={resolveImage(item.thumbnail_url)}
+                  style={styles.cardThumb}
+                  resizeMode="contain"
+                />
+              ) : (
+                <View style={styles.cardThumbPlaceholder}>
+                  <Icon name="book-open-page-variant" size={28} color={colors.textMuted} />
+                </View>
+              )}
+            </View>
 
             {/* Info */}
             <View style={styles.cardInfo}>
+              <View style={styles.cardTopRow}>
+                <View style={[styles.typeChip, {backgroundColor: `${typeColor}14`}]}>
+                  <Icon name={typeIcon} size={11} color={typeColor} />
+                  <Text style={[styles.typeChipText, {color: typeColor}]} numberOfLines={1}>
+                    {typeLabel}
+                  </Text>
+                </View>
+              </View>
               <Text style={styles.cardTitle} numberOfLines={2}>
                 {item.title}
               </Text>
@@ -205,22 +231,27 @@ const GuidesScreen = ({navigation}: any) => {
                 {steps > 0 && (
                   <View style={styles.stepBadge}>
                     <Icon
-                      name="format-list-numbered"
+                      name={isQuest ? 'target' : 'format-list-numbered'}
                       size={12}
                       color={colors.cyan}
                     />
-                    <Text style={styles.stepBadgeText}>{steps} {t('guides.steps')}</Text>
+                    <Text style={styles.stepBadgeText} numberOfLines={1}>
+                      {steps} {isQuest ? t('guides.objectives') : t('guides.steps')}
+                    </Text>
                   </View>
                 )}
-                {(item.rewards?.length ?? 0) > 0 && (
+                {item.rewardCount > 0 && (
                   <View style={styles.rewardBadge}>
                     <Icon name="gift-outline" size={12} color={colors.orange} />
                     <Text style={styles.rewardBadgeText}>
-                      {item.rewards!.length}
+                      {item.rewardCount}
                     </Text>
                   </View>
                 )}
               </View>
+            </View>
+            <View style={styles.cardArrow}>
+              <Icon name="chevron-right" size={20} color={colors.textMuted} />
             </View>
           </TouchableOpacity>
           {isLockedByPremium && (
@@ -229,7 +260,7 @@ const GuidesScreen = ({navigation}: any) => {
         </View>
       );
     },
-    [navigation, isPremium],
+    [navigation, isPremium, t],
   );
 
   return (
@@ -285,7 +316,7 @@ const GuidesScreen = ({navigation}: any) => {
         data={visibleGuides}
         renderItem={renderGuide}
         keyExtractor={item => item.id}
-        contentContainerStyle={styles.list}
+        contentContainerStyle={[styles.list, {paddingBottom: listBottomPadding}]}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={Platform.OS === 'android'}
         initialNumToRender={Platform.OS === 'android' ? 4 : 6}
@@ -322,8 +353,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.md,
+    paddingVertical: spacing.md,
     gap: spacing.sm,
   },
   headerIconWrap: {
@@ -414,21 +444,57 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     overflow: 'hidden',
-    minHeight: 110,
+    minHeight: 124,
+    position: 'relative',
   },
-  cardThumb: {
+  cardThumbWrap: {
     width: THUMB_W,
     alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.035)',
+  },
+  cardThumbGlow: {
+    position: 'absolute',
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+  },
+  cardThumb: {
+    width: 74,
+    height: 74,
   },
   cardThumbPlaceholder: {
+    width: 74,
+    height: 74,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardInfo: {
     flex: 1,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
     paddingHorizontal: spacing.md,
     justifyContent: 'center',
+  },
+  cardTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  typeChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 10,
+    maxWidth: 116,
+  },
+  typeChipText: {
+    fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.8,
   },
   cardTitle: {
     fontSize: fonts.sizes.md,
@@ -443,15 +509,16 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   cardSummary: {
-    fontSize: 11,
+    fontSize: 12,
     color: colors.textSecondary,
-    lineHeight: 15,
-    marginBottom: 6,
+    lineHeight: 17,
+    marginBottom: 8,
   },
   cardMeta: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
+    flexWrap: 'wrap',
   },
   stepBadge: {
     flexDirection: 'row',
@@ -461,6 +528,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 10,
+    maxWidth: 145,
   },
   stepBadgeText: {
     fontSize: 10,
@@ -480,6 +548,12 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '700',
     color: colors.orange,
+  },
+  cardArrow: {
+    width: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 6,
   },
 
   /* empty */

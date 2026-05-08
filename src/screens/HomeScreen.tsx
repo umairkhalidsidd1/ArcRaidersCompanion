@@ -16,7 +16,7 @@ import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from '../utils/safeArea';
-import { colors, fonts, spacing, borderRadius, shadows } from '../theme/theme';
+import { colors, fonts, spacing, borderRadius } from '../theme/theme';
 import { getMapFullImage } from '../data/mapImages';
 import {resolveImage} from '../data/imageRegistry';
 import {useLiveEvents} from '../data/eventsStore';
@@ -208,16 +208,6 @@ const SHOWCASE_WEAPONS = (() => {
 })();
 const TOTAL_WEAPONS = (rawItems as any[]).filter(i => i.item_type === 'Weapon').length;
 
-/* ── Blueprint count ── */
-const TOTAL_BLUEPRINTS = (rawItems as any[]).filter(i => i.item_type === 'Blueprint').length;
-
-/* ── Cosmetic showcase data ── */
-const SHOWCASE_COSMETICS = (rawItems as any[])
-  .filter(i => (i.item_type === 'Cosmetic' || i.item_type === 'Trinket' || i.item_type === 'Collectible') && i.icon)
-  .slice(0, 4);
-const TOTAL_COSMETICS = (rawItems as any[]).filter(i => i.item_type === 'Cosmetic').length;
-const TOTAL_COLLECTIBLES = (rawItems as any[]).filter(i => i.item_type === 'Collectible' || i.item_type === 'Trinket').length;
-
 const RAIDER_TOOLS = [
   { key: 'skilltree', icon: 'file-tree-outline', color: colors.cyan, titleKey: 'home.skillTree', descKey: 'home.skillTreeDesc', screen: 'SkillTree' },
   { key: 'weapons', icon: 'shield-sword', color: colors.cyan, titleKey: 'home.weaponsTitle', descKey: 'home.weaponsDesc', screen: 'Weapons' },
@@ -404,33 +394,10 @@ const EventBadge = React.memo(({ mapId }: { mapId: string }) => {
   );
 });
 
-// Resets every cold start — ensures paywall shows once per app launch for free users
-// Module-level flag: true only on fresh app launch
-let _isFirstLaunch = true;
-
 const HomeScreen = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
-  const {isPremium, isLoading} = usePremium();
-
-  // Show paywall once per app launch — only after premium check resolves
-  useEffect(() => {
-    if (isLoading) return;
-    if (isPremium) return;
-    if (!_isFirstLaunch) return;
-    _isFirstLaunch = false;
-
-    let cancelled = false;
-    const show = async () => {
-      // Give HomeScreen time to render first
-      await new Promise<void>(resolve => setTimeout(resolve, 1000));
-      if (!cancelled && navigation.isFocused?.()) {
-        navigation.navigate('Paywall');
-      }
-    };
-    show();
-    return () => { cancelled = true; };
-  }, [isLoading, isPremium, navigation]);
+  const {isPremium} = usePremium();
 
   // Track session for review prompt (3rd session)
   useEffect(() => {
@@ -462,12 +429,17 @@ const HomeScreen = ({ navigation }: any) => {
     return nameMap;
   }, [localMaps]);
 
+  const homeListBottomPadding = Math.max(
+    insets.bottom + (Platform.OS === 'ios' ? 118 : 108),
+    128,
+  );
+
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       <ScrollView
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, {paddingBottom: homeListBottomPadding}]}
         showsVerticalScrollIndicator={false}>
 
         {/* ── Title + Settings row ── */}

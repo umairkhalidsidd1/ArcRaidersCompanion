@@ -1,8 +1,7 @@
 {
   "quest_data": {
     "description": "Datos de misiones de ARC Raiders con prerrequisitos y orden de desbloqueo",
-    "last_updated": "2026-03-24",
-    "source": "https://arcraiders.wiki/wiki/Quests"
+    "last_updated": "2026-03-24"
   },
   "unlock_requirements": {
     "dam_battlegrounds": "Área de inicio",

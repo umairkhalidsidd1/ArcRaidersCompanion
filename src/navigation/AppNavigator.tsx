@@ -5,7 +5,6 @@ import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {useSafeAreaInsets as useNativeSafeAreaInsets} from 'react-native-safe-area-context';
-import { useSafeAreaInsets } from '../utils/safeArea';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
@@ -43,8 +42,6 @@ import PaywallScreen from '../screens/PaywallScreen';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
-const TAB_BAR_FLOATING_GAP = 10;
-const ANDROID_NAV_OVERLAY_CLEARANCE = 8;
 const ANDROID_WINDOW_INSET_THRESHOLD = 8;
 
 export const navigationRef = createNavigationContainerRef();
@@ -55,19 +52,6 @@ const MaterialsStack = createNativeStackNavigator();
 const EnemiesStack = createNativeStackNavigator();
 const GuidesStack = createNativeStackNavigator();
 
-function useStableAndroidBottomInset() {
-  const {bottom} = useSafeAreaInsets();
-  const [stableBottomInset, setStableBottomInset] = React.useState(bottom);
-
-  React.useEffect(() => {
-    if (Platform.OS === 'android') {
-      setStableBottomInset(prev => Math.max(prev, bottom));
-    }
-  }, [bottom]);
-
-  return Platform.OS === 'android' ? stableBottomInset : bottom;
-}
-
 function useAndroidTabBarBottomOffset() {
   const {bottom} = useNativeSafeAreaInsets();
   const {height: windowHeight} = useWindowDimensions();
@@ -76,10 +60,10 @@ function useAndroidTabBarBottomOffset() {
     screenHeight - windowHeight > ANDROID_WINDOW_INSET_THRESHOLD;
 
   if (windowAlreadyAvoidsSystemNav) {
-    return TAB_BAR_FLOATING_GAP;
+    return 0;
   }
 
-  return Math.max(bottom + ANDROID_NAV_OVERLAY_CLEARANCE, TAB_BAR_FLOATING_GAP);
+  return bottom;
 }
 
 function BunkerStackScreen() {
@@ -162,7 +146,7 @@ const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
 
 /* ── Custom floating glass tab bar ── */
 function GlassTabBar({ state, descriptors, navigation }: any) {
-  const bottomInset = useStableAndroidBottomInset();
+  const {bottom: bottomInset} = useNativeSafeAreaInsets();
   const androidBottomOffset = useAndroidTabBarBottomOffset();
   const { t } = useTranslation();
   const bottomPad = Platform.OS === 'android'
@@ -240,16 +224,13 @@ function GlassTabBar({ state, descriptors, navigation }: any) {
 
 /* ── Tab Navigator ── */
 function TabNavigator() {
-  const bottomInset = useStableAndroidBottomInset();
-  const tabSceneBottomInset = Platform.OS === 'android' ? Math.max(bottomInset, 8) : 0;
-
   return (
     <Tab.Navigator
       tabBar={props => <GlassTabBar {...props} />}
       screenOptions={{
         headerShown: false,
         lazy: true,
-        sceneStyle: { backgroundColor: CONTENT_BG, paddingBottom: tabSceneBottomInset },
+        sceneStyle: { backgroundColor: CONTENT_BG, paddingBottom: 0 },
       }}>
       <Tab.Screen name="Bunker" component={BunkerStackScreen} />
       <Tab.Screen name="Trials" component={TrialsStackScreen} />
@@ -263,8 +244,6 @@ function TabNavigator() {
 /* ── Root Navigator (MapDetail lives here — completely outside tabs) ── */
 const AppNavigator = () => {
   const navBackground = Platform.OS === 'ios' ? 'transparent' : colors.bg;
-  const bottomInset = useStableAndroidBottomInset();
-  const rootBottomInset = Platform.OS === 'android' ? Math.max(bottomInset, 8) : 0;
   const routeNameRef = useRef<string | undefined>(undefined);
 
   return (
@@ -306,7 +285,7 @@ const AppNavigator = () => {
           headerShown: false,
           gestureEnabled: Platform.OS !== 'android',
           animation: Platform.OS === 'android' ? 'none' : 'slide_from_right',
-          contentStyle: { backgroundColor: navBackground, paddingBottom: rootBottomInset },
+          contentStyle: { backgroundColor: navBackground, paddingBottom: 0 },
         }}>
           <RootStack.Screen
             name="MainTabs"
@@ -388,7 +367,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    paddingTop: Platform.OS === 'ios' ? 15 : 14,
+    paddingBottom: Platform.OS === 'ios' ? 11 : 10,
     paddingHorizontal: 4,
     backgroundColor: 'rgba(10,14,23,0.92)',
   },

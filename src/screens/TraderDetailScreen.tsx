@@ -14,7 +14,7 @@ import type {Source} from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from '../utils/safeArea';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import {colors} from '../theme/theme';
 import {getTraders, getQuests} from '../data/localizedData';
 import {TRADER_INFO} from './TraderListScreen';
 import {resolveImage} from '../data/imageRegistry';
@@ -120,35 +120,41 @@ const TraderDetailScreen = ({route, navigation}: any) => {
   const insets = useSafeAreaInsets();
   const {t, i18n} = useTranslation();
   const {traderName} = route.params;
-  const quests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
-  const baseInfo = TRADER_INFO[traderName] || {
-    displayName: traderName,
-    title: 'Trader',
-    specialty: '',
-    currency: 'COINS',
-    currencyColor: '#FDD835',
-    color: colors.orange,
-    icon: 'account',
-    questGiverName: traderName,
-    about: '',
-  };
+  const quests: Quest[] = useMemo(() => {
+    void i18n.language;
+    return ((getQuests() as any).quests || []) as Quest[];
+  }, [i18n.language]);
+  const baseInfo = useMemo(
+    () => TRADER_INFO[traderName] || {
+      displayName: traderName,
+      title: 'Trader',
+      specialty: '',
+      currency: 'COINS',
+      currencyColor: '#FDD835',
+      color: colors.orange,
+      icon: 'account',
+      questGiverName: traderName,
+      about: '',
+    },
+    [traderName],
+  );
   const traderKey = traderName.charAt(0).toLowerCase() + traderName.slice(1);
-  const info = {
+  const info = useMemo(() => ({
     ...baseInfo,
     displayName: t(`traders.${traderKey}`, baseInfo.displayName),
     title: t(`traders.${traderKey}Title`, baseInfo.title),
     specialty: t(`traders.${traderKey}Specialty`, baseInfo.specialty),
     about: t(`traders.${traderKey}About`, baseInfo.about),
-  };
+  }), [baseInfo, t, traderKey]);
 
-  const inventory = useMemo(
-    () => (getTraders() as TraderRow[]).filter(r => r.trader_name === traderName),
-    [traderName, i18n.language],
-  );
+  const inventory = useMemo(() => {
+    void i18n.language;
+    return (getTraders() as TraderRow[]).filter(r => r.trader_name === traderName);
+  }, [traderName, i18n.language]);
 
   const questCount = useMemo(
     () => quests.filter(q => q.quest_giver === info.questGiverName).length,
-    [info.questGiverName, i18n.language],
+    [quests, info.questGiverName],
   );
 
   const currencyIcon = CURRENCY_ICONS[info.currency] || 'circle-multiple';

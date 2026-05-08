@@ -28,7 +28,7 @@ import {usePremium} from '../context/PremiumContext';
 import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 
 const APP_NAME = 'Arc Raiders Companion';
-const APP_VERSION = Platform.OS === 'ios' ? '1.0.3' : '1.0.2';
+const APP_VERSION = Platform.OS === 'ios' ? '1.0.4' : '1.0.3';
 const APP_YEAR = 2026;
 const APP_STORE_ID = '6761329723';
 const ANDROID_APPLICATION_ID = 'com.ArcRaidersCompanion';

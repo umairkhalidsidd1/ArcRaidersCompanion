@@ -353,7 +353,7 @@ const BlueprintTrackerScreen = ({navigation}: any) => {
       listTask.cancel();
       task?.cancel();
     };
-  }, [i18n.language]);
+  }, [i18n.language, isAndroid]);
 
   useEffect(() => {
     if (!ready) return;

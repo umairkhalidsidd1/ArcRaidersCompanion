@@ -3,11 +3,9 @@ import {Platform, StatusBar} from 'react-native';
 import {useSafeAreaInsets as useNativeSafeAreaInsets} from 'react-native-safe-area-context';
 import type {EdgeInsets} from 'react-native-safe-area-context';
 
-const ANDROID_BOTTOM_INSET_FLOOR = 24;
-
 const getStableAndroidInsets = (insets: EdgeInsets): EdgeInsets => ({
   top: Math.max(insets.top, StatusBar.currentHeight ?? 0),
-  bottom: Math.max(insets.bottom, ANDROID_BOTTOM_INSET_FLOOR),
+  bottom: insets.bottom,
   left: insets.left,
   right: insets.right,
 });
@@ -34,9 +32,9 @@ export function useSafeAreaInsets(): EdgeInsets {
       const next = getStableAndroidInsets(nativeInsets);
       const merged = {
         top: Math.max(prev.top, next.top),
-        bottom: Math.max(prev.bottom, next.bottom),
-        left: Math.max(prev.left, next.left),
-        right: Math.max(prev.right, next.right),
+        bottom: next.bottom,
+        left: next.left,
+        right: next.right,
       };
 
       return sameInsets(prev, merged) ? prev : merged;

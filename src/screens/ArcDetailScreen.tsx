@@ -18,7 +18,7 @@ import {resolveImage} from '../data/imageRegistry';
 import { useTranslation } from 'react-i18next';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
-const IMAGE_HEIGHT = SCREEN_WIDTH * 0.7;
+const IMAGE_HEIGHT = SCREEN_WIDTH * 0.58;
 
 // Threat level based on description keywords
 const getThreatLevel = (desc: string): {level: string; color: string; bars: number} => {
@@ -81,6 +81,7 @@ const ArcDetailScreen = ({route, navigation}: any) => {
   const ARC_LOOT: Record<string, ArcLootEntry[]> = getArcLoot() as Record<string, ArcLootEntry[]>;
   const threat = getThreatLevel(arc.description);
   const traits = getTraits(arc.description);
+  const heroSource = arc.image ? resolveImage(arc.image) : arc.icon ? resolveImage(arc.icon) : null;
 
   // Split description into paragraphs
   const paragraphs = arc.description.split('\n').filter((p: string) => p.trim().length > 0);
@@ -91,42 +92,34 @@ const ArcDetailScreen = ({route, navigation}: any) => {
 
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         {/* Hero Image */}
-        <View style={styles.heroSection}>
-          {arc.image ? (
+        <View style={[styles.heroSection, {marginTop: insets.top + spacing.sm}]}>
+          {heroSource ? (
             <Image
-              source={resolveImage(arc.image)}
+              source={heroSource}
               style={styles.heroImage}
               resizeMode="cover"
             />
-          ) : arc.icon ? (
-            <View style={styles.heroPlaceholder}>
-              <Image
-                source={resolveImage(arc.icon)}
-                style={styles.heroIconFallback}
-                resizeMode="contain"
-              />
-            </View>
           ) : (
             <View style={styles.heroPlaceholder}>
               <Icon name="robot-angry" size={80} color={colors.textMuted} />
             </View>
           )}
-
           <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.3)', colors.bg]}
-            style={styles.heroGradient}
+            colors={['rgba(6,10,17,0.48)', 'transparent', 'rgba(6,10,17,0.72)']}
+            start={{x: 0.5, y: 0}}
+            end={{x: 0.5, y: 1}}
+            style={StyleSheet.absoluteFillObject}
           />
-
           {/* Back button */}
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={[styles.backBtn, {top: insets.top + 8}]}>
+            style={styles.backBtn}>
             <Icon name="arrow-left" size={22} color={colors.textPrimary} />
           </TouchableOpacity>
         </View>
 
         {/* Content */}
-        <View style={styles.content}>
+        <View style={[styles.content, {paddingBottom: insets.bottom + 60}]}>
           {/* Name + Icon Row */}
           <View style={styles.nameRow}>
             {arc.icon ? (
@@ -259,36 +252,29 @@ const styles = StyleSheet.create({
 
   // Hero
   heroSection: {
-    width: SCREEN_WIDTH,
+    marginHorizontal: spacing.lg,
     height: IMAGE_HEIGHT,
-    position: 'relative',
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: colors.bgElevated,
   },
   heroImage: {
-    width: '100%',
-    height: '100%',
+    ...StyleSheet.absoluteFillObject,
   },
   heroPlaceholder: {
     width: '100%',
     height: '100%',
-    backgroundColor: colors.bgElevated,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  heroIconFallback: {width: 120, height: 120},
-  heroGradient: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: IMAGE_HEIGHT * 0.6,
-  },
   backBtn: {
     position: 'absolute',
-    left: spacing.lg,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.overlay,
+    top: spacing.sm,
+    left: spacing.sm,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: 'rgba(6,10,17,0.62)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -296,8 +282,7 @@ const styles = StyleSheet.create({
   // Content
   content: {
     paddingHorizontal: spacing.xl,
-    paddingBottom: 60,
-    marginTop: -spacing.xl,
+    marginTop: spacing.lg,
   },
   nameRow: {
     flexDirection: 'row',

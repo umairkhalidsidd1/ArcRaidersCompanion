@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors, fonts, spacing} from '../theme/theme';
+import {colors, spacing} from '../theme/theme';
 
 type Props = {
   onPress: () => void;

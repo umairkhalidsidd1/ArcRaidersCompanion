@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
+  InteractionManager,
   Modal,
   Platform,
   StatusBar,
@@ -226,6 +228,7 @@ const SkillTreeScreen = ({navigation}: any) => {
   const [totalPoints, setTotalPoints] = useState(DEFAULT_TOTAL_POINTS);
   const [showHelp, setShowHelp] = useState(false);
   const [showTapHint, setShowTapHint] = useState(true);
+  const [treeReady, setTreeReady] = useState(Platform.OS !== 'android');
   const pendingTapRef = useRef<{node: SkillNode; timer: ReturnType<typeof setTimeout>} | null>(null);
 
   useEffect(() => {
@@ -240,6 +243,20 @@ const SkillTreeScreen = ({navigation}: any) => {
         clearTimeout(pendingTapRef.current.timer);
         pendingTapRef.current = null;
       }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') return;
+
+    let frame: number | null = null;
+    const task = InteractionManager.runAfterInteractions(() => {
+      frame = requestAnimationFrame(() => setTreeReady(true));
+    });
+
+    return () => {
+      task.cancel();
+      if (frame !== null) cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -272,12 +289,21 @@ const SkillTreeScreen = ({navigation}: any) => {
     } catch {}
   };
 
-  const closeHelp = async () => {
-    setShowHelp(false);
-    try {
-      await AsyncStorage.setItem(HELP_STORAGE_KEY, '1');
-    } catch {}
+  const triggerHaptic = (type: 'impactLight' | 'selection') => {
+    const run = () => ReactNativeHapticFeedback.trigger(type, {enableVibrateFallback: true});
+    if (Platform.OS === 'android') {
+      requestAnimationFrame(run);
+      return;
+    }
+    run();
   };
+
+  const closeHelp = () => {
+    setShowHelp(false);
+    AsyncStorage.setItem(HELP_STORAGE_KEY, '1').catch(() => {});
+  };
+
+  const closeSelected = () => setSelected(null);
 
   const usedTotal = Object.values(alloc).reduce((sum, value) => sum + value, 0);
   const remaining = Math.max(0, totalPoints - usedTotal);
@@ -321,12 +347,12 @@ const SkillTreeScreen = ({navigation}: any) => {
     save(nextAlloc, totalPoints);
   };
 
-  const allocatePoint = (node: SkillNode, triggerHaptic = true) => {
+  const allocatePoint = (node: SkillNode, shouldTriggerHaptic = true) => {
     if (!canAllocate(node)) return;
-    if (triggerHaptic) {
-      ReactNativeHapticFeedback.trigger('impactLight', {enableVibrateFallback: true});
-    }
     updateAlloc({...alloc, [node.id]: (alloc[node.id] || 0) + 1});
+    if (shouldTriggerHaptic) {
+      triggerHaptic('impactLight');
+    }
   };
 
   const wouldBreakAllocatedChildren = (node: SkillNode, nextAlloc: Record<string, number>) => {
@@ -363,8 +389,8 @@ const SkillTreeScreen = ({navigation}: any) => {
     if (wouldBreakAllocatedChildren(node, nextAlloc)) return;
     if (wouldBreakGate(node, nextAlloc)) return;
 
-    ReactNativeHapticFeedback.trigger('impactLight', {enableVibrateFallback: true});
     updateAlloc(nextAlloc);
+    triggerHaptic('impactLight');
   };
 
   const reset = () => {
@@ -386,8 +412,8 @@ const SkillTreeScreen = ({navigation}: any) => {
     if (pending?.node.id === node.id) {
       clearTimeout(pending.timer);
       pendingTapRef.current = null;
-      ReactNativeHapticFeedback.trigger('selection', {enableVibrateFallback: true});
       setSelected(node);
+      triggerHaptic('selection');
       return;
     }
 
@@ -397,8 +423,8 @@ const SkillTreeScreen = ({navigation}: any) => {
     }
 
     if (!canAllocate(node)) {
-      ReactNativeHapticFeedback.trigger('selection', {enableVibrateFallback: true});
       setSelected(node);
+      triggerHaptic('selection');
       return;
     }
 
@@ -497,7 +523,6 @@ const SkillTreeScreen = ({navigation}: any) => {
     const pts = alloc[node.id] || 0;
     const active = pts > 0 || node.pos === 0;
     const available = node.pos !== 0 && hasUnlockedParent(node) && meetsGate(node);
-    const isSelected = selected?.id === node.id;
     const branchColor = BRANCH_META[node.branch].color;
     const radius = node.pos === 0 ? ROOT_R : NODE_R;
     const nodeFrameStyle = {
@@ -522,7 +547,6 @@ const SkillTreeScreen = ({navigation}: any) => {
             styles.node,
             nodeFrameStyle,
             activeNodeStyle,
-            isSelected && styles.nodeSelected,
           ]}>
           <Icon
             name={node.icon}
@@ -566,8 +590,11 @@ const SkillTreeScreen = ({navigation}: any) => {
     );
   };
 
-  const treeContent = (
-    <>
+  const treeContent = React.useMemo(() => {
+    if (!treeReady) return null;
+
+    return (
+      <>
       {BRANCH_ORDER.map(branch => {
         const branchColor = BRANCH_META[branch].color;
         const left = getBranchX(branch) - DX * 1.6 - 22;
@@ -631,14 +658,37 @@ const SkillTreeScreen = ({navigation}: any) => {
       </Svg>
 
       {NODES.map(renderNode)}
-    </>
-  );
+      </>
+    );
+  }, [alloc, remaining, totalPoints, treeReady, t]);
 
   const selectedColor = selected ? BRANCH_META[selected.branch].color : colors.cyan;
   const selectedPts = selected ? alloc[selected.id] || 0 : 0;
   const selectedCanAllocate = selected ? canAllocate(selected) : false;
+  const shouldShowSelectedNodeRing = selectedPts > 0 || selectedCanAllocate;
+  const selectedNodeRing = selected && selected.pos !== 0 && treeReady && shouldShowSelectedNodeRing ? (() => {
+    const {x, y} = getXY(selected);
+    const radius = NODE_R + 5;
+    return (
+      <View
+        pointerEvents="none"
+        style={[
+          styles.nodeSelectionRing,
+          {
+            left: x - radius,
+            top: y - radius,
+            width: radius * 2,
+            height: radius * 2,
+            borderRadius: radius,
+            borderColor: selectedColor,
+          },
+        ]}
+      />
+    );
+  })() : null;
   const selectedLockReason = selected ? getLockReason(selected) : '';
   const selectedIsMaxed = Boolean(selected && selectedPts >= selected.maxPts);
+  const overlayTopInset = Platform.OS === 'android' ? (StatusBar.currentHeight ?? insets.top) : insets.top;
   const detailStatusAccentStyle = selectedCanAllocate
     ? {borderColor: selectedColor + '66', backgroundColor: selectedColor + '14'}
     : selectedIsMaxed
@@ -653,7 +703,7 @@ const SkillTreeScreen = ({navigation}: any) => {
   const detailStatusText = selectedCanAllocate ? 'TAP NODE' : selectedIsMaxed ? 'MAXED' : 'LOCKED';
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} translucent={Platform.OS === 'android'} />
 
       <LinearGradient
@@ -662,7 +712,7 @@ const SkillTreeScreen = ({navigation}: any) => {
         style={StyleSheet.absoluteFillObject}
       />
 
-      <View style={[styles.header, {top: insets.top + 8}]}>
+      <View style={[styles.header, {top: overlayTopInset + 8}]}>
         <View pointerEvents="none" style={styles.headerTitleBox}>
           <Text style={styles.headerEyebrow}>ARC RAIDERS</Text>
           <Text style={styles.headerTitle}>SKILL TREE</Text>
@@ -682,7 +732,7 @@ const SkillTreeScreen = ({navigation}: any) => {
         </View>
       </View>
 
-      <View style={[styles.pointsDock, {top: insets.top + 66}]}>
+      <View style={[styles.pointsDock, {top: overlayTopInset + 66}]}>
         <View style={styles.pointsTopRow}>
           <View>
             <Text style={styles.pointsLabel}>{t('skillTree.skillPoints')}</Text>
@@ -727,13 +777,22 @@ const SkillTreeScreen = ({navigation}: any) => {
         </View>
       </View>
 
-      <GestureDetector gesture={composed}>
-        <Animated.View style={styles.canvasWrap}>
-          <Animated.View style={canvasStyle}>{treeContent}</Animated.View>
-        </Animated.View>
-      </GestureDetector>
+      {treeReady ? (
+        <GestureDetector gesture={composed}>
+          <Animated.View style={styles.canvasWrap}>
+            <Animated.View style={canvasStyle}>
+              {treeContent}
+              {selectedNodeRing}
+            </Animated.View>
+          </Animated.View>
+        </GestureDetector>
+      ) : (
+        <View style={styles.treeLoading}>
+          <ActivityIndicator size="small" color={colors.cyan} />
+        </View>
+      )}
 
-      {showTapHint && !selected && !showHelp && (
+      {treeReady && showTapHint && !selected && !showHelp && (
         <View style={[styles.hintPill, {bottom: insets.bottom + 18}]}>
           <Icon name="gesture-tap" size={15} color="#9AABBA" />
           <Text style={styles.hintText}>Tap to rank • Double-tap for details • Long-press to refund</Text>
@@ -764,7 +823,10 @@ const SkillTreeScreen = ({navigation}: any) => {
               </View>
               <Text style={styles.detailName}>{selected.name}</Text>
             </View>
-            <TouchableOpacity onPress={() => setSelected(null)} style={styles.closeBtn}>
+            <TouchableOpacity
+              onPress={Platform.OS === 'android' ? undefined : closeSelected}
+              onPressIn={Platform.OS === 'android' ? closeSelected : undefined}
+              style={styles.closeBtn}>
               <Icon name="close" size={18} color="#9AABBA" />
             </TouchableOpacity>
           </View>
@@ -799,7 +861,11 @@ const SkillTreeScreen = ({navigation}: any) => {
         </View>
       )}
 
-      <Modal transparent visible={showHelp} animationType="fade" onRequestClose={closeHelp}>
+      <Modal
+        transparent
+        visible={showHelp}
+        animationType={Platform.OS === 'android' ? 'none' : 'fade'}
+        onRequestClose={closeHelp}>
         <View style={styles.helpOverlay}>
           <View style={styles.helpSheet}>
             <View style={styles.helpTitleRow}>
@@ -830,7 +896,10 @@ const SkillTreeScreen = ({navigation}: any) => {
               ))}
             </View>
 
-            <TouchableOpacity onPress={closeHelp} style={styles.helpDoneBtn}>
+            <TouchableOpacity
+              onPress={Platform.OS === 'android' ? undefined : closeHelp}
+              onPressIn={Platform.OS === 'android' ? closeHelp : undefined}
+              style={styles.helpDoneBtn}>
               <Text style={styles.helpDoneText}>START PLANNING</Text>
             </TouchableOpacity>
           </View>
@@ -843,6 +912,11 @@ const SkillTreeScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'transparent'},
   canvasWrap: {flex: 1, overflow: 'hidden'},
+  treeLoading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
   header: {
     position: 'absolute',
@@ -959,8 +1033,10 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 0},
     elevation: Platform.OS === 'ios' ? 10 : 0,
   },
-  nodeSelected: {
+  nodeSelectionRing: {
+    position: 'absolute',
     borderWidth: 3,
+    backgroundColor: 'transparent',
     shadowColor: '#FFFFFF',
     shadowOpacity: 0.28,
     shadowRadius: 16,

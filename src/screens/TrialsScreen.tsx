@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
-  Dimensions,
   FlatList,
   InteractionManager,
   Linking,
@@ -13,28 +12,38 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Image from 'react-native-fast-image';
+import Image, {type ImageStyle as FastImageStyle} from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from '../utils/safeArea';
 import {colors, fonts, spacing, borderRadius} from '../theme/theme';
 import {getTrials} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
+import {
+  getTrialsNextUpdateAtSync,
+  getTrialsSync,
+  refreshTrialsFromServer,
+  subscribeTrials,
+  type Trial,
+} from '../data/trialsStore';
 import {useTranslation} from 'react-i18next';
 
-const {width: SCREEN_W} = Dimensions.get('window');
+const METAFORGE_TRIALS_URL = 'https://metaforge.app/arc-raiders/weekly-trials';
+const METAFORGE_TRIALS_BASE_URL = 'https://metaforge.app/arc-raiders';
 
-type Trial = {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  reward: string;
-  metaforgeUrl: string;
-  category: string;
-  threeStarScore: number;
-  maps: string[];
-  tip: string;
+const slugifyTrialName = (name: string): string =>
+  name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const getTrialMetaForgeUrl = (trial: Trial): string => {
+  if (trial.metaforgeUrl && /^https?:\/\//i.test(trial.metaforgeUrl)) {
+    return trial.metaforgeUrl;
+  }
+
+  const slug = slugifyTrialName(trial.name || '');
+  return slug ? `${METAFORGE_TRIALS_BASE_URL}/${slug}` : METAFORGE_TRIALS_URL;
 };
 
 const EMPTY_TRIALS: Trial[] = [];
@@ -42,6 +51,7 @@ const EMPTY_TRIALS: Trial[] = [];
 type TrialsScreenCache = {
   language: string;
   trials: Trial[];
+  nextUpdateAtMs: number;
 };
 
 let TRIALS_SCREEN_CACHE: TrialsScreenCache | null = null;
@@ -55,24 +65,8 @@ const CATEGORY_CONFIG: Record<string, {icon: string; color: string}> = {
   Special: {icon: 'lightning-bolt', color: '#AB47BC'},
 };
 
-const TRIALS_RESET_DAY_UTC = 1;
-const TRIALS_RESET_HOUR_UTC = 7;
-
-const getResetTime = () => {
-  const now = new Date();
-  const nextReset = new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate(),
-    TRIALS_RESET_HOUR_UTC,
-    0,
-    0,
-    0,
-  ));
-  const daysUntilReset = (TRIALS_RESET_DAY_UTC - now.getUTCDay() + 7) % 7;
-  nextReset.setUTCDate(now.getUTCDate() + daysUntilReset);
-  if (nextReset <= now) nextReset.setUTCDate(nextReset.getUTCDate() + 7);
-  const diff = nextReset.getTime() - now.getTime();
+const getRefreshTime = (nextUpdateAtMs: number) => {
+  const diff = Math.max(0, nextUpdateAtMs - Date.now());
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -92,14 +86,25 @@ const TrialsScreen = ({navigation}: any) => {
   const [visibleCount, setVisibleCount] = useState(
     seed ? Math.min(seed.trials.length, Platform.OS === 'android' ? 4 : seed.trials.length) : 0,
   );
-  const [resetTime, setResetTime] = useState(getResetTime());
+  const [nextUpdateAtMs, setNextUpdateAtMs] = useState<number>(
+    seed?.nextUpdateAtMs ?? getTrialsNextUpdateAtSync(),
+  );
+  const [resetTime, setResetTime] = useState(
+    getRefreshTime(seed?.nextUpdateAtMs ?? getTrialsNextUpdateAtSync()),
+  );
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const showContent = ready && listVisible;
+  const displayHours = resetTime.days * 24 + resetTime.hours;
+  const listBottomPadding = Math.max(
+    insets.bottom + (Platform.OS === 'ios' ? 118 : 108),
+    128,
+  );
 
   useEffect(() => {
     let active = true;
+    let unsubscribe: (() => void) | null = null;
     setListVisible(false);
     setVisibleCount(0);
 
@@ -113,27 +118,50 @@ const TrialsScreen = ({navigation}: any) => {
 
     if (cached) {
       setTrials(cached.trials);
+      setNextUpdateAtMs(cached.nextUpdateAtMs);
       setReady(true);
     } else {
       setReady(false);
     }
 
     const loadTask = InteractionManager.runAfterInteractions(() => {
-      const nextTrials = getTrials() as Trial[];
+      const fallbackTrials = getTrials() as Trial[];
+      const nextTrials = getTrialsSync(fallbackTrials);
+      const nextUpdate = getTrialsNextUpdateAtSync();
       if (!active) return;
 
       setTrials(nextTrials);
+      setNextUpdateAtMs(nextUpdate);
+      setResetTime(getRefreshTime(nextUpdate));
       TRIALS_SCREEN_CACHE = {
         language: i18n.language,
         trials: nextTrials,
+        nextUpdateAtMs: nextUpdate,
       };
       setReady(true);
+
+      unsubscribe = subscribeTrials(freshTrials => {
+        if (!active) return;
+        const freshNextUpdate = getTrialsNextUpdateAtSync();
+        setTrials(freshTrials);
+        setNextUpdateAtMs(freshNextUpdate);
+        setResetTime(getRefreshTime(freshNextUpdate));
+        TRIALS_SCREEN_CACHE = {
+          language: i18n.language,
+          trials: freshTrials,
+          nextUpdateAtMs: freshNextUpdate,
+        };
+        setReady(true);
+      });
+
+      refreshTrialsFromServer().catch(() => undefined);
     });
 
     return () => {
       active = false;
       listTask.cancel();
       loadTask.cancel();
+      unsubscribe?.();
     };
   }, [i18n.language]);
 
@@ -170,17 +198,24 @@ const TrialsScreen = ({navigation}: any) => {
   }, [fadeAnim]);
 
   useEffect(() => {
-    const interval = setInterval(() => setResetTime(getResetTime()), 60000);
-    return () => clearInterval(interval);
-  }, []);
+    const updateTimer = () => {
+      const nextTime = getRefreshTime(nextUpdateAtMs);
+      setResetTime(nextTime);
+      if (nextUpdateAtMs <= Date.now()) {
+        refreshTrialsFromServer({force: true}).catch(() => undefined);
+      }
+    };
 
-  const openMetaforge = (url: string) => {
-    Linking.openURL(url).catch(() => {});
-  };
+    updateTimer();
+    const interval = setInterval(updateTimer, 60000);
+    return () => clearInterval(interval);
+  }, [nextUpdateAtMs]);
 
   const renderTrialCard = ({item}: {item: Trial}) => {
     const cfg = CATEGORY_CONFIG[item.category] || CATEGORY_CONFIG.Combat;
     const isExpanded = expandedId === item.id;
+    const imageSource = resolveImage(item.image) || resolveImage('custom/cache.webp');
+    const trialMetaForgeUrl = getTrialMetaForgeUrl(item);
 
     return (
       <TouchableOpacity
@@ -190,9 +225,36 @@ const TrialsScreen = ({navigation}: any) => {
         {/* Image section */}
         <View style={styles.cardImageWrap}>
           <Image
-            source={resolveImage(item.image)}
-            style={styles.cardImage}
-            resizeMode="cover"
+            source={imageSource}
+            style={styles.cardImageBackdrop as FastImageStyle}
+            resizeMode="contain"
+          />
+          <LinearGradient
+            colors={['rgba(6,10,17,0.78)', 'rgba(6,10,17,0.22)', 'rgba(6,10,17,0.78)']}
+            start={{x: 0.5, y: 0}}
+            end={{x: 0.5, y: 1}}
+            style={styles.cardImageFade}
+          />
+          <View style={styles.cardImageOrbWrap}>
+            <View style={styles.cardImageOrb}>
+              <Image
+                source={imageSource}
+                style={styles.cardImage as FastImageStyle}
+                resizeMode="contain"
+              />
+              <LinearGradient
+                colors={['rgba(255,255,255,0.08)', 'transparent', 'rgba(6,10,17,0.22)']}
+                start={{x: 0.25, y: 0}}
+                end={{x: 0.75, y: 1}}
+                style={styles.cardImageOrbShade}
+              />
+            </View>
+          </View>
+          <LinearGradient
+            colors={['transparent', 'rgba(6,10,17,0.55)']}
+            start={{x: 0.5, y: 0.45}}
+            end={{x: 0.5, y: 1}}
+            style={styles.cardImageBottomFade}
           />
           {/* Category badge */}
           <View style={[styles.categoryBadge, {backgroundColor: `${cfg.color}22`}]}>
@@ -241,15 +303,18 @@ const TrialsScreen = ({navigation}: any) => {
                 <Text style={styles.tipText}>{item.tip}</Text>
               </View>
 
-              {/* Action buttons */}
               <TouchableOpacity
-                style={styles.guideBtn}
-                activeOpacity={0.8}
-                onPress={() => openMetaforge(item.metaforgeUrl)}>
-                <Icon name="book-open-variant" size={18} color={colors.cyan} />
-                <Text style={styles.guideBtnText}>{t('trials.viewGuide')}</Text>
-                <Icon name="chevron-right" size={18} color={colors.cyan} />
+                style={styles.metaForgeButton}
+                activeOpacity={0.78}
+                onPress={() =>
+                  Linking.openURL(trialMetaForgeUrl).catch(() => undefined)
+                }>
+                <Icon name="open-in-new" size={15} color={colors.bg} />
+                <Text style={styles.metaForgeButtonText}>
+                  {t('trials.openMetaForge', 'Open MetaForge')}
+                </Text>
               </TouchableOpacity>
+
             </View>
           )}
 
@@ -299,12 +364,7 @@ const TrialsScreen = ({navigation}: any) => {
           </View>
           <View style={styles.timerValues}>
             <View style={styles.timerUnit}>
-              <Text style={styles.timerNumber}>{resetTime.days}</Text>
-              <Text style={styles.timerUnitLabel}>D</Text>
-            </View>
-            <Text style={styles.timerSep}>:</Text>
-            <View style={styles.timerUnit}>
-              <Text style={styles.timerNumber}>{resetTime.hours}</Text>
+              <Text style={styles.timerNumber}>{displayHours}</Text>
               <Text style={styles.timerUnitLabel}>H</Text>
             </View>
             <Text style={styles.timerSep}>:</Text>
@@ -320,7 +380,7 @@ const TrialsScreen = ({navigation}: any) => {
           data={showContent ? trials.slice(0, visibleCount) : EMPTY_TRIALS}
           renderItem={renderTrialCard}
           keyExtractor={item => String(item.id)}
-          contentContainerStyle={styles.list}
+          contentContainerStyle={[styles.list, {paddingBottom: listBottomPadding}]}
           showsVerticalScrollIndicator={false}
           initialNumToRender={Platform.OS === 'android' ? 4 : 8}
           maxToRenderPerBatch={Platform.OS === 'android' ? 6 : 10}
@@ -462,13 +522,48 @@ const styles = StyleSheet.create({
   },
   cardImageWrap: {
     width: '100%',
-    height: 160,
+    height: 188,
+    backgroundColor: '#0B1018',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.05)',
   },
-  cardImage: {
+  cardImageBackdrop: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.34,
+    transform: [{scale: 1}],
+  },
+  cardImageFade: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  cardImageOrbWrap: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 2,
+  },
+  cardImageOrb: {
     width: '100%',
     height: '100%',
-    borderTopLeftRadius: borderRadius.lg,
-    borderTopRightRadius: borderRadius.lg,
+    borderRadius: 0,
+    overflow: 'hidden',
+    borderWidth: 0,
+    borderColor: 'transparent',
+    backgroundColor: '#111827',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 10},
+    shadowOpacity: 0.34,
+    shadowRadius: 14,
+    elevation: 8,
+  },
+  cardImage: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  cardImageOrbShade: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  cardImageBottomFade: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 3,
   },
   categoryBadge: {
     position: 'absolute',
@@ -576,24 +671,20 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     lineHeight: 20,
   },
-
-  /* Action button */
-  guideBtn: {
+  metaForgeButton: {
+    height: 40,
+    borderRadius: borderRadius.md,
+    backgroundColor: colors.cyan,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.sm,
-    paddingVertical: spacing.md,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    borderColor: colors.cyan,
-    backgroundColor: 'rgba(0,229,255,0.08)',
+    gap: spacing.xs,
   },
-  guideBtnText: {
-    fontSize: fonts.sizes.sm,
-    fontWeight: '800',
-    color: colors.cyan,
-    letterSpacing: 1,
+  metaForgeButtonText: {
+    fontSize: 11,
+    fontWeight: '900',
+    color: colors.bg,
+    letterSpacing: 1.2,
   },
 });
 

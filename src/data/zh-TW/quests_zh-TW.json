@@ -1,8 +1,7 @@
 {
   "quest_data": {
     "description": "ARC Raiders 任務資料，包含前置條件與解鎖順序",
-    "last_updated": "2026-03-24",
-    "source": "https://arcraiders.wiki/wiki/Quests"
+    "last_updated": "2026-03-24"
   },
   "unlock_requirements": {
     "dam_battlegrounds": "起始區域",

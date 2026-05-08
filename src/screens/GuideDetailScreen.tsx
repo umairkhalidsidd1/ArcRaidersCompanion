@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from '../utils/safeArea';
 import {useTranslation} from 'react-i18next';
 import RenderHtml from 'react-native-render-html';
-import {colors, fonts, spacing, borderRadius} from '../theme/theme';
+import {colors, fonts, spacing, borderRadius, getRarityColor} from '../theme/theme';
 import {getGuides} from '../data/localizedData';
 import {resolveImage} from '../data/imageRegistry';
 
@@ -63,6 +63,12 @@ const htmlRenderers = {
 
 type Guide = ReturnType<typeof getGuides>[number];
 type Reward = NonNullable<Guide['rewards']>[number];
+type QuestGuideMeta = {
+  quest_giver?: string | null;
+  location?: string | null;
+  prerequisites?: string[];
+  unlock_requirement?: string | null;
+};
 
 type GuideDetailScreenCache = {
   language: string;
@@ -149,12 +155,63 @@ const GuideDetailScreen = ({route, navigation}: any) => {
 
   const htmlSource = useMemo(
     () => (showHtml && guide?.content ? {html: guide.content} : null),
-    [showHtml, guide?.content, i18n.language],
+    [showHtml, guide?.content],
   );
 
   const hasObjectives = !!guide?.objectives && (guide.objectives as string[]).length > 0;
   const hasRewards = !!guide?.rewards && guide.rewards.length > 0;
   const hasVideo = !!guide?.video_url;
+
+  const quickFacts = useMemo(() => {
+    if (!guide) return [];
+
+    const meta = guide as Guide & QuestGuideMeta;
+    const objectiveCount = (guide.objectives || []).length;
+    const rewardCount = guide.rewards?.length || 0;
+    const facts: Array<{icon: string; label: string; value: string; color: string}> = [];
+
+    if ((guide.type || 'general') === 'quest') {
+      facts.push({
+        icon: 'account-outline',
+        label: t('guides.questGiver'),
+        value: meta.quest_giver || guide.author || t('guides.author'),
+        color: colors.cyan,
+      });
+      facts.push({
+        icon: 'map-marker-radius-outline',
+        label: t('guides.location'),
+        value: meta.location || t('guides.anyLocation'),
+        color: colors.orange,
+      });
+      if (meta.prerequisites && meta.prerequisites.length > 0) {
+        facts.push({
+          icon: 'source-branch',
+          label: t('guides.prerequisite'),
+          value: meta.prerequisites.length === 1 ? meta.prerequisites[0] : `${meta.prerequisites.length}`,
+          color: colors.purple,
+        });
+      }
+    }
+
+    if (objectiveCount > 0) {
+      facts.push({
+        icon: 'target',
+        label: t('guides.objectives'),
+        value: String(objectiveCount),
+        color: colors.cyan,
+      });
+    }
+    if (rewardCount > 0) {
+      facts.push({
+        icon: 'gift-outline',
+        label: t('guides.rewards'),
+        value: String(rewardCount),
+        color: colors.orange,
+      });
+    }
+
+    return facts.slice(0, 4);
+  }, [guide, t]);
 
   return (
     <View style={styles.container}>
@@ -212,8 +269,27 @@ const GuideDetailScreen = ({route, navigation}: any) => {
         )}
 
         {/* Summary */}
-        {showPrimary && guide?.summary ? (
-          <Text style={styles.summary}>{guide.summary}</Text>
+        {showPrimary && guide && (guide.summary || quickFacts.length > 0) ? (
+          <View style={styles.summaryPanel}>
+            {guide.summary ? (
+              <Text style={styles.summary}>{guide.summary}</Text>
+            ) : null}
+            {quickFacts.length > 0 && (
+              <View style={styles.factGrid}>
+                {quickFacts.map(fact => (
+                  <View key={`${fact.label}-${fact.value}`} style={styles.factChip}>
+                    <View style={[styles.factIconWrap, {backgroundColor: `${fact.color}18`}]}>
+                      <Icon name={fact.icon} size={13} color={fact.color} />
+                    </View>
+                    <View style={styles.factTextWrap}>
+                      <Text style={styles.factLabel} numberOfLines={1}>{fact.label}</Text>
+                      <Text style={styles.factValue} numberOfLines={1}>{fact.value}</Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
         ) : null}
 
         {/* Video link */}
@@ -237,7 +313,9 @@ const GuideDetailScreen = ({route, navigation}: any) => {
             </View>
             {(guide.objectives as string[]).map((obj, i) => (
               <View key={i} style={styles.objectiveRow}>
-                <View style={styles.objectiveDot} />
+                <View style={styles.objectiveIndex}>
+                  <Text style={styles.objectiveIndexText}>{i + 1}</Text>
+                </View>
                 <Text style={styles.objectiveText}>{obj}</Text>
               </View>
             ))}
@@ -252,28 +330,33 @@ const GuideDetailScreen = ({route, navigation}: any) => {
               <Text style={styles.sectionTitle}>{t('guides.rewards')}</Text>
             </View>
             <View style={styles.rewardsGrid}>
-              {(guide.rewards as Reward[]).map((r, i) => (
-                <View key={i} style={styles.rewardCard}>
-                  {r.item?.icon && (
-                    <Image
-                      source={resolveImage(r.item.icon)}
-                      style={styles.rewardIcon}
-                      resizeMode="contain"
-                    />
-                  )}
-                  <View style={styles.rewardInfo}>
-                    <Text style={styles.rewardName} numberOfLines={1}>
-                      {r.item?.name || r.item_id}
-                    </Text>
-                    <Text style={styles.rewardMeta}>
-                      {r.quantity && Number(r.quantity) > 1
-                        ? `x${r.quantity} · `
-                        : ''}
-                      {r.item?.rarity || ''}
-                    </Text>
+              {(guide.rewards as Reward[]).map((r, i) => {
+                const rarityColor = getRarityColor(r.item?.rarity || '');
+                return (
+                  <View key={i} style={[styles.rewardCard, {borderLeftColor: rarityColor}]}>
+                    {r.item?.icon && (
+                      <Image
+                        source={resolveImage(r.item.icon)}
+                        style={styles.rewardIcon}
+                        resizeMode="contain"
+                      />
+                    )}
+                    <View style={styles.rewardInfo}>
+                      <Text style={styles.rewardName} numberOfLines={1}>
+                        {r.item?.name || r.item_id}
+                      </Text>
+                      <Text style={styles.rewardMeta} numberOfLines={1}>
+                        {r.item?.rarity || ''}
+                      </Text>
+                    </View>
+                    {r.quantity && Number(r.quantity) > 1 && (
+                      <View style={styles.rewardQty}>
+                        <Text style={styles.rewardQtyText}>x{r.quantity}</Text>
+                      </View>
+                    )}
                   </View>
-                </View>
-              ))}
+                );
+              })}
             </View>
           </View>
         )}
@@ -312,7 +395,7 @@ const GuideDetailScreen = ({route, navigation}: any) => {
 
 /* ── HTML tag styles ── */
 const htmlStyles: Record<string, any> = {
-  body: {color: colors.textSecondary, fontSize: 14, lineHeight: 22},
+  body: {color: colors.textSecondary, fontSize: 14, lineHeight: 23},
   h1: {
     color: colors.textPrimary,
     fontSize: 20,
@@ -321,7 +404,7 @@ const htmlStyles: Record<string, any> = {
     marginBottom: 8,
   },
   h2: {
-    color: colors.textPrimary,
+    color: colors.cyan,
     fontSize: 17,
     fontWeight: '700',
     marginTop: 18,
@@ -334,10 +417,10 @@ const htmlStyles: Record<string, any> = {
     marginTop: 14,
     marginBottom: 4,
   },
-  p: {marginBottom: 10, lineHeight: 22},
-  li: {marginBottom: 6, lineHeight: 22},
-  ul: {paddingLeft: 8},
-  ol: {paddingLeft: 8},
+  p: {marginBottom: 10, lineHeight: 23},
+  li: {marginBottom: 8, lineHeight: 23},
+  ul: {paddingLeft: 10},
+  ol: {paddingLeft: 10},
   strong: {color: colors.textPrimary, fontWeight: '700'},
   em: {fontStyle: 'italic'},
   img: {
@@ -400,7 +483,7 @@ const styles = StyleSheet.create({
   },
   /* title */
   title: {
-    fontSize: fonts.sizes.xl,
+    fontSize: fonts.sizes.xxl,
     fontWeight: '800',
     color: colors.textPrimary,
     paddingHorizontal: spacing.lg,
@@ -434,12 +517,61 @@ const styles = StyleSheet.create({
   },
 
   /* summary */
+  summaryPanel: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    padding: spacing.md,
+    borderRadius: borderRadius.lg,
+    backgroundColor: 'rgba(255,255,255,0.045)',
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+  },
   summary: {
     fontSize: fonts.sizes.sm,
     color: colors.textSecondary,
-    lineHeight: 20,
-    paddingHorizontal: spacing.lg,
-    marginBottom: spacing.lg,
+    lineHeight: 21,
+    marginBottom: spacing.md,
+  },
+  factGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  factChip: {
+    flexBasis: '48%',
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.md,
+    backgroundColor: 'rgba(0,0,0,0.18)',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  factIconWrap: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  factTextWrap: {
+    flex: 1,
+    minWidth: 0,
+  },
+  factLabel: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: colors.textMuted,
+    textTransform: 'uppercase',
+    marginBottom: 2,
+  },
+  factValue: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.textPrimary,
   },
 
   /* video */
@@ -486,14 +618,26 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: spacing.sm,
     marginBottom: spacing.sm,
-    paddingLeft: 4,
+    padding: spacing.sm,
+    borderRadius: borderRadius.md,
+    backgroundColor: 'rgba(0,229,255,0.045)',
+    borderWidth: 1,
+    borderColor: 'rgba(0,229,255,0.10)',
   },
-  objectiveDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.cyan,
-    marginTop: 6,
+  objectiveIndex: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,229,255,0.14)',
+    borderWidth: 1,
+    borderColor: 'rgba(0,229,255,0.28)',
+  },
+  objectiveIndexText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.cyan,
   },
   objectiveText: {
     flex: 1,
@@ -512,6 +656,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgCard,
     borderRadius: borderRadius.md,
     borderWidth: 1,
+    borderLeftWidth: 3,
     borderColor: colors.border,
     padding: spacing.sm,
     gap: spacing.sm,
@@ -532,6 +677,17 @@ const styles = StyleSheet.create({
   rewardMeta: {
     fontSize: 11,
     color: colors.textMuted,
+  },
+  rewardQty: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,107,44,0.12)',
+  },
+  rewardQtyText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.orange,
   },
 });
 

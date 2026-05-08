@@ -4,13 +4,15 @@ import {ensureRevenueCatConfigured} from '../utils/revenueCat';
 type PremiumContextType = {
   isPremium: boolean;
   isLoading: boolean;
-  checkPremiumStatus: () => Promise<void>;
+  canShowPaywall: boolean;
+  checkPremiumStatus: () => Promise<boolean | null>;
 };
 
 const PremiumContext = createContext<PremiumContextType>({
   isPremium: false,
   isLoading: true,
-  checkPremiumStatus: async () => {},
+  canShowPaywall: false,
+  checkPremiumStatus: async () => null,
 });
 
 export const usePremium = () => useContext(PremiumContext);
@@ -26,20 +28,26 @@ const hasEntitlement = (info: any): boolean => {
 export const PremiumProvider = ({children}: {children: React.ReactNode}) => {
   const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [canShowPaywall, setCanShowPaywall] = useState(false);
 
   const checkPremiumStatus = useCallback(async () => {
     try {
       const configured = await ensureRevenueCatConfigured();
       if (!configured) {
         setIsPremium(false);
-        return;
+        setCanShowPaywall(false);
+        return null;
       }
 
       const Purchases = require('react-native-purchases').default;
       const info = await Purchases.getCustomerInfo();
-      setIsPremium(hasEntitlement(info));
+      const premium = hasEntitlement(info);
+      setIsPremium(premium);
+      setCanShowPaywall(!premium);
+      return premium;
     } catch {
-      setIsPremium(false);
+      setCanShowPaywall(false);
+      return null;
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +67,10 @@ export const PremiumProvider = ({children}: {children: React.ReactNode}) => {
 
         const Purchases = require('react-native-purchases').default;
         const listener = (info: any) => {
-          setIsPremium(hasEntitlement(info));
+          const premium = hasEntitlement(info);
+          setIsPremium(premium);
+          setCanShowPaywall(!premium);
+          setIsLoading(false);
         };
         Purchases.addCustomerInfoUpdateListener(listener);
         unsubscribe = () => Purchases.removeCustomerInfoUpdateListener(listener);
@@ -75,7 +86,7 @@ export const PremiumProvider = ({children}: {children: React.ReactNode}) => {
   }, [checkPremiumStatus]);
 
   return (
-    <PremiumContext.Provider value={{isPremium, isLoading, checkPremiumStatus}}>
+    <PremiumContext.Provider value={{isPremium, isLoading, canShowPaywall, checkPremiumStatus}}>
       {children}
     </PremiumContext.Provider>
   );

@@ -1,9 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import {Animated, Dimensions, Easing, StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Animated, Easing, StyleSheet, Text, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
-
-const {width: W, height: H} = Dimensions.get('window');
 
 const SplashScreen = ({onFinish}: {onFinish: () => void}) => {
   const {t} = useTranslation();
@@ -16,7 +13,7 @@ const SplashScreen = ({onFinish}: {onFinish: () => void}) => {
       Animated.delay(250),
       Animated.timing(fadeOut, {toValue: 0, duration: 300, easing: Easing.in(Easing.cubic), useNativeDriver: true}),
     ]).start(() => onFinish());
-  }, []);
+  }, [contentOpacity, fadeOut, onFinish]);
 
   return (
     <Animated.View style={[styles.container, {opacity: fadeOut}]}>

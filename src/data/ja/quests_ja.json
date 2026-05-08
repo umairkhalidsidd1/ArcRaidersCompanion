@@ -1,8 +1,7 @@
 {
   "quest_data": {
     "description": "ARC Raidersのクエストデータ（前提条件と解放順序付き）",
-    "last_updated": "2026-03-24",
-    "source": "https://arcraiders.wiki/wiki/Quests"
+    "last_updated": "2026-03-24"
   },
   "unlock_requirements": {
     "dam_battlegrounds": "開始エリア",

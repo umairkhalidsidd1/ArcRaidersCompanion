@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Alert,
-  Dimensions,
   FlatList,
   Modal,
   ScrollView,
@@ -20,8 +19,6 @@ import {getItems} from '../data/localizedData';
 import {getLoadouts, saveLoadouts, Loadout} from '../utils/storage';
 import {resolveImage} from '../data/imageRegistry';
 import {useTranslation} from 'react-i18next';
-
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 /* ═══════ SLOT DEFINITIONS ═══════ */
 const SLOTS = [
@@ -67,11 +64,14 @@ const RARITY_COLORS: Record<string, string> = {
 const LoadoutBuilderScreen = ({navigation}: any) => {
   const insets = useSafeAreaInsets();
   const {t, i18n} = useTranslation();
-  const allItems: Item[] = (getItems() as any[]).map(i => ({
-    ...i,
-    item_type: normaliseType(i.item_type),
-    rarity: i.rarity || 'Common',
-  }));
+  const allItems: Item[] = useMemo(() => {
+    void i18n.language;
+    return (getItems() as any[]).map(i => ({
+      ...i,
+      item_type: normaliseType(i.item_type),
+      rarity: i.rarity || 'Common',
+    }));
+  }, [i18n.language]);
   const [loadouts, setLoadouts] = useState<Loadout[]>([]);
   const [activeIdx, setActiveIdx] = useState(0);
   const [pickerSlot, setPickerSlot] = useState<SlotKey | null>(null);
@@ -91,7 +91,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
         setLoadouts(saved);
       }
     });
-  }, []);
+  }, [t]);
 
   const active = loadouts[activeIdx] || null;
 
@@ -185,7 +185,7 @@ const LoadoutBuilderScreen = ({navigation}: any) => {
       const ro = (RARITY_ORDER[a.rarity] ?? 5) - (RARITY_ORDER[b.rarity] ?? 5);
       return ro !== 0 ? ro : a.name.localeCompare(b.name);
     });
-  }, [pickerSlot, pickerSearch, i18n.language]);
+  }, [pickerSlot, pickerSearch, allItems]);
 
   /* ═══════ RENDER ═══════ */
   return (

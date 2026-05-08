@@ -62,6 +62,10 @@ const ArcListScreen = ({navigation}: any) => {
   );
 
   const showContent = ready && listVisible;
+  const listBottomPadding = Math.max(
+    insets.bottom + (Platform.OS === 'ios' ? 118 : 108),
+    128,
+  );
 
   useEffect(() => {
     let active = true;
@@ -145,7 +149,7 @@ const ArcListScreen = ({navigation}: any) => {
         data={showContent ? arcs.slice(0, visibleCount) : EMPTY_ARCS}
         numColumns={NUM_COLS}
         columnWrapperStyle={styles.row}
-        renderItem={({item, index}) => (
+        renderItem={({item}) => (
             <TouchableOpacity
               style={styles.arcCard}
               activeOpacity={0.7}
@@ -173,7 +177,7 @@ const ArcListScreen = ({navigation}: any) => {
             </TouchableOpacity>
         )}
         keyExtractor={item => String(item.id)}
-        contentContainerStyle={styles.list}
+        contentContainerStyle={[styles.list, {paddingBottom: listBottomPadding}]}
         showsVerticalScrollIndicator={false}
         initialNumToRender={INITIAL_RENDER_COUNT}
         maxToRenderPerBatch={RENDER_BATCH_SIZE}
@@ -202,8 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.lg,
+    paddingVertical: spacing.md,
     gap: spacing.sm,
   },
   headerIconWrap: {

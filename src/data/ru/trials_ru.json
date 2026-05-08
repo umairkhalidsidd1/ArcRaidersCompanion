@@ -5,7 +5,6 @@
     "description": "Нанесите как можно больше урона Шершням в пределах времени рейда.",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -20,7 +19,6 @@
     "description": "Наносите урон Осам на любой карте.",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -34,7 +32,6 @@
     "description": "Наносите урон Бастионам — тяжелобронированным врагам ARC.",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -48,7 +45,6 @@
     "description": "Наносите урон Ракетчикам во всех экспедициях.",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -62,7 +58,6 @@
     "description": "Наносите урон Прыгунам — быстрым врагам ARC.",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -76,7 +71,6 @@
     "description": "Наносите урон Бомбардирам — крупным угрозам ARC.",
     "image": "custom/damagebombardiers.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -90,7 +84,6 @@
     "description": "Наносите урон Королевам или Матриархам — самым опасным ARC.",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -104,7 +97,6 @@
     "description": "Наносите урон Исследователям, сопровождающим Бомбардиров.",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -118,7 +110,6 @@
     "description": "Наносите урон любой комбинации Ракетчиков, Прыгунов или Бастионов.",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -132,7 +123,6 @@
     "description": "Наносите урон наземным врагам ARC.",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -146,7 +136,6 @@
     "description": "Наносите урон летающим врагам ARC на любой карте.",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -160,7 +149,6 @@
     "description": "Наносите урон летающим ARC именно внутри стен Космопорта.",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -174,7 +162,6 @@
     "description": "Уничтожайте юниты ARC Клещ на всех картах.",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -188,7 +175,6 @@
     "description": "Уничтожайте юниты ARC Клещ, Огненный шар и Поп.",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -202,7 +188,6 @@
     "description": "Уничтожайте юниты ARC Огненный шар.",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -216,7 +201,6 @@
     "description": "Уничтожайте юниты ARC Поп в зонах экспедиций.",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -230,7 +214,6 @@
     "description": "Уничтожайте врагов ARC в зоне Болота на Поле боя у дамбы.",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [
@@ -244,7 +227,6 @@
     "description": "Собирайте растения на всех картах экспедиций.",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "Сбор",
     "threeStarScore": 4000,
     "maps": [
@@ -258,7 +240,6 @@
     "description": "Доставьте переносимые предметы к точкам эвакуации или сдачи.",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "Задание",
     "threeStarScore": 4000,
     "maps": [
@@ -272,7 +253,6 @@
     "description": "Откройте зонды ARC, разбросанные по картам.",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "Исследование",
     "threeStarScore": 4000,
     "maps": [
@@ -286,7 +266,6 @@
     "description": "Обыскивайте тайники Рейдеров, скрытые на картах.",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "Мародёрство",
     "threeStarScore": 4000,
     "maps": [
@@ -300,7 +279,6 @@
     "description": "Обыскивайте контейнеры останков Первой Волны на любой карте.",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "Мародёрство",
     "threeStarScore": 4000,
     "maps": [
@@ -314,7 +292,6 @@
     "description": "Собирайте из птичьих гнёзд на возвышенных позициях.",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "Мародёрство",
     "threeStarScore": 4000,
     "maps": [
@@ -328,7 +305,6 @@
     "description": "Обыскивайте контейнеры в Крыле медицинских исследований на Стелла Монтис.",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "Мародёрство",
     "threeStarScore": 4000,
     "maps": [
@@ -342,7 +318,6 @@
     "description": "Откройте контейнеры в транспортных тоннелях во время Запертых врат на Синих вратах.",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "Мародёрство",
     "threeStarScore": 4000,
     "maps": [
@@ -356,7 +331,6 @@
     "description": "Обезвредьте мины в 4 основных местах во время события Запертые врата на Синих вратах.",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "Задание",
     "threeStarScore": 4000,
     "maps": [
@@ -370,7 +344,6 @@
     "description": "Загрузите информацию с терминалов внутри Скрытого бункера.",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "Задание",
     "threeStarScore": 4000,
     "maps": [
@@ -384,7 +357,6 @@
     "description": "Попадите под молнию во время событий электромагнитной бури.",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "Особое",
     "threeStarScore": 4000,
     "maps": [
@@ -398,7 +370,6 @@
     "description": "Наносите урон врагам ARC Шредерам.",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "Косметические награды + Очки ранга",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "Бой",
     "threeStarScore": 4000,
     "maps": [

@@ -2,8 +2,10 @@
 // Maps CDN paths to local bundled assets
 
 const IMAGE_REGISTRY: Record<string, any> = {
+  'custom/beachcombing.webp': require('../assets/game/custom/beachcombing.webp'),
   'custom/birdcity.webp': require('../assets/game/custom/birdcity.webp'),
   'custom/cache.webp': require('../assets/game/custom/cache.webp'),
+  'custom/closescrutiny.webp': require('../assets/game/custom/closescrutiny.webp'),
   'custom/coldsnap.webp': require('../assets/game/custom/coldsnap.webp'),
   'custom/electrical.webp': require('../assets/game/custom/electrical.webp'),
   'custom/harvester.webp': require('../assets/game/custom/harvester.webp'),
@@ -613,18 +615,14 @@ const IMAGE_REGISTRY: Record<string, any> = {
   'weekly-trials/trial-1769368872612.webp': require('../assets/game/weekly-trials/trial-1769368872612.webp'),
 };
 
-/**
- * Resolve an image URL or local key to a source object for <Image />
- * If the key exists in the registry, returns the local require() result.
- * Otherwise returns {uri: url} for network images.
- */
+/** Resolve an image URL or local key to a bundled <Image /> source. */
 export function resolveImage(key: string | null | undefined): any {
   if (!key) return null;
-  // Strip CDN prefix so remote URLs resolve to local bundled assets
-  const CDN_PREFIX = 'https://cdn.metaforge.app/arc-raiders/';
-  const normalizedKey = key.startsWith(CDN_PREFIX)
-    ? key.slice(CDN_PREFIX.length)
-    : key;
+  const normalizedKey = key
+    .trim()
+    .replace(/^[a-z][a-z0-9+.-]*:\/\/[^/]+\/?/i, '')
+    .replace(/^arc-raiders\//, '')
+    .replace(/^\/+/, '');
   return IMAGE_REGISTRY[normalizedKey] ?? null;
 }
 

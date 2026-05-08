@@ -296,9 +296,6 @@
     "dialogIdle": "Idle",
     "dialogInRaid": "Upon Entering Raid",
     "dialogCompletion": "Upon Completion",
-    "viewOnWiki": "View on ARC Raiders Wiki",
-    "sourceWiki": "Source: arcraiders.wiki",
-    "licenseCcBySa": "Licensed CC BY-SA 4.0",
     "noQuestData": "No quest data available."
   },
   "maps": {
@@ -566,7 +563,6 @@
     "challenges": "challenges",
     "resetsIn": "RESETS IN",
     "proTip": "PRO TIP",
-    "viewGuide": "VIEW GUIDE",
     "tapForDetails": "Tap for details",
     "challengeCount": "{{count}} challenges",
     "d": "D",

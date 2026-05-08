@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState, memo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -22,6 +22,7 @@ import {colors} from '../theme/theme';
 import {resolveImage} from '../data/imageRegistry';
 import {
   useLiveEvents,
+  useLiveEventsMeta,
   refreshEventsFromServer,
 } from '../data/eventsStore';
 import {
@@ -183,6 +184,23 @@ const formatBadge = (sec: number): string => {
   return `${m}m ${String(s).padStart(2, '0')}s`;
 };
 
+const formatFreshness = (updatedAtMs: number | null): string => {
+  if (!updatedAtMs) return '--';
+  const diffSec = Math.max(0, Math.floor((Date.now() - updatedAtMs) / 1000));
+  if (diffSec < 60) return 'just now';
+  const min = Math.floor(diffSec / 60);
+  if (min < 60) return `${min}m ago`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `${hr}h ago`;
+  const days = Math.floor(hr / 24);
+  return `${days}d ago`;
+};
+
+const getEventIconSource = (iconKey: string | null | undefined) => {
+  if (!iconKey) return null;
+  return resolveImage(iconKey);
+};
+
 /* ── Skeleton shimmer (per-card gradient sweep) ──────── */
 const CARD_W = Dimensions.get('window').width - 40; // scroll paddingHorizontal 20*2
 
@@ -288,6 +306,7 @@ const EventTimerScreen = ({navigation}: any) => {
     return result;
   };
   const events = useLiveEvents() as GameEvent[];
+  const eventsMeta = useLiveEventsMeta();
   const [refreshing, setRefreshing] = useState(false);
   const [tick, setTick] = useState(0);
   const [notifiedEvents, setNotifiedEvents] = useState<Set<string>>(new Set());
@@ -297,6 +316,11 @@ const EventTimerScreen = ({navigation}: any) => {
   const frozenRef = useRef(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const skeletonFade = useRef(new Animated.Value(1)).current;
+  const freshnessLabel = useMemo(
+    () => formatFreshness(eventsMeta.updatedAtMs),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [eventsMeta.updatedAtMs, tick],
+  );
 
   // Freeze timer on Android hardware back to prevent janky exit animation
   useEffect(() => {
@@ -495,14 +519,15 @@ const EventTimerScreen = ({navigation}: any) => {
     const isActive = type === 'active';
     const displaySlot = isActive ? ev.status.activeSlot : ev.status.nextSlot;
     const timeStr = displaySlot ? translateSlotTime(formatSlotLocal(displaySlot)) : '';
+    const iconSource = getEventIconSource(ev.icon);
 
     return (
       <View
         key={`${ev.id}-${type}`}
         style={[st.card, isActive ? st.cardActive : st.cardSoon]}>
         <View style={st.cardLeft}>
-          {ev.icon ? (
-            <Image source={resolveImage(ev.icon)} style={st.cardIcon} resizeMode="cover" />
+          {iconSource ? (
+            <Image source={iconSource} style={st.cardIcon} resizeMode="cover" />
           ) : (
             <View style={st.cardIconFb}>
               <Icon name="weather-lightning" size={20} color="#999" />
@@ -618,6 +643,20 @@ const EventTimerScreen = ({navigation}: any) => {
         </TouchableOpacity>
       </View>
 
+      <View style={st.freshnessBar}>
+        <LinearGradient
+          colors={['rgba(34,211,238,0.12)', 'rgba(34,211,238,0.035)', 'transparent']}
+          start={{x: 0, y: 0.5}}
+          end={{x: 1, y: 0.5}}
+          style={StyleSheet.absoluteFill}
+        />
+        <View style={st.freshnessLeft}>
+          <Icon name="cloud-check-outline" size={15} color={CYAN} />
+          <Text style={st.freshnessLabel}>{t('events.serverUpdated', 'SERVER UPDATED')}</Text>
+        </View>
+        <Text style={st.freshnessTime}>{freshnessLabel}</Text>
+      </View>
+
       {/* ── Content ──────────────────────────────────────── */}
       <View style={{flex: 1}}>
         {/* Skeleton stays underneath and fades out */}
@@ -713,6 +752,37 @@ const st = StyleSheet.create({
   },
   refreshBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
   headerBellBtn: {width: 40, height: 40, alignItems: 'center', justifyContent: 'center'},
+
+  freshnessBar: {
+    marginHorizontal: 20,
+    marginBottom: 10,
+    minHeight: 42,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(34,211,238,0.16)',
+    overflow: 'hidden',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+  },
+  freshnessLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  freshnessLabel: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: CYAN,
+    letterSpacing: 1.6,
+  },
+  freshnessTime: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#fff',
+    fontVariant: ['tabular-nums'],
+  },
 
   scroll: {paddingHorizontal: 20, paddingTop: 8, paddingBottom: 100},
 

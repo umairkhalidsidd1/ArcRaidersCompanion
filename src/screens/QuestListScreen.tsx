@@ -19,7 +19,6 @@ import {colors, fonts, spacing, borderRadius as br} from '../theme/theme';
 import {getQuests} from '../data/localizedData';
 import {
   getCompletedQuests,
-  toggleCompletedQuest,
   resetCompletedQuests,
 } from '../utils/storage';
 import {usePremium} from '../context/PremiumContext';
@@ -141,7 +140,10 @@ const QuestListScreen = ({navigation, route}: any) => {
   const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const initialGiver = route?.params?.filterGiver || null;
-  const allQuests: Quest[] = ((getQuests() as any).quests || []) as Quest[];
+  const allQuests: Quest[] = useMemo(() => {
+    void i18n.language;
+    return ((getQuests() as any).quests || []) as Quest[];
+  }, [i18n.language]);
   const {isPremium} = usePremium();
   const FREE_QUEST_COUNT = 3;
 
@@ -161,7 +163,7 @@ const QuestListScreen = ({navigation, route}: any) => {
       if (completedIds.includes(q.id)) set.add(q.name);
     }
     return set;
-  }, [completedIds, i18n.language]);
+  }, [allQuests, completedIds]);
 
   /* Filter quests by giver if coming from trader detail */
   const giverQuests = useMemo(
@@ -169,7 +171,7 @@ const QuestListScreen = ({navigation, route}: any) => {
       initialGiver
         ? allQuests.filter(q => q.quest_giver === initialGiver)
         : allQuests,
-    [initialGiver, i18n.language],
+    [initialGiver, allQuests],
   );
 
   /* Split into available / locked / completed */
@@ -202,16 +204,6 @@ const QuestListScreen = ({navigation, route}: any) => {
   const totalQuests = giverQuests.length;
   const completedCount = completed.length;
   const progressRatio = totalQuests > 0 ? completedCount / totalQuests : 0;
-
-  const handleToggle = useCallback(
-    async (questId: number) => {
-      const isNowCompleted = await toggleCompletedQuest(questId);
-      setCompletedIds(prev =>
-        isNowCompleted ? [...prev, questId] : prev.filter(id => id !== questId),
-      );
-    },
-    [],
-  );
 
   const handlePress = useCallback(
     (questId: number) => {
@@ -255,7 +247,7 @@ const QuestListScreen = ({navigation, route}: any) => {
         },
       ],
     );
-  }, []);
+  }, [t]);
 
   const renderItem = useCallback(
     ({item, index}: {item: Quest; index: number}) => {
@@ -301,7 +293,7 @@ const QuestListScreen = ({navigation, route}: any) => {
         </Text>
       </View>
     );
-  }, [activeTab]);
+  }, [activeTab, t]);
 
   return (
     <View style={[s.root, {paddingTop: insets.top}]}>

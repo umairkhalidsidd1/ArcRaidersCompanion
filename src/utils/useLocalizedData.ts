@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 
-// Quest guides come from the unified arcraiders.wiki dataset (English only
-// for now), so they're served the same regardless of UI language.
+// Legacy helper: only English guide data is exposed here.
 import guidesEn from '../data/guides.json';
 
 // English data

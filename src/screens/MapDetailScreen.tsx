@@ -52,7 +52,7 @@ const DB_MAP_NAME: Record<string, string> = {
   'stella-montis': 'Stella_Montis_Map',
 };
 
-/* ─────── FILTER CATEGORIES  (labels = exact Supabase DB names) ─────── */
+/* ─────── FILTER CATEGORIES  (keys match local marker ids) ─────── */
 const FILTER_CATEGORIES = [
   {key: 'blueprint-heatmap', label: 'Blueprint Heatmap', icon: 'map-marker-radius', color: '#FF6B2C', description: 'Where players find blueprints most'},
   {key: 'agave', label: 'Agave', icon: 'leaf', color: '#4CAF50'},
@@ -356,7 +356,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
   const maps = getMaps();
   const {isPremium} = usePremium();
 
-  const [currentMapId, setCurrentMapId] = useState(mapId);
+  const [currentMapId] = useState(mapId);
   const map = maps.find(m => m.id === currentMapId);
   const mapUrl = MAP_URLS[currentMapId];
 
@@ -499,7 +499,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
     `, 'HEATMAP_ON');
     setHeatmapActive(true);
     showSnackbar(t('maps.blueprintHeatmapCount', {count: coords.length}));
-  }, [currentMapId, runJS, showSnackbar]);
+  }, [currentMapId, runJS, showSnackbar, t]);
 
   const removeHeatmap = useCallback(() => {
     runJS(`
@@ -589,10 +589,10 @@ const MapDetailScreen = ({route, navigation}: any) => {
         });
         setBuiltinInfoVisible(true);
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
-  }, [waypoints, t]);
+  }, [waypoints, t, overlayOpacity]);
 
   /* ─── Build inner HTML for a custom waypoint marker (themed) ─── */
   const buildWaypointInnerHtml = useCallback((wp: Waypoint) => {
@@ -822,7 +822,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
       // Inject existing waypoints
       injectSavedWaypoints();
     }, 1000);
-  }, [runJS, injectSavedWaypoints]);
+  }, [currentMapId, runJS, injectSavedWaypoints]);
 
   /* ─── SELECT MARKER TYPE (from bottom sheet) ─── */
   const handleSelectMarkerType = useCallback((markerType: typeof MARKER_TYPES[0] | null) => {
@@ -897,7 +897,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
     `, 'WP_ADD');
 
     showSnackbar(t('maps.markerAdded'));
-  }, [pendingCoords, selectedMarkerType, customMarkerName, markerNote, isPublished, currentMapId, runJS, showSnackbar, editingMarkerId, buildWaypointInnerHtml, t]);
+  }, [pendingCoords, selectedMarkerType, customMarkerName, markerNote, markerPhoto, isPublished, currentMapId, runJS, showSnackbar, editingMarkerId, buildWaypointInnerHtml, t]);
 
   /* ─── DELETE MARKER ─── */
   const handleDeleteMarker = useCallback(async (id: string) => {
@@ -913,7 +913,7 @@ const MapDetailScreen = ({route, navigation}: any) => {
       }
     `, 'WP_DEL');
     showSnackbar(t('maps.markerDeleted'));
-  }, [runJS, showSnackbar]);
+  }, [runJS, showSnackbar, t]);
 
   /* ─── TOGGLE MARKER MODE ─── */
   const toggleMarkerMode = useCallback(() => {
@@ -921,22 +921,6 @@ const MapDetailScreen = ({route, navigation}: any) => {
     setMarkerMode(newMode);
     runJS(`window.__waypointMode = ${newMode};`, 'WP_MODE');
   }, [markerMode, runJS]);
-
-  /* ─── SWITCH MAP ─── */
-  const handleSwitchMap = useCallback(
-    (newMapId: string) => {
-      if (newMapId === currentMapId) return;
-      setCurrentMapId(newMapId);
-      setMapLoading(true);
-      setMapReady(false);
-      overlayOpacity.setValue(1);
-      // Reset filter & heatmap
-      setSelectedCategories([]);
-      setHeatmapActive(false);
-    },
-    [currentMapId, overlayOpacity],
-  );
-
 
   if (!map) return null;
 

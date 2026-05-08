@@ -5,10 +5,12 @@
     "description": "Deal as much damage to Hornets as possible within the raid time limit.",
     "image": "weekly-trials/damage-hornets.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-hornets",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["Blue Gate", "Spaceport"],
+    "maps": [
+      "Blue Gate",
+      "Spaceport"
+    ],
     "tip": "Aggro Snitches to force extra Hornet spawns. Pilgrim's Peak on Blue Gate offers great elevation."
   },
   {
@@ -17,10 +19,11 @@
     "description": "Deal damage to Wasps across any map.",
     "image": "weekly-trials/damage-wasps.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-wasps",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Wasps are common across all areas. Use Snitch alarms to spawn them in groups."
   },
   {
@@ -29,10 +32,11 @@
     "description": "Deal damage to Bastions, the heavy shielded ARC enemies.",
     "image": "weekly-trials/damage-bastions.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bastions",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Bastions have heavy armor. Bring high-damage weapons like the Anvil IV or Hullcracker."
   },
   {
@@ -41,10 +45,11 @@
     "description": "Deal damage to Rocketeers found across all expeditions.",
     "image": "weekly-trials/damage-rocketeers.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Rocketeers fire explosive projectiles — keep your distance and use cover."
   },
   {
@@ -53,10 +58,11 @@
     "description": "Deal damage to Leapers, fast-moving ARC enemies.",
     "image": "weekly-trials/trial-1769368839314.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-leapers",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Leapers are quick. Use shotguns or SMGs for close-range encounters."
   },
   {
@@ -65,10 +71,11 @@
     "description": "Deal damage to Bombardiers, the large ARC threats.",
     "image": "custom/damagebombardiers.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-bombardiers",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Bombardiers always have two Spotters with them. Deal with Spotters first."
   },
   {
@@ -77,10 +84,11 @@
     "description": "Deal damage to Queens or Matriarchs — the most dangerous ARC.",
     "image": "weekly-trials/damage-queens-or-matriarchs.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-queens-or-matriarchs",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "These are boss-tier ARCs. Bring a full squad and heavy firepower."
   },
   {
@@ -89,10 +97,11 @@
     "description": "Deal damage to Spotters that accompany Bombardiers.",
     "image": "weekly-trials/damage-spotters.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-spotters",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Find Bombardiers — each one always has two Spotters with it."
   },
   {
@@ -101,10 +110,11 @@
     "description": "Deal damage to any combination of Rocketeers, Leapers or Bastions.",
     "image": "weekly-trials/damage-rocketeers-leapers-or-bastions.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-rocketeers-leapers-or-bastions",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "All three ARC types count — focus on whichever you find first."
   },
   {
@@ -113,10 +123,11 @@
     "description": "Damage any ARC enemies that are ground-based.",
     "image": "weekly-trials/damage-ground-based-arc-enemies.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-ground-based-arc-enemies",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Ground ARCs include Ticks, Leapers, and Bastions. Very easy to farm on any map."
   },
   {
@@ -125,10 +136,11 @@
     "description": "Deal damage to flying ARC enemies on any map.",
     "image": "weekly-trials/damage-flying-arc-enemies.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Hornets, Wasps, and Snitches all count. Climb to high ground for better angles."
   },
   {
@@ -137,10 +149,11 @@
     "description": "Damage flying ARC enemies specifically inside the Spaceport walls.",
     "image": "weekly-trials/damage-flying-arc-enemies-inside-the-spaceport-walls.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/damage-flying-arc-enemies-inside-the-spaceport-walls",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["Spaceport"],
+    "maps": [
+      "Spaceport"
+    ],
     "tip": "Stay inside the Spaceport walls — damage dealt outside won't count."
   },
   {
@@ -149,10 +162,11 @@
     "description": "Destroy Tick ARC units found across all maps.",
     "image": "weekly-trials/destroy-ticks.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Ticks are small ground ARCs. One melee hit destroys them with the right skill."
   },
   {
@@ -161,10 +175,11 @@
     "description": "Destroy Ticks, Fireballs and Pop ARC units.",
     "image": "weekly-trials/destroy-ticks-fireballs-and-pops.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-ticks-fireballs-and-pops",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "All three small ARC types count. Easy to chain together in dense ARC areas."
   },
   {
@@ -173,10 +188,11 @@
     "description": "Destroy Fireball ARC units.",
     "image": "weekly-trials/trial-1769368872612.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-fireballs",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Fireballs explode on contact — keep your distance when shooting them."
   },
   {
@@ -185,10 +201,11 @@
     "description": "Destroy Pop ARC units found in expedition areas.",
     "image": "weekly-trials/destroy-pops.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-pops",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Pops are small and fast. Listen for their audio cues to locate them."
   },
   {
@@ -197,10 +214,11 @@
     "description": "Destroy ARC enemies in the Swamp area on Dam Battlegrounds.",
     "image": "weekly-trials/destroy-arc-enemies-in-the-swamp.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/destroy-arc-enemies-in-the-swamp",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["Dam"],
+    "maps": [
+      "Dam"
+    ],
     "tip": "The Swamp is in the Dam Battlegrounds map. Only kills here count."
   },
   {
@@ -209,10 +227,11 @@
     "description": "Harvest plants found across all expedition maps.",
     "image": "weekly-trials/harvest-plants.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/harvest-plants",
     "category": "Gathering",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Plants are abundant on all maps. Run gathering routes for maximum efficiency."
   },
   {
@@ -221,10 +240,11 @@
     "description": "Deliver carriable items to extraction or deposit points.",
     "image": "weekly-trials/deliver-carriables.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deliver-carriables",
     "category": "Objective",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Carriables can be found near events and POIs. Deliver them to the extraction ship."
   },
   {
@@ -233,10 +253,11 @@
     "description": "Open ARC Probes found scattered across maps.",
     "image": "weekly-trials/open-arc-probes.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-arc-probes",
     "category": "Exploration",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "ARC Probes are scattered across all maps. Listen for their distinct hum."
   },
   {
@@ -245,10 +266,11 @@
     "description": "Search hidden Raider Caches scattered around maps.",
     "image": "weekly-trials/search-raider-caches.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-raider-caches",
     "category": "Looting",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Raider Caches are hidden in spots other players have died. Check popular combat areas."
   },
   {
@@ -257,10 +279,11 @@
     "description": "Search First Wave Husk containers on any map.",
     "image": "weekly-trials/search-first-wave-husks.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-first-wave-husks",
     "category": "Looting",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "First Wave Husks are skeletal remains with loot. Found near buildings and shelters."
   },
   {
@@ -269,10 +292,11 @@
     "description": "Loot bird's nests found in elevated positions.",
     "image": "weekly-trials/loot-birds-nests.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/loot-birds-nests",
     "category": "Looting",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Bird's nests are in high places — on rooftops, towers, and cliffs."
   },
   {
@@ -281,10 +305,11 @@
     "description": "Search containers inside the Medical Research wing on Stella Montis.",
     "image": "weekly-trials/search-containers-in-the-medical-research-wing.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/search-containers-in-the-medical-research-wing",
     "category": "Looting",
     "threeStarScore": 4000,
-    "maps": ["Stella Montis"],
+    "maps": [
+      "Stella Montis"
+    ],
     "tip": "Medical Research is on Stella Montis. Watch out for Shredders guarding the area."
   },
   {
@@ -293,10 +318,11 @@
     "description": "Open containers inside the traffic tunnels during Locked Gate on Blue Gate.",
     "image": "weekly-trials/Open_Containers_inside_the_traffic_tunnels_Blue_Gate.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/open-containers-inside-the-traffic-tunnels",
     "category": "Looting",
     "threeStarScore": 4000,
-    "maps": ["Blue Gate"],
+    "maps": [
+      "Blue Gate"
+    ],
     "tip": "Only available during the Locked Gate event on Blue Gate."
   },
   {
@@ -305,10 +331,11 @@
     "description": "Disarm mines at 4 main locations during the Locked Gate event on Blue Gate.",
     "image": "weekly-trials/disarm-mines-during-locked-gate.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/disarm-mines-during-locked-gate",
     "category": "Objective",
     "threeStarScore": 4000,
-    "maps": ["Blue Gate"],
+    "maps": [
+      "Blue Gate"
+    ],
     "tip": "Mines appear in 4 main locations during Locked Gate. Approach carefully."
   },
   {
@@ -317,10 +344,11 @@
     "description": "Download information from terminals inside the Hidden Bunker.",
     "image": "weekly-trials/download-information-inside-the-bunker.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/download-information-inside-the-bunker",
     "category": "Objective",
     "threeStarScore": 4000,
-    "maps": ["Spaceport"],
+    "maps": [
+      "Spaceport"
+    ],
     "tip": "Only available during the Hidden Bunker event on Spaceport."
   },
   {
@@ -329,10 +357,11 @@
     "description": "Get hit by lightning during Electromagnetic storm events.",
     "image": "weekly-trials/get-hit-by-lightning.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/get-hit-by-lightning",
     "category": "Special",
     "threeStarScore": 4000,
-    "maps": ["All Maps"],
+    "maps": [
+      "All Maps"
+    ],
     "tip": "Only during Electromagnetic events. Stand on high ground and metal structures."
   },
   {
@@ -341,10 +370,11 @@
     "description": "Deal damage to Shredder ARC enemies.",
     "image": "weekly-trials/deal-damage-to-shredders.webp",
     "reward": "Cosmetic Rewards + Rank Points",
-    "metaforgeUrl": "https://metaforge.app/arc-raiders/deal-damage-to-shredders",
     "category": "Combat",
     "threeStarScore": 4000,
-    "maps": ["Stella Montis"],
+    "maps": [
+      "Stella Montis"
+    ],
     "tip": "Shredders are found on Stella Montis. Bring heavy weapons and shields."
   }
 ]

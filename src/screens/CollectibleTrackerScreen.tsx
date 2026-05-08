@@ -35,9 +35,8 @@ type CollectibleItem = {
   category: string;
 };
 
-const inferCategory = (name: string, desc: string): string => {
+const inferCategory = (name: string, _desc: string): string => {
   const n = name.toLowerCase();
-  const d = (desc || '').toLowerCase();
   if (n.includes('duck') || n.includes('rubber')) return 'Rubber Ducks';
   if (n.includes('snow globe') || n.includes('snowglobe')) return 'Snow Globes';
   if (n.includes('film reel') || n.includes('film')) return 'Film Reels';
@@ -266,7 +265,7 @@ const CollectibleTrackerScreen = ({navigation}: any) => {
   const progress = totalCount > 0 ? Math.round((foundCount / totalCount) * 100) : 0;
 
   const renderItem = useCallback(
-    ({item, index}: {item: CollectibleItem; index: number}) => {
+    ({item}: {item: CollectibleItem}) => {
       if (item.id === '__spacer__') {
         return <View style={{width: CARD_WIDTH}} />;
       }
