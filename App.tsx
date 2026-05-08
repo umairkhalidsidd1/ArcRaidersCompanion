@@ -5,13 +5,13 @@
  * @format
  */
 
-import React, {createContext, useCallback, useContext, useEffect, useState} from 'react';
+import React, {createContext, useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider, initialWindowMetrics} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import './src/i18n/i18n';
-import AppNavigator from './src/navigation/AppNavigator';
+import AppNavigator, {navigationRef} from './src/navigation/AppNavigator';
 import OnboardingScreen, {ONBOARDING_KEY} from './src/screens/OnboardingScreen';
 
 // Lazy-load SmokeBackground — it imports react-native-reanimated which
@@ -20,9 +20,11 @@ const SmokeBackground = Platform.OS === 'android'
   ? () => <View style={{...require('react-native').StyleSheet.absoluteFillObject, backgroundColor: '#0A0E17'}} />
   : require('./src/components/SmokeBackground').default;
 import SplashScreen from './src/screens/SplashScreen';
-import {PremiumProvider} from './src/context/PremiumContext';
+import {PremiumProvider, usePremium} from './src/context/PremiumContext';
 import {initializeRevenueCat} from './src/utils/revenueCat';
 import {initializeFirebaseTelemetry} from './src/utils/firebase';
+
+const AUTO_PAYWALL_DELAY_MS = 650;
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
@@ -31,6 +33,8 @@ function AppShell() {
   const [ready, setReady] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const {canShowPaywall, checkPremiumStatus, isLoading: isPremiumLoading} = usePremium();
+  const didShowAutoPaywall = useRef(false);
 
   useEffect(() => {
     initializeRevenueCat().catch(() => {});
@@ -50,6 +54,44 @@ function AppShell() {
   const handleOnboardingDone = useCallback(() => {
     setShowOnboarding(false);
   }, []);
+
+  useEffect(() => {
+    if (
+      !ready ||
+      showSplash ||
+      showOnboarding ||
+      isPremiumLoading ||
+      !canShowPaywall ||
+      didShowAutoPaywall.current
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      if (cancelled || didShowAutoPaywall.current || !navigationRef.isReady()) {
+        return;
+      }
+
+      const premiumStatus = await checkPremiumStatus();
+      if (cancelled || premiumStatus !== false || !navigationRef.isReady()) {
+        return;
+      }
+
+      if (navigationRef.getCurrentRoute()?.name === 'Paywall') {
+        didShowAutoPaywall.current = true;
+        return;
+      }
+
+      didShowAutoPaywall.current = true;
+      (navigationRef as any).navigate('Paywall');
+    }, AUTO_PAYWALL_DELAY_MS);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [canShowPaywall, checkPremiumStatus, isPremiumLoading, ready, showOnboarding, showSplash]);
 
   if (!ready) {
     return (
