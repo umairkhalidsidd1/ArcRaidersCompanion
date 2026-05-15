@@ -1,5 +1,5 @@
 /**
- * Arc Raiders Companion — Dark Sci-Fi Theme (Raiders Map Inspired)
+ * Raid Companion — Dark Sci-Fi Theme (Raiders Map Inspired)
  */
 
 export const colors = {

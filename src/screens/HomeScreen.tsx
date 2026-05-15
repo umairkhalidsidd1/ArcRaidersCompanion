@@ -449,11 +449,15 @@ const HomeScreen = ({ navigation }: any) => {
             onPress={() => { if (!isPremium) navigation.navigate('Paywall'); }}>
           <AnimGradBorder radius={borderRadius.full} borderW={1.5} style={styles.titlePill}>
             <View style={styles.titlePillInner}>
-              <Text style={styles.titleArc}>{t('home.arc')}</Text>
-              <Text style={styles.titleRaiders}>{t('home.raiders')}</Text>
+              {Platform.OS !== 'android' && (
+                <Text style={styles.titleArc}>{t('home.arc')}</Text>
+              )}
+              <Text style={styles.titleRaiders}>{Platform.OS === 'android' ? 'Raid Companion' : t('home.raiders')}</Text>
               <View style={styles.companionBadge}>
-                <Icon name="shield-check" size={12} color="#000" />
-                <Text style={styles.companionBadgeText}>{t('home.companion')}</Text>
+                {Platform.OS !== 'android' && <Icon name="shield-check" size={12} color="#000" />}
+                <Text style={styles.companionBadgeText}>
+                  {Platform.OS === 'android' ? 'Loot & Map' : t('home.companion')}
+                </Text>
               </View>
             </View>
           </AnimGradBorder>

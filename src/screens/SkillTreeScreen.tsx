@@ -590,11 +590,8 @@ const SkillTreeScreen = ({navigation}: any) => {
     );
   };
 
-  const treeContent = React.useMemo(() => {
-    if (!treeReady) return null;
-
-    return (
-      <>
+  const treeContent = treeReady ? (
+    <>
       {BRANCH_ORDER.map(branch => {
         const branchColor = BRANCH_META[branch].color;
         const left = getBranchX(branch) - DX * 1.6 - 22;
@@ -658,9 +655,8 @@ const SkillTreeScreen = ({navigation}: any) => {
       </Svg>
 
       {NODES.map(renderNode)}
-      </>
-    );
-  }, [alloc, remaining, totalPoints, treeReady, t]);
+    </>
+  ) : null;
 
   const selectedColor = selected ? BRANCH_META[selected.branch].color : colors.cyan;
   const selectedPts = selected ? alloc[selected.id] || 0 : 0;

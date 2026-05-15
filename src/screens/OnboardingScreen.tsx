@@ -598,7 +598,7 @@ const SkillTreePreview = () => {
           <Icon name="arrow-left" size={12} color="#FFFFFF" />
         </View>
         <View pointerEvents="none" style={mockStyles.skillMiniTitleBox}>
-          <Text style={mockStyles.skillMiniEyebrow}>ARC RAIDERS</Text>
+          <Text style={mockStyles.skillMiniEyebrow}>RAID COMPANION</Text>
           <Text style={mockStyles.skillMiniTitle}>{t('onboarding.preview.skillTree', 'SKILL TREE')}</Text>
         </View>
         <View style={mockStyles.skillHeaderActions}>

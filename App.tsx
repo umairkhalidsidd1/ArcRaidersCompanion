@@ -1,5 +1,5 @@
 /**
- * Arc Raiders Companion App
+ * Raid Companion App
  * React Native CLI — Unofficial game companion
  *
  * @format
@@ -19,7 +19,6 @@ import OnboardingScreen, {ONBOARDING_KEY} from './src/screens/OnboardingScreen';
 const SmokeBackground = Platform.OS === 'android'
   ? () => <View style={{...require('react-native').StyleSheet.absoluteFillObject, backgroundColor: '#0A0E17'}} />
   : require('./src/components/SmokeBackground').default;
-import SplashScreen from './src/screens/SplashScreen';
 import {PremiumProvider, usePremium} from './src/context/PremiumContext';
 import {initializeRevenueCat} from './src/utils/revenueCat';
 import {initializeFirebaseTelemetry} from './src/utils/firebase';
@@ -30,9 +29,7 @@ export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
 
 function AppShell() {
-  const [ready, setReady] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
   const {canShowPaywall, checkPremiumStatus, isLoading: isPremiumLoading} = usePremium();
   const didShowAutoPaywall = useRef(false);
 
@@ -42,7 +39,6 @@ function AppShell() {
 
     AsyncStorage.getItem(ONBOARDING_KEY).then(val => {
       setShowOnboarding(val !== 'true');
-      setReady(true);
     });
   }, []);
 
@@ -57,8 +53,7 @@ function AppShell() {
 
   useEffect(() => {
     if (
-      !ready ||
-      showSplash ||
+      showOnboarding === null ||
       showOnboarding ||
       isPremiumLoading ||
       !canShowPaywall ||
@@ -91,14 +86,10 @@ function AppShell() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [canShowPaywall, checkPremiumStatus, isPremiumLoading, ready, showOnboarding, showSplash]);
+  }, [canShowPaywall, checkPremiumStatus, isPremiumLoading, showOnboarding]);
 
-  if (!ready) {
-    return (
-      <View style={{flex: 1, backgroundColor: '#0A0E17'}}>
-        <StatusBar barStyle="light-content" backgroundColor="#0A0E17" translucent={Platform.OS === 'android'} />
-      </View>
-    );
+  if (showOnboarding === null) {
+    return <View style={{flex: 1, backgroundColor: '#0A0E17'}} />;
   }
 
   return (
@@ -111,7 +102,6 @@ function AppShell() {
           <OnboardingScreen onDone={handleOnboardingDone} />
         </View>
       )}
-      {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
     </>
   );
 }
