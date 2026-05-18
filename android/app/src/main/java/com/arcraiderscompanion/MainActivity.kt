@@ -2,10 +2,12 @@ package com.ArcRaidersCompanion
 
 import android.graphics.PixelFormat
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import java.util.concurrent.atomic.AtomicBoolean
 
 class MainActivity : ReactActivity() {
 
@@ -23,6 +25,9 @@ class MainActivity : ReactActivity() {
    * carousel, etc. iOS uses 32-bit by default — this brings Android in line.
    */
   override fun onCreate(savedInstanceState: Bundle?) {
+    prepareLaunchSplash()
+    val splashScreen = installSplashScreen()
+    splashScreen.setKeepOnScreenCondition { shouldKeepLaunchSplash() }
     window.setFormat(PixelFormat.RGBA_8888)
     super.onCreate(null)
   }
@@ -33,4 +38,18 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+  companion object {
+    private val keepLaunchSplashVisible = AtomicBoolean(true)
+
+    fun markLaunchSplashReady() {
+      keepLaunchSplashVisible.set(false)
+    }
+
+    private fun prepareLaunchSplash() {
+      keepLaunchSplashVisible.set(true)
+    }
+
+    private fun shouldKeepLaunchSplash(): Boolean = keepLaunchSplashVisible.get()
+  }
 }

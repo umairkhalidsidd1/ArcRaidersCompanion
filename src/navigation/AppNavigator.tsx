@@ -242,7 +242,7 @@ function TabNavigator() {
 }
 
 /* ── Root Navigator (MapDetail lives here — completely outside tabs) ── */
-const AppNavigator = () => {
+const AppNavigator = ({onReady}: {onReady?: () => void}) => {
   const navBackground = Platform.OS === 'ios' ? 'transparent' : colors.bg;
   const routeNameRef = useRef<string | undefined>(undefined);
 
@@ -255,6 +255,7 @@ const AppNavigator = () => {
         if (initialRouteName) {
           logFirebaseScreenView(initialRouteName).catch(() => {});
         }
+        onReady?.();
       }}
       onStateChange={() => {
         const currentRouteName = navigationRef.getCurrentRoute()?.name;

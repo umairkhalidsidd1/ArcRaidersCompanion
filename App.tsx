@@ -6,7 +6,7 @@
  */
 
 import React, {createContext, useCallback, useContext, useEffect, useRef, useState} from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {InteractionManager, NativeModules, Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider, initialWindowMetrics} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,14 +24,19 @@ import {initializeRevenueCat} from './src/utils/revenueCat';
 import {initializeFirebaseTelemetry} from './src/utils/firebase';
 
 const AUTO_PAYWALL_DELAY_MS = 650;
+const androidSplashScreen = NativeModules.AndroidSplashScreen as
+  | {markReady?: () => void}
+  | undefined;
 
 export const OnboardingContext = createContext<() => void>(() => {});
 export const useOnboarding = () => useContext(OnboardingContext);
 
 function AppShell() {
   const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
+  const [isNavigationReady, setIsNavigationReady] = useState(false);
   const {canShowPaywall, checkPremiumStatus, isLoading: isPremiumLoading} = usePremium();
   const didShowAutoPaywall = useRef(false);
+  const didReleaseAndroidSplash = useRef(false);
 
   useEffect(() => {
     initializeRevenueCat().catch(() => {});
@@ -50,6 +55,36 @@ function AppShell() {
   const handleOnboardingDone = useCallback(() => {
     setShowOnboarding(false);
   }, []);
+
+  const handleNavigationReady = useCallback(() => {
+    setIsNavigationReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (
+      Platform.OS !== 'android' ||
+      showOnboarding === null ||
+      !isNavigationReady ||
+      didReleaseAndroidSplash.current
+    ) {
+      return;
+    }
+
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      requestAnimationFrame(() => {
+        if (didReleaseAndroidSplash.current) {
+          return;
+        }
+
+        androidSplashScreen?.markReady?.();
+        didReleaseAndroidSplash.current = true;
+      });
+    });
+
+    return () => {
+      interaction.cancel();
+    };
+  }, [isNavigationReady, showOnboarding]);
 
   useEffect(() => {
     if (
@@ -95,7 +130,7 @@ function AppShell() {
   return (
     <>
       <OnboardingContext.Provider value={triggerOnboarding}>
-        <AppNavigator />
+        <AppNavigator onReady={handleNavigationReady} />
       </OnboardingContext.Provider>
       {showOnboarding && (
         <View style={styles.onboardingOverlay}>
